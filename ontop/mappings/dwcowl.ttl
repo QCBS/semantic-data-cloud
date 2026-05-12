@@ -261,15 +261,12 @@ dwcdp:basedOn rdf:type owl:ObjectProperty ;
 
 ###  http://rs.tdwg.org/dwcdp/terms/collectedDuring
 dwcdp:collectedDuring rdf:type owl:ObjectProperty ;
-                      rdfs:domain dwc:MaterialEntity ;
-                      rdfs:range dwc:Event ;
                       rdfs:label "Collected During" ;
                       skos:definition "An object property to relate a dwc:MaterialEntity to the dwc:Event during which it was collected." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/commentedBy
 dwcdp:commentedBy rdf:type owl:ObjectProperty ;
-                  rdfs:range dcterms:Agent ;
                   rdfs:label "Commented By" .
 
 
@@ -342,7 +339,6 @@ dwcdp:hasMedia rdf:type owl:ObjectProperty ;
 
 ###  http://rs.tdwg.org/dwcdp/terms/hasUsagePolicy
 dwcdp:hasUsagePolicy rdf:type owl:ObjectProperty ;
-                     rdfs:range dwc:UsagePolicy ;
                      rdfs:label "Has Usage Policy" ;
                      skos:definition "An object property to relate entities to their respective rights and usage policies, represented by a dwc:UsagePolicy instance." .
 
@@ -355,22 +351,17 @@ dwcdp:identifiedBy rdf:type owl:ObjectProperty ;
 
 ###  http://rs.tdwg.org/dwcdp/terms/identifierFor
 dwcdp:identifierFor rdf:type owl:ObjectProperty ;
-                    rdfs:domain adms:Identifier ;
                     rdfs:label "Identifier For" .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/interactionBy
 dwcdp:interactionBy rdf:type owl:ObjectProperty ;
-                    rdfs:domain dwc:OrganismInteraction ;
-                    rdfs:range dwc:Occurrence ;
                     rdfs:label "Interaction By" ;
                     skos:definition "An object property to designate the subject resource in a dwc:OrganismInteraction." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/interactionWith
 dwcdp:interactionWith rdf:type owl:ObjectProperty ;
-                      rdfs:domain dwc:OrganismInteraction ;
-                      rdfs:range dwc:Occurrence ;
                       rdfs:label "Interaction With" ;
                       skos:definition "An object property to designate the object resource in a dwc:OrganismInteraction." .
 
@@ -411,7 +402,6 @@ dwcdp:relationshipTo rdf:type owl:ObjectProperty ;
 
 ###  http://rs.tdwg.org/dwcdp/terms/reviewedBy
 dwcdp:reviewedBy rdf:type owl:ObjectProperty ;
-                 rdfs:range dcterms:Agent ;
                  rdfs:label "Reviewed By" .
 
 
@@ -423,8 +413,6 @@ dwcdp:satisfied rdf:type owl:ObjectProperty ;
 
 ###  http://rs.tdwg.org/dwcdp/terms/spatialLocation
 dwcdp:spatialLocation rdf:type owl:ObjectProperty ;
-                      rdfs:domain dwc:Event ;
-                      rdfs:range dcterms:Location ;
                       rdfs:label "Spatial Location" ;
                       skos:definition "An object property to link a dwc:Event to the dcterms:Location where it took place." .
 
@@ -437,7 +425,6 @@ dwcdp:targetFor rdf:type owl:ObjectProperty ;
 
 ###  http://rs.tdwg.org/dwcdp/terms/withinContext
 dwcdp:withinContext rdf:type owl:ObjectProperty ;
-                    rdfs:range dwc:GeologicalContext ;
                     rdfs:label "Within Context" ;
                     skos:definition "An object property to link a dcterms:Location or a dwc:MaterialEntity to the dwc:GeologicalContext within which it is situated." .
 
@@ -3295,7 +3282,6 @@ dwc:verticalDatum rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/dwc/terms/vitality
 dwc:vitality rdf:type owl:DatatypeProperty ;
-             rdfs:domain dwc:Occurrence ;
              rdfs:label "Vitality" ;
              skos:definition "An indication of whether a dwc:Organism was alive or dead at the time of collection or observation." ;
              skos:example "alive" ,
@@ -4480,17 +4466,6 @@ dwc:OrganismInteraction rdf:type owl:Class ;
 
 ###  http://rs.tdwg.org/dwc/terms/OrganismRelationship
 dwc:OrganismRelationship rdf:type owl:Class ;
-                         rdfs:subClassOf [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty dwcdp:relationshipOf ;
-                                                                  owl:someValuesFrom dwc:Organism
-                                                                ]
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty dwcdp:relationshipTo ;
-                                                                  owl:someValuesFrom dwc:Organism
-                                                                ]
-                                                              ) ;
-                                           rdf:type owl:Class
-                                         ] ;
                          rdfs:label "Organism Relationship" ;
                          skos:definition "A dwc:ResourceRelationship of one dwc:Organism to another dwc:Organism." ;
                          skos:example "an instance of a dwc:Organism is the mother of another instance of a dwc:Organism" .

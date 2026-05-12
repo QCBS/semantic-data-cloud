@@ -4,7 +4,7 @@ services:
       context: ontop
       dockerfile: ontop.dockerfile
 
-    container_name: ontop-duckdb
+    container_name: ontop-sdc
 
     ports:
       - "8080:8080"
@@ -14,4 +14,43 @@ services:
       - ./ontop/db:/app/db
       - ./ontop/parquet:/opt/ontop/parquet
 
-    command: ["ontop", "endpoint", "-m", "/opt/ontop/input/mappings/dwcowl.obda", "-p", "/opt/ontop/input/mappings/dwcowl.properties", "-t", "/opt/ontop/input/mappings/dwcowl.ttl"]
+    command: [
+      "ontop", "endpoint",
+      "-m", "/opt/ontop/input/mappings/dwcowl.obda",
+      "-p", "/opt/ontop/input/mappings/dwcowl.properties",
+      "-t", "/opt/ontop/input/mappings/dwcowl.ttl"
+    ]
+
+  valkey:
+    image: valkey/valkey:9.0.4
+    container_name: valkey-sdc
+
+    ports:
+      - "6379:6379"
+
+    command: [
+        "valkey-server",
+        "--maxmemory",
+        "1gb",
+        "--maxmemory-policy",
+        "allkeys-lfu"
+      ]
+
+  quicky:
+    build:
+      context: fastaproxy
+      dockerfile: fastaproxy.dockerfile
+
+    container_name: fastaproxy-scp
+
+    depends_on:
+      - valkey
+
+    ports:
+      - "8000:8000"
+
+    environment:
+      TIMEOUT_VAL: 100
+      TTL_VAL: 90
+
+    restart: unless-stopped
