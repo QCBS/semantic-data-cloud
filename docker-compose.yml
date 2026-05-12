@@ -1,0 +1,17 @@
+services:
+  ontop:
+    build:
+      context: ontop
+      dockerfile: ontop.dockerfile
+
+    container_name: ontop-duckdb
+
+    ports:
+      - "8080:8080"
+
+    volumes:
+      - ./ontop/mappings:/opt/ontop/input/mappings
+      - ./ontop/db:/app/db
+      - ./ontop/parquet:/opt/ontop/parquet
+
+    command: ["ontop", "endpoint", "-m", "/opt/ontop/input/mappings/dwcowl.obda", "-p", "/opt/ontop/input/mappings/dwcowl.properties", "-t", "/opt/ontop/input/mappings/dwcowl.ttl"]
