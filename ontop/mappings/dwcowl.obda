@@ -33,11 +33,11 @@ xmprights:	http://ns.adobe.com/xap/1.0/rights/
 
 [MappingDeclaration] @collection [[
 mappingId	uni1-agent
-target		:agent/{agent_id} a dcterms:Agent ; dwc:agentID {agent_id}^^xsd:string ; dc:title {preferred_agent_name}^^xsd:string ; dwc:agentRemarks {agent_remarks}^^xsd:string ; dwc:agentType {agent_type}^^xsd:string . 
+target		:agent/{agent_id} a dcterms:Agent ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRemarks {agent_remarks}^^xsd:string ; dwc:agentType {agent_type}^^xsd:string . 
 source		SELECT * FROM dwcowl.main.agent
 
 mappingId	uni1-bibliographic-resource
-target		:bibliographic-resource/{reference_id} a dcterms:BibliographicResource ; dwc:referenceID {reference_id}^^xsd:string ; bibo:edition {edition}^^xsd:string ; bibo:editor <{editor_id}> ; bibo:issue {issue}^^xsd:string ; bibo:pages {pages}^^xsd:string ; bibo:status <{peer_review_status}> ; bibo:volume {volume}^^xsd:string ; dc:creator {author}^^xsd:string ; dc:publisher {publisher}^^xsd:string ; dc:title {title}^^xsd:string ; dcterms:bibliographicCitation {bibliographic_citation}^^xsd:string ; dcterms:issued {issued}^^xsd:string ; dcterms:publisher <{publisher_id}> ; dwc:editor {editor}^^xsd:string ; dwc:parentReferenceID {parent_reference_id}^^xsd:string ; dwc:referenceRemarks {reference_remarks}^^xsd:string ; dwc:referenceType {reference_type}^^xsd:string ; pav:sourceAccessedOn {accessed}^^xsd:string ; pav:version {version}^^xsd:string . 
+target		:bibliographic-resource/{reference_id} a dcterms:BibliographicResource ; dwc:referenceID {reference_id}^^xsd:string ; bibo:edition {edition}^^xsd:string ; bibo:editor <{editor_id}> ; bibo:issue {issue}^^xsd:string ; bibo:pages {pages}^^xsd:string ; bibo:status <{peer_review_status}> ; bibo:volume {volume}^^xsd:string ; dc:creator {author}^^xsd:string ; dc:publisher {publisher}^^xsd:string ; dcterms:bibliographicCitation {bibliographic_citation}^^xsd:string ; dcterms:issued {issued}^^xsd:string ; dcterms:publisher <{publisher_id}> ; dwc:editor {editor}^^xsd:string ; dwc:parentReferenceID {parent_reference_id}^^xsd:string ; dwc:referenceRemarks {reference_remarks}^^xsd:string ; dwc:referenceType {reference_type}^^xsd:string ; pav:sourceAccessedOn {accessed}^^xsd:string ; pav:version {version}^^xsd:string . 
 source		SELECT * FROM dwcowl.main.bibliographic_resource
 
 mappingId	uni1-event
@@ -85,7 +85,7 @@ target		:organism-interaction/{organism_interaction_id} a dwc:OrganismInteractio
 source		SELECT * FROM dwcowl.main.organism_interaction
 
 mappingId	uni1-protocol
-target		:protocol/{protocol_id} a dwc:Protocol ; dwc:protocolID {protocol_id}^^xsd:string ; dc:title {protocol_name}^^xsd:string ; dwc:protocolDescription {protocol_description}^^xsd:string ; dwc:protocolRemarks {protocol_remarks}^^xsd:string ; dwc:protocolType {protocol_type}^^xsd:string ; eco:protocolReferences {protocol_references}^^xsd:string . 
+target		:protocol/{protocol_id} a dwc:Protocol ; dwc:protocolID {protocol_id}^^xsd:string ; dwc:protocolDescription {protocol_description}^^xsd:string ; dwc:protocolRemarks {protocol_remarks}^^xsd:string ; dwc:protocolType {protocol_type}^^xsd:string ; eco:protocolReferences {protocol_references}^^xsd:string . 
 source		SELECT * FROM dwcowl.main.protocol
 
 mappingId	uni1-provenance
