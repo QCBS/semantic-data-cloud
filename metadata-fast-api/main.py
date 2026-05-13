@@ -1,5 +1,5 @@
 from http.client import HTTPException
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Response
 from fastapi.middleware.cors import CORSMiddleware
 import json
 from pydantic import BaseModel
@@ -52,7 +52,7 @@ def get_dataset(dataset_id: str):
         raise HTTPException(status_code=404, detail="Dataset not found")
 
     eml = row[0]
-    return json.loads(eml) if isinstance(eml, str) else eml
+    return Response(eml, media_type="application/ld+json") if isinstance(eml, str) else eml
 
 def list_datasets(
     page: int = Query(1, ge=1),
