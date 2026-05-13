@@ -36,12 +36,12 @@ services:
         "allkeys-lfu"
       ]
 
-  quicky:
+  fastaproxy:
     build:
       context: fastaproxy
       dockerfile: fastaproxy.dockerfile
 
-    container_name: fastaproxy-scp
+    container_name: fastaproxy-sdc
 
     depends_on:
       - valkey
@@ -54,3 +54,16 @@ services:
       TTL_VAL: 90
 
     restart: unless-stopped
+
+  mcp:
+      build:
+        context: biomcp
+        dockerfile: biomcp.dockerfile
+
+      container_name: biomcp-sdc
+
+      ports:
+        - "9000:9000"
+  
+      depends_on: 
+        - ontop
