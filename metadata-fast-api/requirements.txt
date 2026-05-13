@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+GDAL
+requests
+duckdb
+pandas
+geopandas
+pandas_geojson
+shapely
+boto3
