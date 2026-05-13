@@ -2213,6 +2213,7 @@ dwc:islandGroup rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/dwc/terms/kingdom
 dwc:kingdom rdf:type owl:DatatypeProperty ;
+            rdfs:range xsd:string ;
             rdfs:label "Kingdom" ;
             skos:definition "The full scientific name of the kingdom in which the dwc:Taxon is classified." ;
             skos:example "Animalia" ,
