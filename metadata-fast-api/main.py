@@ -1,3 +1,4 @@
+from http.client import HTTPException
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 import json
@@ -24,7 +25,32 @@ if success:
 else:
     print("Failed to load S3 data into DuckDB.")
 
+@app.get("/")
+def read_root():
+    return {"title": "Welcome to the QCBS Semantic Data Cloud API!", "datasets": list_datasets(1, 10)}
+
+
 @app.get("/datasets")
+def get_list_datasets(
+    page: int = Query(1, ge=1),
+    page_size: int = Query(10, ge=1, le=100),
+):
+    return list_datasets(page, page_size)
+
+
+@app.get("/dataset/{dataset_id}")
+def get_dataset(dataset_id: str):
+    row = ddb.execute(
+        "SELECT eml_content FROM datasets WHERE name = ?;",
+        [dataset_id],
+    ).fetchone()
+
+    if not row:
+        raise HTTPException(status_code=404, detail="Dataset not found")
+
+    eml = row[0]
+    return json.loads(eml) if isinstance(eml, str) else eml
+
 def list_datasets(
     page: int = Query(1, ge=1),
     page_size: int = Query(10, ge=1, le=100),
@@ -48,5 +74,3 @@ def list_datasets(
         "total": total,
         "datasets": datasets,
     }
-
-
