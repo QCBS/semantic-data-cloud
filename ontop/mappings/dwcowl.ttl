@@ -2167,7 +2167,6 @@ dwc:institutionID rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/dwc/terms/isAcceptedIdentification
 dwc:isAcceptedIdentification rdf:type owl:DatatypeProperty ;
-                             rdfs:range xsd:boolean ;
                              rdfs:label "Is Accepted Identification" ;
                              skos:definition "An indicator that this dwc:Identification of a dwc:Organism is a currently an accepted or preferred one." .
 
@@ -3395,7 +3394,6 @@ eco:geospatialScopeAreaValue rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/eco/terms/hasMaterialSamples
 eco:hasMaterialSamples rdf:type owl:DatatypeProperty ;
-                       rdfs:range xsd:boolean ;
                        rdfs:label "Has Material Samples" ;
                        skos:definition "Material samples were collected during a dwc:Event." ;
                        skos:example "false"^^xsd:boolean ,
@@ -3420,7 +3418,6 @@ eco:hasNonTargetTaxa rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/eco/terms/hasVouchers
 eco:hasVouchers rdf:type owl:DatatypeProperty ;
-                rdfs:range xsd:boolean ;
                 rdfs:label "Has Vouchers" ;
                 skos:definition "Specimen vouchers were collected during a dwc:Event." ;
                 skos:example "false"^^xsd:boolean ,
@@ -3449,7 +3446,6 @@ eco:isAbsenceReported rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/eco/terms/isAbundanceCapReported
 eco:isAbundanceCapReported rdf:type owl:DatatypeProperty ;
-                           rdfs:range xsd:boolean ;
                            rdfs:label "Is Abundance Cap Reported" ;
                            skos:definition "A maximum number of dwc:Organisms was reported, as specified or restricted by the dwc:Protocol used." ;
                            skos:example "false"^^xsd:boolean ,
@@ -3466,7 +3462,6 @@ eco:isAbundanceReported rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/eco/terms/isLeastSpecificTargetCategoryQuantityInclusive
 eco:isLeastSpecificTargetCategoryQuantityInclusive rdf:type owl:DatatypeProperty ;
-                                                   rdfs:range xsd:boolean ;
                                                    rdfs:label "Is Least Specific Target Category Quantity Inclusive" ;
                                                    skos:definition "The total detected quantity for a dwc:Taxon (including subcategories thereof) in a dwc:Event is given explicitly in a single record (dwc:organismQuantity value) for that dwc:Taxon." ;
                                                    skos:example "false"^^xsd:boolean ,
@@ -3483,7 +3478,6 @@ eco:isSamplingEffortReported rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/eco/terms/isVegetationCoverReported
 eco:isVegetationCoverReported rdf:type owl:DatatypeProperty ;
-                              rdfs:range xsd:boolean ;
                               rdfs:label "Is Vegetation Cover Reported" ;
                               skos:definition "A vegetation cover metric was reported." ;
                               skos:example "false"^^xsd:boolean ,
