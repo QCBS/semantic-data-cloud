@@ -5,6 +5,7 @@ import json
 from pydantic import BaseModel
 from shapely.geometry import shape
 from s3io import s3_to_duckdb, duckdb_connect
+import os
 
 
 ddb = duckdb_connect()
@@ -27,7 +28,9 @@ else:
 
 @app.get("/")
 def read_root():
-    return {"title": "Welcome to the QCBS Semantic Data Cloud API!", "datasets": list_datasets(1, 10)}
+    return {"title": "Welcome to the QCBS Semantic Data Cloud API!", 
+            "links": {"datasets": f"{os.getenv('API_BASE_URL')}/datasets"},
+            "datasets": list_datasets(1, 10)}
 
 
 @app.get("/datasets")
