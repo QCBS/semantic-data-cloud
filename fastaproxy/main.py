@@ -7,16 +7,14 @@ from fastapi import FastAPI, HTTPException, Request, Depends
 from glide import GlideClient, GlideClientConfiguration, NodeAddress
 from httpx import AsyncClient, AsyncHTTPTransport, HTTPError
 import orjson
-from pydantic import BaseModel
 
 load_dotenv()
 
 TTL_VAL = int(os.getenv("TTL_VAL", 70))
 TIMEOUT_VAL = float(os.getenv("TIMEOUT_VAL", 100))
 
-def make_cache_key(prefix: str, query: str) -> str:
-    normalized = " ".join(query.split())
-    digest = hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+def make_cache_key(prefix: str, query: bytes) -> str:
+    digest = hashlib.sha256(query).hexdigest()
 
     return f"{prefix}:{digest}"
 
@@ -49,20 +47,19 @@ def get_glide_client(request: Request) -> GlideClient:
 
 app = FastAPI(title="sdc-fastapi-proxy", lifespan=lifespan)
 
-# Integrate parts from Bioboum later
-#
-class QueryRequest(BaseModel):
-    query: str
-
 
 @app.post("/sparql")
 async def sparql_query(
-    req: QueryRequest,
+    request: Request,
     client: AsyncClient = Depends(get_http_client),
     cache: GlideClient = Depends(get_glide_client)
 ):
+    # Read raw body as SPARQL query (application/sparql-query)
+    #
+    body = await request.body()
+    query = body.decode("utf-8")
 
-    cache_key = make_cache_key("sparql", req.query)
+    cache_key = make_cache_key("sparql", body)
 
     cached = await cache.get(cache_key)
 
@@ -79,7 +76,7 @@ async def sparql_query(
                     "Accept": "application/sparql-results+json",
                     "Content-Type": "application/sparql-query"
                 },
-                content=req.query
+                content=body
         )
 
     except HTTPError as e:
