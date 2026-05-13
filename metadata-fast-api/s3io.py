@@ -63,8 +63,9 @@ def list_eml_files_in_bucket(target_name, extension):
 	return datasets
 
 def create_asset(folder, file_name):
+	href = f"{os.getenv('OBJECT_STORE_BASE_URL')}/{folder}/{file_name}"
 	return {
-		'href': f"{os.getenv('OBJECT_STORE_BASE_URL')}/{folder}/{file_name}",
+		'href': f"{href}",
 		'mimetype': 'application/vnd.apache.parquet',
 	}
 
@@ -76,9 +77,15 @@ def read_eml_from_s3(dataset, ddb):
 		print(f"Reading from S3: bucket={bucket}, key={key}")
 		response = s3_client.get_object(Bucket=bucket, Key=key)
 		content = json.loads(response['Body'].read().decode('utf-8'))
-		content['assets'] = list(dataset['assets'].values())
+		if(len(dataset['assets'])>0):
+			content['assets'] = list(dataset['assets'].values())
+			species_list=[]
+			if('occurrence.parquet' in dataset['assets']):
+				href = dataset['assets']['occurrence.parquet']['href']
+				content['recordedTaxa'] = species_from_occurrences(href)
+
 		content['self'] = f"{os.getenv('API_BASE_URL')}/dataset/{dataset['name']}"
-		resp = ddb.sql("INSERT INTO datasets VALUES (?, ?);", params=(dataset['folder'].replace('datasets/', ''), json.dumps(content)))
+		resp = ddb.sql("INSERT INTO datasets VALUES (?, ?);", params=[dataset['folder'].replace('datasets/', ''), json.dumps(content)])
 		print(f"Inserted into DuckDB: {resp.rowcount} row(s) affected.")
 		return content
 	except Exception as exc:
@@ -88,9 +95,16 @@ def read_eml_from_s3(dataset, ddb):
 def s3_to_duckdb(target_name, extension, ddb=ddb):
 	try:
 		datasets = list_eml_files_in_bucket(target_name, extension)
+		if not isinstance(datasets, dict):
+			return False
 		for dataset in datasets.values():
 			read_eml_from_s3(dataset, ddb)
 		return True
 	except Exception as exc:
 		print(f'There was an error processing the S3 data: {exc}')
 		return False
+
+
+def species_from_occurrences(href):
+	species_list = ddb.sql("SELECT DISTINCT scientific_name from read_parquet(?);", params=[href])	
+	return [row[0] for row in species_list.fetchall() if row[0] is not None]
