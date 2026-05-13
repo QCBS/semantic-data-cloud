@@ -55,6 +55,23 @@ services:
 
     restart: unless-stopped
 
+  biomcp:
+    build:
+      context: biomcp
+      dockerfile: biomcp.dockerfile
+
+    container_name: biomcp-sdc
+
+    ports:
+      - "9000:9000"
+    
+    environment:
+      TIMEOUT_VAL: 100
+
+    depends_on: 
+      - ontop
+
+
   metadata-api:
     build: 
       context: metadata-fast-api
