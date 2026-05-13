@@ -1,5 +1,4 @@
-from http.client import HTTPException
-from fastapi import FastAPI, Query, Response
+from fastapi import FastAPI, Query, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import json
 from pydantic import BaseModel
