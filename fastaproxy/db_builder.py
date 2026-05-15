@@ -7,7 +7,7 @@ import httpx
 
 
 DB_DIR   = Path("/db")
-BLANKS_DIR = Path("/db/blanks")
+BLANKS_DIR = Path("/blanks")
 
 
 def _local_schema() -> dict[str, list[str]]:
