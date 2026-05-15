@@ -43,6 +43,9 @@ services:
 
     container_name: fastaproxy-sdc
 
+    volumes:
+      - ./fastaproxy:/app
+
     depends_on:
       - valkey
 
