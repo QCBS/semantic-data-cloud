@@ -2947,6 +2947,15 @@ dwc:scientificName rdf:type owl:DatatypeProperty ;
                                 "×Agropogon littoralis (Sm.) C. E. Hubb." .
 
 
+###  http://rs.tdwg.org/dwc/terms/scientificNameAuthorship
+dwc:scientificNameAuthorship rdf:type owl:DatatypeProperty ;
+                             rdfs:label "Scientific Name Authorship" ;
+                             skos:definition "The authorship information for the dwc:scientificName formatted according to the conventions of the applicable dwc:nomenclaturalCode." ;
+                             skos:example "(Györfi, 1952)" ,
+                                          "(Martinovský) Tzvelev" ,
+                                          "(Torr.) J.T. Howell" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/scientificNameID
 dwc:scientificNameID rdf:type owl:DatatypeProperty ;
                      rdfs:label "Scientific Name ID" ;
