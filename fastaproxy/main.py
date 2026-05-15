@@ -57,7 +57,6 @@ async def sparql_query(
     # Read raw body as SPARQL query (application/sparql-query)
     #
     body = await request.body()
-    query = body.decode("utf-8")
 
     cache_key = make_cache_key("sparql", body)
 
@@ -71,7 +70,7 @@ async def sparql_query(
     try:
 
         response = await client.post(
-                "http://ontop-sdc:8080/sparql",
+                url="http://ontop-sdc:8080/sparql",
                 headers={
                     "Accept": "application/sparql-results+json",
                     "Content-Type": "application/sparql-query"
