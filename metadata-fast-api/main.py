@@ -82,10 +82,10 @@ def list_datasets(
 
 @app.get("/datasets/search")
 def search_datasets(
-    min_lon: float = Query(-180.0, description="West bound of query bbox (in WGGS84)"),
-    min_lat: float = Query(-90.0, description="South bound of query bbox"),
-    max_lon: float = Query(180.0, description="East bound of query bbox"),
-    max_lat: float = Query(90.0, description="North bound of query bbox"),
+    min_lon: float = Query(-180.0, description="West bound of query bbox (in WGS84)"),
+    min_lat: float = Query(-90.0, description="South bound of query bbox (in WGS84)"),
+    max_lon: float = Query(180.0, description="East bound of query bbox (in WGS84)"),
+    max_lat: float = Query(90.0, description="North bound of query bbox (in WGS84)"),
     begin_date: date = Query(date(1900, 1, 1), description="Start of temporal range (YYYY-MM-DD)"),
     end_date:   date = Query(date.today(), description="End of temporal range (YYYY-MM-DD)"),
 ):
