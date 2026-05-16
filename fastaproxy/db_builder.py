@@ -1,4 +1,3 @@
-from glob import glob
 import hashlib
 from pathlib import Path
 from urllib.parse import urlparse
@@ -21,9 +20,9 @@ def context_hash(dataset_ids: list[str]) -> str:
 
 def _local_schema() -> dict[str, list[str]]:
     tables = {}
-    for parquet in glob(str(BLANKS_DIR / "*.parquet")):
-        name = Path(parquet).stem.replace("-", "_")
-        tables[name] = [str(parquet)]
+    for parquet_path in BLANKS_DIR.glob("*.parquet"):
+        name = parquet_path.stem.replace("-", "_")
+        tables[name] = [str(parquet_path)]
     return tables
 
 
