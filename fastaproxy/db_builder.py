@@ -46,6 +46,9 @@ def _merge_assets(tables: dict[str, list[str]], dataset_json: dict) -> None:
 def build_db(dataset_ids: list[str]) -> Path:
     db_path = DB_DIR / f"{context_hash(dataset_ids)}.duckdb"
 
+    if db_path.exists():
+        return db_path
+
     tables = _local_schema()
 
     for dataset_id in dataset_ids:
