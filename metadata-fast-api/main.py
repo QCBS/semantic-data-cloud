@@ -1,10 +1,12 @@
+from datetime import date
+import json
+import os
+#
 from fastapi import FastAPI, Query, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-import json
 from pydantic import BaseModel
 from shapely.geometry import shape
 from s3io import s3_to_duckdb, duckdb_connect
-import os
 
 
 ddb = duckdb_connect()
@@ -76,3 +78,50 @@ def list_datasets(
         "total": total,
         "datasets": datasets,
     }
+
+
+@app.get("/datasets/search")
+def search_datasets(
+    min_lon: float = Query(..., description="West bound of query bbox (in WGGS84)"),
+    min_lat: float = Query(..., description="South bound of query bbox"),
+    max_lon: float = Query(..., description="East bound of query bbox"),
+    max_lat: float = Query(..., description="North bound of query bbox"),
+    begin_date: date = Query(..., description="Start of temporal range (YYYY-MM-DD)"),
+    end_date:   date = Query(..., description="End of temporal range (YYYY-MM-DD)"),
+):
+    rows = ddb.execute("""
+        SELECT name
+        FROM datasets
+        WHERE
+            -- Geographical coverage filtering
+            CAST(json_extract_string(eml_content,
+                '$.dataset.coverage.geographicCoverage.boundingCoordinates.westBoundingCoordinate')
+                AS DOUBLE) <= ?
+            AND CAST(json_extract_string(eml_content,
+                '$.dataset.coverage.geographicCoverage.boundingCoordinates.eastBoundingCoordinate')
+                AS DOUBLE) >= ?
+            AND CAST(json_extract_string(eml_content,
+                '$.dataset.coverage.geographicCoverage.boundingCoordinates.southBoundingCoordinate')
+                AS DOUBLE) <= ?
+            AND CAST(json_extract_string(eml_content,
+                '$.dataset.coverage.geographicCoverage.boundingCoordinates.northBoundingCoordinate')
+                AS DOUBLE) >= ?
+            -- Temporal coverage filtering
+            AND CAST(json_extract_string(eml_content,
+                '$.dataset.coverage.temporalCoverage.rangeOfDates.beginDate.calendarDate')
+                AS DATE) <= ?
+            AND CAST(json_extract_string(eml_content,
+                '$.dataset.coverage.temporalCoverage.rangeOfDates.endDate.calendarDate')
+                AS DATE) >= ?
+            -- Taxonomic coverage filtering (coming soon)
+            ;
+    """,
+    [max_lon, min_lon, max_lat, min_lat, end_date, begin_date,]
+    ).fetchall()
+
+    return {"datasets": [row[0] for row in rows]}
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
