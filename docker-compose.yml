@@ -8,7 +8,7 @@ services:
       - "8080:8080"
     volumes:
       - ./ontop/mappings:/opt/ontop/input/mappings
-      - ./db:/app/db
+      - ./db:/db
       - ./blanks:/blanks
     networks:
       - dwc-net
