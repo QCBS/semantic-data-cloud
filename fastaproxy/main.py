@@ -1,3 +1,4 @@
+from asyncio import Lock, to_thread
 from contextlib import asynccontextmanager
 import hashlib
 import os
@@ -15,6 +16,7 @@ TTL_VAL = int(os.getenv("TTL_VAL", 70))
 TIMEOUT_VAL = float(os.getenv("TIMEOUT_VAL", 100))
 METADATA_API_BASE = "http://metadata-api:8000"
 
+
 def make_cache_key(ctx_hash: str, sparql: bytes) -> str:
     digest = hashlib.sha256(sparql).hexdigest()
     return f"sparql:{ctx_hash}:{digest}"
@@ -29,6 +31,8 @@ async def lifespan(app: FastAPI):
     app.state.http = AsyncClient(timeout=TIMEOUT_VAL, transport=transport)
 
     app.state.registry = ContainerRegistry()
+
+    app.state.lock = Lock()
 
     yield
 
@@ -48,6 +52,9 @@ def get_glide_client(request: Request) -> GlideClient:
 def get_registry(request: Request) -> ContainerRegistry:
     return request.app.state.registry
 
+def get_lock(request: Request) -> Lock:
+    return request.app.state.lock
+
 
 app = FastAPI(title="sdc-fastapi-proxy", lifespan=lifespan)
 
@@ -58,6 +65,7 @@ async def sparql_query(
     client: AsyncClient = Depends(get_http_client),
     cache: GlideClient = Depends(get_glide_client),
     registry: ContainerRegistry = Depends(get_registry),
+    lock: Lock = Depends(get_lock),
 ):
     body = await req.json()
 
@@ -86,9 +94,11 @@ async def sparql_query(
     if cached:
         return orjson.loads(cached)
 
-    build_db(dataset_ids)    
-
-    info = registry.get_or_create(dataset_ids)
+    # NOTE: Changes to not block the event loop
+    #
+    async with lock:
+        db_path = await to_thread(build_db, dataset_ids)
+        info = await to_thread(registry.get_or_create, dataset_ids)
 
     try:
         response = await client.post(
