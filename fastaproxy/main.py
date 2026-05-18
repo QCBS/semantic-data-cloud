@@ -8,18 +8,16 @@ from httpx import AsyncClient, AsyncHTTPTransport, HTTPError
 import orjson
 #
 from container_manager import ContainerRegistry
-from db_builder import build_db
+from db_builder import build_db, context_hash
 
 
 TTL_VAL = int(os.getenv("TTL_VAL", 70))
 TIMEOUT_VAL = float(os.getenv("TIMEOUT_VAL", 100))
 METADATA_API_BASE = "http://metadata-api:8000"
 
-
-def make_cache_key(prefix: str, query: bytes) -> str:
-    digest = hashlib.sha256(query).hexdigest()
-
-    return f"{prefix}:{digest}"
+def make_cache_key(ctx_hash: str, sparql: bytes) -> str:
+    digest = hashlib.sha256(sparql).hexdigest()
+    return f"sparql:{ctx_hash}:{digest}"
 
 
 @asynccontextmanager
@@ -81,8 +79,8 @@ async def sparql_query(
     if not dataset_ids:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "No datasets found for the given spatial and temporal filters.")
 
-    cache_key = make_cache_key("sparql", sparql_bytes)
-
+    ctx_hash  = context_hash(dataset_ids)
+    cache_key = make_cache_key(ctx_hash, sparql_bytes)
 
     cached = await cache.get(cache_key)
     if cached:
