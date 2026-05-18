@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import datetime, UTC
+import os
 from pathlib import Path
 #
 import docker
@@ -29,6 +30,20 @@ class ContainerRegistry:
     def __init__(self):
         self._docker = docker.from_env()
         self._registry: dict[str, ContainerInfo] = {}
+        self._host_mounts: dict[str, str] = self._discover_host_mounts()
+
+    # NOTE: The Docker daemon needs host-side paths when mounting volumes into sibling containers
+    # Inspect the fastaproxy container for information about these host-side paths 
+    #
+    def _discover_host_mounts(self) -> dict[str, str]:
+        hostname = os.getenv("HOSTNAME")
+
+        self_info = self._docker.containers.get(hostname)
+        mounts = {
+            m["Destination"]: m["Source"]
+            for m in self_info.attrs.get("Mounts", [])
+        }
+        return mounts
 
     def get_or_create(
         self,
@@ -74,15 +89,15 @@ class ContainerRegistry:
         self._docker.containers.get(container_name).remove(force=True)
 
         volumes = {
-            str(DB_DIR): {
+            self._host_mounts.get(str(DB_DIR)): {
                 "bind": str(DB_DIR),
                 "mode": "rw"
             },
-            str(MAPPING_DIR): {
+            self._host_mounts.get(str(MAPPING_DIR)): {
                 "bind": "/opt/ontop/input/mappings",
                 "mode": "ro"
             },
-            str(BLANKS_DIR): {
+            self._host_mounts.get(str(BLANKS_DIR)): {
                 "bind": str(BLANKS_DIR),
                 "mode": "ro"
             },
