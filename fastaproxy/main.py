@@ -2,16 +2,19 @@ from contextlib import asynccontextmanager
 import hashlib
 import os
 #
-from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Request, Depends
+from fastapi import FastAPI, HTTPException, Request, status, Depends
 from glide import GlideClient, GlideClientConfiguration, NodeAddress
 from httpx import AsyncClient, AsyncHTTPTransport, HTTPError
 import orjson
+#
+from container_manager import ContainerRegistry
+from db_builder import build_db
 
-load_dotenv()
 
 TTL_VAL = int(os.getenv("TTL_VAL", 70))
 TIMEOUT_VAL = float(os.getenv("TIMEOUT_VAL", 100))
+METADATA_API_BASE = "http://metadata-api:8000"
+
 
 def make_cache_key(prefix: str, query: bytes) -> str:
     digest = hashlib.sha256(query).hexdigest()
@@ -19,13 +22,15 @@ def make_cache_key(prefix: str, query: bytes) -> str:
     return f"{prefix}:{digest}"
 
 
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     config = GlideClientConfiguration(addresses=[NodeAddress("valkey", 6379)])
     app.state.glide = await GlideClient.create(config)
     transport = AsyncHTTPTransport(retries=0)
+
     app.state.http = AsyncClient(timeout=TIMEOUT_VAL, transport=transport)
+
+    app.state.registry = ContainerRegistry()
 
     yield
 
@@ -34,15 +39,16 @@ async def lifespan(app: FastAPI):
         await app.state.glide.close()
 
 
-# Dependency function that provides the shared HTTP client
+# Dependency functions
 #
-def get_http_client(request: Request):
+def get_http_client(request: Request) -> AsyncClient:
     return request.app.state.http
 
-# Dependency function that provides the shared GLIDE client
-#
 def get_glide_client(request: Request) -> GlideClient:
     return request.app.state.glide
+
+def get_registry(request: Request) -> ContainerRegistry:
+    return request.app.state.registry
 
 
 app = FastAPI(title="sdc-fastapi-proxy", lifespan=lifespan)
@@ -50,43 +56,57 @@ app = FastAPI(title="sdc-fastapi-proxy", lifespan=lifespan)
 
 @app.post("/sparql")
 async def sparql_query(
-    request: Request,
+    req: Request,
     client: AsyncClient = Depends(get_http_client),
-    cache: GlideClient = Depends(get_glide_client)
+    cache: GlideClient = Depends(get_glide_client),
+    registry: ContainerRegistry = Depends(get_registry),
 ):
-    # Read raw body as SPARQL query (application/sparql-query)
-    #
-    body = await request.body()
+    body = await req.json()
 
-    cache_key = make_cache_key("sparql", body)
+    min_lon, min_lat, max_lon, max_lat = body["bbox"]
+    begin_date, end_date = body["temporal"]
+    sparql_bytes = body["sparql"].encode("utf-8")
+
+    search_resp = await client.get(
+        f"{METADATA_API_BASE}/datasets/search",
+        params={
+            "min_lon": min_lon, "min_lat": min_lat,
+            "max_lon": max_lon, "max_lat": max_lat,
+            "begin_date": begin_date, "end_date": end_date,
+        },
+    )
+
+    dataset_ids: list[str] = search_resp.json().get("datasets", [])
+
+    if not dataset_ids:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "No datasets found for the given spatial and temporal filters.")
+
+    cache_key = make_cache_key("sparql", sparql_bytes)
+
 
     cached = await cache.get(cache_key)
-
     if cached:
-        print("Found in cache!")
-        cached_json = orjson.loads(cached)
-        return cached_json
+        return orjson.loads(cached)
+
+    build_db(dataset_ids)    
+
+    info = registry.get_or_create(dataset_ids)
 
     try:
-
         response = await client.post(
-                url="http://ontop-sdc:8080/sparql",
-                headers={
-                    "Accept": "application/sparql-results+json",
-                    "Content-Type": "application/sparql-query"
-                },
-                content=body
+            f"{info.ontop_url}/sparql",
+            headers={
+                "Accept": "application/sparql-results+json",
+                "Content-Type": "application/sparql-query",
+            },
+            content=sparql_bytes,
         )
-
     except HTTPError as e:
+        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, f"SPARQL request failed: {e}")
 
-        raise HTTPException(status_code=500, detail=f"SPARQL request failed: {str(e)}")
+    result = response.json()
 
-    response_json = response.json()
-
-    # Set in Valkey
-    #
-    await cache.set(cache_key, orjson.dumps(response_json))
+    await cache.set(cache_key, orjson.dumps(result))
     await cache.expire(cache_key, TTL_VAL)
 
-    return response_json
+    return result
