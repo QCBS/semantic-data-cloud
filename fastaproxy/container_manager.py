@@ -55,10 +55,26 @@ class ContainerRegistry:
 
         ctx_hash = context_hash(dataset_ids)
 
+        # NOTE: Check the in-memory registry first
+        #
+        info = self._registry.get(ctx_hash)
+
+        if info:
+            if self._is_healthy(info.ontop_url):
+                info.last_used = datetime.now(UTC)
+                return info
+
         info = self._start(ctx_hash)
 
         self._registry[ctx_hash] = info
         return info
+
+    def _is_healthy(self, ontop_url: str) -> bool:
+        try:
+            res = httpx.get(f"{ontop_url}/actuator/health", timeout=3)
+            return res.status_code == 200
+        except httpx.RequestError:
+            return False
 
     def _wait_for_health(self, ontop_url: str) -> None:
         deadline = time.monotonic() + STARTUP_TIMEOUT
@@ -87,7 +103,7 @@ class ContainerRegistry:
         template_path = MAPPING_DIR / "dwcowl.obda"
 
         template = template_path.read_text()
-        obda     = template.replace("dwcowl", f'"{ctx_hash}"')
+        obda = template.replace("dwcowl", f'"{ctx_hash}"')
 
         obda_path = DB_DIR / f"{ctx_hash}.obda"
         obda_path.write_text(obda)
@@ -95,13 +111,13 @@ class ContainerRegistry:
 
     def _start(self, ctx_hash: str) -> ContainerInfo:
         props_path = self._write_properties(ctx_hash)
-        obda_path  = self._write_obda(ctx_hash)
+        obda_path = self._write_obda(ctx_hash)
 
         container_name = f"ontop-{ctx_hash}"
 
         # NOTE: For now force remove any pre-existing container.
         #
-        self._docker.containers.get(container_name).remove(force=True)
+        # self._docker.containers.get(container_name).remove(force=True)
 
         volumes = {
             self._host_mounts.get(str(DB_DIR)): {
