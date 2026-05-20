@@ -46,6 +46,7 @@ services:
       - ./db:/db
       - ./blanks:/blanks
       - ./ontop/mappings:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - valkey
     ports:
