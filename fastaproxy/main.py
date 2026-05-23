@@ -10,6 +10,7 @@ import orjson
 #
 from container_manager import ContainerRegistry
 from db_builder import build_db, context_hash
+from schemas.sparql import QueryRequest
 
 
 TTL_VAL = int(os.getenv("TTL_VAL", 70))
@@ -61,17 +62,15 @@ app = FastAPI(title="sdc-fastapi-proxy", lifespan=lifespan)
 
 @app.post("/sparql")
 async def sparql_query(
-    req: Request,
+    body: QueryRequest,
     client: AsyncClient = Depends(get_http_client),
     cache: GlideClient = Depends(get_glide_client),
     registry: ContainerRegistry = Depends(get_registry),
     lock: Lock = Depends(get_lock),
 ):
-    body = await req.json()
-
-    min_lon, min_lat, max_lon, max_lat = body["bbox"]
-    begin_date, end_date = body["temporal"]
-    sparql_bytes = body["sparql"].encode("utf-8")
+    min_lon, min_lat, max_lon, max_lat = body.bbox
+    begin_date, end_date = body.temporal
+    sparql_bytes = body.sparql.encode("utf-8")
 
     search_resp = await client.get(
         f"{METADATA_API_BASE}/datasets/search",
