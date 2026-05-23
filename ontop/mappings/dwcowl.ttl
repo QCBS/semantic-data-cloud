@@ -60,6 +60,12 @@ dcterms:accessRights rdf:type owl:ObjectProperty ;
                      skos:definition "Information about who can access the resource or an indication of its security status." .
 
 
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:ObjectProperty ;
+                rdfs:label "Creator" ;
+                skos:definition "An entity responsible for making the resource." .
+
+
 ###  http://purl.org/dc/terms/format
 dcterms:format rdf:type owl:ObjectProperty ;
                rdfs:label "Format" ;
@@ -214,13 +220,6 @@ dwciri:assertionValue rdf:type owl:ObjectProperty ;
                       skos:definition "An IRI of the controlled vocabulary value for a value of a dwc:Assertion." .
 
 
-###  http://rs.tdwg.org/dwc/iri/identifiedBy
-dwciri:identifiedBy rdf:type owl:ObjectProperty ;
-                    rdfs:label "Identified By" ;
-                    skos:definition "An identifier for a dcterms:Agent responsible for making a taxonomic determination of a dwc:Organism." ;
-                    skos:example "https://orcid.org/0000-0002-1825-0097" .
-
-
 ###  http://rs.tdwg.org/dwc/iri/ownerInstitution
 dwciri:ownerInstitution rdf:type owl:ObjectProperty ;
                         rdfs:label "Owner Institution" ;
@@ -279,6 +278,12 @@ dwcdp:analysisOf rdf:type owl:ObjectProperty ;
                  skos:definition "An object property used to relate a dwc:NucleotideAnalysis to a dwc:MaterialEntity it is an analysis of." .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/authoredBy
+dwcdp:authoredBy rdf:type owl:ObjectProperty ;
+                 rdfs:label "Authored By" ;
+                 skos:definition "An object property to relate a dcterms:BibliographicResource to the dcterms:Agent that authored it." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/basedOn
 dwcdp:basedOn rdf:type owl:ObjectProperty ;
               rdfs:label "Based On" .
@@ -295,6 +300,18 @@ dwcdp:commentedBy rdf:type owl:ObjectProperty ;
                   rdfs:label "Commented By" .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/conductedBy
+dwcdp:conductedBy rdf:type owl:ObjectProperty ;
+                  rdfs:label "Conducted By" ;
+                  skos:definition "An object property to relate a dwc:Event to the dcterms:Agent that conducted it." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/createdBy
+dwcdp:createdBy rdf:type owl:ObjectProperty ;
+                rdfs:label "Created By" ;
+                skos:definition "An object property used to relate a dwc:Provenance to the dcterms:Agent responsible for creating it." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/derivedFrom
 dwcdp:derivedFrom rdf:type owl:ObjectProperty ;
                   rdfs:label "Derived From" .
@@ -309,6 +326,12 @@ dwcdp:derivedFromTransitive rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/derivedFromTransitiveReflexive
 dwcdp:derivedFromTransitiveReflexive rdf:type owl:ObjectProperty ;
                                      rdfs:label "Derived From Transitive Reflexive" .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/editedBy
+dwcdp:editedBy rdf:type owl:ObjectProperty ;
+               rdfs:label "Edited By" ;
+               skos:definition "An object property to relate a dcterms:BibliographicResource to the dcterms:Agent that edited it." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/evidenceFor
@@ -385,6 +408,12 @@ dwcdp:identifierFor rdf:type owl:ObjectProperty ;
                     rdfs:label "Identifier For" .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/inferredOrganism
+dwcdp:inferredOrganism rdf:type owl:ObjectProperty ;
+                       rdfs:label "Inferred Organism" ;
+                       skos:definition "An object property to relate a dwc:Identification to the dwc:Organism that is inferred as a a result of the identification process." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/interactionBy
 dwcdp:interactionBy rdf:type owl:ObjectProperty ;
                     rdfs:label "Interaction By" ;
@@ -407,6 +436,24 @@ dwcdp:isMediaOf rdf:type owl:ObjectProperty ;
 dwcdp:materialCollectedDuring rdf:type owl:ObjectProperty ;
                               rdfs:label "Material Collected During" ;
                               skos:definition "An object property used to relate a dwc:NucleotideAnalysis to the dwc:Event during which the dwc:MaterialEntity analyzed was collected." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/metadataCreatedBy
+dwcdp:metadataCreatedBy rdf:type owl:ObjectProperty ;
+                        rdfs:label "Metadata Created By" ;
+                        skos:definition "An object property used to related a dwc:Provenance to the dcterms:Agent responsible for creating the metadata about it." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/metadataProvidedBy
+dwcdp:metadataProvidedBy rdf:type owl:ObjectProperty ;
+                         rdfs:label "Metadata Provided By" ;
+                         skos:definition "An object property used to related a dwc:Provenance to the dcterms:Agent responsible for providing the metadata about it." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/ownedBy
+dwcdp:ownedBy rdf:type owl:ObjectProperty ;
+              rdfs:label "Owned By" ;
+              skos:definition "An object property to relate a dwc:UsagePolicy to a dcterms:Agent that owns it." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/partOf
@@ -437,6 +484,18 @@ dwcdp:provenanceFor rdf:type owl:ObjectProperty ;
                     skos:definition "An object property used to relate a dwc:Provenance to the resources it is a provenance for." .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/providedBy
+dwcdp:providedBy rdf:type owl:ObjectProperty ;
+                 rdfs:label "Provided By" ;
+                 skos:definition "An object property used to relate a dwc:Provenance to the dcterms:Agent responsible for providing it." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/publishedBy
+dwcdp:publishedBy rdf:type owl:ObjectProperty ;
+                  rdfs:label "Published By" ;
+                  skos:definition "An object property to relate a dcterms:BibliographicResource to the dcterms:Agent that published it." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/relationshipOf
 dwcdp:relationshipOf rdf:type owl:ObjectProperty ;
                      rdfs:label "Relationship Of" ;
@@ -452,6 +511,12 @@ dwcdp:relationshipTo rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/reviewedBy
 dwcdp:reviewedBy rdf:type owl:ObjectProperty ;
                  rdfs:label "Reviewed By" .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/rightsHeldBy
+dwcdp:rightsHeldBy rdf:type owl:ObjectProperty ;
+                   rdfs:label "Rights Held By" ;
+                   skos:definition "An object property to relate a dwc:UsagePolicy to the dcterms:Agent that holds the rights to it." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/satisfied
@@ -2327,6 +2392,12 @@ dwc:identifiedBy rdf:type owl:DatatypeProperty ;
                               "Theodore Pappenfuss | Robert Macey" .
 
 
+###  http://rs.tdwg.org/dwc/terms/identifiedByID
+dwc:identifiedByID rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Identified By ID" ;
+                   skos:definition "An identifier for a dcterms:Agent responsible for making a taxonomic determination of a dwc:Organism." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/includeOrExclude
 dwc:includeOrExclude rdf:type owl:DatatypeProperty ;
                      rdfs:label "Include Or Exclude" ;
@@ -2869,6 +2940,12 @@ dwc:otherCatalogNumbers rdf:type owl:DatatypeProperty ;
                         skos:definition "A list (concatenated and separated) of previous or alternate fully qualified catalog numbers or other human-used identifiers for the same dwc:MaterialEntity, whether in the current or any other data set or collection." ;
                         skos:example "FMNH:Mammal:1234" ,
                                      "NPS YELLO6778 | MBG 33424" .
+
+
+###  http://rs.tdwg.org/dwc/terms/ownerID
+dwc:ownerID rdf:type owl:DatatypeProperty ;
+            rdfs:label "Owner ID" ;
+            skos:definition "An identifier for a dcterms:Agent that owns the copyright for a resource." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/ownerInstitutionCode
