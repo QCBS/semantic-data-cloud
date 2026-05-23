@@ -196,18 +196,6 @@ ac:variantIRI rdf:type owl:ObjectProperty ;
               skos:definition "The category describing this Service Access Point variant, denoted by an IRI." .
 
 
-###  http://rs.tdwg.org/dwc/iri/assertionBy
-dwciri:assertionBy rdf:type owl:ObjectProperty ;
-                   rdfs:label "Assertion By" ;
-                   skos:definition "An identifier for a dcterms:Agent responsible for making a dwc:Assertion." .
-
-
-###  http://rs.tdwg.org/dwc/iri/assertionProtocol
-dwciri:assertionProtocol rdf:type owl:ObjectProperty ;
-                         rdfs:label "Assertion Protocol" ;
-                         skos:definition "An identifier for a dwc:Protocol used to make a dwc:Assertion." .
-
-
 ###  http://rs.tdwg.org/dwc/iri/assertionType
 dwciri:assertionType rdf:type owl:ObjectProperty ;
                      rdfs:label "Assertion Type" ;
@@ -1410,6 +1398,12 @@ dwc:assertionBy rdf:type owl:DatatypeProperty ;
                 skos:definition "A list (concatenated and separated) of names of dcterms:Agents responsible for making a dwc:Assertion." .
 
 
+###  http://rs.tdwg.org/dwc/terms/assertionByID
+dwc:assertionByID rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Assertion By ID" ;
+                  skos:definition "An identifier for a dcterms:Agent responsible for making a dwc:Assertion." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/assertionEffectiveDate
 dwc:assertionEffectiveDate rdf:type owl:DatatypeProperty ;
                            rdfs:label "Assertion Effective Date" ;
@@ -1452,6 +1446,12 @@ dwc:assertionMadeDate rdf:type owl:DatatypeProperty ;
                                    "2007-11-13/15" ,
                                    "2009-02-20T08:40Z" ,
                                    "2018-08-29T15:19" .
+
+
+###  http://rs.tdwg.org/dwc/terms/assertionProtocolID
+dwc:assertionProtocolID rdf:type owl:DatatypeProperty ;
+                        rdfs:label "Assertion Protocol ID" ;
+                        skos:definition "An identifier for a dwc:Protocol used to make a dwc:Assertion." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/assertionProtocols
@@ -2797,12 +2797,6 @@ dwc:organismQuantityType rdf:type owl:DatatypeProperty ;
                                       "individuals" .
 
 
-###  http://rs.tdwg.org/dwc/terms/organismRelationshipID
-dwc:organismRelationshipID rdf:type owl:DatatypeProperty ;
-                           rdfs:label "Resource Relationship ID" ;
-                           skos:definition "An identifier for a dwc:ResourceRelationship." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/organismRemarks
 dwc:organismRemarks rdf:type owl:DatatypeProperty ;
                     rdfs:label "Organism Remarks" ;
@@ -2878,18 +2872,6 @@ dwc:pointRadiusSpatialFit rdf:type owl:DatatypeProperty ;
                           skos:example 1.5708 ,
                                        0 ,
                                        1 .
-
-
-###  http://rs.tdwg.org/dwc/terms/preferredAgentName
-dwc:preferredAgentName rdf:type owl:DatatypeProperty ;
-                       rdfs:range xsd:string ;
-                       rdfs:label "Preferred Agent Name" ;
-                       skos:definition "A name of a dcterms:Agent preferred in searches and results." .
-
-
-###  http://rs.tdwg.org/dwc/terms/preferredEventName
-dwc:preferredEventName rdf:type owl:DatatypeProperty ;
-                       rdfs:range xsd:string .
 
 
 ###  http://rs.tdwg.org/dwc/terms/preferredSpatialRepresentation
@@ -3046,6 +3028,25 @@ dwc:relationshipEstablishedDate rdf:type owl:DatatypeProperty ;
                                 skos:definition "A date on which a dwc:ResourceRelationship was established." .
 
 
+###  http://rs.tdwg.org/dwc/terms/relationshipOfResource
+dwc:relationshipOfResource rdf:type owl:DatatypeProperty ;
+                           rdfs:label "Relationship Of Resource" ;
+                           skos:definition "A relationship of a subject resource (identified by dwc:subjectResourceID) to a related resource (identified by dwc:relatedResourceID)." ;
+                           skos:example "duplicate of" ,
+                                        "host of" ,
+                                        "located within" ,
+                                        "mother of" ,
+                                        "offspring of" ,
+                                        "on slab with" ,
+                                        "parasite of" ,
+                                        "pollinated by members of taxon" ,
+                                        "pollinated specific plant" ,
+                                        "pollinator of members of taxon" ,
+                                        "same as" ,
+                                        "sibling of" ,
+                                        "valid synonym of" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/relationshipOfResourceID
 dwc:relationshipOfResourceID rdf:type owl:DatatypeProperty ;
                              rdfs:label "Relationship Of Resource ID" ;
@@ -3101,6 +3102,12 @@ dwc:reproductiveCondition rdf:type owl:DatatypeProperty ;
 dwc:resourceID rdf:type owl:DatatypeProperty ;
                rdfs:label "Resource ID" ;
                skos:definition "An identifier for the resource that is the subject of a dwc:ResourceRelationship." .
+
+
+###  http://rs.tdwg.org/dwc/terms/resourceRelationshipID
+dwc:resourceRelationshipID rdf:type owl:DatatypeProperty ;
+                           rdfs:label "Resource Relationship ID" ;
+                           skos:definition "An identifier for a dwc:ResourceRelationship." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/rightsHolder
