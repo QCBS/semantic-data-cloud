@@ -211,5 +211,9 @@ source		SELECT * FROM dwcowl.main.material
 ;mappingId	uni1-part_of_transitive_occurrence
 ;target		:occurrence/{child} dwcdp:partOfTransitive :occurrence/{ancestor} . 
 ;source		SELECT * FROM dwcowl.main.part_of_transitive_occurrence
+
+mappingId	happened_during_transitive_event
+target		:event/{child} dwcdp:happenedDuringTransitive :event/{ancestor} . 
+source		SELECT child, ancestor FROM dwcowl.main.happened_during_transitive_event
 ]]
 

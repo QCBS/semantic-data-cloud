@@ -61,5 +61,28 @@ def build_db(dataset_ids: list[str]) -> Path:
         rel = con.read_parquet(paths, union_by_name=True)
         rel.create_view(table_name, replace=True)
 
+    # NOTE: Add transitive and transitive_reflexive tables
+    #
+    con.execute("""
+    CREATE VIEW happened_during_transitive_event AS
+    WITH RECURSIVE closure(child, ancestor, depth) AS (
+
+        SELECT event_id, parent_event_id, 1
+        FROM event
+        WHERE parent_event_id IS NOT NULL
+
+        UNION ALL
+
+        SELECT clo.child, eve.parent_event_id, clo.depth + 1
+        FROM closure clo
+        JOIN event eve
+        ON clo.ancestor = eve.event_id
+        WHERE eve.parent_event_id IS NOT NULL
+    )
+
+    SELECT DISTINCT child, ancestor, depth
+    FROM closure;
+    """)
+
     con.close()
     return db_path
