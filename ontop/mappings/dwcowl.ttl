@@ -273,6 +273,12 @@ dwcdp:ageFor rdf:type owl:ObjectProperty ;
              skos:definition "An object property to relate a chrono:ChronometricAge to the dwc:Event it is an age for." .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/analysisOf
+dwcdp:analysisOf rdf:type owl:ObjectProperty ;
+                 rdfs:label "Analysis Of" ;
+                 skos:definition "An object property used to relate a dwc:NucleotideAnalysis to a dwc:MaterialEntity it is an analysis of." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/basedOn
 dwcdp:basedOn rdf:type owl:ObjectProperty ;
               rdfs:label "Based On" .
@@ -356,6 +362,12 @@ dwcdp:hasMedia rdf:type owl:ObjectProperty ;
                skos:definition "An object property to relate a resource to a dwc:Media instance depicting it." .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/hasProvenance
+dwcdp:hasProvenance rdf:type owl:ObjectProperty ;
+                    rdfs:label "Has Provenance" ;
+                    skos:definition "An object property used to relate a resource to its dwc:Provenance." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/hasUsagePolicy
 dwcdp:hasUsagePolicy rdf:type owl:ObjectProperty ;
                      rdfs:label "Has Usage Policy" ;
@@ -391,6 +403,12 @@ dwcdp:isMediaOf rdf:type owl:ObjectProperty ;
                 skos:definition "An object property to relate a dwc:Media instance to a resource it is a media of." .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/materialCollectedDuring
+dwcdp:materialCollectedDuring rdf:type owl:ObjectProperty ;
+                              rdfs:label "Material Collected During" ;
+                              skos:definition "An object property used to relate a dwc:NucleotideAnalysis to the dwc:Event during which the dwc:MaterialEntity analyzed was collected." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/partOf
 dwcdp:partOf rdf:type owl:ObjectProperty ;
              rdfs:label "Part Of" ;
@@ -405,6 +423,18 @@ dwcdp:partOfTransitive rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/partOfTransitiveReflexive
 dwcdp:partOfTransitiveReflexive rdf:type owl:ObjectProperty ;
                                 rdfs:label "Part Of Transitive Reflexive" .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/produced
+dwcdp:produced rdf:type owl:ObjectProperty ;
+               rdfs:label "Produced" ;
+               skos:definition "An object property to relate a dwc:NucleotideAnalysis to the dwc:NucleotideSequence it produced." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/provenanceFor
+dwcdp:provenanceFor rdf:type owl:ObjectProperty ;
+                    rdfs:label "Provenance For" ;
+                    skos:definition "An object property used to relate a dwc:Provenance to the resources it is a provenance for." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/relationshipOf
@@ -440,6 +470,12 @@ dwcdp:spatialLocation rdf:type owl:ObjectProperty ;
 dwcdp:targetFor rdf:type owl:ObjectProperty ;
                 rdfs:label "Target For" ;
                 skos:definition "An object property to relate a dwc:SurveyTarget to the dwc:Survey it is a target for." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/usagePolicyFor
+dwcdp:usagePolicyFor rdf:type owl:ObjectProperty ;
+                     rdfs:label "Usage Policy For" ;
+                     skos:definition "An object property used to relate a dwc:UsagePolicy to a resource." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/withinContext
@@ -621,6 +657,12 @@ dcterms:bibliographicCitation rdf:type owl:DatatypeProperty ;
 dcterms:description rdf:type owl:DatatypeProperty ;
                     rdfs:label "Description" ;
                     skos:definition "An account of the resource." .
+
+
+###  http://purl.org/dc/terms/identifier
+dcterms:identifier rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Identifier" ;
+                   skos:definition "An unambiguous reference to the resource within a given context." .
 
 
 ###  http://purl.org/dc/terms/issued
@@ -2679,6 +2721,12 @@ dwc:nomenclaturalStatus rdf:type owl:DatatypeProperty ;
                                      "nom. subnud." .
 
 
+###  http://rs.tdwg.org/dwc/terms/nucleotideAnalysisID
+dwc:nucleotideAnalysisID rdf:type owl:DatatypeProperty ;
+                         rdfs:label "Nucleotide Analysis ID" ;
+                         skos:definition "An identifier for a dwc:NucleotideAnalysis." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/nucleotideSequenceID
 dwc:nucleotideSequenceID rdf:type owl:DatatypeProperty ;
                          rdfs:label "Nucleotide Sequence ID" ;
@@ -2949,6 +2997,13 @@ dwc:protocolType rdf:type owl:DatatypeProperty ;
 dwc:provenanceID rdf:type owl:DatatypeProperty ;
                  rdfs:label "Provenance ID" ;
                  skos:definition "An identifier for a dwc:Provenance." .
+
+
+###  http://rs.tdwg.org/dwc/terms/readCount
+dwc:readCount rdf:type owl:DatatypeProperty ;
+              rdfs:range xsd:integer ;
+              rdfs:label "Read Count" ;
+              skos:definition "A number of reads for a dwc:NucleotideSequence in a dwc:NucleotideAnalysis." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/recordedBy
@@ -3330,6 +3385,13 @@ dwc:taxonRemarks rdf:type owl:DatatypeProperty ;
                  rdfs:label "Taxon Remarks" ;
                  skos:definition "Comments or notes about the taxon or name." ;
                  skos:example "this name is a misspelling in common use" .
+
+
+###  http://rs.tdwg.org/dwc/terms/totalReadCount
+dwc:totalReadCount rdf:type owl:DatatypeProperty ;
+                   rdfs:range xsd:integer ;
+                   rdfs:label "Total Read Count" ;
+                   skos:definition "A total number of reads in a dwc:NucleotideAnalysis." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/typeStatus
@@ -4627,6 +4689,12 @@ dwc:MolecularProtocol rdf:type owl:Class ;
                       skos:example "a high-throughput amplicon sequencing protocol targeting 16S rRNA" ,
                                    "a shotgun metagenomics pipeline for microbial community profiling" ,
                                    "a standard DNA barcoding workflow using Sanger sequencing" .
+
+
+###  http://rs.tdwg.org/dwc/terms/NucleotideAnalysis
+dwc:NucleotideAnalysis rdf:type owl:Class ;
+                       rdfs:label "Nucleotide Analysis" ;
+                       skos:definition "A link between a dwc:NucleotideSequence and a dwc:Event and a dwc:MaterialEntity from which it was derived, using a specified dwc:Protocol." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/NucleotideSequence
