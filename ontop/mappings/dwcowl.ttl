@@ -196,6 +196,36 @@ ac:variantIRI rdf:type owl:ObjectProperty ;
               skos:definition "The category describing this Service Access Point variant, denoted by an IRI." .
 
 
+###  http://rs.tdwg.org/dwc/iri/assertionBy
+dwciri:assertionBy rdf:type owl:ObjectProperty ;
+                   rdfs:label "Assertion By" ;
+                   skos:definition "An identifier for a dcterms:Agent responsible for making a dwc:Assertion." .
+
+
+###  http://rs.tdwg.org/dwc/iri/assertionProtocol
+dwciri:assertionProtocol rdf:type owl:ObjectProperty ;
+                         rdfs:label "Assertion Protocol" ;
+                         skos:definition "An identifier for a dwc:Protocol used to make a dwc:Assertion." .
+
+
+###  http://rs.tdwg.org/dwc/iri/assertionType
+dwciri:assertionType rdf:type owl:ObjectProperty ;
+                     rdfs:label "Assertion Type" ;
+                     skos:definition "An IRI of a controlled vocabulary value for a type of dwc:Assertion." .
+
+
+###  http://rs.tdwg.org/dwc/iri/assertionUnit
+dwciri:assertionUnit rdf:type owl:ObjectProperty ;
+                     rdfs:label "Assertion Unit" ;
+                     skos:definition "An IRI of a controlled vocabulary value for the unit of a dwc:assertionValue or a dwc:assertionValueNumeric." .
+
+
+###  http://rs.tdwg.org/dwc/iri/assertionValue
+dwciri:assertionValue rdf:type owl:ObjectProperty ;
+                      rdfs:label "Assertion Value" ;
+                      skos:definition "An IRI of the controlled vocabulary value for a value of a dwc:Assertion." .
+
+
 ###  http://rs.tdwg.org/dwc/iri/identifiedBy
 dwciri:identifiedBy rdf:type owl:ObjectProperty ;
                     rdfs:label "Identified By" ;
@@ -247,6 +277,12 @@ dwciri:surveyTargetValue rdf:type owl:ObjectProperty ;
 dwcdp:about rdf:type owl:ObjectProperty ;
             rdfs:label "About" ;
             skos:definition "An object property to relate a dwc:Assertion to the resource it is about." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/ageFor
+dwcdp:ageFor rdf:type owl:ObjectProperty ;
+             rdfs:label "Age For" ;
+             skos:definition "An object property to relate a chrono:ChronometricAge to the dwc:Event it is an age for." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/basedOn
@@ -1178,6 +1214,14 @@ ac:yFrac rdf:type owl:DatatypeProperty ;
                       1 .
 
 
+###  http://rs.tdwg.org/chrono/terms/chronometricAgeConversionProtocol
+chrono:chronometricAgeConversionProtocol rdf:type owl:DatatypeProperty ;
+                                         rdfs:label "Chronometric Age Conversion Protocol" ;
+                                         skos:definition "A description of or reference to a dwc:Protocol used to convert a chrono:uncalibratedChronometricAge into a chronometric age in years, as captured in the chrono:earliestChronometricAge, chrono:earliestChronometricAgeReferenceSystem, chrono:latestChronometricAge, and chrono:latestChronometricAgeReferenceSystem fields." ;
+                                         skos:example "INTCAL13" ,
+                                                      "sequential 6 phase Bayesian model and IntCal13 calibration" .
+
+
 ###  http://rs.tdwg.org/chrono/terms/chronometricAgeDeterminedBy
 chrono:chronometricAgeDeterminedBy rdf:type owl:DatatypeProperty ;
                                    rdfs:label "Chronometric Age Determined By" ;
@@ -1195,6 +1239,13 @@ chrono:chronometricAgeDeterminedDate rdf:type owl:DatatypeProperty ;
                                                   "1971" ,
                                                   "2009-02-20T08:40Z" ,
                                                   "2018-08-29T15:19" .
+
+
+###  http://rs.tdwg.org/chrono/terms/chronometricAgeID
+chrono:chronometricAgeID rdf:type owl:DatatypeProperty ;
+                         rdfs:label "Chronometric Age ID" ;
+                         skos:definition "An identifier for a chrono:ChronometricAge." ;
+                         skos:example "https://www.canadianarchaeology.ca/samples/70673" .
 
 
 ###  http://rs.tdwg.org/chrono/terms/chronometricAgeProtocol
@@ -1219,6 +1270,13 @@ chrono:chronometricAgeRemarks rdf:type owl:DatatypeProperty ;
                               rdfs:label "Chronometric Age Remarks" ;
                               skos:definition "Comments or notes about a chrono:ChronometricAge." ;
                               skos:example "Beta Analytic number: 323913 | One of the Crassostrea virginica right valve specimens from North Midden Feature 17 was chosen for AMS dating, but it is unclear exactly which specimen it was." .
+
+
+###  http://rs.tdwg.org/chrono/terms/chronometricAgeUncertaintyInYears
+chrono:chronometricAgeUncertaintyInYears rdf:type owl:DatatypeProperty ;
+                                         rdfs:label "Chronometric Age Uncertainty In Years" ;
+                                         skos:definition "A temporal uncertainty of a chrono:earliestChronometricAge and chrono:latestChronometricAge in years." ;
+                                         skos:example 100 .
 
 
 ###  http://rs.tdwg.org/chrono/terms/chronometricAgeUncertaintyMethod
@@ -1281,6 +1339,13 @@ chrono:materialDated rdf:type owl:DatatypeProperty ;
                                   "tooth" .
 
 
+###  http://rs.tdwg.org/chrono/terms/materialDatedID
+chrono:materialDatedID rdf:type owl:DatatypeProperty ;
+                       rdfs:label "Material Dated ID" ;
+                       skos:definition "An identifier for a dwc:MaterialEntity on which a chrono:ChronometricAgeProtocol was performed, if applicable." ;
+                       skos:example "https://www.ebi.ac.uk/metagenomics/samples/SRS1930158" .
+
+
 ###  http://rs.tdwg.org/chrono/terms/materialDatedRelationship
 chrono:materialDatedRelationship rdf:type owl:DatatypeProperty ;
                                  rdfs:label "Material Dated Relationship" ;
@@ -1337,6 +1402,107 @@ dwc:assayType rdf:type owl:DatatypeProperty ;
               skos:example "metabarcoding" ,
                            "other" ,
                            "targeted" .
+
+
+###  http://rs.tdwg.org/dwc/terms/assertionBy
+dwc:assertionBy rdf:type owl:DatatypeProperty ;
+                rdfs:label "Assertion By" ;
+                skos:definition "A list (concatenated and separated) of names of dcterms:Agents responsible for making a dwc:Assertion." .
+
+
+###  http://rs.tdwg.org/dwc/terms/assertionEffectiveDate
+dwc:assertionEffectiveDate rdf:type owl:DatatypeProperty ;
+                           rdfs:label "Assertion Effective Date" ;
+                           skos:definition "A date on which a state or measurement of a dwc:Assertion was deemed to first be in effect." ;
+                           skos:example "1809-02-12" ,
+                                        "1900/1909" ,
+                                        "1906-06" ,
+                                        "1963-03-08T14:07-06:00" ,
+                                        "1971" ,
+                                        "2007-03-01T13:00:00Z/2008-05-11T15:30:00Z" ,
+                                        "2007-11-13/15" ,
+                                        "2009-02-20T08:40Z" ,
+                                        "2018-08-29T15:19" .
+
+
+###  http://rs.tdwg.org/dwc/terms/assertionError
+dwc:assertionError rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Assertion Error" ;
+                   skos:definition "The description of the potential error associated with dwc:assertionValueNumeric." ;
+                   skos:example "0.01" ,
+                                "normal distribution with variation of 2 m" .
+
+
+###  http://rs.tdwg.org/dwc/terms/assertionID
+dwc:assertionID rdf:type owl:DatatypeProperty ;
+                rdfs:label "Assertion ID" ;
+                skos:definition "An identifier for a dwc:Assertion." .
+
+
+###  http://rs.tdwg.org/dwc/terms/assertionMadeDate
+dwc:assertionMadeDate rdf:type owl:DatatypeProperty ;
+                      rdfs:label "Assertion Made Date" ;
+                      skos:definition "A date on which a dwc:Assertion was created." ;
+                      skos:example "1809-02-12" ,
+                                   "1900/1909" ,
+                                   "1906-06" ,
+                                   "1963-03-08T14:07-06:00" ,
+                                   "1971" ,
+                                   "2007-03-01T13:00:00Z/2008-05-11T15:30:00Z" ,
+                                   "2007-11-13/15" ,
+                                   "2009-02-20T08:40Z" ,
+                                   "2018-08-29T15:19" .
+
+
+###  http://rs.tdwg.org/dwc/terms/assertionProtocols
+dwc:assertionProtocols rdf:type owl:DatatypeProperty ;
+                       rdfs:label "Assertion Protocols" ;
+                       skos:definition "Names of, references to, or descriptions of dwc:Protocols used in making a dwc:Assertion." .
+
+
+###  http://rs.tdwg.org/dwc/terms/assertionReferences
+dwc:assertionReferences rdf:type owl:DatatypeProperty ;
+                        rdfs:label "Assertion References" ;
+                        skos:definition "A list (concatenated and separated) of dcterms:BibliographicResources associated with a dwc:Assertion." .
+
+
+###  http://rs.tdwg.org/dwc/terms/assertionRemarks
+dwc:assertionRemarks rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Assertion Remarks" ;
+                     skos:definition "Comments or notes about a dwc:Assertion." .
+
+
+###  http://rs.tdwg.org/dwc/terms/assertionType
+dwc:assertionType rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Assertion Type" ;
+                  skos:definition "A category that best matches the nature of a dwc:Assertion." ;
+                  skos:example "survey area" ,
+                               "tail length" ,
+                               "temperature" ,
+                               "trap line length" ,
+                               "trap type" .
+
+
+###  http://rs.tdwg.org/dwc/terms/assertionUnit
+dwc:assertionUnit rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Assertion Unit" ,
+                             "Unit associated with the value in dwc:assertionValue or dwc:assertionValueNumeric." ;
+                  skos:example "g" ,
+                               "m" ,
+                               "ml" ,
+                               "s" .
+
+
+###  http://rs.tdwg.org/dwc/terms/assertionValue
+dwc:assertionValue rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Assertion Value" ;
+                   skos:definition "An asserted value, if it is not numeric." .
+
+
+###  http://rs.tdwg.org/dwc/terms/assertionValueNumeric
+dwc:assertionValueNumeric rdf:type owl:DatatypeProperty ;
+                          rdfs:label "Assertion Value Numeric" ;
+                          skos:definition "An asserted value, if it is numeric." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/associatedOrganisms
@@ -1420,10 +1586,22 @@ dwc:causeOfDeath rdf:type owl:DatatypeProperty ;
                               "trapped" .
 
 
+###  http://rs.tdwg.org/dwc/terms/chronometricAgeConversionProtocolID
+dwc:chronometricAgeConversionProtocolID rdf:type owl:DatatypeProperty ;
+                                        rdfs:label "Chronometric Age Conversion Protocol ID" ;
+                                        skos:definition "An identifier for a dwc:Protocol used to convert a chrono:uncalibratedChronometricAge into a chronometric age in years, as captured in the chrono:earliestChronometricAge, chrono:earliestChronometricAgeReferenceSystem, chrono:latestChronometricAge, and chrono:latestChronometricAgeReferenceSystem fields." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/chronometricAgeDeterminedByID
 dwc:chronometricAgeDeterminedByID rdf:type owl:DatatypeProperty ;
                                   rdfs:label "Chronometric Age Determined By ID" ;
                                   skos:definition "An identifier for a dcterms:Agent responsible for determining a chrono:ChronometricAge." .
+
+
+###  http://rs.tdwg.org/dwc/terms/chronometricAgeProtocolID
+dwc:chronometricAgeProtocolID rdf:type owl:DatatypeProperty ;
+                              rdfs:label "Chronometric Age Protocol ID" ;
+                              skos:definition "An identifier for a dwc:Protocol used to determine a chrono:ChronometricAge." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/class
@@ -3161,6 +3339,15 @@ dwc:typifiedName rdf:type owl:DatatypeProperty ;
                  skos:example "Polysiphonia amphibolis Womersley" .
 
 
+###  http://rs.tdwg.org/dwc/terms/verbatimAssertionType
+dwc:verbatimAssertionType rdf:type owl:DatatypeProperty ;
+                          rdfs:label "Verbatim Assertion Type" ;
+                          skos:definition "A string representing the type of dwc:Assertion as it appeared in the original record." ;
+                          skos:example "Fish biomass" ,
+                                       "sampling net mesh size" ,
+                                       "water_temp" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/verbatimCoordinateSystem
 dwc:verbatimCoordinateSystem rdf:type owl:DatatypeProperty ;
                              rdfs:label "Verbatim Coordinate System" ;
@@ -4365,6 +4552,15 @@ chrono:ChronometricAge rdf:type owl:Class ;
                                     "An age range associated with a specimen derived from a ceramics analysis based on other materials found in the same stratum" ,
                                     "An age range associated with a specimen derived from an AMS dating assay applied to an oyster shell in the same stratum" ,
                                     "An age range of a specimen based on its biostratigraphic context" .
+
+
+###  http://rs.tdwg.org/dwc/terms/Assertion
+dwc:Assertion rdf:type owl:Class ;
+              rdfs:label "Assertion" ;
+              skos:definition "A statement about an rdfs:Resource (http://www.w3.org/2000/01/rdf-schema#Resource)." ;
+              skos:example "surface water temperature in Celsius" ,
+                           "the number of placental scars" ,
+                           "the weight of a dwc:Organism in grams" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/Event
