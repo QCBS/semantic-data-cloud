@@ -7,7 +7,7 @@ class QueryRequest(BaseModel):
     temporal: list[str]
     sparql: str
 
-    @field_validator("Spatial")
+    @field_validator("bbox")
     @classmethod
     def validate_bbox(cls, value: list[float]) -> list[float]:
         if len(value) != 4:
@@ -19,7 +19,7 @@ class QueryRequest(BaseModel):
             raise ValueError("min_lat must be ≤ max_lat")
         return value
 
-    @field_validator("Temporal")
+    @field_validator("temporal")
     @classmethod
     def validate_temporal(cls, value: list[str]) -> list[str]:
         if len(value) != 2:
