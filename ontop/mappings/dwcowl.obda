@@ -352,8 +352,60 @@ mappingId	survey_target_has_definition
 target		:survey-target/{survey_target_id} dwcdp:hasDefinition :survey-target/{survey_target_id}/definition/{definition_key} . 
 source		SELECT survey_target_id, LOWER(REPLACE(survey_target_type, ' ', '')) AS definition_key FROM dwcowl.main.survey_target
 
+mappingId	derived_from_transitive_material
+target		:material-entity/{child} dwcdp:derivedFromTransitive :material-entity/{ancestor} . 
+source		SELECT child, ancestor FROM dwcowl.main.derived_from_transitive_material
+
+mappingId	derived_from_transitive_reflexive_material
+target		:material-entity/{child} dwcdp:derivedFromTransitiveReflexive :material-entity/{ancestor} . 
+source		SELECT child, ancestor FROM dwcowl.main.derived_from_transitive_reflexive_material
+
+mappingId	derived_from_transitive_media
+target		:media/{child} dwcdp:derivedFromTransitive :media/{ancestor} . 
+source		SELECT child, ancestor FROM dwcowl.main.derived_from_transitive_media
+
+mappingId	derived_from_transitive_reflexive_media
+target		:media/{child} dwcdp:derivedFromTransitiveReflexive :media/{ancestor} . 
+source		SELECT child, ancestor FROM dwcowl.main.derived_from_transitive_reflexive_media
+
 mappingId	happened_during_transitive_event
 target		:event/{child} dwcdp:happenedDuringTransitive :event/{ancestor} . 
 source		SELECT child, ancestor FROM dwcowl.main.happened_during_transitive_event
+
+mappingId	happened_during_transitive_reflexive_event
+target		:event/{child} dwcdp:happenedDuringTransitiveReflexive :event/{ancestor} . 
+source		SELECT child, ancestor FROM dwcowl.main.happened_during_transitive_reflexive_event
+
+mappingId	part_of_transitive_bibliographic_resource
+target		:bibliographic-resource/{child} dwcdp:partOfTransitive :bibliographic-resource/{ancestor} . 
+source		SELECT child, ancestor FROM dwcowl.main.part_of_transitive_bibliographic_resource
+
+mappingId	part_of_transitive_reflexive_bibliographic_resource
+target		:bibliographic-resource/{child} dwcdp:partOfTransitiveReflexive :bibliographic-resource/{ancestor} . 
+source		SELECT child, ancestor FROM dwcowl.main.part_of_transitive_reflexive_bibliographic_resource
+
+mappingId	part_of_transitive_material
+target		:material-entity/{child} dwcdp:partOfTransitive :material-entity/{ancestor} . 
+source		SELECT child, ancestor FROM dwcowl.main.part_of_transitive_material
+
+mappingId	part_of_transitive_reflexive_material
+target		:material-entity/{child} dwcdp:partOfTransitiveReflexive :material-entity/{ancestor} . 
+source		SELECT child, ancestor FROM dwcowl.main.part_of_transitive_reflexive_material
+
+mappingId	part_of_transitive_media
+target		:media/{child} dwcdp:partOfTransitive :media/{ancestor} . 
+source		SELECT child, ancestor FROM dwcowl.main.part_of_transitive_media
+
+mappingId	part_of_transitive_reflexive_media
+target		:media/{child} dwcdp:partOfTransitiveReflexive :media/{ancestor} . 
+source		SELECT child, ancestor FROM dwcowl.main.part_of_transitive_reflexive_media
+
+mappingId	part_of_transitive_occurrence
+target		:occurrence/{child} dwcdp:partOfTransitive :occurrence/{ancestor} . 
+source		SELECT child, ancestor FROM dwcowl.main.part_of_transitive_occurrence
+
+mappingId	part_of_transitive_reflexive_occurrence
+target		:occurrence/{child} dwcdp:partOfTransitiveReflexive :occurrence/{ancestor} . 
+source		SELECT child, ancestor FROM dwcowl.main.part_of_transitive_reflexive_occurrence
 ]]
 
