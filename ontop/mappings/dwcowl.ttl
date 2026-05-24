@@ -168,12 +168,6 @@ ac:reviewer rdf:type owl:ObjectProperty ;
             skos:definition "An identifier for a dcterms:Agent primarily responsible for providing the ac:reviewerComments." .
 
 
-###  http://rs.tdwg.org/ac/terms/subjectCategorySource
-ac:subjectCategorySource rdf:type owl:ObjectProperty ;
-                         rdfs:label "Subject Category Source" ;
-                         skos:definition "A reference to a controlled vocabulary in which the definition of a value in dwc:subjectCategory is given." .
-
-
 ###  http://rs.tdwg.org/ac/terms/subjectOrientation
 ac:subjectOrientation rdf:type owl:ObjectProperty ;
                       rdfs:label "Subject Orientation" ;
@@ -200,6 +194,12 @@ ac:variant rdf:type owl:ObjectProperty ;
 ac:variantIRI rdf:type owl:ObjectProperty ;
               rdfs:label "Variant IRI" ;
               skos:definition "The category describing this Service Access Point variant, denoted by an IRI." .
+
+
+###  http://rs.tdwg.org/dwc/iri/agentRole
+dwciri:agentRole rdf:type owl:ObjectProperty ;
+                 rdfs:label "Agent Role" ,
+                            "An IRI of the controlled vocabulary value for a role of a dcterms:Agent." .
 
 
 ###  http://rs.tdwg.org/dwc/iri/assertionType
@@ -239,13 +239,7 @@ dwciri:samplingPerformedBy rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwc/iri/subjectCategory
 dwciri:subjectCategory rdf:type owl:ObjectProperty ;
                        rdfs:label "Subject Category" ;
-                       skos:definition "A category for the content of a dwc:Media resource." .
-
-
-###  http://rs.tdwg.org/dwc/iri/subjectCategoryIRI
-dwciri:subjectCategoryIRI rdf:type owl:ObjectProperty ;
-                          rdfs:label "Subject Category IRI" ;
-                          skos:definition "An IRI of a controlled vocabulary value for the subject category of a dwc:Media resource." .
+                       skos:definition "An IRI of a controlled vocabulary value for the subject category of a dwc:Media resource." .
 
 
 ###  http://rs.tdwg.org/dwc/iri/surveyTargetUnit
@@ -264,6 +258,12 @@ dwciri:surveyTargetValue rdf:type owl:ObjectProperty ;
 dwcdp:about rdf:type owl:ObjectProperty ;
             rdfs:label "About" ;
             skos:definition "An object property to relate a dwc:Assertion to the resource it is about." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/accordingTo
+dwcdp:accordingTo rdf:type owl:ObjectProperty ;
+                  rdfs:label "According To" ;
+                  skos:definition "An object property used to relate a dwc:ResourceRelationship to the dcterm:Agent responsible for stating it." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/ageFor
@@ -289,6 +289,12 @@ dwcdp:basedOn rdf:type owl:ObjectProperty ;
               rdfs:label "Based On" .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/collectedBy
+dwcdp:collectedBy rdf:type owl:ObjectProperty ;
+                  rdfs:label "Collected By" ;
+                  skos:definition "An object property used to relate a dwc:MaterialEntity to the dcterms:Agent that collected it." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/collectedDuring
 dwcdp:collectedDuring rdf:type owl:ObjectProperty ;
                       rdfs:label "Collected During" ;
@@ -312,6 +318,18 @@ dwcdp:createdBy rdf:type owl:ObjectProperty ;
                 skos:definition "An object property used to relate a dwc:Provenance to the dcterms:Agent responsible for creating it." .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/dated
+dwcdp:dated rdf:type owl:ObjectProperty ;
+            rdfs:label "Dated" ;
+            skos:definition "An object property used to relate a chrono:ChronometricAge to the dwc:Material that is dated." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/derivedDuring
+dwcdp:derivedDuring rdf:type owl:ObjectProperty ;
+                    rdfs:label "Derived During" ;
+                    skos:definition "An object property used to relate a dwc:MaterialEntity to the dwc:Event during which it was derived." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/derivedFrom
 dwcdp:derivedFrom rdf:type owl:ObjectProperty ;
                   rdfs:label "Derived From" .
@@ -326,6 +344,12 @@ dwcdp:derivedFromTransitive rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/derivedFromTransitiveReflexive
 dwcdp:derivedFromTransitiveReflexive rdf:type owl:ObjectProperty ;
                                      rdfs:label "Derived From Transitive Reflexive" .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/determinedBy
+dwcdp:determinedBy rdf:type owl:ObjectProperty ;
+                   rdfs:label "Determined By" ;
+                   skos:definition "An object property used to relate a chrono:ChronometricAge to the dcterms:Agent responsible for determining it." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/editedBy
@@ -370,6 +394,12 @@ dwcdp:happenedDuringTransitive rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/happenedDuringTransitiveReflexive
 dwcdp:happenedDuringTransitiveReflexive rdf:type owl:ObjectProperty ;
                                         rdfs:label "Happened During Transitive Reflexive" .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/hasContent
+dwcdp:hasContent rdf:type owl:ObjectProperty ;
+                 rdfs:label "Has Content" ;
+                 skos:definition "An object property to identify the object content in a relationship-type entity depicting an entity in a dwc:Media instance." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/hasDefinition
@@ -438,6 +468,18 @@ dwcdp:materialCollectedDuring rdf:type owl:ObjectProperty ;
                               skos:definition "An object property used to relate a dwc:NucleotideAnalysis to the dwc:Event during which the dwc:MaterialEntity analyzed was collected." .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/mentioned
+dwcdp:mentioned rdf:type owl:ObjectProperty ;
+                rdfs:label "Mentioned" ;
+                skos:definition "An object property to identify the mentioned entity in a relationship-type entity depicting a relation between a dcterms:BibliographicResource and another entity." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/mentionedIn
+dwcdp:mentionedIn rdf:type owl:ObjectProperty ;
+                  rdfs:label "Mentioned In" ;
+                  skos:definition "An object property to identify the mentioning dcterms:BibliographicResource in a relationship-type entity depicting a relation between a dcterms:BibliographicResource and another entity." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/metadataCreatedBy
 dwcdp:metadataCreatedBy rdf:type owl:ObjectProperty ;
                         rdfs:label "Metadata Created By" ;
@@ -448,6 +490,12 @@ dwcdp:metadataCreatedBy rdf:type owl:ObjectProperty ;
 dwcdp:metadataProvidedBy rdf:type owl:ObjectProperty ;
                          rdfs:label "Metadata Provided By" ;
                          skos:definition "An object property used to related a dwc:Provenance to the dcterms:Agent responsible for providing the metadata about it." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/occurrenceOf
+dwcdp:occurrenceOf rdf:type owl:ObjectProperty ;
+                   rdfs:label "Occurrence Of" ;
+                   skos:definition "An object property used to relate a dwc:Occurrence to a dwc:Organism of which it is an occurrence of." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/ownedBy
@@ -496,6 +544,12 @@ dwcdp:publishedBy rdf:type owl:ObjectProperty ;
                   skos:definition "An object property to relate a dcterms:BibliographicResource to the dcterms:Agent that published it." .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/recordedBy
+dwcdp:recordedBy rdf:type owl:ObjectProperty ;
+                 rdfs:label "Recorded By" ;
+                 skos:definition "An object property used to relate a dwc:Occurrence to the dcterms:Agent responsible for recording it." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/relationshipOf
 dwcdp:relationshipOf rdf:type owl:ObjectProperty ;
                      rdfs:label "Relationship Of" ;
@@ -519,6 +573,24 @@ dwcdp:rightsHeldBy rdf:type owl:ObjectProperty ;
                    skos:definition "An object property to relate a dwc:UsagePolicy to the dcterms:Agent that holds the rights to it." .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/roleFor
+dwcdp:roleFor rdf:type owl:ObjectProperty ;
+              rdfs:label "Role For" ;
+              skos:definition "An object property to relate a dwc:AgentAgentRole to the object dcterms:Agent in the described relationship." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/roleHolder
+dwcdp:roleHolder rdf:type owl:ObjectProperty ;
+                 rdfs:label "Role Holder" ;
+                 skos:definition "An object property to relate a dwc:AgentAgentRole to the subject dcterms:Agent in the described relationship." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/samplingBy
+dwcdp:samplingBy rdf:type owl:ObjectProperty ;
+                 rdfs:label "Samping By" ;
+                 skos:definition "An object property used to relate a dwc:Survey to the dcterms:Agent responsible for performing the sampling." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/satisfied
 dwcdp:satisfied rdf:type owl:ObjectProperty ;
                 rdfs:label "Satisfied" ;
@@ -531,16 +603,52 @@ dwcdp:spatialLocation rdf:type owl:ObjectProperty ;
                       skos:definition "An object property to link a dwc:Event to the dcterms:Location where it took place." .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/storedIn
+dwcdp:storedIn rdf:type owl:ObjectProperty ;
+               rdfs:label "Stored In" ;
+               skos:definition "An object property used to relate a dwc:MaterialEntity to the dcterms:Agent within which it is stored." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/targetFor
 dwcdp:targetFor rdf:type owl:ObjectProperty ;
                 rdfs:label "Target For" ;
                 skos:definition "An object property to relate a dwc:SurveyTarget to the dwc:Survey it is a target for." .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/taxonFor
+dwcdp:taxonFor rdf:type owl:ObjectProperty ;
+               rdfs:label "Taxon For" ;
+               skos:definition "An object property to relate a dwc:IdentificationTaxon to the dwc:Identication it is a taxon for." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/thisMedia
+dwcdp:thisMedia rdf:type owl:ObjectProperty ;
+                rdfs:label "This Media" ;
+                skos:definition "An object property to identify the subject media in a relationship-type entity depicting an entity in a dwc:Media instance." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/usagePolicyFor
 dwcdp:usagePolicyFor rdf:type owl:ObjectProperty ;
                      rdfs:label "Usage Policy For" ;
                      skos:definition "An object property used to relate a dwc:UsagePolicy to a resource." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/used
+dwcdp:used rdf:type owl:ObjectProperty ;
+           rdfs:label "Used" ;
+           skos:definition "An object property to identify the dcterms:BibliographicResource used in a relationship-type entity depicting a relation between a dcterms:BibliographicResource and a dwc:Identification." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/usedDuring
+dwcdp:usedDuring rdf:type owl:ObjectProperty ;
+                 rdfs:label "Used During" ;
+                 skos:definition "An object property to relate a dwc:Protocol to the resource that followed it." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/usedFor
+dwcdp:usedFor rdf:type owl:ObjectProperty ;
+              rdfs:label "Used For" ;
+              skos:definition "An object property to identify the considered dwc:Identification in a relationship-type entity depicting a relation between a dcterms:BibliographicResource and a dwc:Identification." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/withinContext
@@ -1237,6 +1345,12 @@ ac:startTimestamp rdf:type owl:DatatypeProperty ;
                   skos:definition "The beginning of a temporal region, specified as real-world clock time ISO 8601 timestamps, using UTC timezone, with an optional fractional part to indicate milliseconds or finer. There is no limit on the number of decimal places for the decimal fraction." .
 
 
+###  http://rs.tdwg.org/ac/terms/subjectCategorySource
+ac:subjectCategorySource rdf:type owl:DatatypeProperty ;
+                         rdfs:label "Subject Category Source" ;
+                         skos:definition "A reference to a controlled vocabulary in which the definition of a value in dwc:subjectCategory is given." .
+
+
 ###  http://rs.tdwg.org/ac/terms/subjectOrientationLiteral
 ac:subjectOrientationLiteral rdf:type owl:DatatypeProperty ;
                              rdfs:label "Subject Orientation Literal" ;
@@ -1476,6 +1590,13 @@ dwc:agentRemarks rdf:type owl:DatatypeProperty ;
                  rdfs:range xsd:string ;
                  rdfs:label "Agent Remarks" ;
                  skos:definition "Comments or notes about a dcterms:Agent." .
+
+
+###  http://rs.tdwg.org/dwc/terms/agentRoleOrder
+dwc:agentRoleOrder rdf:type owl:DatatypeProperty ;
+                   rdfs:range xsd:integer ;
+                   rdfs:label "Agent Role Order" ;
+                   skos:definition "A numerical position of an AgentRole in a set of AgentRoles that have the same combination of dwc:agentRole, dwc:agentRoleIRI, dwc:agentRoleSource and related target." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/agentType
@@ -2362,6 +2483,12 @@ dwc:highestBiostratigraphicZone rdf:type owl:DatatypeProperty ;
                                 skos:example "Blancan" .
 
 
+###  http://rs.tdwg.org/dwc/terms/identificationID
+dwc:identificationID rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Identification ID" ;
+                     skos:definition "An identifier for a dwc:Identification." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/identificationReferences
 dwc:identificationReferences rdf:type owl:DatatypeProperty ;
                              rdfs:label "Identification References" ;
@@ -3119,6 +3246,12 @@ dwc:referenceType rdf:type owl:DatatypeProperty ;
                   skos:definition "A category that best matches the nature of a dcterms:BibliographicResource." .
 
 
+###  http://rs.tdwg.org/dwc/terms/relatedAgentID
+dwc:relatedAgentID rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Related Agent ID" ;
+                   skos:definition "An identifier for a related dcterms:Agent." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/relatedOccurrenceID
 dwc:relatedOccurrenceID rdf:type owl:DatatypeProperty ;
                         rdfs:label "Related Occurrence ID" ;
@@ -3246,6 +3379,13 @@ dwc:resourceRelationshipID rdf:type owl:DatatypeProperty ;
 dwc:rightsHolder rdf:type owl:DatatypeProperty ;
                  rdfs:label "Rights Holder" ;
                  skos:definition "A name of a dcterms:Agent that owns or manages rights over a resource." .
+
+
+###  http://rs.tdwg.org/dwc/terms/samplingPerformedByID
+dwc:samplingPerformedByID rdf:type owl:DatatypeProperty ;
+                          rdfs:label "Sampling Performed By ID" ;
+                          skos:definition "An identifier for a dcterms:Agent responsible for sampling." ;
+                          skos:example "https://orcid.org/0000-0002-1825-0097" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/scientificName
@@ -3462,6 +3602,12 @@ dwc:taxonRemarks rdf:type owl:DatatypeProperty ;
                  rdfs:label "Taxon Remarks" ;
                  skos:definition "Comments or notes about the taxon or name." ;
                  skos:example "this name is a misspelling in common use" .
+
+
+###  http://rs.tdwg.org/dwc/terms/taxonSortOrder
+dwc:taxonSortOrder rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Taxon Sort Order" ;
+                   skos:definition "A numerical position of a dwc:Taxon in a taxonFormula." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/totalReadCount
@@ -4700,6 +4846,23 @@ chrono:ChronometricAge rdf:type owl:Class ;
                                     "An age range of a specimen based on its biostratigraphic context" .
 
 
+###  http://rs.tdwg.org/dwc/terms/AgentAgentRole
+dwc:AgentAgentRole rdf:type owl:Class ;
+                   rdfs:label "Agent Agent Role" ;
+                   skos:definition "A role filled by a dcterms:Agent with respect to another dcterms:Agent." ;
+                   skos:example "an instance of a dcterms:Agent that is a person is a member of another instance of a dcterms:Agent that is a group" ,
+                                "an instance of a dcterms:Agent that is a person is the author of another instance of a dcterms:Agent that is software" ,
+                                "an instance of a dcterms:Agent that is a person is the director of another instance of a dcterms:Agent that is an organization" .
+
+
+###  http://rs.tdwg.org/dwc/terms/AgentMedia
+dwc:AgentMedia rdf:type owl:Class ;
+               rdfs:comment "A dcterms:Agent as content in an ac:Media entity." ;
+               rdfs:label "Agent Media" ;
+               skos:example "a group of people in a video" ,
+                            "a person shown in a photograph" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/Assertion
 dwc:Assertion rdf:type owl:Class ;
               rdfs:label "Assertion" ;
@@ -4720,6 +4883,24 @@ dwc:Event rdf:type owl:Class ;
                        "an organism occurrence" .
 
 
+###  http://rs.tdwg.org/dwc/terms/EventAgentRole
+dwc:EventAgentRole rdf:type owl:Class ;
+                   rdfs:label "EventAgentRole" ;
+                   skos:definition "A role filled by a dcterms:Agent with respect to a dwc:Event." .
+
+
+###  http://rs.tdwg.org/dwc/terms/EventMedia
+dwc:EventMedia rdf:type owl:Class ;
+               rdfs:label "Event Media" ;
+               skos:definition "A dwc:Event as content in an ac:Media entity." .
+
+
+###  http://rs.tdwg.org/dwc/terms/EventReference
+dwc:EventReference rdf:type owl:Class ;
+                   rdfs:label "Event Reference" ;
+                   skos:definition "A dcterms:BibliographicResource related to a dwc:Event." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/GeologicalContext
 dwc:GeologicalContext rdf:type owl:Class ;
                       rdfs:label "Geological Context" ;
@@ -4728,12 +4909,36 @@ dwc:GeologicalContext rdf:type owl:Class ;
                                    "a specific chronostratigraphic unit" .
 
 
+###  http://rs.tdwg.org/dwc/terms/GeologicalContextMedia
+dwc:GeologicalContextMedia rdf:type owl:Class ;
+                           rdfs:label "Geological Context Media" ;
+                           skos:definition "A dwc:GeologicalContext as content in a dwc:Media entity." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/Identification
 dwc:Identification rdf:type owl:Class ;
                    rdfs:label "Identification" ;
                    skos:definition "A classification of a resource according to a classification scheme." ;
                    skos:example "a nomenclatural act designating a specimen as a holotype" ,
                                 "a subspecies determination of an organism" .
+
+
+###  http://rs.tdwg.org/dwc/terms/IdentificationAgentRole
+dwc:IdentificationAgentRole rdf:type owl:Class ;
+                            rdfs:label "Identification Agent Role" ;
+                            skos:definition "A role filled by a dcterms:Agent with respect to a dwc:Identification." .
+
+
+###  http://rs.tdwg.org/dwc/terms/IdentificationReference
+dwc:IdentificationReference rdf:type owl:Class ;
+                            rdfs:label "Identification Reference" ;
+                            skos:definition "A dcterms:BibliographicResource related to a dwc:Identification." .
+
+
+###  http://rs.tdwg.org/dwc/terms/IdentificationTaxon
+dwc:IdentificationTaxon rdf:type owl:Class ;
+                        rdfs:label "Identification Taxon" ;
+                        skos:definition "A construct of components and positions of dwc:Taxa in a dwc:Identification." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/MaterialEntity
@@ -4759,6 +4964,12 @@ dwc:Media rdf:type owl:Class ;
           skos:definition "A dcmi:MediaType or other media type with other entities as subject matter." .
 
 
+###  http://rs.tdwg.org/dwc/terms/MediaAgentRole
+dwc:MediaAgentRole rdf:type owl:Class ;
+                   rdfs:label "Media Agent Role" ;
+                   skos:definition "A role filled by a dcterms:Agent with respect to a dwc:Media entity." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/MolecularProtocol
 dwc:MolecularProtocol rdf:type owl:Class ;
                       rdfs:label "Molecular Protocol" ;
@@ -4766,6 +4977,18 @@ dwc:MolecularProtocol rdf:type owl:Class ;
                       skos:example "a high-throughput amplicon sequencing protocol targeting 16S rRNA" ,
                                    "a shotgun metagenomics pipeline for microbial community profiling" ,
                                    "a standard DNA barcoding workflow using Sanger sequencing" .
+
+
+###  http://rs.tdwg.org/dwc/terms/MolecularProtocolAgentRole
+dwc:MolecularProtocolAgentRole rdf:type owl:Class ;
+                               rdfs:label "Molecular Protocol Agent Role" ;
+                               skos:definition "A role filled by a dcterms:Agent with respect to a dwc:MolecularProtocol." .
+
+
+###  http://rs.tdwg.org/dwc/terms/MolecularProtocolReference
+dwc:MolecularProtocolReference rdf:type owl:Class ;
+                               rdfs:label "Molecular Protocol Reference" ;
+                               skos:definition "A dcterms:BibliographicResource related to a dwc:MolecularProtocol." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/NucleotideAnalysis
@@ -4811,6 +5034,12 @@ dwc:OrganismInteraction rdf:type owl:Class ;
                                      "a viral infection in a plant" .
 
 
+###  http://rs.tdwg.org/dwc/terms/OrganismReference
+dwc:OrganismReference rdf:type owl:Class ;
+                      rdfs:label "Organism Reference" ;
+                      skos:definition "A dcterms:BibliographicResource related to a dwc:Organism." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/OrganismRelationship
 dwc:OrganismRelationship rdf:type owl:Class ;
                          rdfs:label "Organism Relationship" ;
@@ -4826,6 +5055,12 @@ dwc:Protocol rdf:type owl:Class ;
                           "a linear regression model to estimate body mass from skeletal measurements" ,
                           "a pitfall trap method for sampling ground-dwelling arthropods" ,
                           "a point-radius georeferencing method" .
+
+
+###  http://rs.tdwg.org/dwc/terms/ProtocolReference
+dwc:ProtocolReference rdf:type owl:Class ;
+                      rdfs:label "Protocol Reference" ;
+                      skos:definition "A dcterms:BibliographicResource related to a dwc:Protocol." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/Provenance
