@@ -105,7 +105,7 @@ target		:chronometric-age/{chronometric_age_id} a chrono:ChronometricAge ; chron
 source		SELECT * FROM dwcowl.main.chronometric_age
 
 mappingId	event_agent_role
-target		:event-agent-role/{agent_id}/{event_id} a dwc:EventAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:eventID {event_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :agent/{event_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+target		:event-agent-role/{agent_id}/{event_id} a dwc:EventAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:eventID {event_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :event/{event_id} ; dwcdp:roleHolder :agent/{agent_id} . 
 source		SELECT * FROM dwcowl.main.event_agent_role
 
 mappingId	event_assertion
@@ -216,40 +216,144 @@ mappingId	survey
 target		:survey/{survey_id} a dwc:Survey ; dwc:dataGeneralizations {data_generalizations}^^xsd:string ; dwc:eventID {event_id}^^xsd:string ; dwc:feedbackURL {feedback_url}^^xsd:string ; dwc:identificationReferences {identification_references}^^xsd:string ; dwc:identifiedBy {identified_by}^^xsd:string ; dwc:informationWithheld {information_withheld}^^xsd:string ; dwc:samplingPerformedByID {sampling_performed_by_id}^^xsd:string ; dwc:surveyID {survey_id}^^xsd:string ; eco:absentTaxa {absent_taxa}^^xsd:string ; eco:abundanceCap {abundance_cap}^^xsd:integer ; eco:areNonTargetTaxaFullyReported {are_non_target_taxa_fully_reported}^^xsd:boolean ; eco:compilationSourceTypes {compilation_source_types}^^xsd:string ; eco:compilationTypes {compilation_types}^^xsd:string ; eco:eventDurationUnit {event_duration_unit}^^xsd:string ; eco:eventDurationValue {event_duration_value}^^xsd:decimal ; eco:geospatialScopeAreaUnit {geospatial_scope_area_unit}^^xsd:string ; eco:geospatialScopeAreaValue {geospatial_scope_area_value}^^xsd:decimal ; eco:hasMaterialSamples {has_material_samples}^^xsd:boolean ; eco:hasNonTargetOrganisms {has_non_target_organisms}^^xsd:boolean ; eco:hasNonTargetTaxa {has_non_target_taxa}^^xsd:boolean ; eco:hasVouchers {has_vouchers}^^xsd:boolean ; eco:inventoryTypes {inventory_types}^^xsd:string ; eco:isAbsenceReported {is_absence_reported}^^xsd:boolean ; eco:isAbundanceCapReported {is_abundance_cap_reported}^^xsd:boolean ; eco:isAbundanceReported {is_abundance_reported}^^xsd:boolean ; eco:isLeastSpecificTargetCategoryQuantityInclusive {is_least_specific_target_category_quantity_inclusive}^^xsd:boolean ; eco:isSamplingEffortReported {is_sampling_effort_reported}^^xsd:boolean ; eco:isVegetationCoverReported {is_vegetation_cover_reported}^^xsd:boolean ; eco:materialSampleTypes {material_sample_types}^^xsd:string ; eco:nonTargetTaxa {non_target_taxa}^^xsd:string ; eco:protocolDescriptions {protocol_descriptions}^^xsd:string ; eco:protocolNames {protocol_names}^^xsd:string ; eco:protocolReferences {protocol_references}^^xsd:string ; eco:reportedExtremeConditions {reported_extreme_conditions}^^xsd:string ; eco:reportedWeather {reported_weather}^^xsd:string ; eco:sampleSizeUnit {sample_size_unit}^^xsd:string ; eco:sampleSizeValue {sample_size_value}^^xsd:decimal ; eco:samplingEffortProtocol {sampling_effort_protocol}^^xsd:string ; eco:samplingEffortUnit {sampling_effort_unit}^^xsd:string ; eco:samplingEffortValue {sampling_effort_value}^^xsd:decimal ; eco:samplingPerformedBy {sampling_performed_by}^^xsd:string ; eco:siteCount {site_count}^^xsd:integer ; eco:siteNestingDescription {site_nesting_description}^^xsd:string ; eco:taxonCompletenessProtocols {taxon_completeness_protocols}^^xsd:string ; eco:taxonCompletenessReported {taxon_completeness_reported}^^xsd:string ; eco:totalAreaSampledUnit {total_area_sampled_unit}^^xsd:string ; eco:totalAreaSampledValue {total_area_sampled_value}^^xsd:decimal ; eco:verbatimSiteDescriptions {verbatim_site_descriptions}^^xsd:string ; eco:verbatimSiteNames {verbatim_site_names}^^xsd:string ; eco:verbatimTargetScope {verbatim_target_scope}^^xsd:string ; eco:voucherInstitutions {voucher_institutions}^^xsd:string ; ecoiri:samplingEffortProtocol :protocol/{sampling_effort_protocol_id} ; dwcdp:happenedDuring :event/{event_id} ; dwcdp:followed :protocol/{sampling_effort_protocol_id} ; dwcdp:identifiedBy :agent/{identified_by_id} ; dwcdp:samplingBy :agent/{sampling_performed_by_id} . 
 source		SELECT * FROM dwcowl.main.survey
 
-mappingId	organism_interaction
-target		:organism-interaction/{organism_interaction_id} a dwc:OrganismInteraction ; dwc:organismInteractionID {organism_interaction_id}^^xsd:string ; dwc:eventID {event_id}^^xsd:string ; dc:source {external_related_occurrence_source}^^xsd:string ; dwc:externalRelatedOccurrenceID {external_related_occurrence_id}^^xsd:string ; dwc:feedbackURL {feedback_url}^^xsd:string ; dwc:organismInteractionDescription {organism_interaction_description}^^xsd:string ; dwc:organismInteractionType {organism_interaction_type}^^xsd:string ; dwc:relatedOccurrenceID {related_occurrence_id}^^xsd:string ; dwc:relatedOrganismPart {related_organism_part}^^xsd:string ; dwc:subjectOccurrenceID {subject_occurrence_id}^^xsd:string ; dwc:subjectOrganismPart {subject_organism_part}^^xsd:string . 
-source		SELECT * FROM dwcowl.main.organism_interaction
+mappingId	chronometric_age_agent_role
+target		:chronometric-age-agent-role/{agent_id}/{chronometric_age_id} a dwc:ChronometricAgeAgentRole ; chrono:chronometricAgeID {chronometric_age_id}^^xsd:string ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :chronometric-age/{chronometric_age_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+source		SELECT * FROM dwcowl.main.chronometric_age_agent_role
+
+mappingId	chronometric_age_assertion
+target		:assertion/{assertion_id} a dwc:Assertion ; chrono:chronometricAgeID {chronometric_age_id}^^xsd:string ; dc:source {assertion_type_source}^^xsd:string , {assertion_value_source}^^xsd:string , {assertion_unit_source}^^xsd:string ; dwc:assertionBy {assertion_by}^^xsd:string ; dwc:assertionByID {assertion_by_id}^^xsd:string ; dwc:assertionEffectiveDate {assertion_effective_date}^^xsd:string ; dwc:assertionError {assertion_error}^^xsd:string ; dwc:assertionID {assertion_id}^^xsd:string ; dwc:assertionMadeDate {assertion_made_date}^^xsd:string ; dwc:assertionProtocolID {assertion_protocol_id}^^xsd:string ; dwc:assertionProtocols {assertion_protocols}^^xsd:string ; dwc:assertionReferences {assertion_references}^^xsd:string ; dwc:assertionRemarks {assertion_remarks}^^xsd:string ; dwc:assertionType {assertion_type}^^xsd:string ; dwc:assertionUnit {assertion_unit}^^xsd:string ; dwc:assertionValue {assertion_value}^^xsd:string ; dwc:assertionValueNumeric {assertion_value_numeric}^^xsd:decimal ; dwc:verbatimAssertionType {verbatim_assertion_type}^^xsd:string ; dwciri:assertionType <{assertion_type_iri}> ; dwciri:assertionUnit <{assertion_unit_iri}> ; dwciri:assertionValue <{assertion_value_iri}> ; dwcdp:about :chronometric-age/{chronometric_age_id} . 
+source		SELECT * FROM dwcowl.main.chronometric_age_assertion
+
+mappingId	chronometric_age_media
+target		:chronometric-age-media/{media_id}/{chronometric_age_id} a dwc:ChronometricAgeMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; chrono:chronometricAgeID {chronometric_age_id}^^xsd:string ; dwc:mediaID {media_id}^^xsd:string ; dwc:subjectCategory {subject_category}^^xsd:string ; dwciri:subjectCategory <{subject_category_iri}> ; dwcdp:hasContent :chronometric-age/{chronometric_age_id} ; dwcdp:thisMedia :media/{media_id} . 
+source		SELECT * FROM dwcowl.main.chronometric_age_media
+
+mappingId	chronometric_age_protocol
+target		:chronometric-age/{chronometric_age_id} dwcdp:followed :protocol/{protocol_id} . :protocol/{protocol_id} dwcdp:usedFor :chronometric-age/{chronometric_age_id} . 
+source		SELECT * FROM dwcowl.main.chronometric_age_protocol
+
+mappingId	chronometric_age_reference
+target		:chronometric-age-reference/{reference_id}/{chronometric_age_id} a dwc:ChronometricAgeReference ; chrono:chronometricAgeID {chronometric_age_id}^^xsd:string ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :chronometric-age/{chronometric_age_id} ; dwcdp:mentionedIn :bibliographic-resource/{reference_id} . 
+source		SELECT * FROM dwcowl.main.chronometric_age_reference
+
+mappingId	material_agent_role
+target		:material-agent-role/{agent_id}/{material_entity_id} a dwc:MaterialEntityAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:materialEntityID {material_entity_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :material-entity/{material_entity_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+source		SELECT * FROM dwcowl.main.material_agent_role
+
+mappingId	material_assertion
+target		:assertion/{assertion_id} a dwc:Assertion ; dc:source {assertion_type_source}^^xsd:string , {assertion_value_source}^^xsd:string , {assertion_unit_source}^^xsd:string ; dwc:assertionBy {assertion_by}^^xsd:string ; dwc:assertionByID {assertion_by_id}^^xsd:string ; dwc:assertionEffectiveDate {assertion_effective_date}^^xsd:string ; dwc:assertionError {assertion_error}^^xsd:string ; dwc:assertionID {assertion_id}^^xsd:string ; dwc:assertionMadeDate {assertion_made_date}^^xsd:string ; dwc:assertionProtocolID {assertion_protocol_id}^^xsd:string ; dwc:assertionProtocols {assertion_protocols}^^xsd:string ; dwc:assertionReferences {assertion_references}^^xsd:string ; dwc:assertionRemarks {assertion_remarks}^^xsd:string ; dwc:assertionType {assertion_type}^^xsd:string ; dwc:assertionUnit {assertion_unit}^^xsd:string ; dwc:assertionValue {assertion_value}^^xsd:string ; dwc:assertionValueNumeric {assertion_value_numeric}^^xsd:decimal ; dwc:materialEntityID {material_entity_id}^^xsd:string ; dwc:verbatimAssertionType {verbatim_assertion_type}^^xsd:string ; dwciri:assertionType <{assertion_type_iri}> ; dwciri:assertionUnit <{assertion_unit_iri}> ; dwciri:assertionValue <{assertion_value_iri}> ; dwcdp:about :material-entity/{material_entity_id} . 
+source		SELECT * FROM dwcowl.main.material_assertion
+
+mappingId	material_geological_context
+target		:material-entity/{material_entity_id} dwcdp:withinContext :geological_context_id/{geological_context_id} . :geological-context/{geological_context_id} dwcdp:contextFor :material-entity/{material_entity_id} . 
+source		SELECT * FROM dwcowl.main.material_geological_context
 
 mappingId	material_identifier
 target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:materialEntityID {material_entity_id}^^xsd:string ; dwcdp:identifierFor :material-entity/{material_entity_id} . 
 source		SELECT * FROM dwcowl.main.material_identifier
 
+mappingId	material_media
+target		:material-media/{media_id}/{material_entity_id} a dwc:MaterialEntityMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:materialEntityID {material_entity_id}^^xsd:string ; dwc:mediaID {media_id}^^xsd:string ; dwc:subjectCategory {subject_category}^^xsd:string ; dwciri:subjectCategory <{subject_category_iri}> ; dwcdp:hasContent :material-entity/{material_entity_id} ; dwcdp:thisMedia :media/{media_id} . 
+source		SELECT * FROM dwcowl.main.material_media
+
+mappingId	material_protocol
+target		:material-entity/{material_entity_id} dwcdp:followed :protocol/{protocol_id} . :protocol/{protocol_id} dwcdp:usedFor :material-entity/{material_entity_id} . 
+source		SELECT * FROM dwcowl.main.material_protocol
+
+mappingId	material_provenance
+target		:material-entity/{material_entity_id} dwcdp:hasProvenance :provenance/{provenance_id} . :provenance/{provenance_id} dwcdp:provenanceFor :material-entity/{material_entity_id} . 
+source		SELECT * FROM dwcowl.main.material_provenance
+
+mappingId	material_reference
+target		:material-reference/{reference_id}/{material_entity_id} a dwc:MaterialEntityReference ; dwc:materialEntityID {material_entity_id}^^xsd:string ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :material-entity/{material_entity_id} ; dwcdp:mentionedIn :bibliographic-resource/{reference_id} . 
+source		SELECT * FROM dwcowl.main.material_reference
+
+mappingId	material_usage_policy
+target		:material-entity/{material_entity_id} dwcdp:hasUsagePolicy :usage-policy/{usage_policy_id} . :usage-policy/{usage_policy_id} dwcdp:usagePolicyFor :material-entity/{material_entity_id} . 
+source		SELECT * FROM dwcowl.main.material_usage_policy
+
+mappingId	nucleotide_analysis_assertion
+target		:assertion/{assertion_id} a dwc:Assertion ; dc:source {assertion_type_source}^^xsd:string , {assertion_value_source}^^xsd:string , {assertion_unit_source}^^xsd:string ; dwc:assertionBy {assertion_by}^^xsd:string ; dwc:assertionByID {assertion_by_id}^^xsd:string ; dwc:assertionEffectiveDate {assertion_effective_date}^^xsd:string ; dwc:assertionError {assertion_error}^^xsd:string ; dwc:assertionID {assertion_id}^^xsd:string ; dwc:assertionMadeDate {assertion_made_date}^^xsd:string ; dwc:assertionProtocolID {assertion_protocol_id}^^xsd:string ; dwc:assertionProtocols {assertion_protocols}^^xsd:string ; dwc:assertionReferences {assertion_references}^^xsd:string ; dwc:assertionRemarks {assertion_remarks}^^xsd:string ; dwc:assertionType {assertion_type}^^xsd:string ; dwc:assertionUnit {assertion_unit}^^xsd:string ; dwc:assertionValue {assertion_value}^^xsd:string ; dwc:assertionValueNumeric {assertion_value_numeric}^^xsd:decimal ; dwc:nucleotideAnalysisID {nucleotide_analysis_id}^^xsd:string ; dwc:verbatimAssertionType {verbatim_assertion_type}^^xsd:string ; dwciri:assertionType <{assertion_type_iri}> ; dwciri:assertionUnit <{assertion_unit_iri}> ; dwciri:assertionValue <{assertion_value_iri}> ; dwcdp:about :nucleotide-analysis/{nucleotide_analysis_id} . 
+source		SELECT * FROM dwcowl.main.nucleotide_analysis_assertion
+
+mappingId	occurrence_agent_role
+target		:occurrence-agent-role/{agent_id}/{occurrence_id} a dwc:OccurrenceAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:occurrenceID {occurrence_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :occurrence/{occurrence_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+source		SELECT * FROM dwcowl.main.occurrence_agent_role
+
+mappingId	occurrence_assertion
+target		:assertion/{assertion_id} a dwc:Assertion ; dc:source {assertion_type_source}^^xsd:string , {assertion_value_source}^^xsd:string , {assertion_unit_source}^^xsd:string ; dwc:assertionBy {assertion_by}^^xsd:string ; dwc:assertionByID {assertion_by_id}^^xsd:string ; dwc:assertionEffectiveDate {assertion_effective_date}^^xsd:string ; dwc:assertionError {assertion_error}^^xsd:string ; dwc:assertionID {assertion_id}^^xsd:string ; dwc:assertionMadeDate {assertion_made_date}^^xsd:string ; dwc:assertionProtocolID {assertion_protocol_id}^^xsd:string ; dwc:assertionProtocols {assertion_protocols}^^xsd:string ; dwc:assertionReferences {assertion_references}^^xsd:string ; dwc:assertionRemarks {assertion_remarks}^^xsd:string ; dwc:assertionType {assertion_type}^^xsd:string ; dwc:assertionUnit {assertion_unit}^^xsd:string ; dwc:assertionValue {assertion_value}^^xsd:string ; dwc:assertionValueNumeric {assertion_value_numeric}^^xsd:decimal ; dwc:occurrenceID {occurrence_id}^^xsd:string ; dwc:verbatimAssertionType {verbatim_assertion_type}^^xsd:string ; dwciri:assertionType <{assertion_type_iri}> ; dwciri:assertionUnit <{assertion_unit_iri}> ; dwciri:assertionValue <{assertion_value_iri}> ; dwcdp:about :occurrence/{occurrence_id} . 
+source		SELECT * FROM dwcowl.main.occurrence_assertion
+
 mappingId	occurrence_identifier
 target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:occurrenceID {occurrence_id}^^xsd:string ; dwcdp:identifierFor :occurrence/{occurrence_id} . 
 source		SELECT * FROM dwcowl.main.occurrence_identifier
+
+mappingId	occurrence_media
+target		:occurrence-media/{media_id}/{occurrence_id} a dwc:OccurrenceMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:mediaID {media_id}^^xsd:string ; dwc:occurrenceID {occurrence_id}^^xsd:string ; dwc:subjectCategory {subject_category}^^xsd:string ; dwciri:subjectCategory <{subject_category_iri}> ; dwcdp:hasContent :occurrence/{occurrence_id} ; dwcdp:thisMedia :media/{media_id} . 
+source		SELECT * FROM dwcowl.main.occurrence_media
+
+mappingId	occurrence_protocol
+target		:occurrence/{occurrence_id} dwcdp:followed :protocol/{protocol_id} . :protocol/{protocol_id} dwcdp:usedDuring :occurrence/{occurrence_id} . 
+source		SELECT * FROM dwcowl.main.occurrence_protocol
+
+mappingId	occurrence_reference
+target		:occurrence-reference/{reference_id}/{occurrence_id} a dwc:OccurrenceReference ; dwc:occurrenceID {occurrence_id}^^xsd:string ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :occurrence/{occurrence_id} ; dwcdp:mentionedIn :bibliographic-resource/{reference_id} . 
+source		SELECT * FROM dwcowl.main.occurrence_reference
+
+mappingId	organism_interaction
+target		:organism-interaction/{organism_interaction_id} a dwc:OrganismInteraction ; dc:source {external_related_occurrence_source}^^xsd:string ; dwc:eventID {event_id}^^xsd:string ; dwc:externalRelatedOccurrenceID {external_related_occurrence_id}^^xsd:string ; dwc:feedbackURL {feedback_url}^^xsd:string ; dwc:organismInteractionDescription {organism_interaction_description}^^xsd:string ; dwc:organismInteractionID {organism_interaction_id}^^xsd:string ; dwc:organismInteractionType {organism_interaction_type}^^xsd:string ; dwc:relatedOccurrenceID {related_occurrence_id}^^xsd:string ; dwc:relatedOrganismPart {related_organism_part}^^xsd:string ; dwc:subjectOccurrenceID {subject_occurrence_id}^^xsd:string ; dwc:subjectOrganismPart {subject_organism_part}^^xsd:string ; dwcdp:happenedDuring :event/{event_id} ; dwcdp:interactionBy :occurrence/{subject_occurrence_id} ; dwcdp:interactionWith :occurrence/{related_occurrence_id} . 
+source		SELECT * FROM dwcowl.main.organism_interaction
+
+mappingId	organism_interaction_agent_role
+target		:organism-interaction-agent-role/{agent_id}/{organism_interaction_id} a dwc:OrganismInteractionAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:organismInteractionID {organism_interaction_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :organism-interaction/{organism_interaction_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+source		SELECT * FROM dwcowl.main.organism_interaction_agent_role
+
+mappingId	organism_interaction_assertion
+target		:assertion/{assertion_id} a dwc:Assertion ; dc:source {assertion_type_source}^^xsd:string , {assertion_value_source}^^xsd:string , {assertion_unit_source}^^xsd:string ; dwc:assertionBy {assertion_by}^^xsd:string ; dwc:assertionByID {assertion_by_id}^^xsd:string ; dwc:assertionEffectiveDate {assertion_effective_date}^^xsd:string ; dwc:assertionError {assertion_error}^^xsd:string ; dwc:assertionID {assertion_id}^^xsd:string ; dwc:assertionMadeDate {assertion_made_date}^^xsd:string ; dwc:assertionProtocolID {assertion_protocol_id}^^xsd:string ; dwc:assertionProtocols {assertion_protocols}^^xsd:string ; dwc:assertionReferences {assertion_references}^^xsd:string ; dwc:assertionRemarks {assertion_remarks}^^xsd:string ; dwc:assertionType {assertion_type}^^xsd:string ; dwc:assertionUnit {assertion_unit}^^xsd:string ; dwc:assertionValue {assertion_value}^^xsd:string ; dwc:assertionValueNumeric {assertion_value_numeric}^^xsd:decimal ; dwc:organismInteractionID {organism_interaction_id}^^xsd:string ; dwc:verbatimAssertionType {verbatim_assertion_type}^^xsd:string ; dwciri:assertionType <{assertion_type_iri}> ; dwciri:assertionUnit <{assertion_unit_iri}> ; dwciri:assertionValue <{assertion_value_iri}> ; dwcdp:about :organism-interaction/{organism_interaction_id} . 
+source		SELECT * FROM dwcowl.main.organism_interaction_assertion
+
+mappingId	organism_interaction_media
+target		:organism-interaction-media/{media_id}/{organism_interaction_id} a dwc:OrganismInteractionMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:mediaID {media_id}^^xsd:string ; dwc:organismInteractionID {organism_interaction_id}^^xsd:string ; dwc:subjectCategory {subject_category}^^xsd:string ; dwciri:subjectCategory <{subject_category_iri}> ; dwcdp:hasContent :organism-interaction/{organism_interaction_id} ; dwcdp:thisMedia :media/{media_id} . 
+source		SELECT * FROM dwcowl.main.organism_interaction_media
+
+mappingId	organism_interaction_reference
+target		:organism-interaction-reference/{reference_id}/{organism_interaction_id} a dwc:OrganismInteractionReference ; dwc:organismInteractionID {organism_interaction_id}^^xsd:string ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :organism-interaction/{organism_interaction_id} ; dwcdp:mentionedIn :bibliographic-resource/{reference_id} . 
+source		SELECT * FROM dwcowl.main.organism_interaction_reference
+
+mappingId	survey_agent_role
+target		:survey-agent-role/{agent_id}/{survey_id} a dwc:SurveyAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwc:surveyID {survey_id}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :survey/{survey_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+source		SELECT * FROM dwcowl.main.survey_agent_role
+
+mappingId	survey_assertion
+target		:assertion/{assertion_id} a dwc:Assertion ; dc:source {assertion_type_source}^^xsd:string , {assertion_value_source}^^xsd:string , {assertion_unit_source}^^xsd:string ; dwc:assertionBy {assertion_by}^^xsd:string ; dwc:assertionByID {assertion_by_id}^^xsd:string ; dwc:assertionEffectiveDate {assertion_effective_date}^^xsd:string ; dwc:assertionError {assertion_error}^^xsd:string ; dwc:assertionID {assertion_id}^^xsd:string ; dwc:assertionMadeDate {assertion_made_date}^^xsd:string ; dwc:assertionProtocolID {assertion_protocol_id}^^xsd:string ; dwc:assertionProtocols {assertion_protocols}^^xsd:string ; dwc:assertionReferences {assertion_references}^^xsd:string ; dwc:assertionRemarks {assertion_remarks}^^xsd:string ; dwc:assertionType {assertion_type}^^xsd:string ; dwc:assertionUnit {assertion_unit}^^xsd:string ; dwc:assertionValue {assertion_value}^^xsd:string ; dwc:assertionValueNumeric {assertion_value_numeric}^^xsd:decimal ; dwc:surveyID {survey_id}^^xsd:string ; dwc:verbatimAssertionType {verbatim_assertion_type}^^xsd:string ; dwciri:assertionType <{assertion_type_iri}> ; dwciri:assertionUnit <{assertion_unit_iri}> ; dwciri:assertionValue <{assertion_value_iri}> ; dwcdp:about :survey/{survey_id} . 
+source		SELECT * FROM dwcowl.main.survey_assertion
 
 mappingId	survey_identifier
 target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:surveyID {survey_id}^^xsd:string ; dwcdp:identifierFor :survey/{survey_id} . 
 source		SELECT * FROM dwcowl.main.survey_identifier
 
+mappingId	survey_protocol
+target		:survey/{survey_id} dwcdp:followed :protocol/{protocol_id} . :protocol/{protocol_id} dwcdp:usedDuring :survey/{survey_id} . 
+source		SELECT * FROM dwcowl.main.survey_protocol
+
+mappingId	survey_reference
+target		:survey-reference/{reference_id}/{survey_id} a dwc:SurveyReference ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwc:surveyID {survey_id}^^xsd:string ; dwcdp:mentioned :survey/{survey_id} ; dwcdp:mentionedIn :bibliographic-resource/{reference_id} . 
+source		SELECT * FROM dwcowl.main.survey_reference
+
 mappingId	survey_target
-target		:survey-target/{survey_target_id} a dwc:SurveyTarget ; dwc:surveyTargetID {survey_target_id}^^xsd:string ; dwc:surveyID {survey_id}^^xsd:string ; dwc:isSurveyTargetFullyReported {is_survey_target_fully_reported}^^xsd:boolean . 
+target		:survey-target/{survey_target_id} a dwc:SurveyTarget ; dwc:isSurveyTargetFullyReported {is_survey_target_fully_reported}^^xsd:boolean ; dwc:surveyID {survey_id}^^xsd:string ; dwc:surveyTargetID {survey_target_id}^^xsd:string ; dwcdp:targetFor :survey/{survey_id} . 
 source		SELECT DISTINCT survey_target_id, survey_id, is_survey_target_fully_reported FROM dwcowl.main.survey_target
 
-mappingId	uni1-interaction_by
-target		:organism-interaction/{organism_interaction_id} dwcdp:interactionBy :occurrence/{subject_occurrence_id} . 
-source		SELECT * FROM dwcowl.main.organism_interaction
+mappingId	survey_target_definition
+target		:survey-target/{survey_target_id}/definition/{definition_key} a dwc:SurveyTargetDefinition ; dc:source {survey_target_type_source}^^xsd:string , {survey_target_value_source}^^xsd:string , {survey_target_unit_source}^^xsd:string ; dcterms:type <{survey_target_type_iri}> ; dwc:surveyTargetType {survey_target_type}^^xsd:string ; dwc:surveyTargetUnit {survey_target_unit}^^xsd:string ; dwc:surveyTargetValue {survey_target_value}^^xsd:string ; dwciri:surveyTargetValue <{survey_target_value_iri}> ; dwc:includeOrExclude {include_or_exclude}^^xsd:string ; dwciri:surveyTargetUnit <{survey_target_unit_iri}> . 
+source		SELECT *, LOWER(REPLACE(survey_target_type, ' ', '')) AS definition_key FROM dwcowl.main.survey_target
 
-mappingId	uni1-interaction_with
-target		:organism-interaction/{organism_interaction_id} dwcdp:interactionWith :occurrence/{related_occurrence_id} . 
-source		SELECT * FROM dwcowl.main.organism_interaction
+mappingId	survey_target_has_definition
+target		:survey-target/{survey_target_id} dwcdp:hasDefinition :survey-target/{survey_target_id}/definition/{definition_key} . 
+source		SELECT survey_target_id, LOWER(REPLACE(survey_target_type, ' ', '')) AS definition_key FROM dwcowl.main.survey_target
 
 mappingId	happened_during_transitive_event
 target		:event/{child} dwcdp:happenedDuringTransitive :event/{ancestor} . 
 source		SELECT child, ancestor FROM dwcowl.main.happened_during_transitive_event
-
-mappingId	survey-target-has-part
-target		:survey-target/{survey_target_id} dwcdp:hasDefinition :survey-target/{survey_target_id}/component/{type_key} . 
-source		SELECT survey_target_id, LOWER(REPLACE(survey_target_type, ' ', '')) AS type_key FROM dwcowl.main.survey_target
 ]]
 
