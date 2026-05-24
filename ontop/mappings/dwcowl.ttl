@@ -181,7 +181,9 @@ ac:subjectPart rdf:type owl:ObjectProperty ;
 
 
 ###  http://rs.tdwg.org/ac/terms/subtype
-ac:subtype rdf:type owl:ObjectProperty .
+ac:subtype rdf:type owl:ObjectProperty ;
+           rdfs:label "Subtype" ;
+           skos:definition "A class, represented by an IRI, that provides for more specialization of a dwc:Media resource type than dcterms:type." .
 
 
 ###  http://rs.tdwg.org/ac/terms/variant
@@ -310,6 +312,12 @@ dwcdp:commentedBy rdf:type owl:ObjectProperty ;
 dwcdp:conductedBy rdf:type owl:ObjectProperty ;
                   rdfs:label "Conducted By" ;
                   skos:definition "An object property to relate a dwc:Event to the dcterms:Agent that conducted it." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/contextFor
+dwcdp:contextFor rdf:type owl:ObjectProperty ;
+                 rdfs:label "Context For" ;
+                 skos:definition "An object property used to relate a dwc:GeologicalContext to the dwc:MaterialEntity it is a context for." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/createdBy
@@ -801,10 +809,6 @@ dc:rights rdf:type owl:DatatypeProperty ;
 dc:source rdf:type owl:DatatypeProperty ;
           rdfs:label "Source" ;
           skos:definition "A related resource from which the described resource is derived." .
-
-
-###  http://purl.org/dc/elements/1.1/title
-dc:title rdf:type owl:DatatypeProperty .
 
 
 ###  http://purl.org/dc/elements/1.1/type
@@ -4872,6 +4876,24 @@ dwc:Assertion rdf:type owl:Class ;
                            "the weight of a dwc:Organism in grams" .
 
 
+###  http://rs.tdwg.org/dwc/terms/ChronometricAgeAgentRole
+dwc:ChronometricAgeAgentRole rdf:type owl:Class ;
+                             rdfs:label "Chronometric Age Agent Role" ;
+                             skos:definition "A role filled by a dcterms:Agent with respect to a chrono:ChronometricAge." .
+
+
+###  http://rs.tdwg.org/dwc/terms/ChronometricAgeMedia
+dwc:ChronometricAgeMedia rdf:type owl:Class ;
+                         rdfs:label "Chronometric Age Media" ;
+                         skos:definition "A chrono:ChronometricAge as content in a dwc:Media entity." .
+
+
+###  http://rs.tdwg.org/dwc/terms/ChronometricAgeReference
+dwc:ChronometricAgeReference rdf:type owl:Class ;
+                             rdfs:label "Chronometric Age Reference" ;
+                             skos:definition "A dcterms:BibliographicResource related to a chrono:ChronometricAge." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/Event
 dwc:Event rdf:type owl:Class ;
           rdfs:label "Event" ;
@@ -4958,6 +4980,24 @@ dwc:MaterialEntity rdf:type owl:Class ;
                                 "the stomach contents of a fish" .
 
 
+###  http://rs.tdwg.org/dwc/terms/MaterialEntityAgentRole
+dwc:MaterialEntityAgentRole rdf:type owl:Class ;
+                            rdfs:label "Material Entity Agent Role" ;
+                            skos:definition "A role filled by a dcterms:Agent with respect to a dwc:MaterialEntity." .
+
+
+###  http://rs.tdwg.org/dwc/terms/MaterialEntityMedia
+dwc:MaterialEntityMedia rdf:type owl:Class ;
+                        rdfs:label "Material Entity Media" ;
+                        skos:definition "A dwc:MaterialEntity as content in a dwc:Media entity." .
+
+
+###  http://rs.tdwg.org/dwc/terms/MaterialEntityReference
+dwc:MaterialEntityReference rdf:type owl:Class ;
+                            rdfs:label "Material Entity Reference" ;
+                            skos:definition "A dcterms:BibliographicResource relatd to a dwc:MaterialEntity." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/Media
 dwc:Media rdf:type owl:Class ;
           rdfs:label "Media" ;
@@ -5012,6 +5052,24 @@ dwc:Occurrence rdf:type owl:Class ;
                             "a wolf pack on the shore of Kluane Lake in 1988" .
 
 
+###  http://rs.tdwg.org/dwc/terms/OccurrenceAgentRole
+dwc:OccurrenceAgentRole rdf:type owl:Class ;
+                        rdfs:label "Occurrence Agent Role" ;
+                        skos:definition "A role filled by a dcterms:Agent with respect to a dwc:Occurrence." .
+
+
+###  http://rs.tdwg.org/dwc/terms/OccurrenceMedia
+dwc:OccurrenceMedia rdf:type owl:Class ;
+                    rdfs:label "Occurrence Media" ;
+                    skos:definition "A dwc:Occurrence as content in a dwc:Media entity." .
+
+
+###  http://rs.tdwg.org/dwc/terms/OccurrenceReference
+dwc:OccurrenceReference rdf:type owl:Class ;
+                        rdfs:label "A dcterms:BibliographicResource related to a dwc:Occurrence." ,
+                                   "Occurrence Reference" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/Organism
 dwc:Organism rdf:type owl:Class ;
              rdfs:label "Organism" ;
@@ -5032,6 +5090,24 @@ dwc:OrganismInteraction rdf:type owl:Class ;
                                      "a mosquito sucking blood from a chimpanzee's arm" ,
                                      "a slug eating a fungus growing on decomposing stump" ,
                                      "a viral infection in a plant" .
+
+
+###  http://rs.tdwg.org/dwc/terms/OrganismInteractionAgentRole
+dwc:OrganismInteractionAgentRole rdf:type owl:Class ;
+                                 rdfs:label "Organism Interaction Agent Role" ;
+                                 skos:definition "A role filled by a dcterms:Agent with respect to a dwc:OrganismInteraction." .
+
+
+###  http://rs.tdwg.org/dwc/terms/OrganismInteractionMedia
+dwc:OrganismInteractionMedia rdf:type owl:Class ;
+                             rdfs:label "Organism Interaction Media" ;
+                             skos:definition "A dwc:OrganismInteraction as content in a dwc:Media entity." .
+
+
+###  http://rs.tdwg.org/dwc/terms/OrganismInteractionReference
+dwc:OrganismInteractionReference rdf:type owl:Class ;
+                                 rdfs:label "Organism Interaction Reference" ;
+                                 skos:definition "A dcterms:BibliographicResource related to a dwc:OrganismInteraction." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/OrganismReference
@@ -5093,6 +5169,18 @@ dwc:Survey rdf:type owl:Class ;
                         "an environmental impact assessment (e.g., pre-construction biological baseline survey for a wind farm project)" .
 
 
+###  http://rs.tdwg.org/dwc/terms/SurveyAgentRole
+dwc:SurveyAgentRole rdf:type owl:Class ;
+                    rdfs:label "Survey Agent Role" ;
+                    skos:definition "A role filled by a dcterms:Agent with respect to an eco:Survey." .
+
+
+###  http://rs.tdwg.org/dwc/terms/SurveyReference
+dwc:SurveyReference rdf:type owl:Class ;
+                    rdfs:label "Survey Reference" ;
+                    skos:definition "A dcterms:BibliographicResource related to a dwc:Survey." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/SurveyTarget
 dwc:SurveyTarget rdf:type owl:Class ;
                  rdfs:label "Survey Target" ;
@@ -5102,6 +5190,12 @@ dwc:SurveyTarget rdf:type owl:Class ;
                               "all bird species except Larus gulls, fulmars and kittiwakes" ,
                               "all total lengths except < 12 inches" ,
                               "reproductive female Ctenomys sociabilis (only)" .
+
+
+###  http://rs.tdwg.org/dwc/terms/SurveyTargetDefinition
+dwc:SurveyTargetDefinition rdf:type owl:Class ;
+                           rdfs:label "Survey Target Definition" ;
+                           skos:definition "A component of a dwc:SurveyTarget, scoped to a certain combination of terms." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/UsagePolicy
