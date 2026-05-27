@@ -5,6 +5,7 @@ from pathlib import Path
 import time
 #
 import docker
+from docker.errors import NotFound
 import httpx
 #
 from db_builder import context_hash
@@ -117,7 +118,11 @@ class ContainerRegistry:
 
         # NOTE: For now force remove any pre-existing container.
         #
-        # self._docker.containers.get(container_name).remove(force=True)
+        try:
+            container = self._docker.containers.get(container_name)
+            container.remove(force=True)
+        except NotFound:
+            pass
 
         volumes = {
             self._host_mounts.get(str(DB_DIR)): {
