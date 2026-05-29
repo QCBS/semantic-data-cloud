@@ -13,7 +13,9 @@ CREATE OR REPLACE TABLE datasets (
     min_lon DOUBLE,
     min_lat DOUBLE,
     max_lon DOUBLE,
-    max_lat DOUBLE
+    max_lat DOUBLE,
+	begin_date DATE,
+	end_date DATE 
 );
 """)
 
@@ -113,6 +115,39 @@ def read_eml_from_s3(dataset, ddb):
 					max_lat = CAST(bbox ->> 'northBoundingCoordinate' AS DOUBLE)
 				FROM extracted_coords
 				WHERE datasets.name = extracted_coords.name;
+				""")
+
+		resp = ddb.sql("""
+				WITH exploded_temporal AS (
+					SELECT
+						datasets.name,
+						CAST(je.value -> 'rangeOfDates' -> 'beginDate' ->> 'calendarDate' AS DATE) AS start_date,
+						CAST(je.value -> 'rangeOfDates' -> 'endDate' ->> 'calendarDate' AS DATE) AS end_date
+					FROM datasets,
+					json_each(
+						CASE
+							WHEN json_type(datasets.eml_content -> 'dataset' -> 'coverage' -> 'temporalCoverage') = 'ARRAY'
+								THEN datasets.eml_content -> 'dataset' -> 'coverage' -> 'temporalCoverage'
+							ELSE json_array(datasets.eml_content -> 'dataset' -> 'coverage' -> 'temporalCoverage')
+						END
+					) AS je
+				),
+
+				aggregated AS (
+					SELECT
+						name,
+						MIN(start_date) AS begin_date,
+						MAX(end_date) AS end_date
+					FROM exploded_temporal
+					GROUP BY name
+				)
+
+				UPDATE datasets
+				SET
+					begin_date = aggregated.begin_date,
+					end_date = aggregated.end_date
+				FROM aggregated
+				WHERE datasets.name = aggregated.name;
 				""")
 
 		print(f"Inserted into DuckDB: {resp.rowcount} row(s) affected.")
