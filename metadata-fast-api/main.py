@@ -5,8 +5,8 @@ import os
 from fastapi import FastAPI, Query, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from shapely.geometry import shape
 from s3io import s3_to_duckdb, duckdb_connect
+from shapely.geometry import shape
 
 
 ddb = duckdb_connect()
@@ -21,7 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-success = s3_to_duckdb('eml', '.json', ddb)
+success = s3_to_duckdb("eml", ".json", ddb)
 if success: 
     print("Successfully loaded S3 data into DuckDB.")
 else:
@@ -30,7 +30,7 @@ else:
 @app.get("/")
 def read_root():
     return {"title": "Welcome to the QCBS Semantic Data Cloud API!", 
-            "links": {"datasets": f"{os.getenv('API_BASE_URL')}/datasets"},
+            "links": {"datasets": f"{os.getenv("API_BASE_URL")}/datasets"},
             "datasets": list_datasets(1, 10)}
 
 
@@ -87,7 +87,7 @@ def search_datasets(
     max_lon: float = Query(180.0, description="East bound of query bbox (in WGS84)"),
     max_lat: float = Query(90.0, description="North bound of query bbox (in WGS84)"),
     begin_date: date = Query(date(1900, 1, 1), description="Start of temporal range (YYYY-MM-DD)"),
-    end_date:   date = Query(date.today(), description="End of temporal range (YYYY-MM-DD)"),
+    end_date: date = Query(date.today(), description="End of temporal range (YYYY-MM-DD)"),
 ):
     rows = ddb.execute("""
         SELECT name
@@ -120,8 +120,3 @@ def search_datasets(
     ).fetchall()
 
     return {"datasets": [row[0] for row in rows]}
-
-
-@app.get("/health")
-def health():
-    return {"status": "ok"}
