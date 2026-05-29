@@ -23,7 +23,7 @@ def duckdb_connect():
 
 def create_s3_res():
 	return boto3.client(
-	    service_name='s3',
+	    service_name="s3",
 	    aws_access_key_id=os.getenv("S3_ACCESS_ID"),
 	    aws_secret_access_key=os.getenv("S3_ACCESS_SECRET"),
 	    endpoint_url=os.getenv("S3_ENDPOINT_URL"),
@@ -66,7 +66,7 @@ def list_eml_files_in_bucket(target_name, extension):
 		return False
 
 	if not datasets:
-		print('No matching files found in S3.')
+		print("No matching files found in S3.")
 		return []
 
 	return datasets
@@ -97,43 +97,23 @@ def read_eml_from_s3(dataset, ddb):
 		resp = ddb.sql("INSERT INTO datasets (name, eml_content) VALUES (?, ?);", params=[dataset["folder"].replace("datasets/", ""), json.dumps(content)])
 
 		resp = ddb.sql("""
+				WITH extracted_coords AS (
+				SELECT
+					name,
+					eml_content,
+					eml_content -> 'dataset' -> 'coverage' -> 'geographicCoverage' -> 'boundingCoordinates' AS bbox
+				FROM datasets
+				)
+
 				UPDATE datasets
 				SET
-					min_lon = CAST(
-						eml_content
-							-> 'dataset'
-							-> 'coverage'
-							-> 'geographicCoverage'
-							-> 'boundingCoordinates'
-							->> 'westBoundingCoordinate'
-					AS DOUBLE),
-
-					max_lon = CAST(
-						eml_content
-							-> 'dataset'
-							-> 'coverage'
-							-> 'geographicCoverage'
-							-> 'boundingCoordinates'
-							->> 'eastBoundingCoordinate'
-					AS DOUBLE),
-
-					min_lat = CAST(
-						eml_content
-							-> 'dataset'
-							-> 'coverage'
-							-> 'geographicCoverage'
-							-> 'boundingCoordinates'
-							->> 'southBoundingCoordinate'
-					AS DOUBLE),
-
-					max_lat = CAST(
-						eml_content
-							-> 'dataset'
-							-> 'coverage'
-							-> 'geographicCoverage'
-							-> 'boundingCoordinates'
-							->> 'northBoundingCoordinate'
-					AS DOUBLE);""")
+					min_lon = CAST(bbox ->> 'westBoundingCoordinate' AS DOUBLE),
+					min_lat = CAST(bbox ->> 'southBoundingCoordinate' AS DOUBLE),
+					max_lon = CAST(bbox ->> 'eastBoundingCoordinate' AS DOUBLE),
+					max_lat = CAST(bbox ->> 'northBoundingCoordinate' AS DOUBLE)
+				FROM extracted_coords
+				WHERE datasets.name = extracted_coords.name;
+				""")
 
 		print(f"Inserted into DuckDB: {resp.rowcount} row(s) affected.")
 		return content
