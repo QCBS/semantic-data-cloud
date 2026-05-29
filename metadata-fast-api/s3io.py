@@ -1,12 +1,21 @@
-import boto3
 import json
 import os
+#
+import boto3
 import duckdb
-from fastapi import FastAPI, Request
 
 
 ddb = duckdb.connect()
-ddb.sql("CREATE OR REPLACE TABLE datasets (name VARCHAR, eml_content JSON);")
+ddb.sql("""
+CREATE OR REPLACE TABLE datasets (
+    name VARCHAR,
+    eml_content JSON,
+    min_lon DOUBLE,
+    min_lat DOUBLE,
+    max_lon DOUBLE,
+    max_lat DOUBLE
+);
+""")
 
 
 def duckdb_connect():
@@ -85,7 +94,47 @@ def read_eml_from_s3(dataset, ddb):
 				content['recordedTaxa'] = species_from_occurrences(href)
 
 		content['self'] = f"{os.getenv('API_BASE_URL')}/dataset/{dataset['name']}"
-		resp = ddb.sql("INSERT INTO datasets VALUES (?, ?);", params=[dataset['folder'].replace('datasets/', ''), json.dumps(content)])
+		resp = ddb.sql("INSERT INTO datasets (name, eml_content) VALUES (?, ?);", params=[dataset['folder'].replace('datasets/', ''), json.dumps(content)])
+
+		resp = ddb.sql("""
+				UPDATE datasets
+				SET
+					min_lon = CAST(
+						eml_content
+							-> 'dataset'
+							-> 'coverage'
+							-> 'geographicCoverage'
+							-> 'boundingCoordinates'
+							->> 'westBoundingCoordinate'
+					AS DOUBLE),
+
+					max_lon = CAST(
+						eml_content
+							-> 'dataset'
+							-> 'coverage'
+							-> 'geographicCoverage'
+							-> 'boundingCoordinates'
+							->> 'eastBoundingCoordinate'
+					AS DOUBLE),
+
+					min_lat = CAST(
+						eml_content
+							-> 'dataset'
+							-> 'coverage'
+							-> 'geographicCoverage'
+							-> 'boundingCoordinates'
+							->> 'southBoundingCoordinate'
+					AS DOUBLE),
+
+					max_lat = CAST(
+						eml_content
+							-> 'dataset'
+							-> 'coverage'
+							-> 'geographicCoverage'
+							-> 'boundingCoordinates'
+							->> 'northBoundingCoordinate'
+					AS DOUBLE);""")
+
 		print(f"Inserted into DuckDB: {resp.rowcount} row(s) affected.")
 		return content
 	except Exception as exc:
