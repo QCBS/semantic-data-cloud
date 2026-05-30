@@ -15,7 +15,8 @@ CREATE OR REPLACE TABLE datasets (
     max_lon DOUBLE,
     max_lat DOUBLE,
 	begin_date DATE,
-	end_date DATE 
+	end_date DATE ,
+	license_id VARCHAR
 );
 """)
 
@@ -148,6 +149,22 @@ def read_eml_from_s3(dataset, ddb):
 					end_date = aggregated.end_date
 				FROM aggregated
 				WHERE datasets.name = aggregated.name;
+				""")
+
+		resp = ddb.sql("""
+				WITH extracted_license AS (
+				SELECT
+					name,
+					eml_content,
+					eml_content -> 'dataset' -> 'licensed' ->> 'identifier' AS license_id
+				FROM datasets
+				)
+
+				UPDATE datasets
+				SET
+					license_id = extracted_license.license_id
+				FROM extracted_license
+				WHERE datasets.name = extracted_license.name;
 				""")
 
 		print(f"Inserted into DuckDB: {resp.rowcount} row(s) affected.")
