@@ -109,7 +109,18 @@ async def sparql_query(
             content=sparql_bytes,
         )
     except HTTPError as e:
-        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, f"SPARQL request failed: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"SPARQL request failed: {e}",
+        )
+
+    if response.status_code != 200:
+        raise HTTPException(
+            status_code=response.status_code,
+            detail={
+                "error": response.text
+            }
+        )
 
     result = response.json()
 
