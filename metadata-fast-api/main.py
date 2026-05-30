@@ -90,33 +90,23 @@ def search_datasets(
     end_date: date = Query(date.today(), description="End of temporal range (YYYY-MM-DD)"),
 ):
     rows = ddb.execute("""
-        SELECT name
-        FROM datasets
-        WHERE
-            -- Geographical coverage filtering
-            CAST(json_extract_string(eml_content,
-                '$.dataset.coverage.geographicCoverage.boundingCoordinates.westBoundingCoordinate')
-                AS DOUBLE) <= ?
-            AND CAST(json_extract_string(eml_content,
-                '$.dataset.coverage.geographicCoverage.boundingCoordinates.eastBoundingCoordinate')
-                AS DOUBLE) >= ?
-            AND CAST(json_extract_string(eml_content,
-                '$.dataset.coverage.geographicCoverage.boundingCoordinates.southBoundingCoordinate')
-                AS DOUBLE) <= ?
-            AND CAST(json_extract_string(eml_content,
-                '$.dataset.coverage.geographicCoverage.boundingCoordinates.northBoundingCoordinate')
-                AS DOUBLE) >= ?
-            -- Temporal coverage filtering
-            AND CAST(json_extract_string(eml_content,
-                '$.dataset.coverage.temporalCoverage.rangeOfDates.beginDate.calendarDate')
-                AS DATE) <= ?
-            AND CAST(json_extract_string(eml_content,
-                '$.dataset.coverage.temporalCoverage.rangeOfDates.endDate.calendarDate')
-                AS DATE) >= ?
+            SELECT name, min_lon, min_lat, max_lon, max_lat
+            FROM datasets
+            WHERE
+            -- Geographical intersection filtering
+            max_lon >= ?
+            AND min_lon <= ?
+            AND max_lat >= ?
+            AND min_lat <= ?
+
+            -- Temporal overlap filtering
+            AND end_date >= ?
+            AND begin_date <= ?
+
             -- Taxonomic coverage filtering (coming soon)
             ;
     """,
-    [max_lon, min_lon, max_lat, min_lat, end_date, begin_date,]
+    [min_lon, max_lon, min_lat, max_lat, begin_date, end_date]
     ).fetchall()
 
     return {"datasets": [row[0] for row in rows]}
