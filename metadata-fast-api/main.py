@@ -88,10 +88,39 @@ def search_datasets(
     max_lat: float = Query(90.0, description="North bound of query bbox (in WGS84)"),
     begin_date: date = Query(date(500, 1, 1), description="Start of temporal range (YYYY-MM-DD)"),
     end_date: date = Query(date.today(), description="End of temporal range (YYYY-MM-DD)"),
-    license_id: str | None = Query(None, description="SPDX ID of the license requested"),
+    license_id: list[str] | None = Query(None, description="SPDX IDs of the licenses requested"),
 ):
     params = [min_lon, max_lon, min_lat, max_lat, begin_date, end_date]
-    rows = ddb.execute("""
+
+    if license_id:
+        params.append(license_id)
+
+        rows = ddb.execute("""
+            SELECT name, min_lon, min_lat, max_lon, max_lat, license_id
+            FROM datasets
+            WHERE
+
+            -- Geographical intersection filtering
+            max_lon >= ?
+            AND min_lon <= ?
+            AND max_lat >= ?
+            AND min_lat <= ?
+
+            -- Temporal overlap filtering
+            AND end_date >= ?
+            AND begin_date <= ?
+
+            -- License filtering
+            AND license_id = ANY(?)
+
+            -- Taxonomic coverage filtering (coming soon)
+            ;
+            """,
+            params
+            ).fetchall()
+    
+    else:
+        rows = ddb.execute("""
             SELECT name, min_lon, min_lat, max_lon, max_lat
             FROM datasets
             WHERE
@@ -108,32 +137,6 @@ def search_datasets(
 
             -- Taxonomic coverage filtering (coming soon)
             ;
-    """,
-    params
-    ).fetchall()
-
-    if license_id:
-        params.append(license_id)
-        rows = ddb.execute("""
-                SELECT name, min_lon, min_lat, max_lon, max_lat, license_id
-                FROM datasets
-                WHERE
-
-                -- Geographical intersection filtering
-                max_lon >= ?
-                AND min_lon <= ?
-                AND max_lat >= ?
-                AND min_lat <= ?
-
-                -- Temporal overlap filtering
-                AND end_date >= ?
-                AND begin_date <= ?
-
-                -- License filtering
-                AND license_id = ?
-
-                -- Taxonomic coverage filtering (coming soon)
-                ;
         """,
         params
         ).fetchall()
