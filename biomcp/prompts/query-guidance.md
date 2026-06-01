@@ -1,89 +1,78 @@
 # Query Strategy Guide
 
-> This file is injected at runtime into every tool call description.
-> Written for a stateless LLM — be concrete, not abstract.
-
----
-
-## When to call inspect_ontology
-
-Call `inspect_ontology` **before** writing a query whenever:
-- You are unsure whether a property exists on a class
-- You want to confirm the correct traversal path between two classes
-- You see an unfamiliar prefix or term name
-- A query returned 0 results and you suspect a wrong property name
-
-| You want to know | Call |
-|---|---|
-| All classes in the ontology | `action="list_classes"` |
-| All properties on dwc:Event | `action="describe_class", target="dwc:Event"` |
-| How Occurrence links to Location | `action="find_path", target="dwc:Occurrence -> dcterms:Location"` |
-| Which property holds latitude | `action="search_properties", keyword="latitude"` |
-
-The ontology file is the ground truth. It is always more reliable than
-the schema hint. When they conflict, trust inspect_ontology.
+> Injected into the tool description at runtime.
 
 ---
 
 ## Step-by-step protocol for every query
 
-1. **Locate the correct query pattern before writing any SPARQL.**
-   Use the decision table at the top of the ontology reference above to find
-   your pattern. Copy it exactly. Adapt only the filter values.
-   Never write SPARQL from scratch.
+### Step 1 — Identify what the user wants and choose a pattern
 
-2. **Identify what the user wants — pick ONE path and follow it:**
+- Count or ranking → Pattern 5 with GROUP BY / ORDER BY DESC
+- Locations or coordinates → Pattern 2 or 3 (coordinates live on Location, never on Occurrence)
+- Dates or time range → Pattern 6 (dates live on Event, never on Occurrence)
+- Species interactions → OrganismInteraction section
+- Basic occurrence data → Pattern 1
 
-   - Question involves **interactions between species**?
-     → Go to the OrganismInteraction section. Use the standard pattern. STOP.
-   - Question involves **locations or coordinates**?
-     → Use Pattern 2 or 3. Coordinates are NEVER on dwc:Occurrence. STOP.
-   - Question is a **count or ranking**?
-     → Use Pattern 5 with GROUP BY / ORDER BY DESC. STOP.
-   - Question involves **dates or time**?
-     → Use Pattern 6. Dates are on dwc:Event, not dwc:Occurrence. STOP.
-   - **Unsure what properties exist**?
-     → Call inspect_ontology FIRST. Then write the query. STOP.
-   - Otherwise → Use Pattern 1 for basic occurrence queries.
+Copy the pattern exactly. Adapt filter values only. Never write SPARQL from scratch.
 
-3. **Build the query by copying the pattern and adapting filter values only:**
-   - Change species names, country codes, year ranges as needed
-   - Wrap optional fields in `OPTIONAL { }` — not all records have all properties
-   - Do not restructure the pattern or invent new traversal chains
+### Step 2 — Build the query
 
-4. **Always validate mentally before sending:**
-   - Are all used prefixes declared?
-   - Is `dwc:decimalLatitude` on `?loc` (not `?occ`)?
-   - Is there a LIMIT clause (unless it is a COUNT/aggregation query)?
-   - Are all SPARQL keywords UPPERCASE?
+- Declare all PREFIX namespaces at the top of every query
+- Wrap optional fields in `OPTIONAL { }` — not all records have all properties
+- Add a LIMIT clause on browsing queries (not needed for COUNT/aggregation)
+- Do not add geographic or country filters in SPARQL unless the user is asking
+  to filter individual rows by location — that is different from dataset-level scoping
+
+### Step 3 — Validate before sending
+
+- Are all used prefixes declared?
+- Is `dwc:decimalLatitude` on `?loc`, not `?occ`?
+- Is `dwc:eventDate` on `?event`, not `?occ`?
+- Are all SPARQL keywords UPPERCASE?
 
 ---
 
-## Common mistakes to avoid
+## Common mistakes
 
 | Wrong | Right |
 |---|---|
-| `?occ dwc:decimalLatitude ?lat` | Traverse to Location first via Event |
+| `?occ dwc:decimalLatitude ?lat` | Traverse to Location via Event first |
 | `?occ dwc:eventDate ?date` | `?event dwc:eventDate ?date` |
-| Missing PREFIX declarations | Always declare all namespaces |
-| No LIMIT on large queries | Always add LIMIT |
-| `FILTER(?name = "branta")` | `FILTER(LCASE(?name) = LCASE("Branta canadensis"))` for case safety |
-| Lowercase keywords: `as`, `order by`, `filter` | Always uppercase: `AS`, `ORDER BY`, `FILTER` |
+| Missing PREFIX declarations | Always declare all namespaces used |
+| No LIMIT on browsing queries | Always add LIMIT |
+| `FILTER(?name = "branta")` | `FILTER(LCASE(?name) = LCASE("Branta canadensis"))` |
 | `FILTER(REGEX(?name, "Abu", "i"))` | `FILTER(CONTAINS(LCASE(?name), "abudefduf"))` |
-| Using same variable for both occurrences in an interaction query | Use `?subjOcc` and `?objOcc` — distinct variable names for each role |
-| Forgetting `?objOcc a dwc:Occurrence` | Declare rdf:type explicitly for BOTH occurrence nodes |
-| Looking for `dwc:OrganismInteraction` properties on `dwc:Occurrence` | OrganismInteraction is a separate node — start with `?orgInt a dwc:OrganismInteraction` |
-| Writing `?x ?predicate ?value` to explore a class | Read the ontology reference above or call inspect_ontology instead |
+| Using same variable for both roles in an interaction | Use `?subjOcc` and `?objOcc` |
+| Lowercase keywords: `as`, `order by` | Always UPPERCASE: `AS`, `ORDER BY` |
 
 ---
 
 ## When a query returns 0 results
 
-Try these in order:
-1. Remove FILTER clauses one by one to see where results disappear
-2. Check that traversal chain uses `dwcdp:happenedDuring` then `dwcdp:spatialLocation`
-3. Wrap all non-essential triples in OPTIONAL and add them back gradually
-4. Run a COUNT with no filters to confirm the data class exists
+Try in this order:
+1. Run `SELECT * WHERE { ?s ?p ?o } LIMIT 20` to confirm the endpoint has data
+2. Remove FILTER clauses one by one to find which excludes all results
+3. Check traversal chains — is the correct intermediate node being used?
+4. Wrap non-essential triples in OPTIONAL and add them back one at a time
+
+---
+
+## Geographic and temporal scoping (optional)
+
+The endpoint can restrict which datasets are loaded by supplying a bounding box
+and/or temporal range alongside the query. Only do this when the user explicitly
+asks to scope at the dataset level.
+
+Important: a dataset with global coverage is included whenever its declared
+extent overlaps the requested box — it is not excluded because it covers more
+than the requested area. Filtering individual rows by coordinates or country
+should be done with SPARQL FILTER, not with the bbox parameter.
+
+| Parameter | Format | When to use |
+|-----------|--------|-------------|
+| bbox | [min_lon, min_lat, max_lon, max_lat] | User asks to limit to a specific region |
+| temporal | ["YYYY-MM-DD", "YYYY-MM-DD"] | User asks to limit to a collection period |
 
 ---
 
@@ -95,4 +84,3 @@ Try these in order:
 | Filtered by species | 500 |
 | Filtered by species + location | 1000 |
 | Aggregations (COUNT, GROUP BY) | No LIMIT needed |
-| Full export | 5000 max |
