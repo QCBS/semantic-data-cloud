@@ -3,8 +3,8 @@ from datetime import date
 from pydantic import BaseModel, field_validator
 
 class QueryRequest(BaseModel):
-    bbox: list[float]
-    temporal: list[str]
+    bbox: list[float] = [-180.0, -90.0, 180.0, 90.0]
+    temporal: list[str] = ["1000-01-01", "2100-12-31"]
     sparql: str
 
     @field_validator("bbox")
