@@ -3385,6 +3385,25 @@ dwc:rightsHolder rdf:type owl:DatatypeProperty ;
                  skos:definition "A name of a dcterms:Agent that owns or manages rights over a resource." .
 
 
+###  http://rs.tdwg.org/dwc/terms/sampleSizeUnit
+dwc:sampleSizeUnit rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Sample Size Unit" ;
+                   skos:definition "The unit of measurement of the size (time duration, length, area, or volume) of a sample in a sampling dwc:Event." ;
+                   skos:example "cubic metre" ,
+                                "day" ,
+                                "hour" ,
+                                "metre" ,
+                                "minute" ,
+                                "square metre" .
+
+
+###  http://rs.tdwg.org/dwc/terms/sampleSizeValue
+dwc:sampleSizeValue rdf:type owl:DatatypeProperty ;
+                    rdfs:label "Sample Size Value" ;
+                    skos:definition "A numeric value for a measurement of the size (time duration, length, area, or volume) of a sample in a sampling dwc:Event." ;
+                    skos:example 5 .
+
+
 ###  http://rs.tdwg.org/dwc/terms/samplingPerformedByID
 dwc:samplingPerformedByID rdf:type owl:DatatypeProperty ;
                           rdfs:label "Sampling Performed By ID" ;
@@ -4025,25 +4044,6 @@ eco:reportedWeather rdf:type owl:DatatypeProperty ;
                     rdfs:label "Reported Weather" ;
                     skos:definition "A list of weather or climatic conditions present during a dwc:Event." ;
                     skos:example "{\\\"minimumTemperatureInDegreesFahrenheit\\\": 18, \\\"maximumTemperatureInDegreesFahrenheit\\\": 32}" .
-
-
-###  http://rs.tdwg.org/eco/terms/sampleSizeUnit
-eco:sampleSizeUnit rdf:type owl:DatatypeProperty ;
-                   rdfs:label "Sample Size Unit" ;
-                   skos:definition "The unit of measurement of the size (time duration, length, area, or volume) of a sample in a sampling dwc:Event." ;
-                   skos:example "cubic metre" ,
-                                "day" ,
-                                "hour" ,
-                                "metre" ,
-                                "minute" ,
-                                "square metre" .
-
-
-###  http://rs.tdwg.org/eco/terms/sampleSizeValue
-eco:sampleSizeValue rdf:type owl:DatatypeProperty ;
-                    rdfs:label "Sample Size Value" ;
-                    skos:definition "A numeric value for a measurement of the size (time duration, length, area, or volume) of a sample in a sampling dwc:Event." ;
-                    skos:example 5 .
 
 
 ###  http://rs.tdwg.org/eco/terms/samplingEffortProtocol
