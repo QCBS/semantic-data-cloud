@@ -6,8 +6,8 @@ from fastmcp import FastMCP
 from sparql_client import run_sparql, rows_to_markdown
 
 PROMPTS_PATH = Path(__file__).parent / "prompts"
-DWC_SCHEMA   = (PROMPTS_PATH / "darwin-core-schema.md").read_text(encoding="utf-8")
-QUERY_GUIDE  = (PROMPTS_PATH / "query-guidance.md").read_text(encoding="utf-8")
+DWC_SCHEMA = (PROMPTS_PATH / "darwin-core-schema.md").read_text(encoding="utf-8")
+QUERY_GUIDE = (PROMPTS_PATH / "query-guidance.md").read_text(encoding="utf-8")
 
 _TOOL_DESCRIPTION = f"""
 Translate a natural language biodiversity question into a SPARQL SELECT query
@@ -56,8 +56,8 @@ dataset level. Do not fill them in "helpfully" — leave them empty by default.
 
 @mcp.tool(description=_TOOL_DESCRIPTION)
 async def sparql_query(
-    query:    str,
-    bbox:     list[float] | None = None,
+    query: str,
+    bbox: list[float] | None = None,
     temporal: list[str]   | None = None,
 ) -> str:
     """Execute a SPARQL query against the biodiversity endpoint."""
