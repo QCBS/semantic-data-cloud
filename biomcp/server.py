@@ -15,7 +15,7 @@ and execute it against the Darwin Core linked-data endpoint.
 
 Your primary job is writing correct SPARQL. Focus on that.
 
-OPTIONAL geographic and temporal scoping:
+OPTIONAL geographic, temporal and lincense scoping:
   bbox     — [min_lon, min_lat, max_lon, max_lat] in WGS84.
              Only supply this when the user explicitly asks to restrict results
              to a geographic area AND that restriction is meant to filter which
@@ -26,8 +26,15 @@ OPTIONAL geographic and temporal scoping:
   temporal — ["YYYY-MM-DD", "YYYY-MM-DD"].
              Only supply this when the user explicitly asks to restrict by
              data collection period at the dataset level.
+  licenses — ["CC-BY-4.0", "CC0-1.0", ...].
+             List of SPDX license identifiers used to restrict which datasets
+             are loaded. Only supply this when the user explicitly requests
+             licensing constraints (for example: "CC-BY data only",
+             "public-domain records", or "exclude non-commercial licenses").
+             This filters datasets by their declared license and is not a
+             SPARQL filter on individual records.
 
-When in doubt, omit bbox and temporal entirely. Most questions do not need them.
+When in doubt, omit bbox, temporal and licenses entirely. Most questions do not need them.
 If a query returns 0 results, check the SPARQL before adjusting the bbox.
 
 ---
