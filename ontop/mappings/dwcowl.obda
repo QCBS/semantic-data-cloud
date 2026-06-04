@@ -245,7 +245,7 @@ target		:assertion/{assertion_id} a dwc:Assertion ; dc:source {assertion_type_so
 source		SELECT * FROM dwcowl.main.material_assertion
 
 mappingId	material_geological_context
-target		:material-entity/{material_entity_id} dwcdp:withinContext :geological_context_id/{geological_context_id} . :geological-context/{geological_context_id} dwcdp:contextFor :material-entity/{material_entity_id} . 
+target		:material-entity/{material_entity_id} dwcdp:withinContext :geological-context/{geological_context_id} . :geological-context/{geological_context_id} dwcdp:contextFor :material-entity/{material_entity_id} . 
 source		SELECT * FROM dwcowl.main.material_geological_context
 
 mappingId	material_identifier
