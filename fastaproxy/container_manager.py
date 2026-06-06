@@ -14,9 +14,9 @@ from db_builder import context_hash
 DB_DIR = Path("/db")
 MAPPING_DIR = Path("/app/config")
 BLANKS_DIR = Path("/blanks")
-STARTUP_TIMEOUT = 60
 ONTOP_IMAGE = os.getenv("ONTOP_IMAGE", "semantic-data-cloud-ontop")
 ONTOP_NETWORK = os.getenv("ONTOP_NETWORK", "dwc-net")
+ONTOP_STARTUP_TIMEOUT = float(os.getenv("ONTOP_STARTUP_TIMEOUT", 60))
 
 
 # NOTE: Simple class to be expanded on, for now just essential info
@@ -80,7 +80,7 @@ class ContainerRegistry:
             return False
 
     def _wait_for_health(self, ontop_url: str) -> None:
-        deadline = time.monotonic() + STARTUP_TIMEOUT
+        deadline = time.monotonic() + ONTOP_STARTUP_TIMEOUT
         while time.monotonic() < deadline:
             try:
                 res = httpx.get(f"{ontop_url}/actuator/health", timeout=3)
@@ -89,7 +89,7 @@ class ContainerRegistry:
             except Exception as e:
                 print(f"Error: {e}")
             time.sleep(2)
-        raise TimeoutError(f"Ontop container at {ontop_url} did not become healthy within {STARTUP_TIMEOUT}s!")
+        raise TimeoutError(f"Ontop container at {ontop_url} did not become healthy within {ONTOP_STARTUP_TIMEOUT}s!")
 
     def _write_properties(self, ctx_hash: str) -> Path:
         template_path = MAPPING_DIR / "dwcowl.properties"
