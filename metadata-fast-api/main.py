@@ -51,7 +51,8 @@ def get_dataset(dataset_id: str):
         raise HTTPException(status_code=404, detail="Dataset not found")
 
     eml = row[0]
-    return Response(eml, media_type="application/ld+json") if isinstance(eml, str) else eml
+
+    return Response(eml, media_type="application/ld+json")
 
 def list_datasets(
     page: int = Query(1, ge=1),
@@ -60,7 +61,7 @@ def list_datasets(
     offset = (page - 1) * page_size
 
     total = ddb.execute("SELECT COUNT(*) FROM datasets;").fetchone()[0]
-    print(total)
+
     rows = ddb.execute(
         "SELECT name, eml_content FROM datasets ORDER BY name LIMIT ? OFFSET ?;",
         [page_size, offset],
