@@ -65,13 +65,14 @@ dataset level. Do not fill them in "helpfully" — leave them empty by default.
 async def sparql_query(
     query: str,
     bbox: list[float] | None = None,
-    temporal: list[str]   | None = None,
+    temporal: list[str] | None = None,
+    licenses: list[str] | None = None,
 ) -> str:
     """Execute a SPARQL query against the biodiversity endpoint."""
-    print(f"[sparql_query] bbox={bbox} temporal={temporal}", file=sys.stderr)
+    print(f"[sparql_query] bbox={bbox} temporal={temporal} licenses={licenses}", file=sys.stderr)
     print(f"[sparql_query] query={query}", file=sys.stderr)
 
-    rows, error = await run_sparql(query, bbox, temporal)
+    rows, error = await run_sparql(query, bbox, temporal, licenses)
 
     if error:
         return (
