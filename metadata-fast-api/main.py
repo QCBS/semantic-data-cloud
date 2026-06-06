@@ -4,9 +4,7 @@ import os
 #
 from fastapi import FastAPI, Query, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 from s3io import s3_to_duckdb, duckdb_connect
-from shapely.geometry import shape
 
 
 ddb = duckdb_connect()
@@ -142,3 +140,22 @@ def search_datasets(
         ).fetchall()
 
     return {"datasets": [row[0] for row in rows]}
+
+
+@app.get("/datasets/citations")
+def get_citations(
+    dataset_names: list[str] = Query(..., description="Dataset names"),
+):
+    if not dataset_names:
+        raise HTTPException(status_code=400, detail="dataset_names cannot be empty")
+
+    rows = ddb.execute(
+        """
+        SELECT dataset_citation
+        FROM datasets
+        WHERE name = ANY(?);
+        """,
+        (dataset_names,)
+    ).fetchall()
+
+    return {"citations": [row[0] for row in rows]}
