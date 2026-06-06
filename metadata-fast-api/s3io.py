@@ -84,13 +84,20 @@ def create_asset(folder, file_name):
 
 def read_eml_from_s3(dataset, ddb):
 	s3_client = create_s3_res()
+
 	bucket = os.getenv("S3_BUCKET_NAME")
 	key = f"{dataset["folder"]}/eml.json"
+
 	try:
 		print(f"Reading from S3: bucket={bucket}, key={key}")
 		response = s3_client.get_object(Bucket=bucket, Key=key)
 		content = json.loads(response["Body"].read().decode("utf-8"))
-		if(len(dataset["assets"])>0):
+	except Exception as exc:
+		print(f"S3 file reading error: {exc}")
+		return None
+
+	try:
+		if(len(dataset["assets"]) > 0):
 			content["assets"] = list(dataset["assets"].values())
 			species_list=[]
 			if("occurrence.parquet" in dataset["assets"]):
@@ -187,12 +194,12 @@ def read_eml_from_s3(dataset, ddb):
 				FROM extracted_citation
 				WHERE datasets.name = extracted_citation.name;
 				""")
-
-		print(f"Inserted into DuckDB: {resp.rowcount} row(s) affected.")
-		return content
 	except Exception as exc:
-		print(f"There was an error reading the file from S3: {exc}")
+		print(f"Database error: {exc}")
 		return None
+
+	return content
+
 
 def s3_to_duckdb(target_name, extension, ddb=ddb):
 	try:
