@@ -84,8 +84,8 @@ def search_datasets(
     min_lat: float = Query(-90.0, description="South bound of query bbox (in WGS84)"),
     max_lon: float = Query(180.0, description="East bound of query bbox (in WGS84)"),
     max_lat: float = Query(90.0, description="North bound of query bbox (in WGS84)"),
-    begin_date: date = Query(date(500, 1, 1), description="Start of temporal range (YYYY-MM-DD)"),
-    end_date: date = Query(date.today(), description="End of temporal range (YYYY-MM-DD)"),
+    begin_date: date = Query(date(1, 1, 1), description="Start of temporal range (YYYY-MM-DD)"),
+    end_date: date = Query(date(2038, 1, 19), description="End of temporal range (YYYY-MM-DD)"),
     licenses: list[str] | None = Query(None, description="SPDX IDs of the licenses requested"),
 ):
     params = [min_lon, max_lon, min_lat, max_lat, begin_date, end_date]
