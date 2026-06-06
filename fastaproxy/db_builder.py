@@ -1,4 +1,5 @@
 import hashlib
+import os
 from pathlib import Path
 from urllib.parse import urlparse
 #
@@ -8,7 +9,7 @@ import httpx
 
 DB_DIR = Path("/db")
 BLANKS_DIR = Path("/blanks")
-METADATA_API_BASE = "http://metadata-api:8000"
+METADATA_API_BASE = os.getenv("METADATA_API_BASE", "http://metadata-api:8000")
 
 
 # NOTE: Maybe later increase the number of characters if number of datasets increases.
@@ -42,9 +43,28 @@ def _merge_assets(tables: dict[str, list[str]], dataset_json: dict) -> None:
         if name in tables:
             tables[name].append(href)
 
+def _get_datasets_citations(dataset_ids: list[str], ctx_hash: str) -> str:
+    citation_file = DB_DIR / f"{ctx_hash}-citations.txt"
+
+    if not citation_file.exists():
+        citation_resp = httpx.get(
+            f"{METADATA_API_BASE}/datasets/citations",
+            params=[("dataset_names", dataset) for dataset in dataset_ids]
+        )
+
+        citation_resp.raise_for_status()
+
+        citations = citation_resp.json().get("citations", [])
+
+        citation_file.write_text("\n".join(citations), encoding="utf-8")
+
 
 def build_db(dataset_ids: list[str]) -> Path:
-    db_path = DB_DIR / f"{context_hash(dataset_ids)}.duckdb"
+    datasets_hash = context_hash(dataset_ids)
+
+    _get_datasets_citations(dataset_ids, datasets_hash)
+
+    db_path = DB_DIR / f"{datasets_hash}.duckdb"
 
     if db_path.exists():
         return db_path
@@ -416,4 +436,5 @@ def build_db(dataset_ids: list[str]) -> Path:
     """)
 
     con.close()
+
     return db_path
