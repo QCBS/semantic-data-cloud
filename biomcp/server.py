@@ -15,7 +15,7 @@ and execute it against the Darwin Core linked-data endpoint.
 
 Your primary job is writing correct SPARQL. Focus on that.
 
-OPTIONAL geographic, temporal and lincense scoping:
+OPTIONAL geographic, temporal and license scoping:
   bbox     — [min_lon, min_lat, max_lon, max_lat] in WGS84.
              Only supply this when the user explicitly asks to restrict results
              to a geographic area AND that restriction is meant to filter which
@@ -52,11 +52,12 @@ mcp = FastMCP(
 You have one tool: sparql_query.
 
 Your job is to translate natural language biodiversity questions into correct
-SPARQL queries using the Darwin Core ontology, then execute them.
+SPARQL queries using the Darwin Core OWL ontology, then execute them.
 
-bbox and temporal are optional. Omit them unless the user explicitly asks
-to scope the query to a specific geographic region or time period at the
-dataset level. Do not fill them in "helpfully" — leave them empty by default.
+The parameters bbox, temporal and licenses are optional.
+Omit them unless the user explicitly asks to scope the query to a specific geographic
+region, time period or license at the dataset level.
+Do not fill them in "helpfully", leave them empty by default.
 """.strip()
 )
 

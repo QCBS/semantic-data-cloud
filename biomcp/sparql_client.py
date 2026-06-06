@@ -4,19 +4,25 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-SPARQL_ENDPOINT = "http://fastaproxy-sdc:8000/sparql"
+SPARQL_ENDPOINT = os.getenv("SPARQL_ENDPOINT", "http://fastaproxy-sdc:8000/sparql")
 TIMEOUT_VAL = float(os.getenv("TIMEOUT_VAL", 100))
 
 async def run_sparql(
     query: str,
     bbox: list[float] | None = None,
     temporal: list[str] | None = None,
+    licenses: list[str] | None = None,
 ) -> tuple[list[dict[str, str]], str]:
-    payload: dict = {"sparql": query}
+    payload: dict = {
+        "query": query,
+    }
+
     if bbox is not None:
         payload["bbox"] = bbox
     if temporal is not None:
         payload["temporal"] = temporal
+    if licenses is not None:
+        payload["licenses"] = licenses
 
     try:
         async with AsyncClient(timeout=TIMEOUT_VAL) as client:
