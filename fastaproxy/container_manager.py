@@ -15,6 +15,8 @@ DB_DIR = Path("/db")
 MAPPING_DIR = Path("/app/config")
 BLANKS_DIR = Path("/blanks")
 STARTUP_TIMEOUT = 60
+ONTOP_IMAGE = os.getenv("ONTOP_IMAGE", "semantic-data-cloud-ontop")
+ONTOP_NETWORK = os.getenv("ONTOP_NETWORK", "dwc-net")
 
 
 # NOTE: Simple class to be expanded on, for now just essential info
@@ -147,10 +149,10 @@ class ContainerRegistry:
         ]
 
         container = self._docker.containers.run(
-            image="semantic-data-cloud-ontop",
+            image=ONTOP_IMAGE,
             name=container_name,
             detach=True,
-            network="dwc-net",
+            network=ONTOP_NETWORK,
             volumes=volumes,
             command=command,
         )
