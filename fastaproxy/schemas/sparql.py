@@ -6,7 +6,7 @@ class QueryRequest(BaseModel):
     query: str
     bbox: list[float] = [-180.0, -90.0, 180.0, 90.0]
     temporal: list[str] = ["0001-01-01", "2038-01-19"]
-    licenses: list[str] = None
+    licenses: list[str] | None = None
 
     @field_validator("bbox")
     @classmethod
@@ -15,9 +15,9 @@ class QueryRequest(BaseModel):
             raise ValueError("Spatial range bbox must have exactly 4 values: [min_lon, min_lat, max_lon, max_lat]")
         min_lon, min_lat, max_lon, max_lat = value
         if min_lon > max_lon:
-            raise ValueError("min_lon must be ≤ max_lon")
+            raise ValueError("min_lon must be <= max_lon")
         if min_lat > max_lat:
-            raise ValueError("min_lat must be ≤ max_lat")
+            raise ValueError("min_lat must be <= max_lat")
         return value
 
     @field_validator("temporal")
@@ -31,7 +31,7 @@ class QueryRequest(BaseModel):
         except ValueError:
             raise ValueError("dates must be in YYYY-MM-DD format")
         if begin > end:
-            raise ValueError("begin_date must be ≤ end_date")
+            raise ValueError("begin_date must be <= end_date")
         return value
 
 
