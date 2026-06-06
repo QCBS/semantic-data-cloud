@@ -74,6 +74,7 @@ services:
       - dwc-net
     environment:
       TIMEOUT_VAL: 100
+    restart: unless-stopped
 
 
   metadata-api:
@@ -84,7 +85,6 @@ services:
     volumes:
       - ./data:/data
       - ./metadata-fast-api:/app
-    restart: always
     ports:
       - "7788:8000"
     networks:
@@ -96,6 +96,7 @@ services:
       - S3_BUCKET_NAME=${S3_BUCKET_NAME}
       - OBJECT_STORE_BASE_URL=${OBJECT_STORE_BASE_URL}
       - API_BASE_URL=${API_BASE_URL}
+    restart: unless-stopped
 
 
 networks:
