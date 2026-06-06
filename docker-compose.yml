@@ -34,6 +34,7 @@ services:
         "--maxmemory-policy",
         "allkeys-lfu"
       ]
+    restart: unless-stopped
 
 
   fastaproxy:
@@ -59,7 +60,7 @@ services:
       TTL_VAL: 90
       ONTOP_IMAGE: semantic-data-cloud-ontop
       ONTOP_NETWORK: dwc-net
-      ONTOP_STARTUP_TIMEOUT: 60
+      ONTOP_STARTUP_TIMEOUT: 120
     restart: unless-stopped
 
 
@@ -68,12 +69,15 @@ services:
       context: biomcp
       dockerfile: biomcp.dockerfile
     container_name: biomcp-sdc
+    depends_on:
+      - fastaproxy
     ports:
       - "9000:9000"
     networks:
       - dwc-net
     environment:
       TIMEOUT_VAL: 100
+      SPARQL_ENDPOINT: http://fastaproxy-sdc:8000/sparql
     restart: unless-stopped
 
 
