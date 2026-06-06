@@ -15,7 +15,7 @@ from schemas.sparql import QueryRequest
 
 TTL_VAL = int(os.getenv("TTL_VAL", 70))
 TIMEOUT_VAL = float(os.getenv("TIMEOUT_VAL", 100))
-METADATA_API_BASE = "http://metadata-api:8000"
+METADATA_API_BASE = os.getenv("METADATA_API_BASE", "http://metadata-api:8000")
 
 
 def make_cache_key(ctx_hash: str, sparql: bytes) -> str:
@@ -70,16 +70,38 @@ async def sparql_query(
 ):
     min_lon, min_lat, max_lon, max_lat = body.bbox
     begin_date, end_date = body.temporal
-    sparql_bytes = body.sparql.encode("utf-8")
+    sparql_bytes = body.query.encode("utf-8")
+
+    print(body.bbox)
+    print(body.temporal)
+    print(body.licenses)
+
+    search_params = [
+        ("min_lon", min_lon),
+        ("min_lat", min_lat),
+        ("max_lon", max_lon),
+        ("max_lat", max_lat),
+        ("begin_date", begin_date),
+        ("end_date", end_date),
+    ]
+
+    if body.licenses:
+        search_params.extend(("licenses", lic) for lic in body.licenses)
 
     search_resp = await client.get(
         f"{METADATA_API_BASE}/datasets/search",
-        params={
-            "min_lon": min_lon, "min_lat": min_lat,
-            "max_lon": max_lon, "max_lat": max_lat,
-            "begin_date": begin_date, "end_date": end_date,
-        },
+        params=search_params,
     )
+
+    # search_resp = await client.get(
+    #     f"{METADATA_API_BASE}/datasets/search",
+    #     params={
+    #         "min_lon": min_lon, "min_lat": min_lat,
+    #         "max_lon": max_lon, "max_lat": max_lat,
+    #         "begin_date": begin_date, "end_date": end_date,
+    #         "licenses": licenses,
+    #     },
+    # )
 
     dataset_ids: list[str] = search_resp.json().get("datasets", [])
 
@@ -88,6 +110,33 @@ async def sparql_query(
 
     ctx_hash  = context_hash(dataset_ids)
     cache_key = make_cache_key(ctx_hash, sparql_bytes)
+
+    # from pathlib import Path
+    # citation_file = Path("/db") / f"{ctx_hash}.citations.txt"
+
+    # if not citation_file.exists():
+
+    #     citation_resp = await client.get(
+    #         f"{METADATA_API_BASE}/datasets/citations",
+    #         params=[("dataset_names", ds) for ds in dataset_ids]
+    #     )
+
+    #     citation_resp.raise_for_status()
+
+    #     citations = citation_resp.json().get("citations", [])
+
+    #     with citation_file.open("w", encoding="utf-8") as f:
+    #         for citation in citations:
+    #             if citation is None:
+    #                 continue
+
+    #             f.write(citation)
+    #             f.write("\n\n")
+
+        # with citation_file.open("w", encoding="utf-8") as f:
+        #     for citation in citations:
+        #         f.write(citation)
+        #         f.write("\n\n")
 
     cached = await cache.get(cache_key)
     if cached:
