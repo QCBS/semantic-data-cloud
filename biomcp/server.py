@@ -64,16 +64,16 @@ Do not fill them in "helpfully", leave them empty by default.
 
 @mcp.tool(description=_TOOL_DESCRIPTION)
 async def sparql_query(
-    query: str,
+    sparql: str,
     bbox: list[float] | None = None,
     temporal: list[str] | None = None,
     licenses: list[str] | None = None,
 ) -> str:
     """Execute a SPARQL query against the biodiversity endpoint."""
     print(f"[sparql_query] bbox={bbox} temporal={temporal} licenses={licenses}", file=sys.stderr)
-    print(f"[sparql_query] query={query}", file=sys.stderr)
+    print(f"[sparql_query] query={sparql}", file=sys.stderr)
 
-    rows, error = await run_sparql(query, bbox, temporal, licenses)
+    rows, error = await run_sparql(sparql, bbox, temporal, licenses)
 
     if error:
         return (
