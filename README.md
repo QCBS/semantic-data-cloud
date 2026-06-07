@@ -8,27 +8,95 @@ Biodiversity data is commonly published as Darwin Core archives distributed acro
 
 The [Darwin Core Conceptual Model](https://gbif.github.io/dwc-dp/cm/) is a highly interconnected data model. In this regard, it is well suited to graph representations. However, transforming tabular datasets into RDF represents a considerable Extract, Transform, Load (ETL) process and raises deduplication concerns, as the dataset must then exist in two different forms.
 
-This project takes a different approach: data tables contained in the Data Package are hosted as Parquet files on object storage. Databases, consisting of views over the Parquet files, are used to construct a Virtual Knowledge Graph (VKG) and expose the data through a SPARQL interface. The datasets can then be queried using a lightweight OWL 2 QL compliant ontology based primarily on [Darwin Core](https://dwc.tdwg.org/list/) terms.
+This project takes a different approach: data tables contained in each Data Package are hosted as Parquet files on object storage. On demand, a materialised DuckDB database is assembled from the relevant files and exposed through a SPARQL interface via a Virtual Knowledge Graph (VKG). Datasets can then be queried using a lightweight OWL 2 QL compliant ontology based primarily on [Darwin Core](https://dwc.tdwg.org/list/) terms, without any ETL step or permanent data duplication.
+
 
 ## Usage
 
-To use the application locally, first clone the repository:
+The application accepts SPARQL queries over HTTP, following the structure of the [SPARQL 1.1 Protocol](https://www.w3.org/TR/sparql11-protocol/). Queries are submitted as JSON to the `/sparql` endpoint:
 
-```bash
-git clone <https://github.com/QCBS/semantic-data-cloud>
-cd <semantic-data-cloud>
+```json
+{
+  "query": "PREFIX dcterms: <http://purl.org/dc/terms/>\nPREFIX dwc: <http://rs.tdwg.org/dwc/terms/>\n\nSELECT ?sciName (COUNT(?occ) AS ?nOcc)\nWHERE { ?occ a dwc:Occurrence ; dwc:scientificName ?sciName . }\nGROUP BY ?sciName\nORDER BY DESC(?nOcc)\nLIMIT 5"
+}
 ```
 
-Start the application with Docker Compose:
+Any tool capable of making HTTP requests can interact with the endpoint, including:
+
+- Python: [Requests](https://requests.readthedocs.io/), [HTTPX](https://www.python-httpx.org/), or the standard library [urllib](https://docs.python.org/3/library/urllib.request.html).
+- Ruby: [Faraday](https://lostisland.github.io/faraday/), [HTTParty](https://github.com/jnunemaker/httparty), or the standard gem [HTTP](https://ruby-doc.org/stdlib-2.7.0/libdoc/net/http/rdoc/Net/HTTP.html).
+- JavaScript: [Axios](https://axios-http.com/), [ky](https://github.com/sindresorhus/ky), or the standard [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+- R: [httr2](https://httr2.r-lib.org/).
+- Command line: [curl](https://curl.se/) or [wget](https://www.gnu.org/software/wget/)
+
+
+## Additional functionality
+
+In addition to creating complete collection of datasets, the application can generate filtered dataset subsets based on user-defined criteria. The following filters are currently supported:
+
+- **Spatial filtering**: Provide a bounding box of coordinates to include only datasets whose spatial coverage intersects the specified area.
+- **Temporal filtering**: Provide a date range to include only datasets whose temporal coverage intersects the specified period.
+- **License filtering**: Provide one or more license identifiers to include only datasets published under the selected licenses.
+
+Optional filters can narrow which datasets are loaded before the query runs, which means that the application accepts the following JSON objects:
+
+```json
+{
+  "sparql": "...",
+  "bbox":     [min_lon, min_lat, max_lon, max_lat],
+  "temporal": ["YYYY-MM-DD", "YYYY-MM-DD"],
+  "licenses": ["CC-BY-4.0", "CC0-1.0"]
+}
+```
+
+When generating a subset, the application reads only the data required from the source Parquet files stored in object storage. It then creates an isolated, context-specific Docker container that enables efficient querying and processing of the selected data.
+
+### Data provenance and attribution
+
+Each generated container includes a `{ctx_hash}-citations.txt` file containing the citations associated with the datasets used to build that context. This ensures, traceability of the source datasets, proper attribution of data providers cand ompliance with GBIF data usage requirements. This is in line with [the GBIF data user agreement](https://www.gbif.org/terms/data-user) and [GBIF citation guidelines](https://www.gbif.org/citation-guidelines).
+
+## Local deployment
+
+Clone the repository and start the stack with Docker Compose:
 
 ```bash
+git clone https://github.com/QCBS/semantic-data-cloud
+cd semantic-data-cloud
 docker compose up --build
 ```
 
-The application will then expose a (modified) SPARQL endpoint at:
+The SPARQL endpoint will be available at:
 
-```text
-http://localhost:8000/
+```
+http://localhost:8000/sparql
 ```
 
-For more details regarding the types of and example queries that can be run, please see the [SPARQL documentation](docs/sparql.md).
+### Environment Configuration
+
+To access the object storage instance and API services, you must define a `.env` file in the root of the project with the following variables:
+
+```env
+S3_ACCESS_ID=your_access_key_id
+S3_ACCESS_SECRET=your_secret_access_key
+S3_ENDPOINT_URL=https://your-object-storage-endpoint
+S3_BUCKET_NAME=your_bucket_name
+OBJECT_STORE_BASE_URL=https://your-public-object-url-base
+API_BASE_URL=https://your-api-base-url
+```
+
+Where the following parameters are required:
+
+- **S3_ACCESS_ID**: Access key ID used to authenticate with the object storage service.
+- **S3_ACCESS_SECRET**: Secret key paired with the access ID for authentication.
+- **S3_ENDPOINT_URL**: Endpoint URL of the S3-compatible storage service.
+- **S3_BUCKET_NAME**: Name of the bucket where objects are stored.
+- **OBJECT_STORE_BASE_URL**: Public base URL used to access stored objects.
+- **API_BASE_URL**: Base URL of the backend API service.
+
+## Documentation
+
+Additional detailed documentation can be found in the [`docs/`](docs/) directory:
+  - [Architecture](docs/architecture.md) describing the overall architecture and design of the application.
+  - [API reference](docs/api.md), describing the endpoint specification and request/response formats.
+  - [Ontology and mappings](docs/ontology.md), describing the Darwin Core OWL ontology and OBDA mapping conventions.
+  - [MCP server](docs/mcp.md), describing a natural language interface via the Model Context Protocol.
