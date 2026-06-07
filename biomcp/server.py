@@ -1,8 +1,12 @@
 from __future__ import annotations
+from datetime import date
 from pathlib import Path
 import sys
 #
 from fastmcp import FastMCP
+from pydantic import Field
+from typing import Annotated
+#
 from sparql_client import run_sparql, rows_to_markdown
 
 PROMPTS_PATH = Path(__file__).parent / "prompts"
@@ -64,10 +68,35 @@ Do not fill them in "helpfully", leave them empty by default.
 
 @mcp.tool(description=_TOOL_DESCRIPTION)
 async def sparql_query(
-    sparql: str,
-    bbox: list[float] | None = None,
-    temporal: list[str] | None = None,
-    licenses: list[str] | None = None,
+    sparql: Annotated[
+        str,
+        Field(
+            description="SPARQL query to execute against the endpoint",
+            min_length=1,
+        ),
+    ],
+    bbox: Annotated[
+        list[float] | None,
+        Field(
+            description="Geographic bounding box in decimal degrees (WGS84) as [min_longitude, min_latitude, max_longitude, max_latitude].",
+            min_length=4,
+            max_length=4,
+        ),
+    ] = None,
+    temporal: Annotated[
+        list[date] | None,
+        Field(
+            description="Date range as [start_date, end_date] in ISO 8601 format (YYYY-MM-DD)",
+            min_length=2,
+            max_length=2,
+        ),
+    ] = None,
+    licenses: Annotated[
+        list[str] | None,
+        Field(
+            description="List of SPDX license identifiers.",
+        ),
+    ] = None,
 ) -> str:
     """Execute a SPARQL query against the biodiversity endpoint."""
     print(f"[sparql_query] bbox={bbox} temporal={temporal} licenses={licenses}", file=sys.stderr)
@@ -94,7 +123,7 @@ async def sparql_query(
         )
 
     table = rows_to_markdown(rows[:500])
-    note  = (
+    note = (
         "\n\n_Capped at 500 rows. Add a more specific FILTER to narrow results._"
         if len(rows) >= 500 else ""
     )
