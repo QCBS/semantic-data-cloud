@@ -8,13 +8,13 @@ SPARQL_ENDPOINT = os.getenv("SPARQL_ENDPOINT", "http://fastaproxy-sdc:8000/sparq
 TIMEOUT_VAL = float(os.getenv("TIMEOUT_VAL", 100))
 
 async def run_sparql(
-    query: str,
+    sparql: str,
     bbox: list[float] | None = None,
     temporal: list[str] | None = None,
     licenses: list[str] | None = None,
 ) -> tuple[list[dict[str, str]], str]:
     payload: dict = {
-        "query": query,
+        "query": sparql,
     }
 
     if bbox is not None:
@@ -26,7 +26,10 @@ async def run_sparql(
 
     try:
         async with AsyncClient(timeout=TIMEOUT_VAL) as client:
-            response = await client.post(SPARQL_ENDPOINT, json=payload)
+            response = await client.post(
+                SPARQL_ENDPOINT,
+                json=payload,
+            )
             response.raise_for_status()
 
     except TimeoutException:
