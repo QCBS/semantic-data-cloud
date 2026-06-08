@@ -15,9 +15,9 @@ Requests against the `/sparql` endpoint can be made similarly to a conventional 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `query` | `string` | Yes | A valid SPARQL 1.1 SELECT query, prefixes must be declared explicitly |
-| `bbox` | `[float, float, float, float]` | No | Bounding box as `[min_lon, min_lat, max_lon, max_lat]` in WGS84. Default: global extent |
-| `temporal` | `[string, string]` | No | Temporal range as `["YYYY-MM-DD", "YYYY-MM-DD"]` (begin, end inclusive). Default: `['0001-01-01'-'2038-01-19']` |
-| `licenses` | `[string, ...]` | No | SPDX license identifiers to restrict which datasets are loaded, see the [SPDX License List](https://spdx.org/licenses/). Default: None |
+| `bbox` | `[float, float, float, float]` | No | Bounding box as `[min_lon, min_lat, max_lon, max_lat]` in WGS84. Default: `[-180.0, -90.0, 180.0, 90.0]` |
+| `temporal` | `[string, string]` | No | Temporal range as `["YYYY-MM-DD", "YYYY-MM-DD"]` (begin, end inclusive). Default: `['0001-01-01', '2038-01-19']` |
+| `licenses` | `[string, ...]` | No | SPDX license identifiers to restrict which datasets are loaded, see the [SPDX License List](https://spdx.org/licenses/). Default: `None` |
 
 **Validation rules**
 
@@ -104,12 +104,12 @@ Return the identifiers of all datasets whose geographic and temporal coverage in
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `min_lon` | `float` | No | West boundary of query bbox (WGS84). Default: -180.0 |
-| `min_lat` | `float` | No | South boundary of query bbox (WGS84). Default: -90.0 |
-| `max_lon` | `float` | No | East boundary of query bbox (WGS84). Default: 180.0 |
-| `max_lat` | `float` | No | North boundary of query bbox (WGS84). Default: 90.0 |
-| `begin_date` | `string` | No | Start of temporal range (`YYYY-MM-DD`). Default: year 500 |
-| `end_date` | `string` | No | End of temporal range (`YYYY-MM-DD`). Default: today |
+| `min_lon` | `float` | No | West boundary of query bbox (WGS84). Default: `-180.0` |
+| `min_lat` | `float` | No | South boundary of query bbox (WGS84). Default: `-90.0` |
+| `max_lon` | `float` | No | East boundary of query bbox (WGS84). Default: `180.0` |
+| `max_lat` | `float` | No | North boundary of query bbox (WGS84). Default: `90.0` |
+| `begin_date` | `string` | No | Start of temporal range (`YYYY-MM-DD`). Default: `0001-01-01` |
+| `end_date` | `string` | No | End of temporal range (`YYYY-MM-DD`). Default: `2038-01-19` |
 | `licenses` | `[string]` | No | One or more SPDX license identifiers. Repeatable: `?licenses=CC-BY-4.0&licenses=CC0-1.0` |
 
 **Intersection logic**
@@ -129,10 +129,16 @@ When `licenses` is provided, only datasets whose declared license matches one of
 **Response**
 
 ```json
-{ "datasets": ["dataset-id-a", "dataset-id-b"] }
+{
+  "datasets": [
+    "dataset-id-a",
+    "dataset-id-b",
+    "..."
+  ] 
+}
 ```
 
-An empty list is returned (not a `404`) when no datasets match.
+An empty list is returned (i.e. not a `404`) when no datasets match.
 
 ---
 
@@ -149,7 +155,13 @@ Return citation strings for a list of dataset identifiers.
 **Response**
 
 ```json
-{ "citations": ["Author et al. (2023). Dataset title. ...", "..."] }
+{
+  "citations": [
+    "Author et al. (2023). Distribution of species X in location Y. ...",
+    "Penman et al. (2018). Sampling surveys studying communities in Z biomes. ...",
+    "..."
+  ]
+}
 ```
 
 Citations are extracted from the `additionalMetadata.metadata.gbif.citation` field of each dataset's EML record.
