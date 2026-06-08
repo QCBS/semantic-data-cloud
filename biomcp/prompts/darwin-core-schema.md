@@ -129,7 +129,7 @@ WHERE {
 
   ?evt dwcdp:spatialLocation ?loc .
 
-  ?loc dwc:decimalLatitude  ?lat ;
+  ?loc dwc:decimalLatitude ?lat ;
        dwc:decimalLongitude ?lon .
 }
 LIMIT 200
@@ -150,7 +150,7 @@ WHERE {
 
   ?evt dwcdp:spatialLocation ?loc .
   OPTIONAL { ?evt dwc:eventDate ?date }
-  OPTIONAL { ?loc dwc:decimalLatitude  ?lat }
+  OPTIONAL { ?loc dwc:decimalLatitude ?lat }
   OPTIONAL { ?loc dwc:decimalLongitude ?lon }
   OPTIONAL { ?loc dwc:country ?country }
 
@@ -261,7 +261,7 @@ dwc:Identification can be based on Occurrence, MaterialEntity, Media,
 NucleotideAnalysis, or NucleotideSequence - all linked via dwcdp:basedOn.
 
 ```sparql
-PREFIX dwc:   <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 
 SELECT ?iden ?mat ?rems
@@ -308,15 +308,15 @@ PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 SELECT ?subjectName (COUNT(*) AS ?n)
 WHERE {
   ?orgInt a dwc:OrganismInteraction ;
-          dwc:organismInteractionType "visited flower of" ;
-          dwcdp:interactionBy   ?subjOcc ;
+          dwc:organismInteractionType 'visited flower of' ;
+          dwcdp:interactionBy ?subjOcc ;
           dwcdp:interactionWith ?objOcc .
 
   ?subjOcc a dwc:Occurrence ;
            dwc:scientificName ?subjectName .
 
   ?objOcc a dwc:Occurrence ;
-          dwc:scientificName "Malus pumila" .
+          dwc:scientificName 'Malus pumila' .
 }
 GROUP BY ?subjectName
 ORDER BY DESC(?n)
@@ -403,3 +403,13 @@ LIMIT 50
 8. COUNT queries do not need LIMIT
 9. dwcdp:happenedDuring on Occurrence links to the event it occurred during;
    dwcdp:happenedDuring on Event links to its parent event — different meanings, same property
+
+---
+
+## When a query returns 0 results
+
+Try in this order:
+1. Run `SELECT * WHERE { ?s ?p ?o } LIMIT 10` to confirm the endpoint has data at all
+2. Remove FILTER clauses one by one — identify which one eliminates all results
+3. Check every traversal chain — coordinates must go through Location, dates through Event
+4. Wrap non-essential triples in `OPTIONAL { }` and add them back one at a time

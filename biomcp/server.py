@@ -11,7 +11,6 @@ from sparql_client import run_sparql, rows_to_markdown
 
 PROMPTS_PATH = Path(__file__).parent / "prompts"
 DWC_SCHEMA = (PROMPTS_PATH / "darwin-core-schema.md").read_text(encoding="utf-8")
-QUERY_GUIDE = (PROMPTS_PATH / "query-guidance.md").read_text(encoding="utf-8")
 
 _TOOL_DESCRIPTION = f"""
 Translate a natural language biodiversity question into a SPARQL SELECT query
@@ -44,10 +43,6 @@ If a query returns 0 results, check the SPARQL before adjusting the bbox.
 ---
 
 {DWC_SCHEMA}
-
----
-
-{QUERY_GUIDE}
 """.strip()
 
 mcp = FastMCP(
