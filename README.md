@@ -10,14 +10,13 @@ The [Darwin Core Conceptual Model](https://gbif.github.io/dwc-dp/cm/) is a highl
 
 This project takes a different approach: data tables contained in each Data Package are hosted as Parquet files on object storage. On demand, a materialised DuckDB database is assembled from the relevant files and exposed through a SPARQL interface via a Virtual Knowledge Graph (VKG). Datasets can then be queried using a lightweight OWL 2 QL compliant ontology based primarily on [Darwin Core](https://dwc.tdwg.org/list/) terms, without any ETL step or permanent data duplication.
 
-
 ## Usage
 
 The application accepts SPARQL queries over HTTP, following the structure of the [SPARQL 1.1 Protocol](https://www.w3.org/TR/sparql11-protocol/). Queries are submitted as JSON to the `/sparql` endpoint:
 
 ```json
 {
-  "query": "PREFIX dcterms: <http://purl.org/dc/terms/>\nPREFIX dwc: <http://rs.tdwg.org/dwc/terms/>\n\nSELECT ?sciName (COUNT(?occ) AS ?nOcc)\nWHERE { ?occ a dwc:Occurrence ; dwc:scientificName ?sciName . }\nGROUP BY ?sciName\nORDER BY DESC(?nOcc)\nLIMIT 5"
+  "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?sciName (COUNT(?occ) AS ?nOcc) WHERE { ?occ a dwc:Occurrence ; dwc:scientificName ?sciName . } GROUP BY ?sciName ORDER BY DESC(?nOcc) LIMIT 5"
 }
 ```
 
@@ -28,7 +27,6 @@ Any tool capable of making HTTP requests can interact with the endpoint, includi
 - JavaScript: [Axios](https://axios-http.com/), [ky](https://github.com/sindresorhus/ky), or the standard [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
 - R: [httr2](https://httr2.r-lib.org/).
 - Command line: [curl](https://curl.se/) or [wget](https://www.gnu.org/software/wget/)
-
 
 ## Additional functionality
 
@@ -42,7 +40,7 @@ Optional filters can narrow which datasets are loaded before the query runs, whi
 
 ```json
 {
-  "sparql": "...",
+  "query": "...",
   "bbox":     [min_lon, min_lat, max_lon, max_lat],
   "temporal": ["YYYY-MM-DD", "YYYY-MM-DD"],
   "licenses": ["CC-BY-4.0", "CC0-1.0"]
@@ -70,6 +68,33 @@ The SPARQL endpoint will be available at:
 ```
 http://localhost:8000/sparql
 ```
+
+### Storage layout
+
+Datasets are stored in object storage as directory-like prefixes, where each dataset is represented as a self-contained Darwin Core Data Package in exploded Parquet form. An example structure layout is as shown below:
+
+```
+datasets/
+├── dataset_a/
+│   ├── eml.jsonld
+│   ├── event.parquet
+│   ├── identification.parquet
+│   ├── occurrence.parquet
+│   └── occurrence-assertion.parquet
+├── dataset_b/
+│   ├── eml.jsonld
+│   ├── event.parquet
+│   └── material.parquet
+└── dataset_c/
+    ├── eml.jsonld
+    ├── event.parquet
+    ├── event-assertion.parquet
+    └── occurrence.parquet
+```
+
+Each top-level directory under `datasets/` represents a single dataset (i.e., a Darwin Core Data Package). The presence of an `eml.jsonld` file provides the required metadata for discovery and attribution.
+
+All tables are stored as Parquet files, corresponding to Darwin Core tables (e.g., `event`, `identification`, `occurrence`) in the `.csv` (though they are technically `.tsv`) files contained in the Darwin Core Data Package. This layout is corresponds to an "exploded" representation of a Darwin Core Data Package, designed for columnar access and efficient partial loading in DuckDB without requiring transformation into RDF or a centralized warehouse.
 
 ### Environment Configuration
 
