@@ -33,7 +33,7 @@ xmprights:	http://ns.adobe.com/xap/1.0/rights/
 
 [MappingDeclaration] @collection [[
 mappingId	agent
-target		:agent/{agent_id} a dcterms:Agent ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRemarks {agent_remarks}^^xsd:string ; dwc:agentType {agent_type}^^xsd:string . 
+target		:agent/{agent_id} a dcterms:Agent ; dcterms:title {preferred_agent_name}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRemarks {agent_remarks}^^xsd:string ; dwc:agentType {agent_type}^^xsd:string . 
 source		SELECT * FROM dwcowl.main.agent
 
 mappingId	bibliographic_resource
@@ -41,7 +41,7 @@ target		:bibliographic-resource/{reference_id} a dcterms:BibliographicResource ;
 source		SELECT * FROM dwcowl.main.bibliographic_resource
 
 mappingId	event
-target		:event/{event_id} a dwc:Event ; dwc:datasetName {dataset_name}^^xsd:string ; dwc:datasetID {dataset_id}^^xsd:string ; dwc:day {day}^^xsd:integer ; dwc:endDayOfYear {end_day_of_year}^^xsd:integer ; dwc:eventCategory {event_category}^^xsd:string ; dwc:eventConductedBy {event_conducted_by}^^xsd:string ; dwc:eventConductedByID {event_conducted_by_id}^^xsd:string ; dwc:eventDate {event_date}^^xsd:string ; dwc:eventEffort {event_effort} ; dwc:eventID {event_id}^^xsd:string ; dwc:eventReferences {event_references}^^xsd:string ; dwc:eventRemarks {event_remarks}^^xsd:string ; dwc:eventTime {event_time}^^xsd:string ; dwc:eventType {event_type}^^xsd:string ; dwc:fieldNotes {field_notes}^^xsd:string ; dwc:fieldNumber {field_number}^^xsd:string ; dwc:geologicalContextID {geological_context_id}^^xsd:string ; dwc:georeferenceVerificationStatus {georeference_verification_status}^^xsd:string ; dwc:habitat {habitat}^^xsd:string ; dwc:month {month}^^xsd:integer ; dwc:startDayOfYear {start_day_of_year}^^xsd:integer ; dwc:verbatimEventDate {verbatim_event_date}^^xsd:string ; dwc:year {year}^^xsd:integer ; dwcdp:conductedBy :agent/{event_conducted_by_id} ; dwcdp:happenedDuring :event/{parent_event_id} ; dwcdp:spatialLocation :location/{location_id} . 
+target		:event/{event_id} a dwc:Event ; dcterms:title {preferred_event_name}^^xsd:string ; dwc:datasetName {dataset_name}^^xsd:string ; dwc:datasetID {dataset_id}^^xsd:string ; dwc:day {day}^^xsd:integer ; dwc:endDayOfYear {end_day_of_year}^^xsd:integer ; dwc:eventCategory {event_category}^^xsd:string ; dwc:eventConductedBy {event_conducted_by}^^xsd:string ; dwc:eventConductedByID {event_conducted_by_id}^^xsd:string ; dwc:eventDate {event_date}^^xsd:string ; dwc:eventEffort {event_effort} ; dwc:eventID {event_id}^^xsd:string ; dwc:eventReferences {event_references}^^xsd:string ; dwc:eventRemarks {event_remarks}^^xsd:string ; dwc:eventTime {event_time}^^xsd:string ; dwc:eventType {event_type}^^xsd:string ; dwc:fieldNotes {field_notes}^^xsd:string ; dwc:fieldNumber {field_number}^^xsd:string ; dwc:geologicalContextID {geological_context_id}^^xsd:string ; dwc:georeferenceVerificationStatus {georeference_verification_status}^^xsd:string ; dwc:habitat {habitat}^^xsd:string ; dwc:month {month}^^xsd:integer ; dwc:startDayOfYear {start_day_of_year}^^xsd:integer ; dwc:verbatimEventDate {verbatim_event_date}^^xsd:string ; dwc:year {year}^^xsd:integer ; dwcdp:conductedBy :agent/{event_conducted_by_id} ; dwcdp:happenedDuring :event/{parent_event_id} ; dwcdp:spatialLocation :location/{location_id} . 
 source		SELECT * FROM dwcowl.main.event
 
 mappingId	geological_context
