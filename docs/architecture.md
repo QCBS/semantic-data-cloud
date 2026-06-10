@@ -8,7 +8,7 @@ The system is built around three constraints that shaped every subsequent decisi
 
   2. **Entity-based queries.** Biodiversity data is naturally described as a network of occurrences, events, organisms, material entities, and the relationships between them. RDF is therefore a suitable data model, as it represents information directly as entities and relationships rather than requiring users to reason about relational structures.
 
-  3. **Machine readability first.** Data should be structured according to a shared conceptual model, with clearly defined concepts and relationships that can be interpreted consistently by both humans and machines. In this application, that model is provided by the Darwin Core Conceptual Model and its associated vocabularies.
+  3. **Machine-readability first.** Data should be structured according to a shared conceptual model, with clearly defined concepts and relationships that can be interpreted consistently by both humans and machines. In this application, that model is provided by the Darwin Core Conceptual Model and its associated vocabularies.
 
 ---
 
@@ -60,6 +60,8 @@ Short-lived containers running [Ontop](https://ontop-vkg.org/) (`ontop/ontop:5.5
 A [Valkey](https://valkey.io/) instance used for in-memory result caching. As the number of datasets grows, query latency may increase, caching allows repeated queries to be served from RAM rather than re-executing against the database.
 
 Cache keys are SHA-256 digests of the context hash concatenated with the SPARQL query bytes. Each key has a configurable time-to-live ([TTL](https://valkey.io/commands/ttl/)), defaulting to 70 seconds.
+
+The instance uses at most 1 Gb or RAM and considers an [allkey-lfu](https://valkey.io/topics/lru-cache/) eviction policy. This means that when memory is exhausted, the least frequently accessed keys will be removed to make place for the new data to be added.
 
 ---
 
