@@ -112,9 +112,21 @@ class ContainerRegistry:
         obda_path.write_text(obda)
         return obda_path
 
+    def _write_metadata(self, ctx_hash: str) -> Path:
+
+        template = (MAPPING_DIR / "dwcowl.json").read_text()
+
+        metadata = template.replace('\\"dwcowl\\"', f'\\"{ctx_hash}\\"')
+
+        path = DB_DIR / f"{ctx_hash}.metadata.json"
+        path.write_text(metadata)
+        print(f"[container_manager] wrote metadata: {path.name}")
+        return path
+
     def _start(self, ctx_hash: str) -> ContainerInfo:
         props_path = self._write_properties(ctx_hash)
         obda_path = self._write_obda(ctx_hash)
+        metadata_path = self._write_metadata(ctx_hash)
 
         container_name = f"ontop-{ctx_hash}"
 
@@ -146,6 +158,7 @@ class ContainerRegistry:
             "-m", f"{str(DB_DIR)}/{obda_path.name}",
             "-t", "/opt/ontop/input/mappings/dwcowl.ttl",
             "-p", f"{str(DB_DIR)}/{props_path.name}",
+            "-d", f"{str(DB_DIR)}/{metadata_path.name}",
         ]
 
         container = self._docker.containers.run(
@@ -156,6 +169,7 @@ class ContainerRegistry:
             volumes=volumes,
             command=command,
         )
+
         ontop_url = f"http://{container_name}:8080"
 
         self._wait_for_health(ontop_url)
