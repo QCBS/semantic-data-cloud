@@ -3,21 +3,11 @@ services:
     build:
       context: ontop
       dockerfile: ontop.dockerfile
-    container_name: ontop-sdc
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./ontop/mappings:/opt/ontop/input/mappings
-      - ./db:/db
-      - ./blanks:/blanks
+    image: semantic-data-cloud-ontop
+    profiles:
+      - build-only
     networks:
       - dwc-net
-    command: [
-      "ontop", "endpoint",
-      "-m", "/opt/ontop/input/mappings/dwcowl.obda",
-      "-p", "/opt/ontop/input/mappings/dwcowl.properties",
-      "-t", "/opt/ontop/input/mappings/dwcowl.ttl"
-    ]
 
 
   valkey:
