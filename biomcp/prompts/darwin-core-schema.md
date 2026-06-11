@@ -564,7 +564,7 @@ PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 
 SELECT DISTINCT ?prov ?fundingAttribution ?metadataCreatorLiteral ?providerLiteral
-       ?creatorLiteral ?references ?datasetID ?projectID ?projectTitle
+       ?creatorLiteral ?bibliographicCitation ?references ?datasetID ?projectID ?projectTitle
 WHERE {
   ?occ a dwc:Occurrence ;
        dwc:scientificName "Notolepis coatsi" ;
@@ -579,6 +579,7 @@ WHERE {
   OPTIONAL { ?prov ac:metadataCreatorLiteral ?metadataCreatorLiteral }
   OPTIONAL { ?prov ac:providerLiteral ?providerLiteral }
   OPTIONAL { ?prov dc:creator ?creatorLiteral }
+  OPTIONAL { ?prov dcterms:bibliographicCitation ?bibliographicCitation }
   OPTIONAL { ?prov dcterms:references ?references }
   OPTIONAL { ?prov dwc:datasetID ?datasetID }
   OPTIONAL { ?prov dwc:projectID ?projectID }
