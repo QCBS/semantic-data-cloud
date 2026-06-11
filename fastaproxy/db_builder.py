@@ -75,11 +75,43 @@ def build_db(dataset_ids: list[str]) -> Path:
         dataset_json = _fetch_dataset_json(dataset_id)
         _merge_assets(tables, dataset_json)
 
+    # NOTE: Need to make sure the directory exists now
+    #
+    DB_DIR.mkdir(parents=True, exist_ok=True)
+
     con = duckdb.connect(str(db_path))
 
     for table_name, paths in tables.items():
         rel = con.read_parquet(paths, union_by_name=True)
-        rel.create_view(table_name, replace=True)
+        rel.create_view(table_name)
+
+    # NOTE: Create views to handle the dwc:SurveyTarget definition
+    #
+    con.execute("""
+    -- Views to expose survey_target data without computed expressions.
+    CREATE VIEW v_survey_target AS
+    SELECT DISTINCT survey_target_id, survey_id, is_survey_target_fully_reported
+    FROM survey_target;
+
+    CREATE VIEW v_survey_target_with_key AS
+    SELECT *, LOWER(REPLACE(survey_target_type, ' ', '')) AS definition_key
+    FROM survey_target;
+    """)
+
+    # NOTE: Create a view to separate dcterms:Location information from the event table
+    #
+    con.execute("""
+    -- dcterms:Location entity separated from by event table.
+    CREATE VIEW v_location AS
+    SELECT * EXCLUDE (rn)
+    FROM (
+        SELECT *,
+               ROW_NUMBER() OVER (PARTITION BY location_id ORDER BY event_id) AS rn
+        FROM event
+        WHERE location_id IS NOT NULL
+    )
+    WHERE rn = 1;
+    """)
 
     # NOTE: Add transitive and transitive_reflexive tables
     #
