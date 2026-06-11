@@ -1,6 +1,8 @@
 import os
-from httpx import AsyncClient, HTTPStatusError, TimeoutException
+import sys
+#
 from dotenv import load_dotenv
+from httpx import AsyncClient, HTTPStatusError, TimeoutException
 
 load_dotenv()
 
@@ -25,6 +27,8 @@ async def run_sparql(
         payload["licenses"] = licenses
 
     try:
+        print(payload, file=sys.stderr)
+
         async with AsyncClient(timeout=TIMEOUT_VAL) as client:
             response = await client.post(
                 SPARQL_ENDPOINT,
