@@ -169,7 +169,6 @@ class ContainerRegistry:
             volumes=volumes,
             command=command,
         )
-
         ontop_url = f"http://{container_name}:8080"
 
         self._wait_for_health(ontop_url)
