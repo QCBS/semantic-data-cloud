@@ -27,9 +27,14 @@ else:
 
 @app.get("/")
 def read_root():
-    return {"title": "Welcome to the QCBS Semantic Data Cloud API!", 
-            "links": {"datasets": f"{os.getenv("API_BASE_URL")}/datasets"},
-            "datasets": list_datasets(1, 10)}
+    return {
+        "title": "Welcome to the QCBS Semantic Data Cloud API!",
+        "description": "A metadata catalog of biodiversity and ecological datasets described using Ecological Metadata Language (EML), providing standardized, machine-readable metadata and access to associated data assets for discovery, integration, and analysis.",
+        "links": {
+            "datasets": f"{os.getenv("API_BASE_URL")}/datasets",
+        },
+        "datasets": list_datasets(1, 10),
+    }
 
 
 @app.get("/datasets")
