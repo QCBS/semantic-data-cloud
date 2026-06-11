@@ -2,7 +2,7 @@ services:
   ontop:
     build:
       context: ontop
-      dockerfile: ontop.dockerfile
+      dockerfile: Dockerfile
     image: semantic-data-cloud-ontop
     profiles:
       - build-only
@@ -30,7 +30,7 @@ services:
   fastaproxy:
     build:
       context: fastaproxy
-      dockerfile: fastaproxy.dockerfile
+      dockerfile: Dockerfile
     container_name: fastaproxy-sdc
     volumes:
       - ./fastaproxy:/app
@@ -57,7 +57,7 @@ services:
   biomcp:
     build:
       context: biomcp
-      dockerfile: biomcp.dockerfile
+      dockerfile: Dockerfile
     container_name: biomcp-sdc
     depends_on:
       - fastaproxy
