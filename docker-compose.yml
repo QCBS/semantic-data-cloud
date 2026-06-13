@@ -2,32 +2,21 @@ services:
   ontop:
     build:
       context: ontop
-      dockerfile: ontop.dockerfile
+      dockerfile: Dockerfile
+    image: semantic-data-cloud-ontop
+    profiles:
+      - build-only
+    networks:
+      - dwc-net
 
-    container_name: ontop-sdc
-
-    ports:
-      - "8080:8080"
-
-    volumes:
-      - ./ontop/mappings:/opt/ontop/input/mappings
-      - ./ontop/db:/app/db
-      - ./ontop/parquet:/opt/ontop/parquet
-
-    command: [
-      "ontop", "endpoint",
-      "-m", "/opt/ontop/input/mappings/dwcowl.obda",
-      "-p", "/opt/ontop/input/mappings/dwcowl.properties",
-      "-t", "/opt/ontop/input/mappings/dwcowl.ttl"
-    ]
 
   valkey:
     image: valkey/valkey:9.0.4
     container_name: valkey-sdc
-
     ports:
       - "6379:6379"
-
+    networks:
+      - dwc-net
     command: [
         "valkey-server",
         "--maxmemory",
@@ -35,54 +24,65 @@ services:
         "--maxmemory-policy",
         "allkeys-lfu"
       ]
+    restart: unless-stopped
+
 
   fastaproxy:
     build:
       context: fastaproxy
-      dockerfile: fastaproxy.dockerfile
-
+      dockerfile: Dockerfile
     container_name: fastaproxy-sdc
-
+    volumes:
+      - ./fastaproxy:/app
+      - ./db:/db
+      - ./blanks:/blanks
+      - ./ontop/mappings:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - valkey
-
     ports:
       - "8000:8000"
-
+    networks:
+      - dwc-net
     environment:
+      METADATA_API_BASE: http://metadata-api:8000
       TIMEOUT_VAL: 100
       TTL_VAL: 90
-
+      ONTOP_IMAGE: semantic-data-cloud-ontop
+      ONTOP_NETWORK: dwc-net
+      ONTOP_STARTUP_TIMEOUT: 120
     restart: unless-stopped
+
 
   biomcp:
     build:
       context: biomcp
-      dockerfile: biomcp.dockerfile
-
+      dockerfile: Dockerfile
     container_name: biomcp-sdc
-
+    depends_on:
+      - fastaproxy
     ports:
       - "9000:9000"
-    
+    networks:
+      - dwc-net
     environment:
       TIMEOUT_VAL: 100
-
-    depends_on: 
-      - ontop
+      SPARQL_ENDPOINT: http://fastaproxy-sdc:8000/sparql
+    restart: unless-stopped
 
 
   metadata-api:
     build: 
       context: metadata-fast-api
       dockerfile: Dockerfile
-    command: "uvicorn main:app --proxy-headers --host 0.0.0.0 --port 8000 --reload"
+    command: "uvicorn main:app --proxy-headers --host 0.0.0.0 --port 8000"
     volumes:
-      - ./data:/data
+      - ./metadatadb:/data
       - ./metadata-fast-api:/app
-    restart: always
     ports:
       - "7788:8000"
+    networks:
+      - dwc-net
     environment:
       - S3_ACCESS_ID=${S3_ACCESS_ID}
       - S3_ACCESS_SECRET=${S3_ACCESS_SECRET}
@@ -90,3 +90,9 @@ services:
       - S3_BUCKET_NAME=${S3_BUCKET_NAME}
       - OBJECT_STORE_BASE_URL=${OBJECT_STORE_BASE_URL}
       - API_BASE_URL=${API_BASE_URL}
+    restart: unless-stopped
+
+
+networks:
+  dwc-net:
+    external: true

@@ -1,15 +1,28 @@
+from contextlib import asynccontextmanager
+from datetime import date
+import json
+import os
+#
 from fastapi import FastAPI, Query, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-import json
-from pydantic import BaseModel
-from shapely.geometry import shape
 from s3io import s3_to_duckdb, duckdb_connect
-import os
 
 
 ddb = duckdb_connect()
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    success = s3_to_duckdb("eml", ".json", ddb)
+    if success:
+        print("Successfully loaded S3 data into DuckDB.")
+    else:
+        print("Failed to load S3 data into DuckDB.")
+
+    yield
+
+    ddb.close()
+
+app = FastAPI(title="sdc-metadata-fast-api", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -19,17 +32,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-success = s3_to_duckdb('eml', '.json', ddb)
-if success: 
-    print("Successfully loaded S3 data into DuckDB.")
-else:
-    print("Failed to load S3 data into DuckDB.")
 
 @app.get("/")
 def read_root():
-    return {"title": "Welcome to the QCBS Semantic Data Cloud API!", 
-            "links": {"datasets": f"{os.getenv('API_BASE_URL')}/datasets"},
-            "datasets": list_datasets(1, 10)}
+    return {
+        "title": "Welcome to the QCBS Semantic Data Cloud API!",
+        "description": "A metadata catalog of biodiversity and ecological datasets described using Ecological Metadata Language (EML), providing standardized, machine-readable metadata and access to associated data assets for discovery, integration, and analysis.",
+        "links": {
+            "datasets": f"{os.getenv("API_BASE_URL")}/datasets",
+        },
+        "datasets": list_datasets(1, 10),
+    }
 
 
 @app.get("/datasets")
@@ -51,7 +64,8 @@ def get_dataset(dataset_id: str):
         raise HTTPException(status_code=404, detail="Dataset not found")
 
     eml = row[0]
-    return Response(eml, media_type="application/ld+json") if isinstance(eml, str) else eml
+
+    return Response(eml, media_type="application/ld+json")
 
 def list_datasets(
     page: int = Query(1, ge=1),
@@ -60,7 +74,7 @@ def list_datasets(
     offset = (page - 1) * page_size
 
     total = ddb.execute("SELECT COUNT(*) FROM datasets;").fetchone()[0]
-    print(total)
+
     rows = ddb.execute(
         "SELECT name, eml_content FROM datasets ORDER BY name LIMIT ? OFFSET ?;",
         [page_size, offset],
@@ -76,3 +90,86 @@ def list_datasets(
         "total": total,
         "datasets": datasets,
     }
+
+
+@app.get("/datasets/search")
+def search_datasets(
+    min_lon: float = Query(-180.0, description="West bound of query bbox (in WGS84)"),
+    min_lat: float = Query(-90.0, description="South bound of query bbox (in WGS84)"),
+    max_lon: float = Query(180.0, description="East bound of query bbox (in WGS84)"),
+    max_lat: float = Query(90.0, description="North bound of query bbox (in WGS84)"),
+    begin_date: date = Query(date(1, 1, 1), description="Start of temporal range (YYYY-MM-DD)"),
+    end_date: date = Query(date(2038, 1, 19), description="End of temporal range (YYYY-MM-DD)"),
+    licenses: list[str] | None = Query(None, description="SPDX IDs of the licenses requested"),
+):
+    params = [min_lon, max_lon, min_lat, max_lat, begin_date, end_date]
+
+    if licenses:
+        params.append(licenses)
+
+        rows = ddb.execute("""
+            SELECT name, min_lon, min_lat, max_lon, max_lat, license_id
+            FROM datasets
+            WHERE
+
+            -- Geographical intersection filtering
+            max_lon >= ?
+            AND min_lon <= ?
+            AND max_lat >= ?
+            AND min_lat <= ?
+
+            -- Temporal overlap filtering
+            AND end_date >= ?
+            AND begin_date <= ?
+
+            -- License filtering
+            AND license_id = ANY(?)
+
+            -- Taxonomic coverage filtering (coming soon)
+            ;
+            """,
+            params
+            ).fetchall()
+    
+    else:
+        rows = ddb.execute("""
+            SELECT name, min_lon, min_lat, max_lon, max_lat
+            FROM datasets
+            WHERE
+
+            -- Geographical intersection filtering
+            max_lon >= ?
+            AND min_lon <= ?
+            AND max_lat >= ?
+            AND min_lat <= ?
+
+            -- Temporal overlap filtering
+            AND end_date >= ?
+            AND begin_date <= ?
+
+            -- Taxonomic coverage filtering (coming soon)
+            ;
+        """,
+        params
+        ).fetchall()
+
+    return {"datasets": [row[0] for row in rows]}
+
+
+@app.get("/datasets/citations")
+def get_citations(
+    dataset_names: list[str] = Query(..., description="Dataset names"),
+):
+    if not dataset_names:
+        raise HTTPException(status_code=400, detail="dataset_names cannot be empty")
+
+    rows = ddb.execute(
+        """
+        SELECT dataset_citation
+        FROM datasets
+        WHERE name = ANY(?);
+        """,
+        (dataset_names,)
+    ).fetchall()
+
+    return {"citations": [row[0] for row in rows]}

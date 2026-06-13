@@ -1,85 +1,129 @@
+from __future__ import annotations
+from datetime import date
 from pathlib import Path
 import sys
 #
 from fastmcp import FastMCP
+from pydantic import Field
+from typing import Annotated
+#
 from sparql_client import run_sparql, rows_to_markdown
 
-mcp = FastMCP(
-    name="Biodiversity-DwC-DP",
-    instructions= "SPARQL access biodiversity data using Darwin Core Data Package (DWC-DP) linked-data ontology."
-)
-
 PROMPTS_PATH = Path(__file__).parent / "prompts"
+DWC_SCHEMA = (PROMPTS_PATH / "darwin-core-schema.md").read_text(encoding="utf-8")
 
-DWC_SCHEMA  = (PROMPTS_PATH / "darwin-core-schema.md").read_text(encoding="utf-8")
-QUERY_GUIDE = (PROMPTS_PATH / "query-guidance.md").read_text(encoding="utf-8")
+_TOOL_DESCRIPTION = f"""
+Translate a natural language biodiversity question into a SPARQL SELECT query
+and execute it against the Darwin Core linked-data endpoint.
 
-# Build a sparql query docstring template
-# NOTE: Later try to integrate .obda file.
-#
-_SPARQL_TOOL_DOCSTRING = f"""
-Execute a SPARQL SELECT query against the SPARQL endpoint using terms from the
-Darwin Core OWL (DWC-OWL) ontology.
+Your primary job is writing correct SPARQL. Focus on that.
 
-BEFORE writing any query:
-1. Read the ontology reference below — especially the graph structure section.
-2. Use one of the provided query patterns as a starting point.
+OPTIONAL geographic, temporal and license scoping:
+  bbox     — [min_lon, min_lat, max_lon, max_lat] in WGS84.
+             Only supply this when the user explicitly asks to restrict results
+             to a geographic area AND that restriction is meant to filter which
+             datasets are loaded, not just to filter rows in the query.
+             Note: a dataset with global coverage will still be included even
+             when a bbox is given — the bbox selects datasets whose declared
+             coverage intersects the box, not datasets that contain only that area.
+  temporal — ["YYYY-MM-DD", "YYYY-MM-DD"].
+             Only supply this when the user explicitly asks to restrict by
+             data collection period at the dataset level.
+  licenses — ["CC-BY-4.0", "CC0-1.0", ...].
+             List of SPDX license identifiers used to restrict which datasets
+             are loaded. Only supply this when the user explicitly requests
+             licensing constraints (for example: "CC-BY data only",
+             "public-domain records", or "exclude non-commercial licenses").
+             This filters datasets by their declared license and is not a
+             SPARQL filter on individual records.
 
-Results are returned as a Markdown table (max 500 rows shown).
-If a query returns 0 results, re-read the traversal rules.
+When in doubt, omit bbox, temporal and licenses entirely. Most questions do not need them.
+If a query returns 0 results, check the SPARQL before adjusting the bbox.
 
 ---
 
 {DWC_SCHEMA}
+""".strip()
 
----
+mcp = FastMCP(
+    name="Biodiversity-DwC-DP",
+    instructions="""
+You have one tool: sparql_query.
 
-{QUERY_GUIDE}
-"""
+Your job is to translate natural language biodiversity questions into correct
+SPARQL queries using the Darwin Core OWL ontology, then execute them.
+
+The parameters bbox, temporal and licenses are optional.
+Omit them unless the user explicitly asks to scope the query to a specific geographic
+region, time period or license at the dataset level.
+Do not fill them in "helpfully", leave them empty by default.
+""".strip()
+)
 
 
-@mcp.tool()
-async def sparql_query(query: str) -> str:
-    # Enable logging of the query.
-    #
-    print(f"Supplied query: {query}", file=sys.stderr)
+@mcp.tool(description=_TOOL_DESCRIPTION)
+async def sparql_query(
+    sparql: Annotated[
+        str,
+        Field(
+            description="SPARQL query to execute against the endpoint",
+            min_length=1,
+        ),
+    ],
+    bbox: Annotated[
+        list[float] | None,
+        Field(
+            description="Geographic bounding box in decimal degrees (WGS84) as [min_longitude, min_latitude, max_longitude, max_latitude].",
+            min_length=4,
+            max_length=4,
+        ),
+    ] = None,
+    temporal: Annotated[
+        list[date] | None,
+        Field(
+            description="Date range as [start_date, end_date] in ISO 8601 format (YYYY-MM-DD)",
+            min_length=2,
+            max_length=2,
+        ),
+    ] = None,
+    licenses: Annotated[
+        list[str] | None,
+        Field(
+            description="List of SPDX license identifiers.",
+        ),
+    ] = None,
+) -> str:
+    """Execute a SPARQL query against the biodiversity endpoint."""
+    print(f"[sparql_query] bbox={bbox} temporal={temporal} licenses={licenses}", file=sys.stderr)
+    print(f"[sparql_query] query={sparql}", file=sys.stderr)
 
-    rows, error = await run_sparql(query)
+    rows, error = await run_sparql(sparql, bbox, temporal, licenses)
 
-    # NOTE: LLMs tend to overreact if there is an error returned as an exception.
-    # Return it as readable text so the LLM can diagnose and retry again.
-    #
     if error:
         return (
-            f"Query error:\n\n{error}\n\n"
-            f"Re-read the ontology reference in your tool description and retry. "
-            f"Common causes: missing prefix declarations, or wrong graph traversal method."
+            f"API error:\n\n{error}\n\n"
+            "Common causes:\n"
+            "- Missing PREFIX declarations\n"
+            "- Wrong property name or traversal path — re-read the ontology reference\n"
+            "- LIMIT missing on a large result set"
         )
 
     if not rows:
         return (
             "_No results returned._\n\n"
-            "If you expected results:\n"
-            "1. Check that all traversal chains are complete (Occurrence → Event → Location for coordinates)\n"
+            "1. Check traversal chains — coordinates are on Location, dates on Event\n"
             "2. Wrap optional properties in OPTIONAL { }\n"
-            "3. Try removing FILTER clauses one at a time to find which one is excluding all results"
+            "3. Remove FILTER clauses one at a time to isolate the problem\n"
+            "4. Run SELECT * with no filters and a small LIMIT to see what is actually there"
         )
 
-    n = len(rows)
-    table = rows_to_markdown(rows)
-
-    # Tell the LLM how many rows came back and whether there may be more.
-    if n >= 500:
-        note = "\n\n_Result capped at 500 rows. Add a more specific FILTER to narrow results._"
-    else:
-        note = ""
-
+    table = rows_to_markdown(rows[:500])
+    note = (
+        "\n\n_Capped at 500 rows. Add a more specific FILTER to narrow results._"
+        if len(rows) >= 500 else ""
+    )
     return table + note
 
-
-# Replace the placeholder docstring with the full injected version.
-#
-sparql_query.__doc__ = _SPARQL_TOOL_DOCSTRING
 
 if __name__ == "__main__":
     mcp.run(transport="http", host="0.0.0.0", port=9000)

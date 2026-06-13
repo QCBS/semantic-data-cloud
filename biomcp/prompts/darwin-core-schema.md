@@ -1,288 +1,258 @@
 # Darwin Core Data Package — Ontology Reference
 
-> This file is injected at runtime into every SPARQL tool call.
-> It describes the EXACT graph structure of THIS endpoint.
-> Do NOT assume flat Darwin Core — this uses DWC-DP linked object properties.
-
 ---
 
-## ⚠️ MANDATORY INSTRUCTIONS — READ BEFORE DOING ANYTHING
+## Instructions — read before writing any SPARQL
 
-**DO NOT write exploratory queries.** Do not query `?interaction ?predicate ?value`
-to "understand the structure". The structure is fully documented below.
-Writing exploratory queries wastes time and often returns misleading results
-due to OPTIONAL properties.
+USE THE PATTERNS. Every query type has a worked example below.
+Find the matching pattern, copy it, adapt filter values only.
+Do not invent new graph traversals.
 
-**USE THE PATTERNS.** Every query type you will ever need has a worked example
-in this document. Find the pattern that matches the user's question, copy it,
-and adapt the filter values only. Do not invent new query structures.
-
-**Decision tree — pick your pattern before writing a single line of SPARQL:**
-
-| User asks about... | Action |
+| User asks about... | Pattern |
 |---|---|
-| Species occurrences, counts, names | Use Pattern 1 or 5 |
-| Coordinates, locations, countries | Use Pattern 2, 3, or 4 |
-| Dates, years, months | Use Pattern 6 |
-| Who recorded something | Use Pattern 7 |
-| Interactions between species | Go to OrganismInteraction section — use standard pattern there |
-| Unsure what properties exist | Call `inspect_ontology` tool — do NOT write exploratory SPARQL |
+| Species names, occurrences, lists | 1 |
+| Coordinates, map positions | 2 |
+| Country, locality, geographic filter | 3 |
+| Dates, years, months | 4 |
+| Counts, rankings, aggregations | 5 |
+| Who did what surrounding the event of an occurrence | 6 |
+| Measurements, body size, numeric values | 7 |
+| Photos, images, audio, video | 8 |
+| Taxonomic identification details | 9 |
+| Information about a survey | 10 |
+| Information about a molecular protocol | 11 |
+| Information about the chronometric age surrounding the event of an occurrence | 12 |
+| Information about the geological context surrounding a material entity | 13 |
+| Information about the provenance of an event, material entity or occurrence | 14 |
+| Ecological interactions between species | OrganismInteraction section |
 
 ---
 
-## Namespace prefixes
-Declare ALL of these at the top of every query, even if you only use some.
+## Prefix block — include relevant prefixes in every query
 
 ```sparql
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl:     <http://www.w3.org/2002/07/owl#>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+PREFIX ac: <http://rs.tdwg.org/ac/terms/>
+PREFIX chrono: <http://rs.tdwg.org/chrono/terms/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
 PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX dce:     <http://purl.org/dc/elements/1.1/>
-PREFIX dwc:     <http://rs.tdwg.org/dwc/terms/>
-PREFIX dwciri:  <http://rs.tdwg.org/dwc/iri/>
-PREFIX dwcdp:   <http://rs.tdwg.org/dwcdp/terms/>
-PREFIX eco:     <http://rs.tdwg.org/eco/terms/>
-PREFIX ac:      <http://rs.tdwg.org/ac/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+PREFIX eco: <http://rs.tdwg.org/eco/terms/>
+PREFIX gbif: <http://rs.gbif.org/terms/>
+PREFIX mixs: <https://w3id.org/mixs/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 ```
 
 ---
 
-## Graph structure — how classes connect via object properties
+## Graph structure
 
-**This is not flat DWC.** To reach location data you must traverse a chain.
-There are NO coordinates directly on dwc:Occurrence.
+Here are the object properties connecting the main classes in the ontology.
+There are NO coordinates or dates directly on dwc:Occurrence.
+You MUST traverse the object property chain to reach them.
 
 ```
 dwc:Occurrence
-├─ dwcdp:happenedDuring  ──► dwc:Event
+├─ dwcdp:happenedDuring ──► dwc:Event
 │                              ├─ dwcdp:spatialLocation ──► dcterms:Location
-│                              │                              (coordinates, country, locality)
-│                              ├─ dwcdp:conductedBy     ──► dcterms:Agent
-│                              ├─ dwcdp:hasProvenance   ──► dwcdp:Provenance
-│                              └─ dwcdp:happenedDuring  ──► dwc:Event  (parent event)
-│
-├─ dwcdp:occurrenceOf    ──► dwc:Organism
-├─ dwcdp:recordedBy      ──► dcterms:Agent
-├─ dwcdp:identifiedBy    ──► dcterms:Agent
-├─ dwcdp:mentionedIn     ──► dcterms:BibliographicResource
-├─ dwcdp:happenedWithin  ──► dwc:GeologicalContext
-└─ dwcdp:satisfied       ──► eco:SurveyTarget
+│                              │                            └─ dwcdp:georeferencedBy ──► dcterms:Agent
+│                              ├─ dwcdp:conductedBy ──► dcterms:Agent
+│                              ├─ dwcdp:happenedDuring ──► dwc:Event (parent event)
+│                              └─ dwcdp:hasProvenance ──► dwc:Provenance
+├─ dwcdp:occurrenceOf ──► dwc:Organism
+├─ dwcdp:recordedBy ──► dcterms:Agent
+└─ dwcdp:identifiedBy ──► dcterms:Agent
+
+dwc:MaterialEntity
+├─ dwcdp:collectedDuring ──► dwc:Event
+├─ dwcdp:evidenceFor ──► dwc:Occurrence
+├─ dwcdp:hasProvenance ──► dwc:Provenance
+└─ dwcdp:identifiedBy ──► dcterms:Agent
+
+dwc:NucleotideAnalysis
+├─ dwcdp:analysisOf ──► dwc:MaterialEntity
+├─ dwcdp:materialCollectedDuring ──► dwc:Event
+├─ dwcdp:followed ──► dwc:MolecularProtocol
+└─ dwcdp:produced ──► dwc:NucleotideSequence
+
+dwc:OrganismInteraction
+├─ dwcdp:happenedDuring ──► dwc:Event
+├─ dwcdp:interactionBy ──► dwc:Occurrence
+└─ dwcdp:interactionWith ──► dwc:Occurrence
+
+dwc:Survey — dwcdp:happenedDuring ──► dwc:Event
+
+dwc:Media — dwcdp:hasProvenance ──► dwc:Provenance
+
+dwc:GeologicalContext — dwcdp:contextFor ──► dwc:MaterialEntity
+
+dwc:Assertion — dwcdp:about ──► [any entity: Occurrence, MaterialEntity, ...]
+
+dwc:OccurrenceMedia — dwcdp:hasContent ──► dwc:Occurrence
+└─ dwcdp:thisMedia ──► dwc:Media (ac:accessURI)
+
+dwc:Identification — dwcdp:basedOn ──► [Occurrence, MaterialEntity, Media,
+├─                                      NucleotideAnalysis, NucleotideSequence]
+└─ dwcdp:identifiedBy ──► dcterms:Agent
+
+chrono:ChronometricAge — dwcdp:ageFor ──► dwc:Event
 ```
 
 ---
 
-## Properties per class
+## Key properties per class
 
-### dwc:Occurrence — data properties (no traversal needed)
+### dwc:Occurrence
+`dwc:occurrenceID` · `dwc:scientificName` · `dwc:occurrenceStatus`
+`dwc:sex` · `dwc:lifeStage` · `dwc:vitality` · `dwc:behavior`
+`dwc:recordedBy` · `dwc:identifiedBy` · `dwc:organismQuantity` · `dwc:organismQuantityType` · `dwc:occurrenceRemarks`
 
-| Property | Description | Example |
-|---|---|---|
-| `dwc:scientificName` | Full scientific name | "Abudefduf vaigiensis" |
-| `dwc:scientificNameID` | Taxon name identifier | |
-| `dwc:taxonID` | Taxon identifier | |
-| `dwc:taxonRank` | Rank of the taxon | "species", "genus" |
-| `dwc:kingdom` | Kingdom | "Animalia", "Plantae" |
-| `dwc:verbatimIdentification` | Original identification string | |
-| `dwc:vernacularName` | Common name | |
-| `dwc:basisOfRecord` | Nature of the record | "HumanObservation", "PreservedSpecimen" |
-| `dwc:occurrenceID` | Unique occurrence identifier | |
-| `dwc:occurrenceStatus` | Presence/absence | "present", "absent" |
-| `dwc:occurrenceRemarks` | Free-text notes | |
-| `dwc:individualCount` | Number of individuals | 3 |
-| `dwc:organismQuantity` | Quantity value | |
-| `dwc:organismQuantityType` | Quantity unit | "individuals", "% cover" |
-| `dwc:sex` | Sex of organism | "male", "female" |
-| `dwc:lifeStage` | Life stage | "adult", "juvenile", "larva" |
-| `dwc:vitality` | Living status | "alive", "dead" |
-| `dwc:recordedBy` | Recorder name (literal string) | "Jane Smith" |
-| `dwc:identifiedBy` | Identifier name (literal string) | |
-| `dwc:catalogNumber` | Catalog number | |
-| `dwc:collectionCode` | Collection code | |
-| `dwc:institutionCode` | Institution code | "MNHN", "JAMSTEC" |
-| `dwc:eventID` | Event identifier (literal) | |
-| `dwc:surveyTargetID` | Survey target identifier | |
-| `dcterms:identifier` | Record identifier | |
+### dwc:Event (reached via dwcdp:happenedDuring)
+`dwc:eventID` · `dwc:eventDate` · `dwc:year` · `dwc:month` · `dwc:day`
+`dwc:eventType` · `dwc:habitat` · `dwc:datasetName` · `dwc:eventRemarks`
 
-### dwc:Event — data properties
+### dcterms:Location (reached via dwc:Event → dwcdp:spatialLocation)
+`dwc:locationID` · `dwc:decimalLatitude` · `dwc:decimalLongitude` · `dwc:coordinateUncertaintyInMeters`
+`dwc:country` · `dwc:countryCode` · `dwc:stateProvince` · `dwc:locality`
+`dwc:waterBody` · `dwc:minimumDepthInMeters` · `dwc:maximumDepthInMeters` · `dwc:locationRemarks`
 
-| Property | Description |
-|---|---|
-| `dwc:eventDate` | ISO 8601 date: "2023-06-15" or "2023-06" or "2023" |
-| `dwc:eventTime` | Time of event |
-| `dwc:year` | Integer year |
-| `dwc:month` | Integer month (1–12) |
-| `dwc:day` | Integer day |
-| `dwc:eventType` | Type of event |
-| `dwc:eventCategory` | Category |
-| `dwc:eventID` | Identifier |
-| `dwc:datasetName` | Name of the source dataset |
-| `dwc:samplingProtocol` | Protocol name |
-| `dwc:samplingEffort` | Effort description |
-| `dwc:habitat` | Habitat description |
-| `dwc:eventRemarks` | Free-text notes |
-| `dwc:parentEventID` | Parent event identifier (literal) |
-| `dcterms:title` | Event title |
-| `dcterms:identifier` | Identifier |
+### dwc:Assertion (linked to its subject via dwcdp:about)
+`dwc:assertionID` · `dwc:assertionType` · `dwc:assertionValue` · `dwc:assertionValueNumeric`
+`dwc:assertionUnit` · `dwc:assertionMadeDate`
 
-### dcterms:Location — data properties (all geographic data lives here)
+### dwc:Identification (linked to its basis via dwcdp:basedOn)
+`dwc:identificationID` · `dwc:scientificName` · `dwc:identifiedBy` · `dwc:dateIdentified`
+`dwc:taxonRank` · `dwc:identificationVerificationStatus` · `dwc:identificationRemarks`
 
-| Property | Description |
-|---|---|
-| `dwc:decimalLatitude` | Decimal degrees WGS84 — **coordinates are HERE** |
-| `dwc:decimalLongitude` | Decimal degrees WGS84 — **coordinates are HERE** |
-| `dwc:coordinateUncertaintyInMeters` | Positional uncertainty |
-| `dwc:coordinatePrecision` | Precision |
-| `dwc:geodeticDatum` | "WGS84" |
-| `dwc:country` | Country name |
-| `dwc:countryCode` | ISO 3166-1 alpha-2: "FR", "PH", "JP" |
-| `dwc:stateProvince` | State or province |
-| `dwc:county` | County |
-| `dwc:municipality` | Municipality |
-| `dwc:locality` | Locality description |
-| `dwc:verbatimLocality` | Original locality string |
-| `dwc:continent` | "Europe", "Asia", "North America", etc. |
-| `dwc:waterBody` | Water body name |
-| `dwc:island` | Island name |
-| `dwc:islandGroup` | Island group |
-| `dwc:higherGeography` | Broader geographic name |
-| `dwc:minimumDepthInMeters` | Min depth (for aquatic) |
-| `dwc:maximumDepthInMeters` | Max depth (for aquatic) |
-| `dwc:minimumElevationInMeters` | Min elevation |
-| `dwc:maximumElevationInMeters` | Max elevation |
-| `dwc:footprintWKT` | WKT geometry string |
-| `dwc:footprintSRS` | SRS for WKT |
-| `dcterms:identifier` | Location identifier |
+### dwc:Media (reached via dwc:OccurrenceMedia → dwcdp:thisMedia)
+`dwc:mediaID` · `ac:accessURI` · `dcterms:title` · `dcterms:type` · `dc:format`
+
+### dwc:Survey (linked to a dwc:Event via dwcdp:happenedDuring)
+`dwc:surveyID` · `dwc:sampleSizeUnit` · `dwc:sampleSizeValue` · `eco:areNonTargetTaxaFullyReported`
+`eco:isAbsenceReported` · `eco:isLeastSpecificTargetCategoryQuantityInclusive` · `eco:samplingEffortProtocol`
+`eco:samplingEffortUnit` · `eco:samplingEffortValue` · `eco:samplingPerformedBy`
+
+### dwc:GeologicalContext (linked to a dwc:MaterialEntity via dwcdp:contextFor)
+`dwc:geologicalContextID` · `dwc:bed` · `dwc:earliestAgeOrLowestStage` · `dwc:earliestEpochOrLowestSeries`
+`dwc:earliestEraOrLowestErathem` · `dwc:earliestPeriodOrLowestSystem` · `dwc:formation` · `dwc:group`
+`dwc:latestAgeOrHighestStage` · `dwc:latestEpochOrHighestSeries` · `dwc:latestEraOrHighestErathem`
+`dwc:latestPeriodOrHighestSystem` · `dwc:member`
+
+### dwc:MolecularProtocol
+`dwc:molecularProtocolID` · `mixs:0000041` · `mixs:0000044`
+`mixs:0000045` · `mixs:0000050` · `mixs:0000086` · `mixs:0000087`
+`gbif:pcr_primer_forward` · `gbif:pcr_primer_reverse` · `gbif:pcr_primer_name_forward` · `gbif:pcr_primer_name_reverse`
+
+### dwc:Provenance
+`dwc:provenanceID` · `ac:fundingAttribution` · `ac:metadataCreatorLiteral` · `ac:providerLiteral`
+`dc:creator` · `dcterms:bibliographicCitation` · `dcterms:references`
+`dwc:datasetID` · `dwc:projectID` · `dwc:projectTitle`
+
+### dwc:OrganismInteraction
+`dwc:organismInteractionID` · `dwc:organismInteractionDescription` · `dwc:subjectOrganismPart`
+`dwc:organismInteractionType` · `dwc:relatedOrganismPart`
+
+### chrono:ChronometricAge
+`dwc:chronometricAgeID` · `chrono:chronometricAgeConversionProtocol` · `chrono:chronometricAgeConversionRemarks`
+`chrono:materialDated` · `chrono:materialDatedRelationship` · `chrono:earliestChronometricAge`
+`chrono:earliestChronometricAgeReferenceSystem` · `chrono:latestChronometricAge`
+`chrono:latestChronometricAgeReferenceSystem` · `chrono:verbatimChronometricAge`
 
 ---
 
-## Query patterns — copy and adapt these exactly
+## Query patterns
 
-> Copy the entire pattern including all PREFIX lines.
-> Change only the filter values (species names, country codes, years).
-> Do not restructure the pattern.
+### Pattern 1 — List occurrences by taxon name
 
-### Pattern 1: List occurrences by taxon name (no location needed)
 ```sparql
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl:     <http://www.w3.org/2002/07/owl#>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX dce:     <http://purl.org/dc/elements/1.1/>
-PREFIX dwc:     <http://rs.tdwg.org/dwc/terms/>
-PREFIX dwciri:  <http://rs.tdwg.org/dwc/iri/>
-PREFIX dwcdp:   <http://rs.tdwg.org/dwcdp/terms/>
-PREFIX eco:     <http://rs.tdwg.org/eco/terms/>
-PREFIX ac:      <http://rs.tdwg.org/ac/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 
-SELECT ?occ ?name ?basisOfRecord ?institutionCode WHERE {
+SELECT ?occ
+WHERE {
   ?occ a dwc:Occurrence ;
-       dwc:scientificName ?name .
-  OPTIONAL { ?occ dwc:basisOfRecord   ?basisOfRecord }
-  OPTIONAL { ?occ dwc:institutionCode ?institutionCode }
+       dwc:scientificName "Chaetodon baronessa" .
 }
-ORDER BY ?name
 LIMIT 100
 ```
 
-### Pattern 2: Coordinates — ALWAYS traverse Occurrence → Event → Location
-```sparql
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl:     <http://www.w3.org/2002/07/owl#>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX dce:     <http://purl.org/dc/elements/1.1/>
-PREFIX dwc:     <http://rs.tdwg.org/dwc/terms/>
-PREFIX dwciri:  <http://rs.tdwg.org/dwc/iri/>
-PREFIX dwcdp:   <http://rs.tdwg.org/dwcdp/terms/>
-PREFIX eco:     <http://rs.tdwg.org/eco/terms/>
-PREFIX ac:      <http://rs.tdwg.org/ac/terms/>
+### Pattern 2 — Occurrences with coordinates
+Coordinates are on dcterms:Location, never on Occurrence. Always traverse.
 
-SELECT ?name ?lat ?lon WHERE {
+```sparql
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+
+SELECT ?lat ?lon ?country ?county ?locality ?locationRemarks ?stateProvince
+WHERE {
   ?occ a dwc:Occurrence ;
-       dwc:scientificName ?name ;
-       dwcdp:happenedDuring ?event .
-  ?event dwcdp:spatialLocation ?loc .
-  ?loc dwc:decimalLatitude  ?lat ;
+       dwc:scientificName "Coccyzus americanus" ;
+       dwcdp:happenedDuring ?evt .
+
+  ?evt dwcdp:spatialLocation ?loc .
+
+  ?loc dwc:decimalLatitude ?lat ;
        dwc:decimalLongitude ?lon .
+
+  OPTIONAL { ?loc dwc:country ?country }
+  OPTIONAL { ?loc dwc:county ?county }
+  OPTIONAL { ?loc dwc:locality ?locality }
+  OPTIONAL { ?loc dwc:locationRemarks ?locationRemarks }
+  OPTIONAL { ?loc dwc:stateProvince ?stateProvince }
 }
-LIMIT 100
+LIMIT 200
 ```
 
-### Pattern 3: Filter by species name + get full location
-```sparql
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl:     <http://www.w3.org/2002/07/owl#>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX dce:     <http://purl.org/dc/elements/1.1/>
-PREFIX dwc:     <http://rs.tdwg.org/dwc/terms/>
-PREFIX dwciri:  <http://rs.tdwg.org/dwc/iri/>
-PREFIX dwcdp:   <http://rs.tdwg.org/dwcdp/terms/>
-PREFIX eco:     <http://rs.tdwg.org/eco/terms/>
-PREFIX ac:      <http://rs.tdwg.org/ac/terms/>
+### Pattern 3 — Filter by country or species with full location
 
-SELECT ?name ?lat ?lon ?country ?date WHERE {
+```sparql
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+
+SELECT ?lat ?lon ?country ?date
+WHERE {
   ?occ a dwc:Occurrence ;
-       dwc:scientificName ?name ;
-       dwcdp:happenedDuring ?event .
-  ?event dwcdp:spatialLocation ?loc .
-  OPTIONAL { ?loc   dwc:decimalLatitude  ?lat }
-  OPTIONAL { ?loc   dwc:decimalLongitude ?lon }
-  OPTIONAL { ?loc   dwc:country          ?country }
-  OPTIONAL { ?event dwc:eventDate        ?date }
-  FILTER(?name = "Abudefduf vaigiensis")
+       dwc:scientificName "Abudefduf vaigiensis" ;
+       dwcdp:happenedDuring ?evt .
+
+  ?evt dwcdp:spatialLocation ?loc .
+  OPTIONAL { ?evt dwc:eventDate ?date }
+  OPTIONAL { ?loc dwc:decimalLatitude ?lat }
+  OPTIONAL { ?loc dwc:decimalLongitude ?lon }
+  OPTIONAL { ?loc dwc:country ?country }
 }
 LIMIT 500
 ```
 
-### Pattern 4: Filter by country code
-```sparql
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl:     <http://www.w3.org/2002/07/owl#>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX dce:     <http://purl.org/dc/elements/1.1/>
-PREFIX dwc:     <http://rs.tdwg.org/dwc/terms/>
-PREFIX dwciri:  <http://rs.tdwg.org/dwc/iri/>
-PREFIX dwcdp:   <http://rs.tdwg.org/dwcdp/terms/>
-PREFIX eco:     <http://rs.tdwg.org/eco/terms/>
-PREFIX ac:      <http://rs.tdwg.org/ac/terms/>
+### Pattern 4 — Filter by year range
 
-SELECT ?name ?lat ?lon ?date WHERE {
+```sparql
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+
+SELECT ?occ ?year ?month
+WHERE {
   ?occ a dwc:Occurrence ;
-       dwc:scientificName ?name ;
-       dwcdp:happenedDuring ?event .
-  ?event dwcdp:spatialLocation ?loc .
-  ?loc dwc:countryCode         ?cc ;
-       dwc:decimalLatitude     ?lat ;
-       dwc:decimalLongitude    ?lon .
-  OPTIONAL { ?event dwc:eventDate ?date }
-  FILTER(?cc IN ("FR", "PH", "JP"))
+       dwc:scientificName "Lutjanus viridis" ;
+       dwcdp:happenedDuring ?evt .
+
+  ?evt dwc:year ?year .
+
+  OPTIONAL { ?evt dwc:month ?month }
+  FILTER(?year >= 1980 && ?year <= 2000)
 }
-LIMIT 500
+ORDER BY ?year ?month
+LIMIT 200
 ```
 
-### Pattern 5: Count occurrences per species
-```sparql
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl:     <http://www.w3.org/2002/07/owl#>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX dce:     <http://purl.org/dc/elements/1.1/>
-PREFIX dwc:     <http://rs.tdwg.org/dwc/terms/>
-PREFIX dwciri:  <http://rs.tdwg.org/dwc/iri/>
-PREFIX dwcdp:   <http://rs.tdwg.org/dwcdp/terms/>
-PREFIX eco:     <http://rs.tdwg.org/eco/terms/>
-PREFIX ac:      <http://rs.tdwg.org/ac/terms/>
+### Pattern 5 — Count or rank by species
 
-SELECT ?name (COUNT(?occ) AS ?n) WHERE {
+```sparql
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+
+SELECT ?name (COUNT(?occ) AS ?n)
+WHERE {
   ?occ a dwc:Occurrence ;
        dwc:scientificName ?name .
 }
@@ -291,57 +261,334 @@ ORDER BY DESC(?n)
 LIMIT 50
 ```
 
-### Pattern 6: Filter by year range (through Event)
-```sparql
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl:     <http://www.w3.org/2002/07/owl#>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX dce:     <http://purl.org/dc/elements/1.1/>
-PREFIX dwc:     <http://rs.tdwg.org/dwc/terms/>
-PREFIX dwciri:  <http://rs.tdwg.org/dwc/iri/>
-PREFIX dwcdp:   <http://rs.tdwg.org/dwcdp/terms/>
-PREFIX eco:     <http://rs.tdwg.org/eco/terms/>
-PREFIX ac:      <http://rs.tdwg.org/ac/terms/>
+### Pattern 6 — Who did what surrounding an occurrence
+dcterms:Agent represents actors in various roles. They can be the recorders of a dwc:Occurrence
+via dwcdp:recordedBy, the identifiers of an occurrence via dwcdp:identifiedBy, or the conductors
+of a dwc:Event via dwcdp:conductedBy. The literal string properties dwc:recordedBy and
+dwc:identifiedBy on dwc:Occurrence are also available for simpler lookups.
 
-SELECT ?name ?year ?month WHERE {
+```sparql
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+
+SELECT ?identifierName ?identifierType ?conductorName ?conductorType
+       ?identificationRemarks ?recorderName ?recorderType ?recordedBy ?identifiedBy
+WHERE {
   ?occ a dwc:Occurrence ;
-       dwc:scientificName ?name ;
-       dwcdp:happenedDuring ?event .
-  ?event dwc:year ?year .
-  OPTIONAL { ?event dwc:month ?month }
-  FILTER(?year >= 2015 && ?year <= 2023)
+       dwc:scientificName "Actias luna" ;
+       dwcdp:happenedDuring ?evt .
+
+  ?evt a dwc:Event .
+
+  OPTIONAL { ?occ dwc:identificationRemarks ?identificationRemarks }
+  OPTIONAL { ?occ dwc:identifiedBy ?identifiedBy }
+  OPTIONAL { ?occ dwc:recordedBy ?recordedBy }
+
+  OPTIONAL {
+    ?evt dwcdp:recordedBy ?recorder .
+    ?recorder a dcterms:Agent ;
+              dcterms:title ?recorderName ;
+              dwc:agentType ?recorderType .
+  }
+
+  OPTIONAL {
+    ?occ dwcdp:identifiedBy ?identifier .
+    ?identifier a dcterms:Agent ;
+                dcterms:title ?identifierName ;
+                dwc:agentType ?identifierType .
+  }
+
+  OPTIONAL {
+    ?evt dwcdp:conductedBy ?conductor .
+    ?conductor a dcterms:Agent ;
+               dcterms:title ?conductorName ;
+               dwc:agentType ?conductorType .
+  }
 }
-ORDER BY ?year ?month
-LIMIT 200
+LIMIT 100
 ```
 
-### Pattern 7: Full record with recorder identity (Agent traversal)
-```sparql
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl:     <http://www.w3.org/2002/07/owl#>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX dce:     <http://purl.org/dc/elements/1.1/>
-PREFIX dwc:     <http://rs.tdwg.org/dwc/terms/>
-PREFIX dwciri:  <http://rs.tdwg.org/dwc/iri/>
-PREFIX dwcdp:   <http://rs.tdwg.org/dwcdp/terms/>
-PREFIX eco:     <http://rs.tdwg.org/eco/terms/>
-PREFIX ac:      <http://rs.tdwg.org/ac/terms/>
+### Pattern 7 — Assertions (measurements about any entity)
+dwc:Assertion records numeric or categorical measurements.
+Link from assertion to its subject via dwcdp:about.
+Subject can be any other entity, such as dwc:Occurrence, dwc:MaterialEntity, dwc:Event, or dwc:Media.
 
-SELECT ?name ?lat ?lon ?date ?recorder WHERE {
+```sparql
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+
+SELECT ?sciName (AVG(?val) AS ?avgVal) ?unit
+WHERE {
+  ?ass a dwc:Assertion ;
+       dwc:assertionType "body size" ;
+       dwc:assertionValueNumeric ?val ;
+       dwc:assertionUnit ?unit ;
+       dwcdp:about ?occ .
+
   ?occ a dwc:Occurrence ;
-       dwc:scientificName ?name ;
-       dwcdp:happenedDuring ?event .
-  OPTIONAL {
-    ?event dwcdp:spatialLocation ?loc .
-    ?loc dwc:decimalLatitude  ?lat ;
-         dwc:decimalLongitude ?lon .
-  }
-  OPTIONAL { ?event dwc:eventDate  ?date }
-  OPTIONAL { ?occ   dwc:recordedBy ?recorder }
+       dwc:scientificName ?sciName .
+}
+GROUP BY ?sciName ?unit
+ORDER BY DESC(?avgVal)
+```
+
+### Pattern 8 — Media linked to an occurrence (OccurrenceMedia)
+dwc:OccurrenceMedia is an entity that represents a dwc:Occurrence as content in a dwc:Media item.
+Variants include dwc:EventMedia, dwc:MaterialMedia, dwc:OrganismMedia.
+
+```sparql
+PREFIX ac: <http://rs.tdwg.org/ac/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+
+SELECT ?accUri ?sciName ?subjectOrientationLiteral ?subjectPartLiteral
+WHERE {
+  ?occMed a dwc:OccurrenceMedia ;
+          dwcdp:thisMedia ?med ;
+          dwcdp:hasContent ?occ .
+
+  ?med a dwc:Media ;
+       ac:accessURI ?accUri .
+
+  ?occ a dwc:Occurrence ;
+       dwc:scientificName "Trapezia rufopunctata" .
+
+  OPTIONAL { ?occMed ac:subjectOrientationLiteral ?subjectOrientationLiteral }
+  OPTIONAL { ?occMed ac:subjectPartLiteral ?subjectPartLiteral }
+}
+```
+
+### Pattern 9 — Identification based on a specific entity type
+dwc:Identification can be based on Occurrence, MaterialEntity, Media,
+NucleotideAnalysis, or NucleotideSequence — all linked via dwcdp:basedOn.
+
+```sparql
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+
+SELECT ?iden ?mat ?materialEntityRemarks ?materialEntityType
+WHERE {
+  ?iden a dwc:Identification ;
+        dwc:scientificName "Tremarctos ornatus" ;
+        dwcdp:basedOn ?mat .
+
+  ?mat a dwc:MaterialEntity .
+  OPTIONAL { ?mat dwc:materialEntityRemarks ?materialEntityRemarks }
+  OPTIONAL { ?mat dwc:materialEntityType ?materialEntityType }
+}
+```
+
+### Pattern 10 — Information about a survey that happened during an event
+dwc:Survey contains information about biodiversity inventories, checklists and surveys.
+These are related to an event using the dwcdp:happenedDuring property.
+
+```sparql
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+PREFIX eco: <http://rs.tdwg.org/eco/terms/>
+
+SELECT ?sampleSizeUnit ?sampleSizeValue ?samplingEffortProtocol ?samplingEffortUnit
+       ?samplingEffortValue ?isAbsenceReported ?areNonTargetTaxaFullyReported
+       ?isLeastSpecificTargetCategoryQuantityInclusive ?samplingPerformedBy
+WHERE {
+  ?surv a dwc:Survey ;
+        dwcdp:happenedDuring ?evt .
+
+  OPTIONAL { ?surv dwc:sampleSizeUnit ?sampleSizeUnit }
+  OPTIONAL { ?surv dwc:sampleSizeValue ?sampleSizeValue }
+
+  OPTIONAL { ?surv eco:areNonTargetTaxaFullyReported ?areNonTargetTaxaFullyReported }
+  OPTIONAL { ?surv eco:isAbsenceReported ?isAbsenceReported }
+  OPTIONAL { ?surv eco:isLeastSpecificTargetCategoryQuantityInclusive ?isLeastSpecificTargetCategoryQuantityInclusive }
+  OPTIONAL { ?surv eco:samplingEffortProtocol ?samplingEffortProtocol }
+  OPTIONAL { ?surv eco:samplingEffortUnit ?samplingEffortUnit }
+  OPTIONAL { ?surv eco:samplingEffortValue ?samplingEffortValue }
+  OPTIONAL { ?surv eco:samplingPerformedBy ?samplingPerformedBy }
+
+  # Replace the event ID below with that of the event you want to query
+  ?evt a dwc:Event ;
+       dwc:eventID "BROKE_WEST_RMT_004_RMT1" .
+}
+LIMIT 5
+```
+
+### Pattern 11 — Information about genomic data
+Genomic data information is contained within dwc:NucleotideAnalysis. It links a
+dwc:NucleotideSequence to a dwc:Event and a dwc:MaterialEntity via a dwc:MolecularProtocol.
+
+```sparql
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+PREFIX gbif: <http://rs.gbif.org/terms/>
+PREFIX mixs: <https://w3id.org/mixs/>
+
+SELECT ?molPro ?evtId ?libLayout ?targetGene ?targetSubfragment ?seqMeth
+       ?otuSeqCompAppr ?otuDb ?pcrPrimerForward ?pcrPrimerReverse
+       ?pcrPrimerNameForward ?pcrPrimerNameReverse
+
+WHERE {
+  ?nucAna a dwc:NucleotideAnalysis ;
+          dwcdp:followed ?molPro ;
+          dwcdp:materialCollectedDuring ?evt ;
+          dwcdp:produced ?nucSeq .
+
+  ?evt a dwc:Event ;
+       dwc:eventID ?evtId .
+
+  ?molPro a dwc:MolecularProtocol .
+
+  OPTIONAL { ?molPro mixs:0000041 ?libLayout }
+  OPTIONAL { ?molPro mixs:0000044 ?targetGene }
+  OPTIONAL { ?molPro mixs:0000045 ?targetSubfragment }
+  OPTIONAL { ?molPro mixs:0000050 ?seqMeth }
+  OPTIONAL { ?molPro mixs:0000086 ?otuSeqCompAppr }
+  OPTIONAL { ?molPro mixs:0000087 ?otuDb }
+
+  OPTIONAL { ?molPro gbif:pcr_primer_forward ?pcrPrimerForward }
+  OPTIONAL { ?molPro gbif:pcr_primer_reverse ?pcrPrimerReverse }
+  OPTIONAL { ?molPro gbif:pcr_primer_name_forward ?pcrPrimerNameForward }
+  OPTIONAL { ?molPro gbif:pcr_primer_name_reverse ?pcrPrimerNameReverse }
+
+  ?nucSeq a dwc:NucleotideSequence .
+
+  ?iden a dwc:Identification ;
+        dwc:scientificName "Thysanoessa" ;
+        dwcdp:basedOn ?nucSeq .
+}
+LIMIT 100
+```
+
+### Pattern 12 — Information about the chronometric age surrounding an event
+chrono:ChronometricAge contains information about the chronometric age of a dwc:Event.
+It is related to its corresponding dwc:Event through the dwcdp:ageFor property.
+
+```sparql
+PREFIX chrono: <http://rs.tdwg.org/chrono/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+
+SELECT ?occ
+       ?materialEntityRemarks ?preparations
+       ?eventDate
+       ?chronometricAgeConversionProtocol ?chronometricAgeConversionRemarks
+       ?earliestChronometricAge ?earliestChronometricAgeReferenceSystem
+       ?latestChronometricAge ?latestChronometricAgeReferenceSystem
+       ?materialDated ?materialDatedRelationship ?verbatimChronometricAge
+WHERE {
+  ?occ a dwc:Occurrence ;
+       dwc:scientificName "Odocoileus virginianus" ;
+       dwcdp:happenedDuring ?evt .
+
+  ?mat a dwc:MaterialEntity ;
+       dwcdp:evidenceFor ?occ .
+
+  ?evt a dwc:Event ;
+       dwc:eventDate ?eventDate .
+
+  ?chro a chrono:ChronometricAge ;
+        dwcdp:ageFor ?evt .
+
+  OPTIONAL { ?mat dwc:materialEntityRemarks ?materialEntityRemarks }
+  OPTIONAL { ?mat dwc:preparations ?preparations }
+
+  OPTIONAL { ?chro chrono:chronometricAgeConversionProtocol ?chronometricAgeConversionProtocol }
+  OPTIONAL { ?chro chrono:chronometricAgeConversionRemarks ?chronometricAgeConversionRemarks }
+  OPTIONAL { ?chro chrono:materialDated ?materialDated }
+  OPTIONAL { ?chro chrono:materialDatedRelationship ?materialDatedRelationship }
+  OPTIONAL { ?chro chrono:earliestChronometricAge ?earliestChronometricAge }
+  OPTIONAL { ?chro chrono:earliestChronometricAgeReferenceSystem ?earliestChronometricAgeReferenceSystem }
+  OPTIONAL { ?chro chrono:latestChronometricAge ?latestChronometricAge }
+  OPTIONAL { ?chro chrono:latestChronometricAgeReferenceSystem ?latestChronometricAgeReferenceSystem }
+  OPTIONAL { ?chro chrono:verbatimChronometricAge ?verbatimChronometricAge }
+}
+LIMIT 100
+```
+
+### Pattern 13 — Information about the geological context surrounding a material entity
+dwc:GeologicalContext contains information about the geological context of a dwc:MaterialEntity.
+It is related to its corresponding dwc:MaterialEntity through the dwcdp:contextFor property.
+
+```sparql
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+
+SELECT ?mat ?geoCtx
+       ?country ?county ?decimalLatitude ?decimalLongitude ?locality ?locationRemarks ?stateProvince
+       ?bed ?earliestAgeOrLowestStage ?earliestEpochOrLowestSeries ?earliestEraOrLowestErathem
+       ?earliestPeriodOrLowestSystem ?formation ?group ?latestAgeOrHighestStage
+       ?latestEpochOrHighestSeries ?latestEraOrHighestErathem ?latestPeriodOrHighestSystem ?member
+
+WHERE {
+  ?mat a dwc:MaterialEntity ;
+       dwc:scientificName "Carcharodon megalodon" ;
+       dwcdp:collectedDuring ?evt .
+
+  ?evt a dwc:Event ;
+       dwcdp:spatialLocation ?loc .
+
+  ?loc a dcterms:Location .
+
+  ?geoCtx a dwc:GeologicalContext ;
+          dwcdp:contextFor ?mat .
+
+  OPTIONAL { ?loc dwc:country ?country }
+  OPTIONAL { ?loc dwc:county ?county }
+  OPTIONAL { ?loc dwc:decimalLatitude ?decimalLatitude }
+  OPTIONAL { ?loc dwc:decimalLongitude ?decimalLongitude }
+  OPTIONAL { ?loc dwc:locality ?locality }
+  OPTIONAL { ?loc dwc:locationRemarks ?locationRemarks }
+  OPTIONAL { ?loc dwc:stateProvince ?stateProvince }
+
+  OPTIONAL { ?geoCtx dwc:bed ?bed }
+  OPTIONAL { ?geoCtx dwc:earliestAgeOrLowestStage ?earliestAgeOrLowestStage }
+  OPTIONAL { ?geoCtx dwc:earliestEpochOrLowestSeries ?earliestEpochOrLowestSeries }
+  OPTIONAL { ?geoCtx dwc:earliestEraOrLowestErathem ?earliestEraOrLowestErathem }
+  OPTIONAL { ?geoCtx dwc:earliestPeriodOrLowestSystem ?earliestPeriodOrLowestSystem }
+  OPTIONAL { ?geoCtx dwc:formation ?formation }
+  OPTIONAL { ?geoCtx dwc:group ?group }
+  OPTIONAL { ?geoCtx dwc:latestAgeOrHighestStage ?latestAgeOrHighestStage }
+  OPTIONAL { ?geoCtx dwc:latestEpochOrHighestSeries ?latestEpochOrHighestSeries }
+  OPTIONAL { ?geoCtx dwc:latestEraOrHighestErathem ?latestEraOrHighestErathem }
+  OPTIONAL { ?geoCtx dwc:latestPeriodOrHighestSystem ?latestPeriodOrHighestSystem }
+  OPTIONAL { ?geoCtx dwc:member ?member }
+}
+LIMIT 100
+```
+
+### Pattern 14 — Information about the provenance of an occurrence
+dwc:Provenance contains information about an entity's origin. This entity can be of various kinds, such as dwc:Event, dwc:MaterialEntity or dwc:Media.
+If considering the provenance of a dwc:Occurrence, then this must be done through the dwc:Event.
+
+```sparql
+PREFIX ac: <http://rs.tdwg.org/ac/terms/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+
+SELECT DISTINCT ?prov ?fundingAttribution ?metadataCreatorLiteral ?providerLiteral
+       ?creatorLiteral ?bibliographicCitation ?references ?datasetID ?projectID ?projectTitle
+WHERE {
+  ?occ a dwc:Occurrence ;
+       dwc:scientificName "Notolepis coatsi" ;
+       dwcdp:happenedDuring ?evt .
+
+  ?evt a dwc:Event ;
+       dwcdp:hasProvenance ?prov .
+
+  ?prov a dwc:Provenance .
+
+  OPTIONAL { ?prov ac:fundingAttribution ?fundingAttribution }
+  OPTIONAL { ?prov ac:metadataCreatorLiteral ?metadataCreatorLiteral }
+  OPTIONAL { ?prov ac:providerLiteral ?providerLiteral }
+  OPTIONAL { ?prov dc:creator ?creatorLiteral }
+  OPTIONAL { ?prov dcterms:bibliographicCitation ?bibliographicCitation }
+  OPTIONAL { ?prov dcterms:references ?references }
+  OPTIONAL { ?prov dwc:datasetID ?datasetID }
+  OPTIONAL { ?prov dwc:projectID ?projectID }
+  OPTIONAL { ?prov dwc:projectTitle ?projectTitle }
 }
 LIMIT 100
 ```
@@ -350,61 +597,37 @@ LIMIT 100
 
 ## dwc:OrganismInteraction — ecological interactions between two occurrences
 
-This class is structurally unique in the ontology. Unlike every other class,
-an OrganismInteraction links TWO dwc:Occurrence nodes in asymmetric roles:
-one is the actor (subject), one is the target (object). Both are full
-dwc:Occurrence instances with their own scientificName and properties.
+This class links two dwc:Occurrence nodes in asymmetric roles:
+one is the actor (subject), one is the target (object).
 
 ### Graph structure
 
 ```
 dwc:OrganismInteraction
-├─ dwc:organismInteractionType   (string literal)
-│    e.g. "visited flower of", "parasite of", "predator of"
-├─ dwcdp:interactionBy   ──► dwc:Occurrence   (SUBJECT: the acting organism)
-└─ dwcdp:interactionWith ──► dwc:Occurrence   (OBJECT: the target organism)
+├─ dwc:organismInteractionType (string: "visited flower of", "parasite of", ...)
+├─ dwcdp:interactionBy ──► dwc:Occurrence (the acting organism)
+└─ dwcdp:interactionWith ──► dwc:Occurrence (the target organism)
 ```
 
-### Critical rules for interaction queries
+### Critical rules
 
-1. **Always bind both occurrences with different variable names.**
-   Use `?subjOcc` and `?objOcc` (or similar) — never reuse `?occ` for both.
-   Reusing the same variable name will make the query match only
-   self-interactions, returning 0 results.
+1. Always use different variable names for each occurrence — `?subjOcc` and `?objOcc`.
+   Reusing the same variable matches only self-interactions, returning 0 results.
+2. Always declare `a dwc:Occurrence` for BOTH occurrences explicitly.
+3. Filter `?objOcc` by scientificName to find what interacts with a specific species.
+4. Filter `?subjOcc` by scientificName to find what a specific species interacts with.
 
-2. **Always declare the rdf:type of both occurrences explicitly.**
-   Write `?subjOcc a dwc:Occurrence` AND `?objOcc a dwc:Occurrence` —
-   do not omit either, even if it seems redundant.
-
-3. **Filter the object by scientificName to find interactions with a
-   specific target species.** Filter the subject to find what interacts
-   with something specific.
-
-4. **Use COUNT + GROUP BY to find the most frequent interactor.**
-
-5. **All variation patterns below require the same PREFIX declarations
-   as the standard pattern.** Always copy the full PREFIX block.
-
-### Standard query pattern — copy and adapt this exactly
+### Standard pattern — What pollinates a specific plant?
 
 ```sparql
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl:     <http://www.w3.org/2002/07/owl#>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX dce:     <http://purl.org/dc/elements/1.1/>
-PREFIX dwc:     <http://rs.tdwg.org/dwc/terms/>
-PREFIX dwciri:  <http://rs.tdwg.org/dwc/iri/>
-PREFIX dwcdp:   <http://rs.tdwg.org/dwcdp/terms/>
-PREFIX eco:     <http://rs.tdwg.org/eco/terms/>
-PREFIX ac:      <http://rs.tdwg.org/ac/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 
-SELECT ?subjectName (COUNT(*) AS ?n) WHERE {
-
+SELECT ?subjectName (COUNT(*) AS ?n)
+WHERE {
   ?orgInt a dwc:OrganismInteraction ;
           dwc:organismInteractionType "visited flower of" ;
-          dwcdp:interactionBy   ?subjOcc ;
+          dwcdp:interactionBy ?subjOcc ;
           dwcdp:interactionWith ?objOcc .
 
   ?subjOcc a dwc:Occurrence ;
@@ -418,25 +641,17 @@ ORDER BY DESC(?n)
 LIMIT 20
 ```
 
-### Variation A — Find all interactions a species participates in (as subject)
+### Variation A — All interactions a species participates in (as actor)
 
 ```sparql
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl:     <http://www.w3.org/2002/07/owl#>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX dce:     <http://purl.org/dc/elements/1.1/>
-PREFIX dwc:     <http://rs.tdwg.org/dwc/terms/>
-PREFIX dwciri:  <http://rs.tdwg.org/dwc/iri/>
-PREFIX dwcdp:   <http://rs.tdwg.org/dwcdp/terms/>
-PREFIX eco:     <http://rs.tdwg.org/eco/terms/>
-PREFIX ac:      <http://rs.tdwg.org/ac/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 
-SELECT ?type ?objectName (COUNT(*) AS ?n) WHERE {
+SELECT ?type ?objectName (COUNT(*) AS ?n)
+WHERE {
   ?orgInt a dwc:OrganismInteraction ;
           dwc:organismInteractionType ?type ;
-          dwcdp:interactionBy   ?subjOcc ;
+          dwcdp:interactionBy ?subjOcc ;
           dwcdp:interactionWith ?objOcc .
 
   ?subjOcc a dwc:Occurrence ;
@@ -450,22 +665,13 @@ ORDER BY DESC(?n)
 LIMIT 20
 ```
 
-### Variation B — Find all interaction types in the dataset
+### Variation B — All interaction types in the dataset
 
 ```sparql
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl:     <http://www.w3.org/2002/07/owl#>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX dce:     <http://purl.org/dc/elements/1.1/>
-PREFIX dwc:     <http://rs.tdwg.org/dwc/terms/>
-PREFIX dwciri:  <http://rs.tdwg.org/dwc/iri/>
-PREFIX dwcdp:   <http://rs.tdwg.org/dwcdp/terms/>
-PREFIX eco:     <http://rs.tdwg.org/eco/terms/>
-PREFIX ac:      <http://rs.tdwg.org/ac/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 
-SELECT ?type (COUNT(*) AS ?n) WHERE {
+SELECT ?type (COUNT(*) AS ?n)
+WHERE {
   ?orgInt a dwc:OrganismInteraction ;
           dwc:organismInteractionType ?type .
 }
@@ -473,25 +679,17 @@ GROUP BY ?type
 ORDER BY DESC(?n)
 ```
 
-### Variation C — Find all species pairs for a given interaction type
+### Variation C — All species pairs for a given interaction type
 
 ```sparql
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl:     <http://www.w3.org/2002/07/owl#>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX dce:     <http://purl.org/dc/elements/1.1/>
-PREFIX dwc:     <http://rs.tdwg.org/dwc/terms/>
-PREFIX dwciri:  <http://rs.tdwg.org/dwc/iri/>
-PREFIX dwcdp:   <http://rs.tdwg.org/dwcdp/terms/>
-PREFIX eco:     <http://rs.tdwg.org/eco/terms/>
-PREFIX ac:      <http://rs.tdwg.org/ac/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 
-SELECT ?subjectName ?objectName (COUNT(*) AS ?n) WHERE {
+SELECT ?subjectName ?objectName (COUNT(*) AS ?n)
+WHERE {
   ?orgInt a dwc:OrganismInteraction ;
           dwc:organismInteractionType "visited flower of" ;
-          dwcdp:interactionBy   ?subjOcc ;
+          dwcdp:interactionBy ?subjOcc ;
           dwcdp:interactionWith ?objOcc .
 
   ?subjOcc a dwc:Occurrence ;
@@ -507,20 +705,29 @@ LIMIT 50
 
 ---
 
-## Rules — read before every query
+## Rules
 
-1. **Always declare all namespaces** — copy the full PREFIX block from the pattern
-2. **Never put coordinates on Occurrence** — they do not exist there
-3. **The coordinate path is always**: `?occ dwcdp:happenedDuring ?event . ?event dwcdp:spatialLocation ?loc . ?loc dwc:decimalLatitude ?lat`
-4. **Use OPTIONAL** for any property that may not be present on all records
-5. **Always add LIMIT** — use 100 for browsing, 500 for filtered queries, 5000 max
-6. **For partial name matching**: `FILTER(CONTAINS(LCASE(?name), "search term"))`
-7. **For exact name matching**: `FILTER(?name = "Exact Name")` — faster
-8. **COUNT queries do not need LIMIT**
-9. **dwcdp:happenedDuring on Event** means parent event (nested event hierarchy)
-10. **dwcdp:happenedDuring on Occurrence** means the event this occurrence happened during — these are different uses of the same property on different subjects
-11. **All SPARQL keywords MUST be UPPERCASE** — Ontop rejects lowercase `as`, `filter`, `optional`, `order by`, etc. Always write `AS`, `FILTER`, `OPTIONAL`, `ORDER BY`
-12. **Never use REGEX()** — DuckDB cannot execute it via Ontop. Use instead:
-    - Partial match: `FILTER(CONTAINS(LCASE(?name), "search term"))`
-    - Exact match:   `FILTER(?name = "Exact Name")`
-    - Starts with:   `FILTER(STRSTARTS(LCASE(?name), "prefix"))`
+1. Declare all namespaces used in the query at the top
+2. NEVER place coordinates on Occurrence — the path is always:
+   `?occ dwcdp:happenedDuring ?evt . ?evt dwcdp:spatialLocation ?loc . ?loc dwc:decimalLatitude ?lat`
+3. Dates and years are on dwc:Event, not on Occurrence
+4. Use OPTIONAL for any property that may be absent on some records
+5. Always add LIMIT — 100 for browsing, 500 for filtered queries; omit for aggregations
+6. ALL SPARQL keywords UPPERCASE: AS, FILTER, OPTIONAL, ORDER BY, GROUP BY, WHERE
+7. NEVER use REGEX() — DuckDB cannot execute it via Ontop. Use instead:
+   - Exact match: `FILTER(?x = "Exact Value")`
+   - Partial match: `FILTER(CONTAINS(LCASE(?x), "term"))`
+   - Starts with: `FILTER(STRSTARTS(LCASE(?x), "prefix"))`
+8. COUNT queries do not need LIMIT
+9. dwcdp:happenedDuring on Occurrence links to the event it occurred during;
+   dwcdp:happenedDuring on Event links to its parent event — different meanings, same property
+
+---
+
+## When a query returns 0 results
+
+Try in this order:
+1. Run `SELECT * WHERE { ?s ?p ?o } LIMIT 10` to confirm the endpoint has data at all
+2. Remove FILTER clauses one by one — identify which one eliminates all results
+3. Check every traversal chain — coordinates must go through Location, dates through Event
+4. Wrap non-essential triples in `OPTIONAL { }` and add them back one at a time
