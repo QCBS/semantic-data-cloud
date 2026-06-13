@@ -1,4 +1,4 @@
-data/
+metadatadb/
 db/
 __pycache__/
 .venv/

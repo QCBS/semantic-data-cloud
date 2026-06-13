@@ -12,14 +12,14 @@ ddb = duckdb_connect()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # startup
     success = s3_to_duckdb("eml", ".json", ddb)
     if success:
         print("Successfully loaded S3 data into DuckDB.")
     else:
         print("Failed to load S3 data into DuckDB.")
+
     yield
-    # shutdown
+
     ddb.close()
 
 app = FastAPI(title="sdc-metadata-fast-api", lifespan=lifespan)
