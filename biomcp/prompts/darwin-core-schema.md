@@ -23,7 +23,7 @@ Do not invent new graph traversals.
 | Information about a molecular protocol | 11 |
 | Information about the chronometric age surrounding the event of an occurrence | 12 |
 | Information about the geological context surrounding a material entity | 13 |
-| Information about the provenance of an event, material entity or occurrence | 14 |
+| Information about the provenance of an event, material entity, media or occurrence | 14 |
 | Ecological interactions between species | OrganismInteraction section |
 
 ---
