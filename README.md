@@ -25,8 +25,9 @@ Any tool capable of making HTTP requests can interact with the endpoint, includi
 - Python: [Requests](https://requests.readthedocs.io/), [HTTPX](https://www.python-httpx.org/), or the standard library [urllib](https://docs.python.org/3/library/urllib.request.html).
 - Ruby: [Faraday](https://lostisland.github.io/faraday/), [HTTParty](https://github.com/jnunemaker/httparty), or the standard gem [HTTP](https://ruby-doc.org/stdlib-2.7.0/libdoc/net/http/rdoc/Net/HTTP.html).
 - JavaScript: [Axios](https://axios-http.com/), [ky](https://github.com/sindresorhus/ky), or the standard [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
-- R: [httr2](https://httr2.r-lib.org/).
-- Command line: [curl](https://curl.se/) or [wget](https://www.gnu.org/software/wget/)
+- R: [httr2](https://httr2.r-lib.org/), [crul](https://docs.ropensci.org/crul/) or [curl](https://jeroen.r-universe.dev/curl).
+- Rust: [reqwests](https://docs.rs/reqwest/latest/reqwest/) or [hyper](https://hyper.rs/).
+- Command line: [curl](https://curl.se/) or [wget](https://www.gnu.org/software/wget/).
 
 ## Additional functionality
 
