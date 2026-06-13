@@ -1,30 +1,35 @@
-# Ontology and mappings
+# Ontology and Mappings
 
 ## Overview
 
-The semantic layer of this system is built on three files that work together: an OWL ontology, an OBDA mapping file, and a JDBC properties file. These are static across all dataset contexts, only the database name in the mapping and properties files changes per-context, and that substitution is performed automatically by the container manager.
+The semantic layer of this system is built on four files that work together: an OWL ontology, an OBDA mapping file, a JDBC properties file, and a database metadata JSON file. These are static across all dataset contexts, only the database name in the mapping, properties, and metadata files changes per context, and that substitution is performed automatically by the container manager.
 
 ---
 
-## OWL Ontology (`dwcowl.ttl`)
+## OWL ontology (`dwcowl.ttl`)
 
-The ontology defines the vocabulary used in SPARQL queries, which consists of the classes and properties over which Ontop reasons. It is written in [Turtle](https://www.w3.org/TR/turtle/) format and is based primarily around terms published by TDWG, including [Darwin Core](https://dwc.tdwg.org/list/), the [Humboldt Extension Vocabulary](https://eco.tdwg.org/list/), [Audiovisual Core](https://ac.tdwg.org/termlist), and the [Chronometric Age Vocabulary](https://chrono.tdwg.org/list/). Additional terms from the Minimum Information about any (x) Sequence ([MIxS](https://genomicsstandardsconsortium.github.io/mixs/)) and Global Genome Biodiversity Network ([GGBN](https://www.ggbn.org/ggbn_portal/site/wf?p=GGBN_Data_Standard)), as well as other other vocabularies for genomic data.
+The ontology defines the vocabulary used in SPARQL queries and the class/property hierarchy over which Ontop reasons. It is written in [Turtle](https://www.w3.org/TR/turtle/) format and is based primarily around terms published by TDWG, including [Darwin Core](https://dwc.tdwg.org/list/), the [Humboldt Extension Vocabulary](https://eco.tdwg.org/list/), [Audiovisual Core](https://ac.tdwg.org/termlist), and the [Chronometric Age Vocabulary](https://chrono.tdwg.org/list/). Additional terms from the Minimum Information about any (x) Sequence ([MIxS](https://genomicsstandardsconsortium.github.io/mixs/)) and Global Genome Biodiversity Network ([GGBN](https://www.ggbn.org/ggbn_portal/site/wf?p=GGBN_Data_Standard)) standards cover genomic data.
 
 Vocabularies can borrow terms from other namespaces, for example, Darwin Core includes terms from both the Dublin Core legacy (`dc:`) and Dublin Core terms (`dcterms:`) namespaces. At its most expressive, the ontology spans up to 30 namespaces. For most queries, the relevant ones are:
 
 ```sparql
-PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX ac: <http://rs.tdwg.org/ac/terms/>
+PREFIX chrono: <http://rs.tdwg.org/chrono/terms/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
-PREFIX eco: <http://rs.tdwg.org/eco/terms/>
 PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+PREFIX eco: <http://rs.tdwg.org/eco/terms/>
+PREFIX gbif: <http://rs.gbif.org/terms/>
+PREFIX mixs: <https://w3id.org/mixs/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 ```
 
 The ontology declares three types of entities:
 
-- **Classes** corresponding to Darwin Core record types: `dwc:Occurrence`, `dwc:Event`, `dwc:Organism`, `dwc:MaterialEntity`, and others.
-- **Data properties** for literal Darwin Core terms (e.g. `dwc:scientificName`, `dwc:decimalLatitude`).
-- **Object properties** linking records (e.g. a `dwc:Occurrence` instance is related to a `dwc:Event` instance via `dwcdp:happenedDuring`).
+- **Classes**, which represent categories or types of entities in the domain (for example, `dwc:Event`, `dwc:Occurrence`, or `dwc:MaterialEntity`).
+- **Data properties**, which describe attributes of those entities using literal values such as text or numbers (for example, `dwc:decimalLatitude`, `dwc:organismQuantity`, or `dwc:scientificName`).
+- **Object properties**, which define relationships between entities, linking one instance to another (for example, relating a `dwc:Occurrence` instance to a `dwc:Event` instance via `dwcdp:happenedDuring`).
 
 The ontology is validated as conformant with the OWL 2 QL profile using [ROBOT's ontology profile validation](https://robot.obolibrary.org/validate-profile), which checks the ontology against the W3C OWL 2 profile specification.
 
@@ -58,7 +63,7 @@ A strict `snake_case` naming convention is used for all column names in the data
 
 ---
 
-## Connection Properties (`dwcowl.properties`)
+## Connection properties (`dwcowl.properties`)
 
 The JDBC connection properties file is read by Ontop at startup. A template is stored in `ontop/mappings/`, from which the container manager generates a context-specific copy with the correct `jdbc.url` before starting each Ontop container.
 
@@ -74,9 +79,23 @@ ontop.queryLogging=true
 ontop.queryLogging.includeReformulatedQuery=true
 ```
 
-Only the `jdbc.url` line is modified, all other settings are preserved from the template. However, users can modify them if they wish. For other configuration options, consult the [Ontop configuration keys](https://ontop-vkg.org/guide/advanced/configuration.html) page.
+Only the `jdbc.url` line is modified by the application, all other settings are preserved from the template. Users can modify them if they wish. For other configuration options, consult the [Ontop configuration keys](https://ontop-vkg.org/guide/advanced/configuration.html) page.
 
 As the application is oriented towards open-access to biodiversity data, no authentication is enabled by default. Should the user wish to enable it, credentials can be passed through the `jdbc.user` and `jdbc.password` settings.
+
+---
+
+## Database metadata (`dwcowl.json`)
+
+The database metadata file provides Ontop with a complete description of the DWC DP table schema: column names, data types, nullability, primary key declarations, and foreign key relationships.
+
+By taking database keys and other integrity constraints into account, Ontop can infer when multiple query atoms necessarily refer to the same database tuple. This allows it to eliminate redundant self-joins during SPARQL-to-SQL translation, producing simpler and more efficient SQL queries.
+
+See the pages on the role [of primary keys](https://ontop-vkg.org/tutorial/mapping/primary-keys.html) and [of foreign keys](https://ontop-vkg.org/tutorial/mapping/foreign-keys.html) for a quick overview, as well as [this paper](https://www.sciencedirect.com/science/article/pii/S1570826815000153) for a more thorough explanation on the matter.
+
+The metadata file was produced by running the [Ontop CLI](https://ontop-vkg.org/guide/cli.html) against a DuckDB instance populated with a modified DWC DP schema. This schema was based on the JSON files available at the [GBIF repository of schemas](https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/), but also includes additional tables used by the application.
+
+**Note:** The Ontop CLI's `extract-db-metadata` command produces a blank output with DuckDB JDBC driver 1.5.2 (the version considered by the application). Consequently, for database metadata extraction, version 1.5.1 of the driver was used (this fact can be seen at the bottom of the [metadata.json](/ontop/mappings/dwcowl.json) file). This does not affect the application, as Ontop only relies on the extracted metadata contained in the file.
 
 ---
 
