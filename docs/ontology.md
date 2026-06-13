@@ -31,7 +31,7 @@ The ontology declares three types of entities:
 - **Data properties**, which describe attributes of those entities using literal values such as text or numbers (for example, `dwc:decimalLatitude`, `dwc:organismQuantity`, or `dwc:scientificName`).
 - **Object properties**, which define relationships between entities, linking one instance to another (for example, relating a `dwc:Occurrence` instance to a `dwc:Event` instance via `dwcdp:happenedDuring`).
 
-The ontology is validated as conformant with the OWL 2 QL profile using [ROBOT's ontology profile validation](https://robot.obolibrary.org/validate-profile), which checks the ontology against the W3C OWL 2 profile specification.
+The ontology is compliant to a specific OWL 2 profile, namely, the [OWL 2 QL](https://www.w3.org/2007/OWL/wiki/Profiles-v2.html#OWL_2_QL) profile. This is a requirement for Ontop to be able to translate the SPARQL queries to SQL (see [this paper](https://link.springer.com/article/10.1007/s10817-007-9078-x) for more details). The ontology is validated as conformant with the OWL 2 QL profile using [ROBOT's ontology profile validation](https://robot.obolibrary.org/validate-profile), which checks it against the W3C OWL 2 profile specification.
 
 Ontop uses this ontology during query reformulation. It supports OWL 2 QL reasoning, which means subclass and subproperty hierarchies declared in the ontology are respected during query answering, though these features are kept minimal in the current version. For a full view of the ontology, consider loading the `.ttl` file into an ontology editor such as [Protégé](https://protege.stanford.edu/).
 

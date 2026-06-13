@@ -8,19 +8,49 @@ Biodiversity data is commonly published as Darwin Core archives distributed acro
 
 The [Darwin Core Conceptual Model](https://gbif.github.io/dwc-dp/cm/) is a highly interconnected data model. In this regard, it is well suited to graph representations. However, transforming tabular datasets into RDF represents a considerable Extract, Transform, Load (ETL) process and raises deduplication concerns, as the dataset must then exist in two different forms.
 
-This project takes a different approach: data tables contained in each Data Package are hosted as Parquet files on object storage. On demand, a materialised DuckDB database is assembled from the relevant files and exposed through a SPARQL interface via a Virtual Knowledge Graph (VKG). Datasets can then be queried using a lightweight OWL 2 QL compliant ontology based primarily on [Darwin Core](https://dwc.tdwg.org/list/) terms, without any ETL step or permanent data duplication.
+This project takes a different approach: data tables contained in each Data Package are hosted as Parquet files on object storage. On demand, a materialised DuckDB database is assembled from the relevant files and exposed through a SPARQL interface via a Virtual Knowledge Graph (VKG). Datasets can then be queried using a lightweight Web Ontology Language ([OWL](https://www.w3.org/TR/2012/REC-owl2-primer-20121211/)) ontology based primarily on [Darwin Core](https://dwc.tdwg.org/list/) terms, without any ETL step or permanent data duplication.
 
 ## Usage
 
-The application accepts SPARQL queries over HTTP, following the structure of the [SPARQL 1.1 Protocol](https://www.w3.org/TR/sparql11-protocol/). Queries are submitted as JSON to the `/sparql` endpoint:
+The application brings the semantic expressivity of [the SPARQL 1.1 Query Language](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) to users. SPARQL is a highly expressive declarative query language that enables precise extraction of specific data across multiple related entities. Users can therefore focus on writing clean SPARQL queries to retrieve exactly the data they need.
+
+For example, the following query retrieves occurrences of Mawson’s dragonfish (*Cygnodraco mawsoni*) that are linked to material entities as evidence, along with the material entity type, preparations, disposition, and the event date:
+
+```sparql
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+
+SELECT ?occurrenceID ?eventDate ?materialEntityType ?preparations ?disposition
+WHERE {
+  ?occ a dwc:Occurrence ;
+       dwc:occurrenceID ?occurrenceID ;
+       dwc:scientificName "Cygnodraco mawsoni" ;
+       dwcdp:happenedDuring ?evt .
+
+  ?evt a dwc:Event ;
+       dwc:eventDate ?eventDate .
+
+  ?mat a dwc:MaterialEntity ;
+       dwc:materialEntityType ?materialEntityType ;
+       dwc:disposition ?disposition ;
+       dwc:preparations ?preparations ;
+       dwcdp:evidenceFor ?occ .
+}
+LIMIT 10
+```
+
+This query illustrates the expressive power of SPARQL, allowing multiple entity types to be connected in a single, declarative pattern.
+
+The application accepts SPARQL queries over [HTTP](https://datatracker.ietf.org/doc/html/rfc2616) following the [SPARQL 1.1 Protocol](https://www.w3.org/TR/sparql11-protocol/). Queries are submitted as JSON to the `/sparql` endpoint, for example:
 
 ```json
 {
-  "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?sciName (COUNT(?occ) AS ?nOcc) WHERE { ?occ a dwc:Occurrence ; dwc:scientificName ?sciName . } GROUP BY ?sciName ORDER BY DESC(?nOcc) LIMIT 5"
+  "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/> SELECT ?occurrenceID ?eventDate ?materialEntityType ?preparations ?disposition WHERE { ?occ a dwc:Occurrence ; dwc:occurrenceID ?occurrenceID ; dwc:scientificName \"Cygnodraco mawsoni\" ; dwcdp:happenedDuring ?evt . ?evt a dwc:Event ; dwc:eventDate ?eventDate . ?mat a dwc:MaterialEntity ; dwc:materialEntityType ?materialEntityType ; dwc:disposition ?disposition ; dwc:preparations ?preparations ; dwcdp:evidenceFor ?occ . } LIMIT 10
+"
 }
 ```
 
-Any tool capable of making HTTP requests can interact with the endpoint, including:
+Because SPARQL queries are sent as HTTP requests, any tool or programming language capable of making HTTP requests can interact with the application, including:
 
 - Python: [Requests](https://requests.readthedocs.io/), [HTTPX](https://www.python-httpx.org/), or the standard library [urllib](https://docs.python.org/3/library/urllib.request.html).
 - Ruby: [Faraday](https://lostisland.github.io/faraday/), [HTTParty](https://github.com/jnunemaker/httparty), or the standard gem [HTTP](https://ruby-doc.org/stdlib-2.7.0/libdoc/net/http/rdoc/Net/HTTP.html).
@@ -52,7 +82,7 @@ When generating a subset, the application reads only the data required from the 
 
 ### Data provenance and attribution
 
-Each generated container includes a `{ctx_hash}-citations.txt` file containing the citations associated with the datasets used to build that context. This ensures, traceability of the source datasets, proper attribution of data providers cand ompliance with GBIF data usage requirements. This is in line with [the GBIF data user agreement](https://www.gbif.org/terms/data-user) and [GBIF citation guidelines](https://www.gbif.org/citation-guidelines).
+Each generated container includes a `{ctx_hash}-citations.txt` file containing the citations associated with the datasets used to build that context. This ensures, traceability of the source datasets, proper attribution of data providers and ompliance with GBIF data usage requirements. The approach follows [the GBIF data user agreement](https://www.gbif.org/terms/data-user) and [GBIF citation guidelines](https://www.gbif.org/citation-guidelines).
 
 ## Local deployment
 
