@@ -1,5 +1,4 @@
+db/
 __pycache__/
-parquet/
 .venv/
-
 .env
