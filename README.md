@@ -45,8 +45,7 @@ The application accepts SPARQL queries over [HTTP](https://datatracker.ietf.org/
 
 ```json
 {
-  "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/> SELECT ?occurrenceID ?eventDate ?materialEntityType ?preparations ?disposition WHERE { ?occ a dwc:Occurrence ; dwc:occurrenceID ?occurrenceID ; dwc:scientificName \"Cygnodraco mawsoni\" ; dwcdp:happenedDuring ?evt . ?evt a dwc:Event ; dwc:eventDate ?eventDate . ?mat a dwc:MaterialEntity ; dwc:materialEntityType ?materialEntityType ; dwc:disposition ?disposition ; dwc:preparations ?preparations ; dwcdp:evidenceFor ?occ . } LIMIT 10
-"
+  "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/> SELECT ?occurrenceID ?eventDate ?materialEntityType ?preparations ?disposition WHERE { ?occ a dwc:Occurrence ; dwc:occurrenceID ?occurrenceID ; dwc:scientificName \"Cygnodraco mawsoni\" ; dwcdp:happenedDuring ?evt . ?evt a dwc:Event ; dwc:eventDate ?eventDate . ?mat a dwc:MaterialEntity ; dwc:materialEntityType ?materialEntityType ; dwc:disposition ?disposition ; dwc:preparations ?preparations ; dwcdp:evidenceFor ?occ . } LIMIT 10"
 }
 ```
 
