@@ -100,7 +100,6 @@ chrono:ChronometricAge — dwcdp:ageFor ──► dwc:Event
 
 ---
 
-
 ## Key properties per class
 
 ### dwc:Occurrence
@@ -184,7 +183,7 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 
-SELECT ?lat ?lon
+SELECT ?lat ?lon ?country ?county ?locality ?locationRemarks ?stateProvince
 WHERE {
   ?occ a dwc:Occurrence ;
        dwc:scientificName "Coccyzus americanus" ;
@@ -194,6 +193,12 @@ WHERE {
 
   ?loc dwc:decimalLatitude ?lat ;
        dwc:decimalLongitude ?lon .
+
+  OPTIONAL { ?loc dwc:country ?country }
+  OPTIONAL { ?loc dwc:county ?county }
+  OPTIONAL { ?loc dwc:locality ?locality }
+  OPTIONAL { ?loc dwc:locationRemarks ?locationRemarks }
+  OPTIONAL { ?loc dwc:stateProvince ?stateProvince }
 }
 LIMIT 200
 ```
@@ -391,7 +396,7 @@ WHERE {
         dwcdp:happenedDuring ?evt .
 
   OPTIONAL { ?surv dwc:sampleSizeUnit ?sampleSizeUnit }
-  OPTIONAL { ?surv dwc:sampleSizeValue ?sampleSizeValue  }
+  OPTIONAL { ?surv dwc:sampleSizeValue ?sampleSizeValue }
 
   OPTIONAL { ?surv eco:areNonTargetTaxaFullyReported ?areNonTargetTaxaFullyReported }
   OPTIONAL { ?surv eco:isAbsenceReported ?isAbsenceReported }
