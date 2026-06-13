@@ -1,11 +1,15 @@
 import json
 import os
+from pathlib import Path
 #
 import boto3
 import duckdb
 
 
-ddb = duckdb.connect()
+METADATA_DB_PATH = Path("/data/metadatadb.duckdb")
+
+ddb = duckdb.connect(str(METADATA_DB_PATH))
+
 ddb.sql("""
 CREATE OR REPLACE TABLE datasets (
     name VARCHAR,

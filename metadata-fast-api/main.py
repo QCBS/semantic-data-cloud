@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from datetime import date
 import json
 import os
@@ -9,7 +10,19 @@ from s3io import s3_to_duckdb, duckdb_connect
 
 ddb = duckdb_connect()
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # startup
+    success = s3_to_duckdb("eml", ".json", ddb)
+    if success:
+        print("Successfully loaded S3 data into DuckDB.")
+    else:
+        print("Failed to load S3 data into DuckDB.")
+    yield
+    # shutdown
+    ddb.close()
+
+app = FastAPI(title="sdc-metadata-fast-api", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -19,11 +32,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-success = s3_to_duckdb("eml", ".json", ddb)
-if success: 
-    print("Successfully loaded S3 data into DuckDB.")
-else:
-    print("Failed to load S3 data into DuckDB.")
 
 @app.get("/")
 def read_root():
