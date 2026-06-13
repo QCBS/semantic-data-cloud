@@ -42,7 +42,7 @@ async def lifespan(app: FastAPI):
         await app.state.glide.close()
 
 
-# Dependency functions
+# NOTE: Dependency functions
 #
 def get_http_client(request: Request) -> AsyncClient:
     return request.app.state.http
@@ -98,7 +98,8 @@ async def sparql_query(
     if not dataset_ids:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "No datasets found for the given spatial and temporal filters.")
 
-    ctx_hash  = context_hash(dataset_ids)
+    ctx_hash = context_hash(dataset_ids)
+
     cache_key = make_cache_key(ctx_hash, sparql_bytes)
 
     cached = await cache.get(cache_key)
