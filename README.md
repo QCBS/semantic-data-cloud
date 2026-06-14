@@ -93,17 +93,12 @@ cd semantic-data-cloud
 docker compose up --build
 ```
 
-The SPARQL endpoint will be available at:
+The application exposes three services:
+  1. The SPARQL proxy at: `http://localhost:8000`
+  2. The EML metadata catalog at: `http://localhost:7788`
+  3. The MCP server at: `http://localhost:9000`
 
-```
-http://localhost:8000/sparql
-```
-
-The EML metadata catalog will be available at:
-
-```
-http://localhost:7788
-```
+For more details on the how to interact with these services, please consult the [API reference](docs/api.md) and [MCP server](docs/mcp.md) documentation.
 
 ### Storage layout
 
@@ -137,17 +132,16 @@ All tables are stored as Parquet files, corresponding to Darwin Core tables (e.g
 To enable access to files stored in the S3-compatible object storage service and to communicate with the backend API, create a `.env` file in the project root containing the following variables:
 
 ```env
+OBJECT_STORE_BASE_URL=https://your-public-object-url-base
 S3_ACCESS_ID=your_access_key_id
 S3_ACCESS_SECRET=your_secret_access_key
-S3_ENDPOINT_URL=https://your-object-storage-endpoint
 S3_BUCKET_NAME=your_bucket_name
-OBJECT_STORE_BASE_URL=https://your-public-object-url-base
+S3_ENDPOINT_URL=https://your-object-storage-endpoint
 ```
 
 The S3-related variables provide the credentials and connection details required to access the object storage bucket that hosts application files. Particularly, `OBJECT_STORE_BASE_URL` specifies the public URL used to retrieve stored objects.
 
 By default, the EML metadata catalog is exposed on port `7788`. This can be overridden by setting the optional environment variable `METADATA_API_PORT` to the desired value port value.
-
 
 ## Documentation
 
