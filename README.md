@@ -85,7 +85,7 @@ Each generated container includes a `{ctx_hash}-citations.txt` file containing t
 
 ## Local deployment
 
-Clone the repository and start the stack with Docker Compose:
+The application is fully containerized using Docker. As long as [Docker](https://docs.docker.com/get-started/docker-overview/) and [Docker Compose](https://docs.docker.com/compose/) are installed, running the application is as simple as cloning the repository and starting the stack with Docker Compose:
 
 ```bash
 git clone https://github.com/QCBS/semantic-data-cloud
@@ -126,9 +126,9 @@ Each top-level directory under `datasets/` represents a single dataset (i.e., a 
 
 All tables are stored as Parquet files, corresponding to Darwin Core tables (e.g., `event`, `identification`, `occurrence`) in the `.csv` (though they are technically `.tsv`) files contained in the Darwin Core Data Package. This layout is corresponds to an "exploded" representation of a Darwin Core Data Package, designed for columnar access and efficient partial loading in DuckDB without requiring transformation into RDF or a centralized warehouse.
 
-### Environment Configuration
+### Environment configuration
 
-To access the object storage instance and API services, you must define a `.env` file in the root of the project with the following variables:
+To enable access to files stored in the S3-compatible object storage service and to communicate with the backend API, create a `.env` file in the project root containing the following variables:
 
 ```env
 S3_ACCESS_ID=your_access_key_id
@@ -139,14 +139,7 @@ OBJECT_STORE_BASE_URL=https://your-public-object-url-base
 API_BASE_URL=https://your-api-base-url
 ```
 
-Where the following parameters are required:
-
-- **S3_ACCESS_ID**: Access key ID used to authenticate with the object storage service.
-- **S3_ACCESS_SECRET**: Secret key paired with the access ID for authentication.
-- **S3_ENDPOINT_URL**: Endpoint URL of the S3-compatible storage service.
-- **S3_BUCKET_NAME**: Name of the bucket where objects are stored.
-- **OBJECT_STORE_BASE_URL**: Public base URL used to access stored objects.
-- **API_BASE_URL**: Base URL of the backend API service.
+The S3-related variables provide the credentials and connection details required to access the object storage bucket that hosts application files. Particularly, `OBJECT_STORE_BASE_URL` specifies the public URL used to retrieve stored objects, while `API_BASE_URL` identifies the backend API endpoint for the metadata catalog.
 
 ## Documentation
 
