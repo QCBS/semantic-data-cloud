@@ -7,6 +7,7 @@ from fastapi import FastAPI, Query, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from s3io import s3_to_duckdb, duckdb_connect
 
+METADATA_API_PORT = os.getenv("METADATA_API_PORT")
 
 ddb = duckdb_connect()
 
@@ -39,7 +40,7 @@ def read_root():
         "title": "Welcome to the QCBS Semantic Data Cloud API!",
         "description": "A metadata catalog of biodiversity and ecological datasets described using Ecological Metadata Language (EML), providing standardized, machine-readable metadata and access to associated data assets for discovery, integration, and analysis.",
         "links": {
-            "datasets": f"{os.getenv("API_BASE_URL")}/datasets",
+            "datasets": f"http://localhost:{METADATA_API_PORT}/datasets",
         },
         "datasets": list_datasets(1, 10),
     }

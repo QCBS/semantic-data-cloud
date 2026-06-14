@@ -80,7 +80,7 @@ services:
       - ./metadatadb:/data
       - ./metadata-fast-api:/app
     ports:
-      - "7788:8000"
+      - "${METADATA_API_PORT:-7788}:8000"
     networks:
       - dwc-net
     environment:
@@ -89,7 +89,7 @@ services:
       - S3_ENDPOINT_URL=${S3_ENDPOINT_URL}
       - S3_BUCKET_NAME=${S3_BUCKET_NAME}
       - OBJECT_STORE_BASE_URL=${OBJECT_STORE_BASE_URL}
-      - API_BASE_URL=${API_BASE_URL}
+      - METADATA_API_PORT=${METADATA_API_PORT:-7788}
     restart: unless-stopped
 
 

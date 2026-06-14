@@ -5,8 +5,8 @@ from pathlib import Path
 import boto3
 import duckdb
 
-
 METADATA_DB_PATH = Path("/data/metadatadb.duckdb")
+METADATA_API_PORT = os.getenv("METADATA_API_PORT")
 
 ddb = duckdb.connect(str(METADATA_DB_PATH))
 
@@ -108,7 +108,7 @@ def read_eml_from_s3(dataset, ddb):
 				href = dataset["assets"]["occurrence.parquet"]["href"]
 				content["recordedTaxa"] = species_from_occurrences(href)
 
-		content["self"] = f"{os.getenv("API_BASE_URL")}/dataset/{dataset["name"]}"
+		content["self"] = f"http://localhost:{METADATA_API_PORT}/dataset/{dataset["name"]}"
 		resp = ddb.sql("INSERT INTO datasets (name, eml_content) VALUES (?, ?);", params=[dataset["folder"].replace("datasets/", ""), json.dumps(content)])
 
 		resp = ddb.sql("""
