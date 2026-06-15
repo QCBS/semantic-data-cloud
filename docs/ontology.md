@@ -81,7 +81,7 @@ ontop.queryLogging.includeReformulatedQuery=true
 
 Only the `jdbc.url` line is modified by the application, all other settings are preserved from the template. Users can modify them if they wish. For other configuration options, consult the [Ontop configuration keys](https://ontop-vkg.org/guide/advanced/configuration.html) page.
 
-As the application is oriented towards open-access to biodiversity data, no authentication is enabled by default. Should the user wish to enable it, credentials can be passed through the `jdbc.user` and `jdbc.password` settings.
+As the application is oriented towards open-access to biodiversity data, no authentication is enabled on the SPARQL endpoint by default. Access to the underlying Parquet files and dataset metadata on object storage is governed by the [Boto3 credentials](https://docs.aws.amazon.com/boto3/latest/guide/credentials.html) supplied to the metadata API. Private datasets are protected at the bucket level through those credentials. The `jdbc.user` and `jdbc.password` fields in [dwcowl.properties](/ontop/mappings/dwcowl.properties) are considered by Ontop's JDBC configuration templates, but have no effect with DuckDB, which does not implement user-level authentication.
 
 ---
 
@@ -95,7 +95,7 @@ See the pages on the role [of primary keys](https://ontop-vkg.org/tutorial/mappi
 
 The metadata file was produced by running the [Ontop CLI](https://ontop-vkg.org/guide/cli.html) against a DuckDB instance populated with a modified DWC DP schema. This schema was based on the JSON files available at the [GBIF repository of schemas](https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/), but also includes additional tables used by the application.
 
-**Note:** The Ontop CLI's `extract-db-metadata` command produces a blank output with DuckDB JDBC driver 1.5.2 (the version considered by the application). Consequently, for database metadata extraction, version 1.5.1 of the driver was used (this fact can be seen at the bottom of the [metadata.json](/ontop/mappings/dwcowl.json) file). This does not affect the application, as Ontop only relies on the extracted metadata contained in the file.
+**Note:** The Ontop CLI's `extract-db-metadata` command produces a blank output with DuckDB JDBC driver 1.5.2.1 (the version considered by the application). Consequently, for database metadata extraction, version 1.5.1 of the driver was used (this fact can be seen at the bottom of the [metadata.json](/ontop/mappings/dwcowl.json) file). This does not affect the application, as Ontop only relies on the extracted metadata contained in the file.
 
 ---
 

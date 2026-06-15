@@ -1,4 +1,4 @@
-# API Reference
+# API reference
 
 ## fastaproxy-sdc
 
@@ -8,7 +8,7 @@ Base URL: `http://localhost:8000` (default)
 
 ### POST /sparql
 
-Requests against the `/sparql` endpoint can be made similarly to a conventional URL-encoded POST prescribed by the [SPARQL 1.1 Protocol](https://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/).
+Requests against the `/sparql` endpoint can be made similarly to a conventional JSON POST prescribed by the [SPARQL 1.1 Protocol](https://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/).
 
 **Request body** (`application/json`)
 

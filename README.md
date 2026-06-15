@@ -4,7 +4,7 @@ An application that allows SPARQL-based queries over biodiversity datasets using
 
 ## Overview
 
-Biodiversity data is commonly published as Darwin Core archives distributed across institutional repositories. The newly proposed [Darwin Core Data Package](https://www.gbif.org/composition/3Be8w9RzbjHtK2brXxTtun/introducing-the-darwin-core-data-package) format introduces additional semantics and flexibility, but also increased complexity in data integration and querying. Querying across multiple such datasets typically requires either centralising the data or negotiating heterogeneous APIs.
+Biodiversity data is commonly published as [Darwin Core Archives](https://ipt.gbif.org/manual/en/ipt/latest/dwca-guide#what-is-darwin-core-archive-dwc-a) distributed across institutional repositories. The newly proposed [Darwin Core Data Package](https://www.gbif.org/composition/3Be8w9RzbjHtK2brXxTtun/introducing-the-darwin-core-data-package) format introduces additional semantics and flexibility, but also increased complexity in data integration and querying. Querying across multiple such datasets typically requires either centralising the data or negotiating heterogeneous APIs.
 
 The [Darwin Core Conceptual Model](https://gbif.github.io/dwc-dp/cm/) is a highly interconnected data model. In this regard, it is well suited to graph representations. However, transforming tabular datasets into RDF represents a considerable Extract, Transform, Load (ETL) process and raises deduplication concerns, as the dataset must then exist in two different forms.
 
@@ -71,7 +71,7 @@ Optional filters can narrow which datasets are loaded before the query runs, whi
 ```json
 {
   "query": "...",
-  "bbox":     [min_lon, min_lat, max_lon, max_lat],
+  "bbox": [min_lon, min_lat, max_lon, max_lat],
   "temporal": ["YYYY-MM-DD", "YYYY-MM-DD"],
   "licenses": ["CC-BY-4.0", "CC0-1.0"]
 }

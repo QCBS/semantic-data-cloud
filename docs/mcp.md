@@ -1,4 +1,4 @@
-# MCP Server
+# MCP server
 
 ## Overview
 
@@ -94,6 +94,7 @@ The following example uses [LangChain agents](https://docs.langchain.com/oss/pyt
 
 ```python
 import asyncio
+#
 from langchain.agents import create_agent
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain_ollama import ChatOllama
