@@ -6,7 +6,7 @@ An application that allows SPARQL-based queries over biodiversity datasets using
 
 Biodiversity data is commonly published as [Darwin Core Archives](https://ipt.gbif.org/manual/en/ipt/latest/dwca-guide#what-is-darwin-core-archive-dwc-a) distributed across institutional repositories. The newly proposed [Darwin Core Data Package](https://www.gbif.org/composition/3Be8w9RzbjHtK2brXxTtun/introducing-the-darwin-core-data-package) format introduces additional semantics and flexibility, but also increased complexity in data integration and querying. Querying across multiple such datasets typically requires either centralising the data or negotiating heterogeneous APIs.
 
-The [Darwin Core Conceptual Model](https://gbif.github.io/dwc-dp/cm/) is a highly interconnected data model. In this regard, it is well suited to graph representations. However, transforming tabular datasets into RDF represents a considerable Extract, Transform, Load (ETL) process and raises deduplication concerns, as the dataset must then exist in two different forms.
+The [Darwin Core Conceptual Model](https://gbif.github.io/dwc-dp/cm/) is a highly interconnected data model. In this regard, it is well suited to graph representations, making the Resource Description Framework ([RDF](https://www.w3.org/TR/rdf11-primer/)) a clean, intuitive and semantically-rich data model. However, transforming tabular datasets into RDF represents a considerable Extract, Transform, Load (ETL) process and raises deduplication concerns, as the dataset must then exist in two different forms.
 
 This project takes a different approach: data tables contained in each Data Package are hosted as Parquet files on object storage. On demand, a materialised DuckDB database is assembled from the relevant files and exposed through a SPARQL interface via a Virtual Knowledge Graph (VKG). Datasets can then be queried using a lightweight Web Ontology Language ([OWL](https://www.w3.org/TR/2012/REC-owl2-primer-20121211/)) ontology based primarily on [Darwin Core](https://dwc.tdwg.org/list/) terms, without any ETL step or permanent data duplication.
 
@@ -14,18 +14,20 @@ This project takes a different approach: data tables contained in each Data Pack
 
 The application brings the semantic expressivity of [the SPARQL 1.1 Query Language](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) to users. SPARQL is a highly expressive declarative query language that enables precise extraction of specific data across multiple related entities. Users can therefore focus on writing clean SPARQL queries to retrieve exactly the data they need.
 
-For example, the following query retrieves occurrences of Mawson’s dragonfish (*Cygnodraco mawsoni*) that are linked to material entities as evidence, along with the material entity type, preparations, disposition, and the event date:
+For example, the following query retrieves occurrences of Mawson’s dragonfish (*Cygnodraco mawsoni*) that are linked to material entities as evidence, along with the material entity type, preparations, disposition, the event date as well as the name of the agent who recorded it:
 
 ```sparql
+PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 
-SELECT ?occurrenceID ?eventDate ?materialEntityType ?preparations ?disposition
+SELECT ?occurrenceID ?eventDate ?materialEntityType ?preparations ?disposition ?preferredAgentName
 WHERE {
   ?occ a dwc:Occurrence ;
        dwc:occurrenceID ?occurrenceID ;
        dwc:scientificName "Cygnodraco mawsoni" ;
-       dwcdp:happenedDuring ?evt .
+       dwcdp:happenedDuring ?evt ;
+       dwcdp:recordedBy ?agt .
 
   ?evt a dwc:Event ;
        dwc:eventDate ?eventDate .
@@ -35,6 +37,9 @@ WHERE {
        dwc:disposition ?disposition ;
        dwc:preparations ?preparations ;
        dwcdp:evidenceFor ?occ .
+
+  ?agt a dcterms:Agent ;
+       dcterms:title ?preferredAgentName .
 }
 LIMIT 10
 ```
@@ -53,10 +58,14 @@ Because SPARQL queries are sent as HTTP requests, any tool or programming langua
 
 - Python: [Requests](https://requests.readthedocs.io/), [HTTPX](https://www.python-httpx.org/), or the standard library [urllib](https://docs.python.org/3/library/urllib.request.html).
 - Ruby: [Faraday](https://lostisland.github.io/faraday/), [HTTParty](https://github.com/jnunemaker/httparty), or the standard gem [HTTP](https://ruby-doc.org/stdlib-2.7.0/libdoc/net/http/rdoc/Net/HTTP.html).
-- JavaScript: [Axios](https://axios-http.com/), [ky](https://github.com/sindresorhus/ky), or the standard [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+- JavaScript: [ky](https://github.com/sindresorhus/ky), [Axios](https://axios-http.com/), or the standard [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
 - R: [httr2](https://httr2.r-lib.org/), [crul](https://docs.ropensci.org/crul/) or [curl](https://jeroen.r-universe.dev/curl).
-- Rust: [reqwests](https://docs.rs/reqwest/latest/reqwest/) or [hyper](https://hyper.rs/).
+- Rust: [reqwests](https://docs.rs/reqwest/latest/reqwest/), or [hyper](https://hyper.rs/).
+- Elixir: [Req](https://req.hexdocs.pm/Req.html), or [Finch](https://finch.hexdocs.pm/0.23.0/Finch.html).
+- Lua: [LuaSocket](https://lunarmodules.github.io/luasocket/), or [lua-http](https://daurnimator.github.io/lua-http/0.4/).
 - Command line: [curl](https://curl.se/) or [wget](https://www.gnu.org/software/wget/).
+
+The above list is not meant to be exhaustive, but rather to highlight the broad range of tools and programming languages that can be used to interact with the application. As long as a client can make standard HTTP requests, it can submit SPARQL queries and process the results.
 
 ## Additional functionality
 
@@ -79,6 +88,17 @@ Optional filters can narrow which datasets are loaded before the query runs, whi
 
 When generating a subset, the application reads only the data required from the source Parquet files stored in object storage. It then creates an isolated, context-specific Docker container that enables efficient querying and processing of the selected data.
 
+For example, a query considering only datasets that consider South American data between 2000 and 2015 (inclusive), and that bear the CC-BY-NC-4.0 license can simply be obtained as:
+
+```json
+{
+  "query": "...",
+  "bbox": [-82.0, -56.0, -34.0, 13.5],
+  "temporal": ["2000-01-01", "2015-12-31"],
+  "licenses": ["CC-BY-NC-4.0"]
+}
+```
+
 ### Data provenance and attribution
 
 Each generated container includes a `{ctx_hash}-citations.txt` file containing the citations associated with the datasets used to build that context. This ensures, traceability of the source datasets, proper attribution of data providers and ompliance with GBIF data usage requirements. The approach follows [the GBIF data user agreement](https://www.gbif.org/terms/data-user) and [GBIF citation guidelines](https://www.gbif.org/citation-guidelines).
@@ -98,7 +118,7 @@ The application exposes three services:
   2. The EML metadata catalog at: `http://localhost:7788`
   3. The MCP server at: `http://localhost:9000`
 
-For more details on the how to interact with these services, please consult the [API reference](docs/api.md) and [MCP server](docs/mcp.md) documentation.
+For more details on the how to interact with these services, please consult the [API reference](/docs/api.md) and [MCP server](/docs/mcp.md) documentation.
 
 ### Storage layout
 
@@ -107,23 +127,23 @@ Datasets are stored in object storage as directory-like prefixes, where each dat
 ```
 datasets/
 ├── dataset_a/
-│   ├── eml.jsonld
+│   ├── eml.json
 │   ├── event.parquet
 │   ├── identification.parquet
 │   ├── occurrence.parquet
 │   └── occurrence-assertion.parquet
 ├── dataset_b/
-│   ├── eml.jsonld
+│   ├── eml.json
 │   ├── event.parquet
 │   └── material.parquet
 └── dataset_c/
-    ├── eml.jsonld
+    ├── eml.json
     ├── event.parquet
     ├── event-assertion.parquet
     └── occurrence.parquet
 ```
 
-Each top-level directory under `datasets/` represents a single dataset (i.e., a Darwin Core Data Package). The presence of an `eml.jsonld` file provides the required metadata for discovery and attribution.
+Each top-level directory under `datasets/` represents a single dataset (i.e., a Darwin Core Data Package). The presence of an `eml.json` file provides the required metadata for discovery and attribution.
 
 All tables are stored as Parquet files, corresponding to Darwin Core tables (e.g., `event`, `identification`, `occurrence`) in the `.csv` (though they are technically `.tsv`) files contained in the Darwin Core Data Package. This layout is corresponds to an "exploded" representation of a Darwin Core Data Package, designed for columnar access and efficient partial loading in DuckDB without requiring transformation into RDF or a centralized warehouse.
 
@@ -145,8 +165,9 @@ By default, the EML metadata catalog is exposed on port `7788`. This can be over
 
 ## Documentation
 
-Additional detailed documentation can be found in the [`docs/`](docs/) directory:
-  - [Architecture](docs/architecture.md) describing the overall architecture and design of the application.
-  - [API reference](docs/api.md), describing the endpoint specification and request/response formats.
-  - [Ontology and mappings](docs/ontology.md), describing the Darwin Core OWL ontology and OBDA mapping conventions.
-  - [MCP server](docs/mcp.md), describing a natural language interface via the Model Context Protocol.
+Additional detailed documentation can be found in the [`docs/`](/docs/) directory:
+  - [Architecture](/docs/architecture.md) describing the overall architecture and design of the application.
+  - [API reference](/docs/api.md), describing the endpoint specification and request/response formats.
+  - [Ontology and mappings](/docs/ontology.md), describing the Darwin Core OWL ontology and OBDA mapping conventions.
+  - [MCP server](/docs/mcp.md), describing a natural language interface via the Model Context Protocol.
+  - [Starter guide](/docs/starter.md) for help regarding how to prepare and host Darwin Core Data Packages for use with the application.

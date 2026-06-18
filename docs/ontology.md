@@ -1,4 +1,4 @@
-# Ontology and Mappings
+# Ontology and mappings
 
 ## Overview
 
