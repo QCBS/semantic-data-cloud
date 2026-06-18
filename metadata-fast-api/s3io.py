@@ -229,5 +229,8 @@ def s3_to_duckdb(target_name, extension, ddb=ddb):
 
 
 def species_from_occurrences(href):
-	species_list = ddb.sql("SELECT DISTINCT scientific_name from read_parquet(?);", params=[href])	
-	return [row[0] for row in species_list.fetchall() if row[0] is not None]
+    try:
+        species_list = ddb.sql("SELECT DISTINCT scientific_name FROM read_parquet(?);", params=[href])
+        return [row[0] for row in species_list.fetchall() if row[0] is not None]
+    except Exception:
+        return []
