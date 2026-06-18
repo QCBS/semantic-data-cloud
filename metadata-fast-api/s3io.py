@@ -132,10 +132,20 @@ def read_eml_from_s3(dataset, ddb):
 
 		resp = ddb.sql("""
 				WITH exploded_temporal AS (
-					SELECT
-						datasets.name,
-						CAST(je.value -> 'rangeOfDates' -> 'beginDate' ->> 'calendarDate' AS DATE) AS start_date,
-						CAST(je.value -> 'rangeOfDates' -> 'endDate' ->> 'calendarDate' AS DATE) AS end_date
+    				SELECT
+        				datasets.name,
+				        CAST(
+            				COALESCE(
+                				je.value -> 'rangeOfDates' -> 'beginDate' ->> 'calendarDate',
+                				je.value -> 'singleDateTime' ->> 'calendarDate'
+            				) AS DATE
+        				) AS start_date,
+        				CAST(
+            				COALESCE(
+                				je.value -> 'rangeOfDates' -> 'endDate' ->> 'calendarDate',
+                				je.value -> 'singleDateTime' ->> 'calendarDate'
+            				) AS DATE
+        				) AS end_date
 					FROM datasets,
 					json_each(
 						CASE
