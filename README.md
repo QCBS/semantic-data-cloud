@@ -14,47 +14,81 @@ This project takes a different approach: data tables contained in each Data Pack
 
 The application brings the semantic expressivity of [the SPARQL 1.1 Query Language](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) to users. SPARQL is a highly expressive declarative query language that enables precise extraction of specific data across multiple related entities. Users can therefore focus on writing clean SPARQL queries to retrieve exactly the data they need.
 
-For example, the following query retrieves occurrences of Mawson’s dragonfish (*Cygnodraco mawsoni*) that are linked to material entities as evidence, along with the material entity type, preparations, disposition, the event date as well as the name of the agent who recorded it:
+For example, the following query retrieves occurrences of Antarctic lanternfish (*Electrona antarctica*) and their life stage that are linked to material entities as evidence, along with the material entity disposition, preparations, the event date as well as the name of the agent who recorded it:
 
 ```sparql
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 
-SELECT ?occurrenceID ?eventDate ?materialEntityType ?preparations ?disposition ?preferredAgentName
+SELECT ?lifeStage ?eventDate ?eventType ?disposition ?preparations ?preferredAgentName ?agentType 
+
 WHERE {
   ?occ a dwc:Occurrence ;
-       dwc:occurrenceID ?occurrenceID ;
-       dwc:scientificName "Cygnodraco mawsoni" ;
+       dwc:scientificName "Electrona antarctica" ;
+       dwc:scientificName ?lifeStage ;
        dwcdp:happenedDuring ?evt ;
        dwcdp:recordedBy ?agt .
 
   ?evt a dwc:Event ;
-       dwc:eventDate ?eventDate .
+       dwc:eventDate ?eventDate ;
+       dwc:eventType ?eventType .
 
   ?mat a dwc:MaterialEntity ;
-       dwc:materialEntityType ?materialEntityType ;
        dwc:disposition ?disposition ;
        dwc:preparations ?preparations ;
-       dwcdp:evidenceFor ?occ .
+       dwcdp:evidenceFor ?occ ;
+       dwcdp:collectedDuring ?evt .
 
   ?agt a dcterms:Agent ;
-       dcterms:title ?preferredAgentName .
+       dcterms:title ?preferredAgentName ;
+       dwc:agentType ?agentType .
 }
 LIMIT 10
 ```
 
-This query illustrates the expressive power of SPARQL, allowing multiple entity types to be connected in a single, declarative pattern.
+This query illustrates the expressive power of SPARQL by traversing relationships between multiple entity types in a single declarative query pattern.
 
-The application accepts SPARQL queries over [HTTP](https://datatracker.ietf.org/doc/html/rfc2616) following the [SPARQL 1.1 Protocol](https://www.w3.org/TR/sparql11-protocol/). Queries are submitted as JSON to the `/sparql` endpoint, for example:
+One solution to this query is shown below (data taken from the [BROKE-West fish](https://dwcdp-ipt.gbif-test.org/resource?r=broke-west-fish) dataset):
+
+```mermaid
+graph LR
+    Occ1((dwc:Occurrence)):::Occurrence
+    Evt1((dwc:Event)):::Event
+    Ment1((dwc:MaterialEntity)):::MaterialEntity
+    Agt1((dcterms:Agent)):::Agent
+    %% 
+    classDef Occurrence fill:green,stroke:#333,color:white;
+    classDef Event fill:purple,stroke:#333,color:white;
+    classDef MaterialEntity fill:blue,stroke:#333,color:white;
+    classDef Agent fill:red,stroke:#333,color:white;
+    %% 
+    Occ1((dwc:Occurrence)) -- dwc:scientificName --> Lit1["Electrona antarctica"]
+    Occ1((dwc:Occurence)) -- dwc:lifeStage --> Lit2["Larvae"]
+    Occ1((dwc:Occurrence)) -- dwcdp:happenedDuring --> Evt1((dwc:Event))
+    Occ1((dwc:Occurrence)) -- dwcdp:recordedBy --> Agt1((dcterms:Agent))
+    Evt1((dwc:Event)) -- dwc:eventDate --> Lit3["2006-01-20"]
+    Evt1((dwc:Event)) -- dwc:eventType --> Lit4["Survey - device subunit"]
+    Ment1((dwc:MaterialEntity)) -- dwcdp:collectedDuring --> Evt1((dwc:Event))
+    Ment1((dwc:MaterialEntity)) -- dwcdp:evidenceFor --> Occ1((dwc:Occurrence))
+    Ment1((dwc:MaterialEntity)) -- dwcdp:identifiedBy --> Agt1((dcterms:Agent))
+    Ment1((dwc:MaterialEntity)) -- dwc:disposition --> Lit6["pending accession into Institue of Natural Sciences' collection"]
+    Ment1((dwc:MaterialEntity)) -- dwc:preparations --> Lit5["Ethanol"]
+    Agt1((dcterms:Agent)) -- dcterms:title --> Lit7["Anton Van de Putte"]
+    Agt1((dcterms:Agent)) -- dwc:agentType --> Lit8["person"]
+```
+
+As this example illustrates, biodiversity data is inherently graph-structured, with rich relationships between occurrences, events, material entities, and agents that are difficult to represent in flat tables.
+
+The application accepts SPARQL queries over [HTTP](https://datatracker.ietf.org/doc/html/rfc2616) following the [SPARQL 1.1 Protocol](https://www.w3.org/TR/sparql11-protocol/). Queries are submitted as JSON in the body of a POST request to the `/sparql` endpoint. For example, the following JSON payload submits the previous query to the `/sparql` endpoint:
 
 ```json
 {
-  "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/> SELECT ?occurrenceID ?eventDate ?materialEntityType ?preparations ?disposition WHERE { ?occ a dwc:Occurrence ; dwc:occurrenceID ?occurrenceID ; dwc:scientificName \"Cygnodraco mawsoni\" ; dwcdp:happenedDuring ?evt . ?evt a dwc:Event ; dwc:eventDate ?eventDate . ?mat a dwc:MaterialEntity ; dwc:materialEntityType ?materialEntityType ; dwc:disposition ?disposition ; dwc:preparations ?preparations ; dwcdp:evidenceFor ?occ . } LIMIT 10"
+  "query": "PREFIX dcterms: <http://purl.org/dc/terms/> PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/> SELECT ?lifeStage ?eventDate ?eventType ?disposition ?preparations ?preferredAgentName ?agentType WHERE { ?occ a dwc:Occurrence ; dwc:scientificName \"Electrona antarctica\" ; dwc:scientificName ?lifeStage ; dwcdp:happenedDuring ?evt ; dwcdp:recordedBy ?agt . ?evt a dwc:Event ; dwc:eventDate ?eventDate ; dwc:eventType ?eventType . ?mat a dwc:MaterialEntity ; dwc:disposition ?disposition ; dwc:preparations ?preparations ; dwcdp:evidenceFor ?occ ; dwcdp:collectedDuring ?evt . ?agt a dcterms:Agent ; dcterms:title ?preferredAgentName ; dwc:agentType ?agentType . } LIMIT 10"
 }
 ```
 
-Because SPARQL queries are sent as HTTP requests, any tool or programming language capable of making HTTP requests can interact with the application, including:
+Because SPARQL queries are sent as HTTP requests, any programming language or tool capable of making HTTP requests can interact with the application, including:
 
 - Python: [Requests](https://requests.readthedocs.io/), [HTTPX](https://www.python-httpx.org/), or the standard library [urllib](https://docs.python.org/3/library/urllib.request.html).
 - Ruby: [Faraday](https://lostisland.github.io/faraday/), [HTTParty](https://github.com/jnunemaker/httparty), or the standard gem [HTTP](https://ruby-doc.org/stdlib-2.7.0/libdoc/net/http/rdoc/Net/HTTP.html).
@@ -88,7 +122,7 @@ Optional filters can narrow which datasets are loaded before the query runs, whi
 
 When generating a subset, the application reads only the data required from the source Parquet files stored in object storage. It then creates an isolated, context-specific Docker container that enables efficient querying and processing of the selected data.
 
-For example, a query considering only datasets that consider South American data between 2000 and 2015 (inclusive), and that bear the CC-BY-NC-4.0 license can simply be obtained as:
+For example, a query considering only datasets that consider data in South American data between 2000 and 2015, and that bear the CC-BY-NC-4.0 license can simply be obtained as:
 
 ```json
 {
@@ -170,4 +204,4 @@ Additional detailed documentation can be found in the [`docs/`](/docs/) director
   - [API reference](/docs/api.md), describing the endpoint specification and request/response formats.
   - [Ontology and mappings](/docs/ontology.md), describing the Darwin Core OWL ontology and OBDA mapping conventions.
   - [MCP server](/docs/mcp.md), describing a natural language interface via the Model Context Protocol.
-  - [Starter guide](/docs/starter.md) for help regarding how to prepare and host Darwin Core Data Packages for use with the application.
+  - [Starter guide](/docs/starter.md), for help regarding how to prepare and host Darwin Core Data Packages for use with the application.
