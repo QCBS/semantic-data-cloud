@@ -26,7 +26,7 @@ SELECT ?lifeStage ?eventDate ?eventType ?disposition ?preparations ?preferredAge
 WHERE {
   ?occ a dwc:Occurrence ;
        dwc:scientificName "Electrona antarctica" ;
-       dwc:scientificName ?lifeStage ;
+       dwc:lifeStage ?lifeStage ;
        dwcdp:happenedDuring ?evt ;
        dwcdp:recordedBy ?agt .
 
@@ -71,7 +71,6 @@ graph LR
     Evt1((dwc:Event)) -- dwc:eventType --> Lit4["Survey - device subunit"]
     Ment1((dwc:MaterialEntity)) -- dwcdp:collectedDuring --> Evt1((dwc:Event))
     Ment1((dwc:MaterialEntity)) -- dwcdp:evidenceFor --> Occ1((dwc:Occurrence))
-    Ment1((dwc:MaterialEntity)) -- dwcdp:identifiedBy --> Agt1((dcterms:Agent))
     Ment1((dwc:MaterialEntity)) -- dwc:disposition --> Lit6["pending accession into Institue of Natural Sciences' collection"]
     Ment1((dwc:MaterialEntity)) -- dwc:preparations --> Lit5["Ethanol"]
     Agt1((dcterms:Agent)) -- dcterms:title --> Lit7["Anton Van de Putte"]
