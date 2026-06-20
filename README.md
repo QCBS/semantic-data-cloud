@@ -10,18 +10,25 @@ The [Darwin Core Conceptual Model](https://gbif.github.io/dwc-dp/cm/) is a highl
 
 This project takes a different approach: data tables contained in each Data Package are hosted as Parquet files on object storage. On demand, a materialised DuckDB database is assembled from the relevant files and exposed through a SPARQL interface via a Virtual Knowledge Graph (VKG). Datasets can then be queried using a lightweight Web Ontology Language ([OWL](https://www.w3.org/TR/2012/REC-owl2-primer-20121211/)) ontology based primarily on [Darwin Core](https://dwc.tdwg.org/list/) terms, without any ETL step or permanent data duplication.
 
+## Why a Semantic Data Cloud?
+
+- **No data duplication.** Datasets stay on object storage as Parquet files. The application builds DuckDB views directly over them rather than downloading or copying rows into a local database, so the underlying data exists in exactly one place.
+- **No ETL pipeline.** Datasets are queryable as soon as they're registered, no transform-and-load step or intermediate format conversion is required, just pointing the application at the relevant Parquet assets.
+- **Schema heterogeneity accomodation.** Datasets with differing numbers of tables and columns can be queried uniformly, without having to pad the Parquet data with empty columns or tables.
+- **Entity- and relationship-based querying.** SPARQL lets users think in terms of entities (e.g. occurrences, events, agents, etc.) and how they relate to one another, rather than reasoning about foreign keys and join conditions.
+- **Language-agnostic access.** Queries are submitted over plain HTTP, so any language or tool capable of making HTTP requests (e.g. Python, JavaScript, R, curl, etc.) can interact with the application.
+- **Context-scoped, on-demand resources.** Spatial, temporal, and license filters resolve the relevant datasets before a query runs, so each context spins up only the database views and container it actually needs.
+
 ## Usage
 
-The application brings the semantic expressivity of [the SPARQL 1.1 Query Language](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) to users. SPARQL is a highly expressive declarative query language that enables precise extraction of specific data across multiple related entities. Users can therefore focus on writing clean SPARQL queries to retrieve exactly the data they need.
-
-For example, the following query retrieves occurrences of Antarctic lanternfish (*Electrona antarctica*) and their life stage that are linked to material entities as evidence, along with the material entity disposition, preparations, the event date as well as the name of the agent who recorded it:
+The application brings the semantic expressivity of [the SPARQL 1.1 Query Language](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) to users, letting them declare exactly the data they need across related entities. For example, the following query retrieves occurrences of Antarctic lanternfish (*Electrona antarctica*) and their life stage, linked to material entities as evidence, along with the material entity's disposition, preparations, the event date, and the recording agent:
 
 ```sparql
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 
-SELECT ?lifeStage ?eventDate ?eventType ?disposition ?preparations ?preferredAgentName ?agentType 
+SELECT ?lifeStage ?eventDate ?eventType ?disposition ?preparations ?preferredAgentName ?agentType
 
 WHERE {
   ?occ a dwc:Occurrence ;
@@ -47,8 +54,6 @@ WHERE {
 LIMIT 10
 ```
 
-This query illustrates the expressive power of SPARQL by traversing relationships between multiple entity types in a single declarative query pattern.
-
 One solution to this query is shown below (data taken from the [BROKE-West fish](https://dwcdp-ipt.gbif-test.org/resource?r=broke-west-fish) dataset):
 
 ```mermaid
@@ -57,12 +62,12 @@ graph LR
     Evt1((dwc:Event)):::Event
     Ment1((dwc:MaterialEntity)):::MaterialEntity
     Agt1((dcterms:Agent)):::Agent
-    %% 
+    %%
     classDef Occurrence fill:green,stroke:#333,color:white;
     classDef Event fill:purple,stroke:#333,color:white;
     classDef MaterialEntity fill:blue,stroke:#333,color:white;
     classDef Agent fill:red,stroke:#333,color:white;
-    %% 
+    %%
     Occ1((dwc:Occurrence)) -- dwc:scientificName --> Lit1["Electrona antarctica"]
     Occ1((dwc:Occurence)) -- dwc:lifeStage --> Lit2["Larvae"]
     Occ1((dwc:Occurrence)) -- dwcdp:happenedDuring --> Evt1((dwc:Event))
@@ -79,7 +84,7 @@ graph LR
 
 As this example illustrates, biodiversity data is inherently graph-structured, with rich relationships between occurrences, events, material entities, and agents that are difficult to represent in flat tables.
 
-The application accepts SPARQL queries over [HTTP](https://datatracker.ietf.org/doc/html/rfc2616) following the [SPARQL 1.1 Protocol](https://www.w3.org/TR/sparql11-protocol/). Queries are submitted as JSON in the body of a POST request to the `/sparql` endpoint. For example, the following JSON payload submits the previous query to the `/sparql` endpoint:
+Queries are submitted as JSON payload over [HTTP](https://datatracker.ietf.org/doc/html/rfc2616), following the [SPARQL 1.1 Protocol](https://www.w3.org/TR/sparql11-protocol/), to the `/sparql` endpoint:
 
 ```json
 {
@@ -87,58 +92,13 @@ The application accepts SPARQL queries over [HTTP](https://datatracker.ietf.org/
 }
 ```
 
-Because SPARQL queries are sent as HTTP requests, any programming language or tool capable of making HTTP requests can interact with the application, including:
+The request body can also include `bbox`, `temporal`, and `licenses` fields to narrow which datasets are loaded before the query runs, restricting the result, for instance, to only datasets that consider South American records from 2000 to 2015 published under CC-BY-NC-4.0. See the [API reference](/docs/api.md) for the full request/response specification.
 
-- Python: [Requests](https://requests.readthedocs.io/), [HTTPX](https://www.python-httpx.org/), or the standard library [urllib](https://docs.python.org/3/library/urllib.request.html).
-- Ruby: [Faraday](https://lostisland.github.io/faraday/), [HTTParty](https://github.com/jnunemaker/httparty), or the standard gem [HTTP](https://ruby-doc.org/stdlib-2.7.0/libdoc/net/http/rdoc/Net/HTTP.html).
-- JavaScript: [ky](https://github.com/sindresorhus/ky), [Axios](https://axios-http.com/), or the standard [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
-- R: [httr2](https://httr2.r-lib.org/), [crul](https://docs.ropensci.org/crul/) or [curl](https://jeroen.r-universe.dev/curl).
-- Rust: [reqwests](https://docs.rs/reqwest/latest/reqwest/), or [hyper](https://hyper.rs/).
-- Elixir: [Req](https://req.hexdocs.pm/Req.html), or [Finch](https://finch.hexdocs.pm/0.23.0/Finch.html).
-- Lua: [LuaSocket](https://lunarmodules.github.io/luasocket/), or [lua-http](https://daurnimator.github.io/lua-http/0.4/).
-- Command line: [curl](https://curl.se/) or [wget](https://www.gnu.org/software/wget/).
-
-The above list is not meant to be exhaustive, but rather to highlight the broad range of tools and programming languages that can be used to interact with the application. As long as a client can make standard HTTP requests, it can submit SPARQL queries and process the results.
-
-## Additional functionality
-
-In addition to creating complete collection of datasets, the application can generate filtered dataset subsets based on user-defined criteria. The following filters are currently supported:
-
-- **Spatial filtering**: Provide a bounding box of coordinates to include only datasets whose spatial coverage intersects the specified area.
-- **Temporal filtering**: Provide a date range to include only datasets whose temporal coverage intersects the specified period.
-- **License filtering**: Provide one or more license identifiers to include only datasets published under the selected licenses.
-
-Optional filters can narrow which datasets are loaded before the query runs, which means that the application accepts the following JSON objects:
-
-```json
-{
-  "query": "...",
-  "bbox": [min_lon, min_lat, max_lon, max_lat],
-  "temporal": ["YYYY-MM-DD", "YYYY-MM-DD"],
-  "licenses": ["CC-BY-4.0", "CC0-1.0"]
-}
-```
-
-When generating a subset, the application reads only the data required from the source Parquet files stored in object storage. It then creates an isolated, context-specific Docker container that enables efficient querying and processing of the selected data.
-
-For example, a query considering only datasets that consider data in South American data between 2000 and 2015, and that bear the CC-BY-NC-4.0 license can simply be obtained as:
-
-```json
-{
-  "query": "...",
-  "bbox": [-82.0, -56.0, -34.0, 13.5],
-  "temporal": ["2000-01-01", "2015-12-31"],
-  "licenses": ["CC-BY-NC-4.0"]
-}
-```
-
-### Data provenance and attribution
-
-Each generated container includes a `{ctx_hash}-citations.txt` file containing the citations associated with the datasets used to build that context. This ensures, traceability of the source datasets, proper attribution of data providers and ompliance with GBIF data usage requirements. The approach follows [the GBIF data user agreement](https://www.gbif.org/terms/data-user) and [GBIF citation guidelines](https://www.gbif.org/citation-guidelines).
+Each generated context also produces a citations file listing the source datasets used, in line with [the GBIF data user agreement](https://www.gbif.org/terms/data-user) and [GBIF's citation guidelines](https://www.gbif.org/citation-guidelines).
 
 ## Local deployment
 
-The application is fully containerized using Docker. As long as [Docker](https://docs.docker.com/get-started/docker-overview/) and [Docker Compose](https://docs.docker.com/compose/) are installed, running the application is as simple as cloning the repository and starting the stack with Docker Compose:
+The application is fully containerized using Docker. As long as [Docker](https://docs.docker.com/get-started/docker-overview/) and [Docker Compose](https://docs.docker.com/compose/) are installed, running the application is as simple as cloning the repository and starting the stack:
 
 ```bash
 git clone https://github.com/QCBS/semantic-data-cloud
@@ -151,38 +111,7 @@ The application exposes three services:
   2. The EML metadata catalog at: `http://localhost:7788`
   3. The MCP server at: `http://localhost:9000`
 
-For more details on the how to interact with these services, please consult the [API reference](/docs/api.md) and [MCP server](/docs/mcp.md) documentation.
-
-### Storage layout
-
-Datasets are stored in object storage as directory-like prefixes, where each dataset is represented as a self-contained Darwin Core Data Package in exploded Parquet form. An example structure layout is as shown below:
-
-```
-datasets/
-├── dataset_a/
-│   ├── eml.json
-│   ├── event.parquet
-│   ├── identification.parquet
-│   ├── occurrence.parquet
-│   └── occurrence-assertion.parquet
-├── dataset_b/
-│   ├── eml.json
-│   ├── event.parquet
-│   └── material.parquet
-└── dataset_c/
-    ├── eml.json
-    ├── event.parquet
-    ├── event-assertion.parquet
-    └── occurrence.parquet
-```
-
-Each top-level directory under `datasets/` represents a single dataset (i.e., a Darwin Core Data Package). The presence of an `eml.json` file provides the required metadata for discovery and attribution.
-
-All tables are stored as Parquet files, corresponding to Darwin Core tables (e.g., `event`, `identification`, `occurrence`) in the `.csv` (though they are technically `.tsv`) files contained in the Darwin Core Data Package. This layout is corresponds to an "exploded" representation of a Darwin Core Data Package, designed for columnar access and efficient partial loading in DuckDB without requiring transformation into RDF or a centralized warehouse.
-
-### Environment configuration
-
-To enable access to files stored in the S3-compatible object storage service and to communicate with the backend API, create a `.env` file in the project root containing the following variables:
+Before starting the stack, create a `.env` file in the project root with credentials for the S3-compatible object storage hosting your datasets:
 
 ```env
 OBJECT_STORE_BASE_URL=https://your-public-object-url-base
@@ -192,14 +121,12 @@ S3_BUCKET_NAME=your_bucket_name
 S3_ENDPOINT_URL=https://your-object-storage-endpoint
 ```
 
-The S3-related variables provide the credentials and connection details required to access the object storage bucket that hosts application files. Particularly, `OBJECT_STORE_BASE_URL` specifies the public URL used to retrieve stored objects.
-
-By default, the EML metadata catalog is exposed on port `7788`. This can be overridden by setting the optional environment variable `METADATA_API_PORT` to the desired value port value.
+To host your own datasets rather than connect to an existing bucket, see the [starter guide](/docs/starter.md) for how to prepare and upload Darwin Core Data Packages.
 
 ## Documentation
 
 Additional detailed documentation can be found in the [`docs/`](/docs/) directory:
-  - [Architecture](/docs/architecture.md) describing the overall architecture and design of the application.
+  - [Architecture](/docs/architecture.md), describing the overall architecture, components, design of the application.
   - [API reference](/docs/api.md), describing the endpoint specification and request/response formats.
   - [Ontology and mappings](/docs/ontology.md), describing the Darwin Core OWL ontology and OBDA mapping conventions.
   - [MCP server](/docs/mcp.md), describing a natural language interface via the Model Context Protocol.
