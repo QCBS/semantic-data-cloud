@@ -31,12 +31,14 @@ There may be some artefacts from XML [entity encoding](https://www.w3.org/TR/xml
 
 Three fields are required for the application to correctly index a dataset:
   1. **Bounding box**: The `boundingCoordinates` field within `geographicCoverage` must be an object containing four decimal values representing the spatial extent of the dataset, as per [EML standards](https://eml.ecoinformatics.org/schema/eml-coverage_xsd#Coverage_geographicCoverage).
-  2. **Temporal coverage**: The `rangeOfDates` field within `temporalCoverage` must be an object containing two ISO 8601 date strings representing the start and end of the dataset. The application also supports cases where `temporalCoverage` is an array of `rangeOfDates` objects, though this is not strictly part of the EML standard.
+  2. **Temporal coverage**: The dates within the in the `temporalCoverage` element  can either be a `rangeOfDates` object or a `singleDateTime` object, as per [EML standards](https://eml.ecoinformatics.org/schema/eml-coverage_xsd#Coverage_temporalCoverage). The values in the `calendarDate` leaf elements must be valid ISO 8601 date strings representing the considered dates. The application also supports cases where `temporalCoverage` is an array of `rangeOfDates` objects, though this is not strictly part of the EML standard.
   3. **License**: The `licensed` element must contain the licensing rights for the dataset as specified by [EML standards](https://eml.ecoinformatics.org/schema/eml-resource_xsd#ResourceGroup_licensed). In particular, the `identifier` leaf element must be present and must be a valid [SPDX license identifier](https://spdx.org/licenses/).
 
 ### Citation and provenance
 
-As specified by EML standards, [additional metadata can be supplied via the `additionalMetadata` element](https://eml.ecoinformatics.org/schema/eml_xsd#eml_eml_additionalMetadata_metadata). When dealing with Darwin Core Data Packages, the application extracts the `citation` element from the `gbif` element within `additionalMetadata`. The `citation` element may be either a plain string or an object with a `citation` field and an accompanying `identifier` field. These provide the application with the definitive source representation of the dataset, which is used for attribution in generated citation files.
+As specified by EML standards, additional metadata can be supplied via the [`additionalMetadata`](https://eml.ecoinformatics.org/schema/eml_xsd#eml_additionalMetadata)'s [`metadata`](https://eml.ecoinformatics.org/schema/eml_xsd.html#eml_eml_additionalMetadata_metadata) element.
+
+When dealing with Darwin Core Data Packages, the application extracts the `citation` element from the `gbif` element within `additionalMetadata`. The `citation` element may be either a plain string or an object with a `citation` field and an accompanying `identifier` field. These provide the application with the definitive source representation of the dataset, which is used for attribution in generated citation files.
 
 ---
 
