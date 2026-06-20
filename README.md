@@ -58,28 +58,45 @@ One solution to this query is shown below (data taken from the [BROKE-West fish]
 
 ```mermaid
 graph LR
-    Occ1((dwc:Occurrence)):::Occurrence
-    Evt1((dwc:Event)):::Event
-    Ment1((dwc:MaterialEntity)):::MaterialEntity
-    Agt1((dcterms:Agent)):::Agent
-    %%
-    classDef Occurrence fill:green,stroke:#333,color:white;
-    classDef Event fill:purple,stroke:#333,color:white;
-    classDef MaterialEntity fill:blue,stroke:#333,color:white;
-    classDef Agent fill:red,stroke:#333,color:white;
-    %%
-    Occ1((dwc:Occurrence)) -- dwc:scientificName --> Lit1["Electrona antarctica"]
-    Occ1((dwc:Occurence)) -- dwc:lifeStage --> Lit2["Larvae"]
-    Occ1((dwc:Occurrence)) -- dwcdp:happenedDuring --> Evt1((dwc:Event))
-    Occ1((dwc:Occurrence)) -- dwcdp:recordedBy --> Agt1((dcterms:Agent))
-    Evt1((dwc:Event)) -- dwc:eventDate --> Lit3["2006-01-20"]
-    Evt1((dwc:Event)) -- dwc:eventType --> Lit4["Survey - device subunit"]
-    Ment1((dwc:MaterialEntity)) -- dwcdp:collectedDuring --> Evt1((dwc:Event))
-    Ment1((dwc:MaterialEntity)) -- dwcdp:evidenceFor --> Occ1((dwc:Occurrence))
-    Ment1((dwc:MaterialEntity)) -- dwc:disposition --> Lit6["pending accession into Institue of Natural Sciences' collection"]
-    Ment1((dwc:MaterialEntity)) -- dwc:preparations --> Lit5["Ethanol"]
-    Agt1((dcterms:Agent)) -- dcterms:title --> Lit7["Anton Van de Putte"]
-    Agt1((dcterms:Agent)) -- dwc:agentType --> Lit8["person"]
+    Occ1((dwc:Occurrence))
+    Evt1((dwc:Event))
+    Ment1((dwc:MaterialEntity))
+    Agt1((dcterms:Agent))
+
+    Lit1["Electrona antarctica"]
+    Lit2["Larvae"]
+    Lit3["2006-01-20"]
+    Lit4["Survey - device subunit"]
+    Lit5["Ethanol"]
+    Lit6["pending accession into Institue of Natural Sciences' collection"]
+    Lit7["Anton Van de Putte"]
+    Lit8["person"]
+
+    Occ1 -- dwc:scientificName --> Lit1
+    Occ1 -- dwc:lifeStage --> Lit2
+    Occ1 -- dwc:occuredDuring --> Evt1
+    Occ1 -- dwc:recordedBy --> Agt1
+
+    Evt1 -- dwc:eventDate --> Lit3
+    Evt1 -- dwc:eventType --> Lit4
+
+    Ment1 -- collectedDuring --> Evt1
+    Ment1 -- evidenceFor --> Occ1
+    Ment1 -- dwc:disposition --> Lit6
+    Ment1 -- dwc:preparations --> Lit5
+
+    Agt1 -- dcterms:title --> Lit7
+    Agt1 -- dwc:agentType --> Lit8
+
+    classDef Occurrence fill:#2e7d32,stroke:#1b1b1b,color:#ffffff;
+    classDef Event fill:#6a1b9a,stroke:#1b1b1b,color:#ffffff;
+    classDef MaterialEntity fill:#1565c0,stroke:#1b1b1b,color:#ffffff;
+    classDef Agent fill:#c62828,stroke:#1b1b1b,color:#ffffff;
+
+    class Occ1 Occurrence
+    class Evt1 Event
+    class Ment1 MaterialEntity
+    class Agt1 Agent
 ```
 
 As this example illustrates, biodiversity data is inherently graph-structured, with rich relationships between occurrences, events, material entities, and agents that are difficult to represent in flat tables.
