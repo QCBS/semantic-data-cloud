@@ -14,10 +14,10 @@ This project takes a different approach: data tables contained in each Data Pack
 
 - **No data duplication.** Datasets stay on object storage as Parquet files. The application builds DuckDB views directly over them rather than downloading or copying rows into a local database, so the underlying data exists in exactly one place.
 - **No ETL pipeline.** Datasets are queryable as soon as they're registered, no transform-and-load step or intermediate format conversion is required, just pointing the application at the relevant Parquet assets.
-- **Schema heterogeneity accomodation.** Datasets with differing numbers of tables and columns can be queried uniformly, without having to pad the Parquet data with empty columns or tables.
+- **Schema heterogeneity accommodation.** Datasets with differing numbers of tables and columns can be queried uniformly, without having to pad the Parquet data with empty columns or tables.
 - **Entity- and relationship-based querying.** SPARQL lets users think in terms of entities (e.g. occurrences, events, agents, etc.) and how they relate to one another, rather than reasoning about foreign keys and join conditions.
 - **Language-agnostic access.** Queries are submitted over plain HTTP, so any language or tool capable of making HTTP requests (e.g. Python, JavaScript, R, curl, etc.) can interact with the application.
-- **Context-scoped, on-demand resources.** Spatial, temporal, and license filters resolve the relevant datasets before a query runs, so each context spins up only the database views and container it actually needs.
+- **Context-scoped, on-demand containers.** Spatial, temporal, and license filters resolve the relevant datasets before a query runs, so each context spins up only the database views and container it actually needs.
 
 ## Usage
 
@@ -84,17 +84,35 @@ graph LR
 
 As this example illustrates, biodiversity data is inherently graph-structured, with rich relationships between occurrences, events, material entities, and agents that are difficult to represent in flat tables.
 
-Queries are submitted as JSON payload over [HTTP](https://datatracker.ietf.org/doc/html/rfc2616), following the [SPARQL 1.1 Protocol](https://www.w3.org/TR/sparql11-protocol/), to the `/sparql` endpoint:
-
-```json
-{
-  "query": "PREFIX dcterms: <http://purl.org/dc/terms/> PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/> SELECT ?lifeStage ?eventDate ?eventType ?disposition ?preparations ?preferredAgentName ?agentType WHERE { ?occ a dwc:Occurrence ; dwc:scientificName \"Electrona antarctica\" ; dwc:scientificName ?lifeStage ; dwcdp:happenedDuring ?evt ; dwcdp:recordedBy ?agt . ?evt a dwc:Event ; dwc:eventDate ?eventDate ; dwc:eventType ?eventType . ?mat a dwc:MaterialEntity ; dwc:disposition ?disposition ; dwc:preparations ?preparations ; dwcdp:evidenceFor ?occ ; dwcdp:collectedDuring ?evt . ?agt a dcterms:Agent ; dcterms:title ?preferredAgentName ; dwc:agentType ?agentType . } LIMIT 10"
-}
-```
+Queries are submitted as a JSON payload over [HTTP](https://datatracker.ietf.org/doc/html/rfc2616), following the [SPARQL 1.1 Protocol](https://www.w3.org/TR/sparql11-protocol/), to the `/sparql` endpoint. The SPARQL query should be contained in the `query` field of the JSON payload.
 
 The request body can also include `bbox`, `temporal`, and `licenses` fields to narrow which datasets are loaded before the query runs, restricting the result, for instance, to only datasets that consider South American records from 2000 to 2015 published under CC-BY-NC-4.0. See the [API reference](/docs/api.md) for the full request/response specification.
 
 Each generated context also produces a citations file listing the source datasets used, in line with [the GBIF data user agreement](https://www.gbif.org/terms/data-user) and [GBIF's citation guidelines](https://www.gbif.org/citation-guidelines).
+
+## Live instance
+
+A live instance of the application is running, covering around 50 datasets across various domains, downloaded from [GBIF](https://www.gbif.org) and converted to the exploded Darwin Core Data Package format described in the [starter guide](/docs/starter.md) documentation. It is fully queryable and requires no installation.
+
+The live instance exposes the following services/endpoints:
+
+  - A SPARQL endpoint at: [https://data.qcbs.ca/sparql](https://data.qcbs.ca/sparql)
+  - A metadata catalog at: [https://data.qcbs.ca/metadata-api](https://data.qcbs.ca/metadata-api)
+  - An MCP server at: [https://data.qcbs.ca/mcp](https://data.qcbs.ca/mcp)
+
+For example, the above query can be sent to the endpoint using [curl](https://curl.se/) with the following code:
+
+```bash
+curl -X POST https://data.qcbs.ca/sparql \
+  -H "Content-Type: application/json" \
+  -d '{"query": "PREFIX dcterms: <http://purl.org/dc/terms/> PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/> SELECT ?lifeStage ?eventDate ?eventType ?disposition ?preparations ?preferredAgentName ?agentType WHERE { ?occ a dwc:Occurrence ; dwc:scientificName \"Electrona antarctica\" ; dwc:lifeStage ?lifeStage ; dwcdp:happenedDuring ?evt ; dwcdp:recordedBy ?agt . ?evt a dwc:Event ; dwc:eventDate ?eventDate ; dwc:eventType ?eventType . ?mat a dwc:MaterialEntity ; dwc:disposition ?disposition ; dwc:preparations ?preparations ; dwcdp:evidenceFor ?occ ; dwcdp:collectedDuring ?evt . ?agt a dcterms:Agent ; dcterms:title ?preferredAgentName ; dwc:agentType ?agentType . } LIMIT 10"}'
+```
+
+The above command can be adapted to your favorite language and HTTP request library.
+
+More information about the considered datasets can be obtained by considering the metadata catalog, where full dataset EML data can be requested in JSON-LD format. For example, metadata about the BROKE-West dataset can be obtained by visiting [https://data.qcbs.ca/metadata-api/dataset/broke-west-fish](https://data.qcbs.ca/metadata-api/dataset/broke-west-fish).
+
+Additionally, the deployment also offers a SPARQL-LLM chatbot, which consists of an open-source LLM with access to the SPARQL endpoint through the MCP server. Users may interact with it through the [chat interface](https://data.qcbs.ca/chat), which accepts plain-language questions and constructs the underlying SPARQL for you.
 
 ## Local deployment
 

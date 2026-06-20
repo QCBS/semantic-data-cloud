@@ -4,8 +4,6 @@
 
 The application exposes a natural language interface through the [Model Context Protocol](https://modelcontextprotocol.io/docs/getting-started/intro) (MCP). An MCP server runs on port 9000, built with [FastMCP](https://gofastmcp.com/servers/server), and provides a single tool (`sparql_query`) that translates natural language biodiversity questions into SPARQL queries and executes them against the endpoint.
 
-A live instance is available at [https://chat.qcbs.ca/data](https://chat.qcbs.ca/data) with approximately 50 pre-loaded datasets.
-
 ---
 
 ## Tool: `sparql_query`
