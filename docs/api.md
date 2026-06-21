@@ -49,7 +49,7 @@ Responses are cached in Valkey. The cache key is derived from the set of matched
 
 **Cold start**
 
-The first request for a new dataset combination triggers DuckDB table materialisation and Ontop container startup. This typically takes 15–60 seconds depending on dataset size and operating system. Subsequent requests for the same combination reuse the running container and are served within seconds.
+The first request for a new dataset combination triggers DuckDB table materialisation and Ontop container startup. This typically takes 15–60 seconds depending on dataset size and operating system. Subsequent requests for the same combination reuse the running container and are served within seconds. If the request is repeated, then response time is almost instantaneous due to Valkey caching.
 
 ---
 

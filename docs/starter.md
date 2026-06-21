@@ -25,13 +25,18 @@ write(eml_json, "eml.json")
 
 **Note:** The `auto_unbox = TRUE` argument is important, as it ensures that length-1 vectors are converted to JSON strings and numbers instead of arrays.
 
-There may be some artefacts from XML [entity encoding](https://www.w3.org/TR/xml/#syntax), such as `&` being represented as `&amp;`. Any manual edits must conform to [RFC 8259](https://datatracker.ietf.org/doc/html/rfc8259).
+Here are a few points to watch out for regarding the obtained JSON representation of EML metadata:
+  1. There may be some artefacts from XML [entity encoding](https://www.w3.org/TR/xml/#syntax), where special characters such as `&` or `<` are represented by their entity references `&amp;` or `&lt;`.
+  2. Depending on how the text was present in the XML document, whitespace escape sequences (e.g. `\n`, `\t`, etc.) might be present.
+  3. Some values that are to be semantically interpreted as numeric in the original XML may be represented as character strings in the parsed object (e.g. `"-74.0684"` instead of `-74.0684`) due to type handling in the parsing and serialization process.
+  
+These may require manual editing of the file. However, any such edits must ensure the output remains valid JSON, as defined in [RFC 8259](https://datatracker.ietf.org/doc/html/rfc8259).
 
 ### Required fields
 
 Three fields are required for the application to correctly index a dataset:
-  1. **Bounding box**: The `boundingCoordinates` field within `geographicCoverage` must be an object containing four decimal values representing the spatial extent of the dataset, as per [EML standards](https://eml.ecoinformatics.org/schema/eml-coverage_xsd#Coverage_geographicCoverage).
-  2. **Temporal coverage**: The dates within the in the `temporalCoverage` element  can either be a `rangeOfDates` object or a `singleDateTime` object, as per [EML standards](https://eml.ecoinformatics.org/schema/eml-coverage_xsd#Coverage_temporalCoverage). The values in the `calendarDate` leaf elements must be valid ISO 8601 date strings representing the considered dates. The application also supports cases where `temporalCoverage` is an array of `rangeOfDates` objects, though this is not strictly part of the EML standard.
+  1. **Bounding box**: The `boundingCoordinates` field within `geographicCoverage` must be an object containing four decimal values representing the spatial extent of the dataset, as per [EML standards](https://eml.ecoinformatics.org/schema/eml-coverage_xsd#Coverage_geographicCoverage). The application also allows for strings of decimal values, since the metadata catalog database will attempt to cast the values into the `DOUBLE` datatype.
+  2. **Temporal coverage**: The dates within the in the `temporalCoverage` element  can either be a `rangeOfDates` object or a `singleDateTime` object, as per [EML standards](https://eml.ecoinformatics.org/schema/eml-coverage_xsd#Coverage_temporalCoverage). The values in the `calendarDate` leaf elements must be strings of valid ISO 8601 date strings representing the considered dates. The application also supports cases where `temporalCoverage` is an array of `rangeOfDates` objects, though this is not strictly part of the EML standard.
   3. **License**: The `licensed` element must contain the licensing rights for the dataset as specified by [EML standards](https://eml.ecoinformatics.org/schema/eml-resource_xsd#ResourceGroup_licensed). In particular, the `identifier` leaf element must be present and must be a valid [SPDX license identifier](https://spdx.org/licenses/).
 
 ### Citation and provenance

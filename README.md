@@ -67,23 +67,23 @@ graph LR
     Lit2["Larvae"]
     Lit3["2006-01-20"]
     Lit4["Survey - device subunit"]
-    Lit5["Ethanol"]
-    Lit6["pending accession into Institue of Natural Sciences' collection"]
+    Lit5["pending accession into Institue of Natural Sciences' collection"]
+    Lit6["Ethanol"]
     Lit7["Anton Van de Putte"]
     Lit8["person"]
 
     Occ1 -- dwc:scientificName --> Lit1
     Occ1 -- dwc:lifeStage --> Lit2
-    Occ1 -- dwc:occuredDuring --> Evt1
-    Occ1 -- dwc:recordedBy --> Agt1
+    Occ1 -- dwcdp:happenedDuring --> Evt1
+    Occ1 -- dwcdp:recordedBy --> Agt1
 
     Evt1 -- dwc:eventDate --> Lit3
     Evt1 -- dwc:eventType --> Lit4
 
-    Ment1 -- collectedDuring --> Evt1
-    Ment1 -- evidenceFor --> Occ1
-    Ment1 -- dwc:disposition --> Lit6
-    Ment1 -- dwc:preparations --> Lit5
+    Ment1 -- dwc:disposition --> Lit5
+    Ment1 -- dwc:preparations --> Lit6
+    Ment1 -- dwcdp:collectedDuring --> Evt1
+    Ment1 -- dwcdp:evidenceFor --> Occ1
 
     Agt1 -- dcterms:title --> Lit7
     Agt1 -- dwc:agentType --> Lit8
@@ -101,9 +101,9 @@ graph LR
 
 As this example illustrates, biodiversity data is inherently graph-structured, with rich relationships between occurrences, events, material entities, and agents that are difficult to represent in flat tables.
 
-Queries are submitted as a JSON payload over [HTTP](https://datatracker.ietf.org/doc/html/rfc2616), following the [SPARQL 1.1 Protocol](https://www.w3.org/TR/sparql11-protocol/), to the `/sparql` endpoint. The SPARQL query should be contained in the `query` field of the JSON payload.
+Queries are submitted as a JSON payload over [HTTP](https://datatracker.ietf.org/doc/html/rfc9110), following the [SPARQL 1.1 Protocol](https://www.w3.org/TR/sparql11-protocol/), to the `/sparql` endpoint. The SPARQL query should be contained in the `query` field of the JSON payload.
 
-The request body can also include `bbox`, `temporal`, and `licenses` fields to narrow which datasets are loaded before the query runs, restricting the result, for instance, to only datasets that consider South American records from 2000 to 2015 published under CC-BY-NC-4.0. See the [API reference](/docs/api.md) for the full request/response specification.
+The request body can also include `bbox`, `temporal`, and `licenses` fields to narrow which datasets are loaded before the query runs, restricting the result, for instance, to only datasets that consider South American records from 2000 to 2015 and published under CC-BY-NC-4.0. See the [API reference](/docs/api.md) for the full request/response specification.
 
 Each generated context also produces a citations file listing the source datasets used, in line with [the GBIF data user agreement](https://www.gbif.org/terms/data-user) and [GBIF's citation guidelines](https://www.gbif.org/citation-guidelines).
 
@@ -125,7 +125,7 @@ curl -X POST https://data.qcbs.ca/sparql \
   -d '{"query": "PREFIX dcterms: <http://purl.org/dc/terms/> PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/> SELECT ?lifeStage ?eventDate ?eventType ?disposition ?preparations ?preferredAgentName ?agentType WHERE { ?occ a dwc:Occurrence ; dwc:scientificName \"Electrona antarctica\" ; dwc:lifeStage ?lifeStage ; dwcdp:happenedDuring ?evt ; dwcdp:recordedBy ?agt . ?evt a dwc:Event ; dwc:eventDate ?eventDate ; dwc:eventType ?eventType . ?mat a dwc:MaterialEntity ; dwc:disposition ?disposition ; dwc:preparations ?preparations ; dwcdp:evidenceFor ?occ ; dwcdp:collectedDuring ?evt . ?agt a dcterms:Agent ; dcterms:title ?preferredAgentName ; dwc:agentType ?agentType . } LIMIT 10"}'
 ```
 
-The above command can be adapted to your favorite language and HTTP request library.
+The returned results will follow the standard [SPARQL 1.1 Query Results JSON format](https://www.w3.org/TR/sparql11-results-json/). The above command can be adapted to your favorite language and HTTP request library (e.g. [Requests](https://requests.readthedocs.io/en/latest/) in Python).
 
 More information about the considered datasets can be obtained by considering the metadata catalog, where full dataset EML data can be requested in JSON-LD format. For example, metadata about the BROKE-West dataset can be obtained by visiting [https://data.qcbs.ca/metadata-api/dataset/broke-west-fish](https://data.qcbs.ca/metadata-api/dataset/broke-west-fish).
 

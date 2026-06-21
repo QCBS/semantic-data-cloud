@@ -39,7 +39,7 @@ It is stateless with respect to data, but stateful with respect to the container
 
 #### db_builder
 
-Constructs a materialised DuckDB database for a given list of dataset IDs. For each Darwin Core table (event, media, occurrence, etc...), it creates views over the Parquet assets from all datasets in the context. The `union_by_name=True` option handles column set differences across datasets by filling absent columns with NULL and guaranteeing correct column matching.
+Constructs a materialised DuckDB database for a given list of dataset IDs. For each Darwin Core table (event, media, occurrence, etc...), it creates views over the Parquet assets from all datasets in the context. The [`union_by_name=True`](https://duckdb.org/docs/current/data/multiple_files/combining_schemas) option handles column set differences across datasets by filling absent columns with NULL and guaranteeing correct column matching.
 
 The output is a `.duckdb` file containing views over Parquet files representing the tables in the Darwin Core Data Package schema, named after a 16-character SHA-256 prefix of the sorted, pipe-delimited dataset ID list. This hash serves as both the filename and the cache key, a database is built only once per unique dataset combination and reused on all subsequent requests.
 
