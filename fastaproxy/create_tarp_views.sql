@@ -1,7 +1,6 @@
 -- Define dwcdp:derivedFromTransitive for dwc:MaterialEntity
 CREATE VIEW derived_from_transitive_material AS
 WITH RECURSIVE closure(child, ancestor) AS (
-
     SELECT material_entity_id, derived_from_material_entity_id
     FROM material
     WHERE derived_from_material_entity_id IS NOT NULL
@@ -51,7 +50,6 @@ FROM closure;
 -- Define dwcdp:derivedFromTransitive for dwc:Media
 CREATE VIEW derived_from_transitive_media AS
 WITH RECURSIVE closure(child, ancestor) AS (
-
     SELECT media_id, derived_from_media_id
     FROM media
     WHERE derived_from_media_id IS NOT NULL
@@ -101,7 +99,6 @@ FROM closure;
 -- Define dwcdp:happenedDuringTransitive for dwc:Event
 CREATE VIEW happened_during_transitive_event AS
 WITH RECURSIVE closure(child, ancestor, depth) AS (
-
     SELECT event_id, parent_event_id, 1
     FROM event
     WHERE parent_event_id IS NOT NULL
@@ -151,7 +148,6 @@ FROM closure;
 -- Define dwcdp:partOfTransitive for dcterms:BibliographicResource
 CREATE VIEW part_of_transitive_bibliographic_resource AS
 WITH RECURSIVE closure(child, ancestor) AS (
-
     SELECT reference_id, parent_reference_id
     FROM bibliographic_resource
     WHERE parent_reference_id IS NOT NULL
@@ -201,7 +197,6 @@ FROM closure;
 -- Define dwcdp:partOfTransitive for dwc:MaterialEntity
 CREATE VIEW part_of_transitive_material AS
 WITH RECURSIVE closure(child, ancestor) AS (
-
     SELECT material_entity_id, is_part_of_material_entity_id
     FROM material
     WHERE is_part_of_material_entity_id IS NOT NULL
@@ -301,7 +296,6 @@ FROM closure;
 -- Define dwcdp:partOfTransitive for dwc:Occurrence
 CREATE VIEW part_of_transitive_occurrence AS
 WITH RECURSIVE closure(child, ancestor) AS (
-
     SELECT occurrence_id, is_part_of_occurrence_id
     FROM occurrence
     WHERE is_part_of_occurrence_id IS NOT NULL
