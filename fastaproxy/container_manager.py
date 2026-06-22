@@ -120,7 +120,7 @@ class ContainerRegistry:
 
         path = DB_DIR / f"{ctx_hash}.metadata.json"
         path.write_text(metadata)
-        print(f"[container_manager] wrote metadata: {path.name}")
+
         return path
 
     def _start(self, ctx_hash: str) -> ContainerInfo:
