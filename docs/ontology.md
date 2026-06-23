@@ -35,6 +35,26 @@ The ontology is compliant to a specific OWL 2 profile, namely, the [OWL 2 QL](ht
 
 Ontop uses this ontology during query reformulation. It supports OWL 2 QL reasoning, which means subclass and subproperty hierarchies declared in the ontology are respected during query answering, though these features are kept minimal in the current version. For a full view of the ontology, consider loading the `.ttl` file into an ontology editor such as [Protégé](https://protege.stanford.edu/).
 
+### Deductive closure of transitive properties
+
+Transitivity and reflexivity are first-class property characteristics in OWL 2, with formal semantics defined in the [OWL 2 RDF-Based Semantics](https://www.w3.org/TR/owl2-rdf-based-semantics/#Semantic_Conditions_for_Property_Characteristics) specification. However, the ontology used here is OWL 2 QL compliant, and [axioms declaring a property transitive or reflexive are disallowed](https://www.w3.org/2007/OWL/wiki/Profiles-v2.html#Axioms_2) under that profile.
+
+Though not explicitly named as such, this kind of self-relation is present throughout the [Darwin Core Conceptual Model](https://gbif.github.io/dwc-dp/cm/). For example, a `dwc:Event` can have a parent `dwc:Event`, and a `dwc:MaterialEntity` can be derived from a source `dwc:MaterialEntity`. In principle, both relationships could be chained to an arbitrary depth. From a first-order logical point of view, it would be plausible to consider these as transitive properties.
+
+Likewise, SPARQL allows for complex graph navigation through [property paths](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/#propertypath-arbitrary-length), where the `+` (one or more) and `*` (zero or more) operators let a predicate be traversed an arbitrary number of times along a chain of repeated properties. However, Ontop currently [does not support these features](https://ontop-vkg.org/guide/compliance.html).
+
+Left unaddressed, these limitations would be a considerable loss of expressivity. Querying across a `dwc:Event` hierarchy or a chain of `dwc:MaterialEntity` derivations would require the user to know in advance, and hardcode, the exact number of hops to traverse. This is aggravated by the fact that the depth of such chains carries no consistent meaning across datasets. For example, one dataset might model a chain of material entities for a nucleotides analysis going a preserved organism to an aliquot, while another might distinguish a raw aliquot from a purified one.
+
+OWL 2 QL's restriction here mirrors the same tradeoff made by the DL-Lite family of description logics it is built on: excluding transitivity is what guarantees a query can always be rewritten into a single first-order (here, SQL) query, independent of data size. In the same spirit, the work of computing transitive and reflexive closures is pushed down to the SQL engine rather than handled by the ontology itself. A set of views were created using [recursive Common Table Expressions (CTEs)](https://duckdb.org/docs/lts/sql/query_syntax/with), which allow graph-like traversal in DuckDB. The OBDA mapping then exposes these views as additional object properties, giving Ontop ready-made transitive and reflexive variants of the base properties to map directly, with no non-QL reasoning required at query time.
+
+Each base object property affected by this pattern has a `dwcdp:*Transitive` and a `dwcdp:*TransitiveReflexive` counterpart. The properties and classes covered are summarized below.
+
+| Basic | Transitive | Transitive & reflexive | Classes |
+|---|---|---|---|
+| `dwcdp:derivedFrom` | `dwcdp:derivedFromTransitive` | `dwcdp:derivedFromTransitiveReflexive` | `dwc:MaterialEntity`, `dwc:Media` |
+| `dwcdp:happenedDuring` | `dwcdp:happenedDuringTransitive` | `dwcdp:happenedDuringTransitiveReflexive` | `dwc:Event` |
+| `dwcdp:partOf` | `dwcdp:partOfTransitive` | `dwcdp:partOfTransitiveReflexive` | `dcterms:BibliographicResource`, `dwc:MaterialEntity`, `dwc:Media`, `dwc:Occurrence` |
+
 ---
 
 ## OBDA mapping (`dwcowl.obda`)
