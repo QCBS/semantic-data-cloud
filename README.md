@@ -142,9 +142,9 @@ docker compose up --build
 ```
 
 The application exposes three services:
-  1. The SPARQL proxy at: `http://localhost:8000`
-  2. The EML metadata catalog at: `http://localhost:7788`
-  3. The MCP server at: `http://localhost:9000`
+  1. The SPARQL proxy at: [http://localhost:8000](http://localhost:8000)
+  2. The EML metadata catalog at: [http://localhost:7788](http://localhost:7788)
+  3. The MCP server at: [http://localhost:9000/mcp](http://localhost:9000/mcp)
 
 Before starting the stack, create a `.env` file in the project root with credentials for the S3-compatible object storage hosting your datasets:
 
