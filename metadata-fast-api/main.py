@@ -46,6 +46,11 @@ def read_root():
     }
 
 
+@app.get("/health")
+async def get_health():
+    return {"status": "ok"}
+
+
 @app.get("/datasets")
 def get_list_datasets(
     page: int = Query(1, ge=1),

@@ -97,7 +97,12 @@ services:
       - OBJECT_STORE_BASE_URL=${OBJECT_STORE_BASE_URL}
       - METADATA_API_PORT=${METADATA_API_PORT:-7788}
     restart: unless-stopped
-
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
 networks:
   dwc-net:
