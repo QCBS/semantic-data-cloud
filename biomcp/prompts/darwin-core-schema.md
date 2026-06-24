@@ -339,10 +339,12 @@ Variants include dwc:EventMedia, dwc:MaterialMedia, dwc:OrganismMedia.
 
 ```sparql
 PREFIX ac: <http://rs.tdwg.org/ac/terms/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 
-SELECT ?accUri ?sciName ?subjectOrientationLiteral ?subjectPartLiteral
+SELECT ?accUri ?sciName ?subjectOrientationLiteral ?subjectPartLiteral ?title ?type ?format
 WHERE {
   ?occMed a dwc:OccurrenceMedia ;
           dwcdp:thisMedia ?med ;
@@ -356,6 +358,10 @@ WHERE {
 
   OPTIONAL { ?occMed ac:subjectOrientationLiteral ?subjectOrientationLiteral }
   OPTIONAL { ?occMed ac:subjectPartLiteral ?subjectPartLiteral }
+
+  OPTIONAL { ?med dcterms:title ?title }
+  OPTIONAL { ?med dcterms:type ?type }
+  OPTIONAL { ?med dc:format ?format }
 }
 ```
 
