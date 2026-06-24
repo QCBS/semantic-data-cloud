@@ -59,6 +59,9 @@ def get_lock(request: Request) -> Lock:
 
 app = FastAPI(title="sdc-fastapi-proxy", lifespan=lifespan)
 
+@app.get("/health")
+async def get_health():
+    return {"status": "ok"}
 
 @app.post("/sparql")
 async def sparql_query(

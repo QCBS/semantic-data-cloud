@@ -52,6 +52,12 @@ services:
       ONTOP_NETWORK: dwc-net
       ONTOP_STARTUP_TIMEOUT: 120
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
 
   biomcp:
