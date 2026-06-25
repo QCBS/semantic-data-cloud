@@ -1,11 +1,18 @@
 from contextlib import asynccontextmanager
 from datetime import date
 import json
+import logging
 import os
 #
 from fastapi import FastAPI, Query, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from s3io import s3_to_duckdb, duckdb_connect
+
+
+class SuppressHealthcheck(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        return "/health" not in record.getMessage()
+
 
 METADATA_API_PORT = os.getenv("METADATA_API_PORT")
 
@@ -13,6 +20,8 @@ ddb = duckdb_connect()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    logging.getLogger("uvicorn.access").addFilter(SuppressHealthcheck())
+
     success = s3_to_duckdb("eml", ".json", ddb)
     if success:
         print("Successfully loaded S3 data into DuckDB.")

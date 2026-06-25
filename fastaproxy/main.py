@@ -1,6 +1,7 @@
 from asyncio import Lock, to_thread
 from contextlib import asynccontextmanager
 import hashlib
+import logging
 import os
 #
 from fastapi import FastAPI, HTTPException, Request, status, Depends
@@ -11,6 +12,11 @@ import orjson
 from container_manager import ContainerRegistry
 from db_builder import build_db, context_hash
 from schemas.sparql import QueryRequest
+
+
+class SuppressHealthcheck(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        return "/health" not in record.getMessage()
 
 
 TTL_VAL = int(os.getenv("TTL_VAL", 70))
@@ -24,7 +30,9 @@ def make_cache_key(ctx_hash: str, sparql: bytes) -> str:
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI):    
+    logging.getLogger("uvicorn.access").addFilter(SuppressHealthcheck())
+
     config = GlideClientConfiguration(addresses=[NodeAddress("valkey", 6379)])
     app.state.glide = await GlideClient.create(config)
     transport = AsyncHTTPTransport(retries=0)
