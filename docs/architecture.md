@@ -53,7 +53,9 @@ Volume host paths are discovered automatically by inspecting the fastaproxy cont
 
 #### Ontop containers
 
-Short-lived containers running [Ontop](https://ontop-vkg.org/) (`ontop/ontop:5.5.0`) with the DuckDB JDBC driver (`duckdb_jdbc-1.5.2.1.jar`). Each container receives three files at startup: an OWL ontology (`.ttl`), an OBDA mapping (`.obda`), and a connection properties file (`.properties`). The OBDA mapping is generated per-context with the correct database catalog name. Ontop translates incoming SPARQL queries to SQL, executes them against the DuckDB database, and returns results in SPARQL JSON format.
+Short-lived containers running [Ontop](https://ontop-vkg.org/) (`ontop/ontop:5.5.0`) with the DuckDB JDBC driver (`duckdb_jdbc-1.5.2.1.jar`). Each Ontop container receives a unique name, `ontop-{context_hash}`, where `{context_hash}` is a truncated SHA-256 hash of the the space vertical bar space (` | `) separated dataset names selected by the filters used in the user-submitted query.
+
+Each container receives four files at startup: an OWL ontology (`.ttl`), an OBDA mapping (`.obda`), a database metadata (`d.json`), and a connection properties file (`.properties`). The OBDA mapping and the database metadata files are generated per-context with the correct database catalog name. Ontop translates incoming SPARQL queries to SQL, executes them against the DuckDB database, and returns results in SPARQL JSON format.
 
 ### Caching layer: Valkey
 
@@ -62,6 +64,22 @@ A [Valkey](https://valkey.io/) instance used for in-memory result caching. As th
 Cache keys are SHA-256 digests of the context hash concatenated with the SPARQL query bytes. Each key has a configurable time-to-live ([TTL](https://valkey.io/commands/ttl/)), defaulting to 70 seconds.
 
 The instance uses at most 1 Gb or RAM and considers an [allkeys-lfu](https://valkey.io/topics/lru-cache/) eviction policy. This means that when memory is exhausted, the least frequently accessed keys will be removed to make place for the new data to be added.
+
+### Docker network
+
+The application relies on a custom, external [Docker network](https://docs.docker.com/engine/network/) named `dwc-net`. All service containers, `fastaproxy`, `metadata-fast-api`, `valkey`, `biomcp`, and any Ontop containers spawned when queried, need to be attached to this network.
+
+This has two practical consequences. First, it enables volume host path discovery, because `container_manager` inspects `fastaproxy`'s own mount table via the Docker socket to resolve the host-side paths of the `/db` and `/blanks` volumes. For this to work, both containers need to share the same network context for that introspection to succeed.
+
+Second, it enables named container addressing, wherein Docker's [embedded DNS](https://docs.docker.com/engine/network/drivers/bridge/#dns-resolution-among-containers) resolves container names to IP addresses within the same network. When `container_manager` starts an Ontop instance named `ontop-{context_hash}`, `fastaproxy` can immediately reach it at `http://ontop-{context_hash}:8080/sparql` without any manual service registration or port-mapping.
+
+The network is declared as [`external: true`](https://docs.docker.com/reference/compose-file/networks/#external) in [docker-compose.yml](/docker-compose.yml), meaning that Docker Compose will not attempt to create or destroy it (it is expected to already exist in the environment). It is intentionally not marked [`internal`](https://docs.docker.com/reference/compose-file/networks/#internal), as that would cut off outbound internet access for all attached containers. However, `db_builder` fetches the hrefs to the remote Parquet files from S3 at query time, and `metadata-fast-api` ingests remote EML JSON-LD files during dataset registration, both of which require outbound connectivity.
+
+Because the network is user-defined and external, it [needs to be created](https://docs.docker.com/reference/cli/docker/network/create/) before starting the application, otherwise Docker Compose will exit with an error. The network can be created with the command:
+
+```bash
+docker network create -d bridge dwc-net
+```
 
 ---
 
