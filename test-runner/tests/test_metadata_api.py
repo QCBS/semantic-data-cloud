@@ -1,6 +1,8 @@
 import httpx
 
+
 METADATA_API_BASE_URL = "http://metadata-api:8000"
+
 
 def test_root_endpoint():
     res = httpx.get(
@@ -15,6 +17,7 @@ def test_root_endpoint():
     assert "description" in payload
     assert "links" in payload
     assert "datasets" in payload
+
 
 def test_example_dataset():
     res = httpx.get(
@@ -32,12 +35,14 @@ def test_example_dataset():
     #
     assert "citation" in payload["additionalMetadata"]["metadata"]["gbif"]
 
+
 def test_nonexistant_dataset():
     res = httpx.get(
         url=f"{METADATA_API_BASE_URL}/dataset/nonexistant-dataset"
     )
 
     assert res.status_code == 404
+
 
 def test_metadata_search():
     res = httpx.get(
@@ -54,6 +59,7 @@ def test_metadata_search():
 
     assert res.status_code == 200
     assert res.json() is not None
+
 
 def test_metadata_search_licenses():
     res = httpx.get(
