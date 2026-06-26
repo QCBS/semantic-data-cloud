@@ -1,19 +1,19 @@
 # Semantic Data Cloud
 
-An application that allows SPARQL-based queries over biodiversity datasets using Darwin Core semantics over Parquet-backed DuckDB views.
+An application that allows SPARQL-based queries over biodiversity datasets using Darwin Core Conceptual Model semantics over Parquet-backed DuckDB views.
 
 ## Overview
 
 Biodiversity data is commonly published as [Darwin Core Archives](https://ipt.gbif.org/manual/en/ipt/latest/dwca-guide#what-is-darwin-core-archive-dwc-a) distributed across institutional repositories. The newly proposed [Darwin Core Data Package](https://www.gbif.org/composition/3Be8w9RzbjHtK2brXxTtun/introducing-the-darwin-core-data-package) format introduces additional semantics and flexibility, but also increased complexity in data integration and querying. Querying across multiple such datasets typically requires either centralising the data or negotiating heterogeneous APIs.
 
-The [Darwin Core Conceptual Model](https://dwc.tdwg.org/cm/) is a highly interconnected data model. In this regard, it is well suited to graph representations, making the Resource Description Framework ([RDF](https://www.w3.org/TR/rdf11-primer/)) a clean, intuitive and semantically-rich data model. However, transforming tabular datasets into RDF represents a considerable Extract, Transform, Load (ETL) process and raises deduplication concerns, as the dataset must then exist in two different forms.
+The [Darwin Core Conceptual Model](https://dwc.tdwg.org/cm/), which is the basis for the DwC DP,  is a highly interconnected data model. In this regard, it is well suited to graph representations, making the Resource Description Framework ([RDF](https://www.w3.org/TR/rdf11-primer/)) a clean, intuitive and semantically-rich data model. However, transforming tabular datasets into RDF represents a considerable Extract, Transform, Load (ETL) process and raises deduplication concerns, as the dataset must then exist in two different forms.
 
 This project takes a different approach: data tables contained in each Data Package are hosted as Parquet files on object storage. On demand, a materialised DuckDB database is assembled from the relevant files and exposed through a SPARQL interface via a Virtual Knowledge Graph (VKG). Datasets can then be queried using a lightweight Web Ontology Language ([OWL](https://www.w3.org/TR/2012/REC-owl2-primer-20121211/)) ontology based primarily on [Darwin Core](https://dwc.tdwg.org/list/) terms, without any ETL step or permanent data duplication.
 
 ## Why a Semantic Data Cloud?
 
 - **No data duplication.** Datasets stay on object storage as Parquet files. The application builds DuckDB views directly over them rather than downloading or copying rows into a local database, so the underlying data exists in exactly one place.
-- **No ETL pipeline.** Datasets are queryable as soon as they're registered, no transform-and-load step or intermediate format conversion is required, just pointing the application at the relevant Parquet assets.
+- **No ETL pipeline.** Datasets are queryable as soon as they're registered, no extract-transform-load step or intermediate format conversion is required, just pointing the application at the relevant Parquet assets.
 - **Schema heterogeneity accommodation.** Datasets with differing numbers of tables and columns can be queried uniformly, without having to pad the Parquet data with empty columns or tables.
 - **Entity- and relationship-based querying.** SPARQL lets users think in terms of entities (e.g. occurrences, events, agents, etc.) and how they relate to one another, rather than reasoning about foreign keys and join conditions.
 - **Language-agnostic access.** Queries are submitted over plain HTTP, so any language or tool capable of making HTTP requests (e.g. Python, JavaScript, R, curl, etc.) can interact with the application.

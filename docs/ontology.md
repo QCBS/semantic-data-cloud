@@ -39,7 +39,7 @@ Ontop uses this ontology during query reformulation. It supports OWL 2 QL reason
 
 Transitivity and reflexivity are first-class property characteristics in OWL 2, with formal semantics defined in the [OWL 2 RDF-Based Semantics](https://www.w3.org/TR/owl2-rdf-based-semantics/#Semantic_Conditions_for_Property_Characteristics) specification. However, the ontology used here is OWL 2 QL compliant, and [axioms declaring a property transitive or reflexive are disallowed](https://www.w3.org/2007/OWL/wiki/Profiles-v2.html#Axioms_2) under that profile.
 
-Though not explicitly named as such, this kind of self-relation is present throughout the [Darwin Core Conceptual Model](https://gbif.github.io/dwc-dp/cm/). For example, a `dwc:Event` can have a parent `dwc:Event`, and a `dwc:MaterialEntity` can be derived from a source `dwc:MaterialEntity`. In principle, both relationships could be chained to an arbitrary depth. From a first-order logical point of view, it would be plausible to consider these as transitive properties.
+Though not explicitly named as such, this kind of self-relation is present throughout the [Darwin Core Conceptual Model](https://gbif.github.io/dwc-dp/cm/). For example, a `dwc:Event` can have a parent `dwc:Event`, and a `dwc:MaterialEntity` can be derived from a source `dwc:MaterialEntity`. See also the [Properties of hierarchical events in the Humboldt Extension for Ecological Inventories](https://eco.tdwg.org/hierarchy/) document for an example of a three-level nested event case. In principle, such relationships could be chained to an arbitrary depth. From a first-order logical point of view, it would be plausible to consider these as transitive properties.
 
 Likewise, SPARQL allows for complex graph navigation through [property paths](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/#propertypath-arbitrary-length), where the `+` (one or more) and `*` (zero or more) operators let a predicate be traversed an arbitrary number of times along a chain of repeated properties. However, Ontop currently [does not support these features](https://ontop-vkg.org/guide/compliance.html).
 
@@ -79,7 +79,7 @@ source     SELECT occurrence_id, scientific_name FROM FROM dwcowl.main.occurrenc
 
 The string `dwcowl` in the SQL `FROM` clause is the DuckDB catalog name. It is replaced at runtime by the container manager with the quoted context hash (e.g. `"95cb752fb61d60a2"`) for each per-context database file. The quoting is necessary because the hash begins with a digit, making it an invalid bare SQL identifier.
 
-A strict `snake_case` naming convention is used for all column names in the database and Parquet files, to maximise portability across operating systems and database systems.
+A strict `snake_case` naming convention is used for all column names in the Parquet files (and ultimately in the database views), to maximise portability across operating systems and database systems. This was also the naming convention was adopted in [the originally proposed DwC DP schema](https://github.com/gbif/dwc-dp-examples/blob/master/gbif/dwc_dp_schema.sql).
 
 ---
 
