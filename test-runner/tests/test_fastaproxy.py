@@ -4,6 +4,29 @@ import httpx
 FASTAPROXY_BASE_URL = "http://fastaproxy:8000"
 
 
+def test_sparql_endpoint():
+    res = httpx.post(
+        url=f"{FASTAPROXY_BASE_URL}/sparql",
+        json={
+            "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
+        }
+    )
+
+    body = res.json()
+
+    assert res.status_code == 200
+    #
+    assert set(body) == {"head", "results"}
+    assert isinstance(body["head"], dict)
+    assert isinstance(body["results"], dict)
+
+    assert "vars" in body["head"]
+    assert isinstance(body["head"]["vars"], list)
+
+    assert "bindings" in body["results"]
+    assert isinstance(body["results"]["bindings"], list)
+
+
 def test_missing_query():
     res = httpx.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
