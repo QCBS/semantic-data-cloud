@@ -5,9 +5,10 @@ import logging
 import os
 from threading import Lock
 #
-from fastapi import FastAPI, Query, Response, HTTPException
+from fastapi import FastAPI, Query, Response, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from s3io import s3_to_duckdb, duckdb_connect
+
 
 class SuppressHealthcheck(logging.Filter):
     def filter(self, record: logging.LogRecord) -> bool:
@@ -16,17 +17,15 @@ class SuppressHealthcheck(logging.Filter):
 
 METADATA_API_PORT = os.getenv("METADATA_API_PORT")
 
-ddb = duckdb_connect()
 
-# NOTE: Created an instance of Lock to avoid several threads accessing ddb
-# TODO: Later integrate into @asynccontextmanager like in fastaproxy
-#
-ddb_lock = Lock()
+ddb = duckdb_connect()
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logging.getLogger("uvicorn.access").addFilter(SuppressHealthcheck())
+
+    app.state.lock = Lock()
 
     success = s3_to_duckdb("eml", ".json", ddb)
     if success:
@@ -38,7 +37,15 @@ async def lifespan(app: FastAPI):
 
     ddb.close()
 
+
+# NOTE: Dependency function
+#
+def get_lock(request: Request) -> Lock:
+    return request.app.state.lock
+
+
 app = FastAPI(title="sdc-metadata-fast-api", lifespan=lifespan)
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -91,10 +98,11 @@ def get_dataset(dataset_id: str):
 def list_datasets(
     page: int = Query(1, ge=1),
     page_size: int = Query(10, ge=1, le=100),
+    lock: Lock = Depends(get_lock),
 ):
     offset = (page - 1) * page_size
 
-    with ddb_lock:
+    with lock:
         total = ddb.execute("SELECT COUNT(*) FROM datasets;").fetchone()[0]
 
     rows = ddb.execute(
