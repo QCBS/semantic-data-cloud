@@ -3,11 +3,11 @@ from datetime import date
 import json
 import logging
 import os
+from threading import Lock
 #
 from fastapi import FastAPI, Query, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from s3io import s3_to_duckdb, duckdb_connect
-
 
 class SuppressHealthcheck(logging.Filter):
     def filter(self, record: logging.LogRecord) -> bool:
@@ -17,6 +17,12 @@ class SuppressHealthcheck(logging.Filter):
 METADATA_API_PORT = os.getenv("METADATA_API_PORT")
 
 ddb = duckdb_connect()
+
+# NOTE: Created an instance of Lock to avoid several threads accessing ddb
+# TODO: Later integrate into @asynccontextmanager like in fastaproxy
+#
+ddb_lock = Lock()
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -88,7 +94,8 @@ def list_datasets(
 ):
     offset = (page - 1) * page_size
 
-    total = ddb.execute("SELECT COUNT(*) FROM datasets;").fetchone()[0]
+    with ddb_lock:
+        total = ddb.execute("SELECT COUNT(*) FROM datasets;").fetchone()[0]
 
     rows = ddb.execute(
         "SELECT name, eml_content FROM datasets ORDER BY name LIMIT ? OFFSET ?;",
@@ -108,7 +115,7 @@ def list_datasets(
 
 
 @app.get("/datasets/search")
-def search_datasets(
+async def search_datasets(
     min_lon: float = Query(-180.0, description="West bound of query bbox (in WGS84)"),
     min_lat: float = Query(-90.0, description="South bound of query bbox (in WGS84)"),
     max_lon: float = Query(180.0, description="East bound of query bbox (in WGS84)"),

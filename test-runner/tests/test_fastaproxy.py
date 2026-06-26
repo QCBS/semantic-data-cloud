@@ -1,4 +1,7 @@
+import asyncio
+#
 import httpx
+import pytest
 
 
 FASTAPROXY_BASE_URL = "http://fastaproxy:8000"
@@ -94,3 +97,25 @@ def test_missing_prefix():
     )
 
     assert res.status_code == 400
+
+
+@pytest.mark.asyncio
+async def test_sparql_endpoint_concurrent():
+    PAYLOAD = {
+        "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1", 
+    }
+
+    async with httpx.AsyncClient() as client:
+
+        async def make_request():
+            res = await client.post(
+                url=f"{FASTAPROXY_BASE_URL}/sparql",
+                json=PAYLOAD,
+            )
+
+            assert res.status_code == 200
+            body = res.json()
+            assert "head" in body
+            assert "results" in body
+
+        await asyncio.gather(*(make_request() for _ in range(20)))
