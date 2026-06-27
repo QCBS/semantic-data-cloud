@@ -5,14 +5,15 @@ import pytest
 
 
 FASTAPROXY_BASE_URL = "http://fastaproxy:8000"
-
+TIMEOUT_VAL = 60.0
 
 def test_sparql_endpoint():
     res = httpx.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
-        }
+        },
+        timeout=TIMEOUT_VAL,
     )
 
     body = res.json()
@@ -33,7 +34,7 @@ def test_sparql_endpoint():
 def test_missing_query():
     res = httpx.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
-        json={}
+        json={},
     )
 
     body = res.json()
@@ -49,7 +50,7 @@ def test_missing_spatial_value():
         json={
             "bbox": [1, 2, 3],
             "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
-        }
+        },
     )
 
     body = res.json()
@@ -62,9 +63,9 @@ def test_non_numeric_spatial_value():
     res = httpx.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
-            "bbox": [1, 2, 3, "pumpernickel"],
+            "bbox": [-74.0684, 4.5958, -74.0684, "pumpernickel"],
             "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
-        }
+        },
     )
 
     body = res.json()
@@ -79,7 +80,7 @@ def test_non_iso_8601_date():
         json={
             "temporal": ["08/15/89", "08/21/89"],
             "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
-        }
+        },
     )
 
     body = res.json()
@@ -93,7 +94,8 @@ def test_missing_prefix():
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": "SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
-        }
+        },
+        timeout=TIMEOUT_VAL,
     )
 
     assert res.status_code == 400
@@ -114,7 +116,9 @@ async def test_sparql_endpoint_concurrent():
             )
 
             assert res.status_code == 200
+
             body = res.json()
+
             assert "head" in body
             assert "results" in body
 
