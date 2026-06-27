@@ -139,9 +139,11 @@ def test_metadata_search_impossible_license():
 
 
 def test_citations_known_dataset():
-    res = httpx.get(
+    res = httpx.post(
         f"{METADATA_API_BASE_URL}/datasets/citations",
-        params={"dataset_names": [TEST_DATASET_ID]},
+        json={
+            "dataset_names": [TEST_DATASET_ID],
+        },
     )
 
     assert res.status_code == 200
@@ -154,9 +156,11 @@ def test_citations_known_dataset():
 
 
 def test_citations_unknown_dataset_returns_empty():
-    res = httpx.get(
+    res = httpx.post(
         f"{METADATA_API_BASE_URL}/datasets/citations",
-        params={"dataset_names": ["imaginary-key-xyz"]},
+        json={
+            "dataset_names": ["imaginary-key-xyz"],
+        },
     )
 
     assert res.status_code == 200

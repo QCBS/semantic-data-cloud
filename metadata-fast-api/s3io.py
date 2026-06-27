@@ -5,6 +5,7 @@ from pathlib import Path
 import boto3
 import duckdb
 
+
 METADATA_DB_PATH = Path("/data/metadatadb.duckdb")
 METADATA_API_PORT = os.getenv("METADATA_API_PORT")
 

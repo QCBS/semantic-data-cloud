@@ -48,9 +48,9 @@ def _get_datasets_citations(dataset_ids: list[str], ctx_hash: str) -> None:
     citation_file = DB_DIR / f"{ctx_hash}-citations.txt"
 
     if not citation_file.exists():
-        citation_resp = httpx.get(
+        citation_resp = httpx.post(
             f"{METADATA_API_BASE}/datasets/citations",
-            params=[("dataset_names", dataset) for dataset in dataset_ids]
+            json={"dataset_names": dataset_ids},
         )
 
         citation_resp.raise_for_status()

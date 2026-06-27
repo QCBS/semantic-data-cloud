@@ -8,8 +8,15 @@ from threading import Lock
 #
 from fastapi import FastAPI, Query, Response, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 #
 from s3io import s3_to_duckdb, duckdb_connect
+
+
+# NOTE: Tiny Pydantic model for dataset citations POST requests
+#
+class CitationRequest(BaseModel):
+    dataset_names: list[str]
 
 
 class SuppressHealthcheck(logging.Filter):
@@ -168,13 +175,13 @@ async def search_datasets(
     return {"datasets": [row[0] for row in rows]}
 
 
-@app.get("/datasets/citations")
+@app.post("/datasets/citations")
 async def get_citations(
-    dataset_names: list[str] = Query(..., description="Dataset names"),
+    body: CitationRequest,
     ddb = Depends(get_ddb),
     lock: Lock = Depends(get_lock),
 ):
-    if not dataset_names:
+    if not body.dataset_names:
         raise HTTPException(status_code=400, detail="dataset_names cannot be empty")
 
     loop = asyncio.get_event_loop()
@@ -183,7 +190,7 @@ async def get_citations(
         with lock:
             return ddb.execute(
                 "SELECT dataset_citation FROM datasets WHERE name = ANY(?);",
-                (dataset_names,),
+                (body.dataset_names,)
             ).fetchall()
 
     rows = await loop.run_in_executor(None, _query)
