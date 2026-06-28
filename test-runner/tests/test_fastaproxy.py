@@ -211,9 +211,9 @@ def test_empty_query_string():
     )
 
     # WARN: Ontop considers an empty string a 500 error.
-    # NOTE: Maybe validate it with Pydantic instead.
+    # NOTE: Validated with Pydantic instead.
     #
-    assert res.status_code == 500
+    assert res.status_code == 422
 
 
 def test_cache_returns_same_result():
