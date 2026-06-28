@@ -10,73 +10,6 @@ services:
       - dwc-net
 
 
-  valkey:
-    image: valkey/valkey:9.0.4
-    container_name: valkey-sdc
-    ports:
-      - "6379:6379"
-    networks:
-      - dwc-net
-    command: [
-        "valkey-server",
-        "--maxmemory",
-        "1gb",
-        "--maxmemory-policy",
-        "allkeys-lfu"
-      ]
-    restart: unless-stopped
-
-
-  fastaproxy:
-    build:
-      context: fastaproxy
-      dockerfile: Dockerfile
-    container_name: fastaproxy-sdc
-    volumes:
-      - ./fastaproxy:/app
-      - ./db:/db
-      - ./blanks:/blanks
-      - ./ontop/mappings:/app/config
-      - /var/run/docker.sock:/var/run/docker.sock
-    depends_on:
-      - valkey
-    ports:
-      - "8000:8000"
-    networks:
-      - dwc-net
-    environment:
-      METADATA_API_BASE: http://metadata-api:8000
-      TIMEOUT_VAL: 100
-      TTL_VAL: 604800
-      ONTOP_IMAGE: semantic-data-cloud-ontop
-      ONTOP_NETWORK: dwc-net
-      ONTOP_STARTUP_TIMEOUT: 120
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-
-
-  biomcp:
-    build:
-      context: biomcp
-      dockerfile: Dockerfile
-    container_name: biomcp-sdc
-    depends_on:
-      - fastaproxy
-    ports:
-      - "9000:9000"
-    networks:
-      - dwc-net
-    environment:
-      TIMEOUT_VAL: 100
-      SPARQL_ENDPOINT: http://fastaproxy-sdc:8000/sparql
-    restart: unless-stopped
-
-
   metadata-api:
     build: 
       context: metadata-fast-api
@@ -105,6 +38,83 @@ services:
       start_period: 10s
 
 
+  valkey:
+    image: valkey/valkey:9.0.4
+    container_name: valkey-sdc
+    ports:
+      - "6379:6379"
+    networks:
+      - dwc-net
+    command: [
+        "valkey-server",
+        "--maxmemory",
+        "1gb",
+        "--maxmemory-policy",
+        "allkeys-lfu"
+      ]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "valkey-cli", "PING"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
+
+  fastaproxy:
+    build:
+      context: fastaproxy
+      dockerfile: Dockerfile
+    container_name: fastaproxy-sdc
+    volumes:
+      - ./fastaproxy:/app
+      - ./db:/db
+      - ./blanks:/blanks
+      - ./ontop/mappings:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      valkey:
+        condition: service_healthy
+      metadata-api:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    networks:
+      - dwc-net
+    environment:
+      METADATA_API_BASE: http://metadata-api:8000
+      TIMEOUT_VAL: 100
+      TTL_VAL: 604800
+      ONTOP_IMAGE: semantic-data-cloud-ontop
+      ONTOP_NETWORK: dwc-net
+      ONTOP_STARTUP_TIMEOUT: 120
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+
+  biomcp:
+    build:
+      context: biomcp
+      dockerfile: Dockerfile
+    container_name: biomcp-sdc
+    depends_on:
+      fastaproxy:
+        condition: service_healthy
+    ports:
+      - "9000:9000"
+    networks:
+      - dwc-net
+    environment:
+      TIMEOUT_VAL: 100
+      SPARQL_ENDPOINT: http://fastaproxy-sdc:8000/sparql
+    restart: unless-stopped
+
+
   test-runner:
     build: 
       context: test-runner
@@ -119,7 +129,7 @@ services:
     profiles:
       - test
     restart: "no"
- 
+
 
 networks:
   dwc-net:
