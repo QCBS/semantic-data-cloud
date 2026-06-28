@@ -128,13 +128,42 @@ async def get_dataset(
 
 @app.get("/datasets/search")
 async def search_datasets(
-    min_lon: float = Query(-180.0, description="West bound of query bbox (in WGS84)"),
-    min_lat: float = Query(-90.0, description="South bound of query bbox (in WGS84)"),
-    max_lon: float = Query(180.0, description="East bound of query bbox (in WGS84)"),
-    max_lat: float = Query(90.0, description="North bound of query bbox (in WGS84)"),
-    begin_date: date = Query(date(1, 1, 1), description="Start of temporal range (YYYY-MM-DD)"),
-    end_date: date = Query(date(2038, 1, 19), description="End of temporal range (YYYY-MM-DD)"),
-    licenses: list[str] | None = Query(None, description="SPDX IDs of the licenses requested"),
+    min_lon: float = Query(
+        default=-180.0,
+        description="West bound of query bbox (in WGS84)",
+        ge=-180.0,
+        le=180.0,
+    ),
+    min_lat: float = Query(
+        default=-90.0,
+        description="South bound of query bbox (in WGS84)",
+        ge=-90.0,
+        le=90.0,
+    ),
+    max_lon: float = Query(
+        default=180.0,
+        description="East bound of query bbox (in WGS84)",
+        ge=-180.0,
+        le=180.0,
+    ),
+    max_lat: float = Query(
+        default=90.0,
+        description="North bound of query bbox (in WGS84)",
+        ge=-90.0,
+        le=90.0,
+    ),
+    begin_date: date = Query(
+        default=date(1, 1, 1),
+        description="Start of temporal range (YYYY-MM-DD)",
+    ),
+    end_date: date = Query(
+        default=date(2038, 1, 19),
+        description="End of temporal range (YYYY-MM-DD)",
+    ),
+    licenses: list[str] | None = Query(
+        default=None,
+        description="SPDX IDs of the licenses requested",
+    ),
     ddb = Depends(get_ddb),
     lock: Lock = Depends(get_lock),
 ):
