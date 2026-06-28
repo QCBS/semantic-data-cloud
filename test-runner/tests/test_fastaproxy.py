@@ -258,27 +258,24 @@ def test_cache_second_request_is_faster():
         timeout=TIMEOUT_VAL,
     )
     second_duration = time.monotonic() - t0
- 
+
     assert first_query.status_code == 200
     assert second_query.status_code == 200
 
     # WARN: If rerun, the cache is already set, so this test will fail
     #
-    assert second_duration < first_duration / 2, f"Cache did not accelerate response: first={first_duration:.2f}s second={second_duration:.2f}s"
+    assert second_duration < first_duration / 2.0, f"Cache did not accelerate response: first={first_duration:.2f}s second={second_duration:.2f}s"
 
 
 @pytest.mark.asyncio
 async def test_sparql_endpoint_concurrent():
-    PAYLOAD = {
-        "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1", 
-    }
-
     async with httpx.AsyncClient() as client:
-
         async def make_request():
             res = await client.post(
                 url=f"{FASTAPROXY_BASE_URL}/sparql",
-                json=PAYLOAD,
+                json={
+                    "query": OCCURRENCE_QUERY,
+                },
             )
 
             assert res.status_code == 200

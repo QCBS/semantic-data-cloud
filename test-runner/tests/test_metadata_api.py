@@ -5,6 +5,7 @@ import pytest
 
 
 METADATA_API_BASE_URL = "http://metadata-api:8000"
+#
 TEST_DATASET_ID = "broke-west-fish"
 DEFAULT_SEARCH_VALS = {
     "min_lon": "-180.0",
@@ -169,9 +170,7 @@ def test_citations_unknown_dataset_returns_empty():
 
 @pytest.mark.asyncio
 async def test_metadata_search_concurrent():
-
     async with httpx.AsyncClient() as client:
-
         async def make_request():
             res = await client.get(
                 url=f"{METADATA_API_BASE_URL}/datasets/search",

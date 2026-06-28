@@ -173,7 +173,7 @@ async def test_sparql_missing_prefix_returns_error_guidance():
                 "sparql": "SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
             },
         )
- 
+
         text = result.content[0].text
         #
         assert text
