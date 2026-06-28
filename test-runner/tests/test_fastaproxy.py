@@ -46,7 +46,6 @@ def test_sparql_endpoint():
 
 
 def test_sparql_response_binding_shape():
-    """Each binding must be a dict whose keys match the declared vars."""
     res = httpx.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
