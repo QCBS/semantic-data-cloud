@@ -8,6 +8,15 @@ class QueryRequest(BaseModel):
     temporal: list[str] = ["0001-01-01", "2038-01-19"]
     licenses: list[str] | None = None
 
+
+    @field_validator("query")
+    @classmethod
+    def validate_query(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("query must not be an empty string")
+        return value
+
+
     @field_validator("bbox")
     @classmethod
     def validate_bbox(cls, value: list[float]) -> list[float]:
@@ -19,6 +28,7 @@ class QueryRequest(BaseModel):
         if min_lat > max_lat:
             raise ValueError("min_lat must be <= max_lat")
         return value
+
 
     @field_validator("temporal")
     @classmethod
