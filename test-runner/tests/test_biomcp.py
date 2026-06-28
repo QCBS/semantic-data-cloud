@@ -1,3 +1,4 @@
+import asyncio
 from contextlib import asynccontextmanager
 #
 from mcp.client.streamable_http import streamable_http_client
@@ -161,3 +162,164 @@ async def test_sparql_query_with_all_optional_params():
         assert text
         assert "|" in text
         assert "row(s) returned" in text
+
+
+@pytest.mark.asyncio
+async def test_sparql_missing_prefix_returns_error_guidance():
+    async with get_client() as client:
+        result = await client.call_tool(
+            "sparql_query",
+            {
+                "sparql": "SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
+            },
+        )
+ 
+        text = result.content[0].text
+        #
+        assert text
+        assert "API error" in text
+        assert "Missing PREFIX declarations" in text or "PREFIX" in text
+
+
+@pytest.mark.asyncio
+async def test_sparql_no_results_returns_debugging_guidance():
+    async with get_client() as client:
+        result = await client.call_tool(
+            "sparql_query",
+            {
+                "sparql": 'PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence ; dwc:scientificName "Homo technologicus" } LIMIT 1',
+            },
+        )
+
+        text = result.content[0].text
+        #
+        assert text
+        assert "No results returned" in text
+        assert "OPTIONAL" in text
+
+
+@pytest.mark.asyncio
+async def test_sparql_empty_string_is_rejected():
+    async with get_client() as client:
+        result = await client.call_tool(
+            "sparql_query",
+            {
+                "sparql": "",
+            },
+        )
+
+        text = result.content[0].text
+        #
+        assert text
+        assert "validation error for call[sparql_query]" in text
+        assert "String should have at least 1 character" in text
+
+
+@pytest.mark.asyncio
+async def test_sparql_non_numeric_spatial_value_rejected():
+    async with get_client() as client:
+        result = await client.call_tool(
+            "sparql_query",
+            {
+                "sparql": OCCURRENCE_QUERY,
+                "bbox": [-74.0684, 4.5958, -74.0684, "pumpernickel"],
+            },
+        )
+
+        text = result.content[0].text
+        #
+        assert text
+        assert "validation error for call[sparql_query]" in text
+        assert "Input should be a valid number, unable to parse string as a number" in text
+
+
+@pytest.mark.asyncio
+async def test_sparql_too_short_bbox_is_rejected():
+    async with get_client() as client:
+        result = await client.call_tool(
+            "sparql_query",
+            {
+                "sparql": OCCURRENCE_QUERY,
+                "bbox": [-74.0684, 4.5958, -74.0684],
+            },
+        )
+
+        text = result.content[0].text
+        #
+        assert text
+        assert "validation error for call[sparql_query]" in text
+        assert "List should have at least 4 items after validation" in text
+
+
+@pytest.mark.asyncio
+async def test_sparql_too_long_bbox_is_rejected():
+    async with get_client() as client:
+        result = await client.call_tool(
+            "sparql_query",
+            {
+                "sparql": OCCURRENCE_QUERY,
+                "bbox": [-74.0684, 4.5958, -74.0684, 4.5958, -74.0684],
+            },
+        )
+
+        text = result.content[0].text
+        #
+        assert text
+        assert "validation error for call[sparql_query]" in text
+        assert "List should have at most 4 items after validation" in text
+
+
+@pytest.mark.asyncio
+async def test_sparql_too_short_temporal_is_rejected():
+    async with get_client() as client:
+        result = await client.call_tool(
+            "sparql_query",
+            {
+                "sparql": OCCURRENCE_QUERY,
+                "temporal": ["1991-09-17"],
+            },
+        )
+
+        text = result.content[0].text
+        #
+        assert text
+        assert "validation error for call[sparql_query]" in text
+        assert "List should have at least 2 items after validation" in text
+
+
+@pytest.mark.asyncio
+async def test_sparql_too_long_temporal_is_rejected():
+    async with get_client() as client:
+        result = await client.call_tool(
+            "sparql_query",
+            {
+                "sparql": OCCURRENCE_QUERY,
+                "temporal": ["1991-09-17", "2038-01-19", "2038-01-19"],
+            },
+        )
+
+        text = result.content[0].text
+        #
+        assert text
+        assert "validation error for call[sparql_query]" in text
+        assert "List should have at most 2 items after validation" in text
+
+
+@pytest.mark.asyncio
+async def test_sparql_query_concurrent():
+    async def make_request():
+        async with get_client() as client:
+            result = await client.call_tool(
+                "sparql_query",
+                {
+                    "sparql": OCCURRENCE_QUERY,
+                },
+            )
+
+            text = result.content[0].text
+            #
+            assert text
+            assert "|" in text
+            assert "row(s) returned" in text
+
+    await asyncio.gather(*(make_request() for _ in range(20)))
