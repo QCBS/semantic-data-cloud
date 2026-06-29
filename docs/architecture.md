@@ -49,13 +49,26 @@ The [blanks/](../blanks/) directory contains zero-row Parquet files for every ta
 
 Manages the lifecycle of per-context Ontop containers. On the first request for a context, it generates a context-specific properties file (with the correct `jdbc.url`) and OBDA mapping file (with the database name replaced by the quoted context hash), then starts an Ontop container with those files and the shared `/db` and `/blanks` volumes. On subsequent requests for the same context, it checks the in-memory registry and reuses the running container if healthy.
 
-Volume host paths are discovered automatically by inspecting the fastaproxy container's own mount table via the Docker socket, removing the need for explicit `HOST_*` environment variables.
+Volume host paths are discovered automatically by inspecting `fastaproxy`'s own mount table 
+via the Docker socket, removing the need for explicit `HOST_*` environment variables. This 
+works by [bind-mounting](https://docs.docker.com/engine/storage/bind-mounts/) the host's 
+Docker socket into the container, which allows processes inside it to communicate directly 
+with the host's Docker daemon and grants the container full access to create, manage, and 
+remove containers on the host via [`docker container run`](https://docs.docker.com/reference/cli/docker/container/run/).
 
 #### Ontop containers
 
-Short-lived containers running [Ontop](https://ontop-vkg.org/) (`ontop/ontop:5.5.0`) with the DuckDB JDBC driver (`duckdb_jdbc-1.5.2.1.jar`). Each Ontop container receives a unique name, `ontop-{context_hash}`, where `{context_hash}` is a truncated SHA-256 hash of the the space vertical bar space (` | `) separated dataset names selected by the filters used in the user-submitted query.
+The application extends [the official Ontop Docker image](https://hub.docker.com/r/ontop/ontop) by adding the DuckDB JDBC driver, enabling Ontop to execute SQL queries against DuckDB databases. This custom image, named `semantic-data-cloud-ontop`, serves as the base image for all dynamically created Ontop containers.
+
+From this image, short-lived containers running [Ontop](https://ontop-vkg.org/) (`ontop/ontop:5.5.0`) with the DuckDB JDBC driver (`duckdb_jdbc-1.5.2.1.jar`). Each Ontop container receives a unique name, `ontop-{context_hash}`, where `{context_hash}` is a truncated SHA-256 hash of the the space vertical bar space (` | `) separated dataset names selected by the filters used in the user-submitted query.
 
 Each container receives four files at startup: an OWL ontology (`.ttl`), an OBDA mapping (`.obda`), a database metadata (`d.json`), and a connection properties file (`.properties`). The OBDA mapping and the database metadata files are generated per-context with the correct database catalog name. Ontop translates incoming SPARQL queries to SQL, executes them against the DuckDB database, and returns results in SPARQL JSON format.
+
+Because the image belongs to a separate [Docker Compose profile](https://docs.docker.com/compose/how-tos/profiles/), it is not built automatically when the application starts. In its absence, Docker will attempt to pull `semantic-data-cloud-ontop` from [Docker Hub](https://hub.docker.com/). Since this image is not published there, container creation will fail and SPARQL queries cannot be executed. The image can be built with the command:
+
+```bash
+docker compose build ontop
+```
 
 ### Caching layer: Valkey
 
