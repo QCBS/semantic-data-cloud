@@ -135,8 +135,8 @@ def test_missing_spatial_value():
     res = httpx.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
-            "bbox": [-74.0684, 4.5958, -74.0684],
             "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
+            "bbox": [-74.0684, 4.5958, -74.0684],
         },
     )
 
@@ -150,8 +150,8 @@ def test_non_numeric_spatial_value():
     res = httpx.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
-            "bbox": [-74.0684, 4.5958, -74.0684, "pumpernickel"],
             "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
+            "bbox": [-74.0684, 4.5958, -74.0684, "pumpernickel"],
         },
     )
 
@@ -165,8 +165,8 @@ def test_non_iso_8601_date():
     res = httpx.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
-            "temporal": ["08/15/89", "08/21/89"],
             "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
+            "temporal": ["08/15/89", "08/21/89"],
         },
     )
 
@@ -174,6 +174,26 @@ def test_non_iso_8601_date():
 
     assert res.status_code == 422
     assert body["detail"][0]["type"] == "value_error"
+    assert "dates must be in YYYY-MM-DD format" in body["detail"][0]["msg"]
+
+
+def test_temporal_start_after_end():
+    res = httpx.post(
+        url=f"{FASTAPROXY_BASE_URL}/sparql",
+        json={
+            "query": OCCURRENCE_QUERY,
+            "temporal": ["2038-01-19", "1991-09-17"],
+        },
+        timeout=TIMEOUT_VAL,
+    )
+
+    assert res.status_code == 422
+
+    body = res.json()
+
+    assert body["detail"][0]["type"] == "value_error"
+    assert body["detail"][0]["loc"] == ["body","temporal"]
+    assert "begin_date must be <= end_date" in body["detail"][0]["msg"]
 
 
 def test_missing_prefix():
@@ -201,7 +221,7 @@ def test_invalid_sparql_syntax():
     assert res.status_code == 400
 
 
-def test_empty_query_string():
+def test_sparql_empty_query_string():
     res = httpx.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
@@ -216,19 +236,95 @@ def test_empty_query_string():
     assert res.status_code == 422
 
 
+def test_sparql_too_short_bbox():
+    res = httpx.post(
+        url=f"{FASTAPROXY_BASE_URL}/sparql",
+        json={
+            "query": OCCURRENCE_QUERY,
+            "bbox": [-74.0684, 4.5958, -74.0684],
+        },
+        timeout=TIMEOUT_VAL,
+    )
+
+    assert res.status_code == 422
+
+    body = res.json()
+
+    assert body["detail"][0]["type"] == "value_error"
+    assert body["detail"][0]["loc"] == ["body","bbox"]
+    assert "Spatial range bbox must have exactly 4 values" in body["detail"][0]["msg"]
+
+
+def test_sparql_too_long_bbox():
+    res = httpx.post(
+        url=f"{FASTAPROXY_BASE_URL}/sparql",
+        json={
+            "query": OCCURRENCE_QUERY,
+            "bbox": [-74.0684, 4.5958, -74.0684, 4.5958, -74.0684],
+        },
+        timeout=TIMEOUT_VAL,
+    )
+
+    assert res.status_code == 422
+
+    body = res.json()
+
+    assert body["detail"][0]["type"] == "value_error"
+    assert body["detail"][0]["loc"] == ["body","bbox"]
+    assert "Spatial range bbox must have exactly 4 values" in body["detail"][0]["msg"]
+
+
+def test_sparql_too_short_temporal():
+    res = httpx.post(
+        url=f"{FASTAPROXY_BASE_URL}/sparql",
+        json={
+            "query": OCCURRENCE_QUERY,
+            "temporal": ["1991-09-17"],
+        },
+        timeout=TIMEOUT_VAL,
+    )
+
+    assert res.status_code == 422
+
+    body = res.json()
+
+    assert body["detail"][0]["type"] == "value_error"
+    assert body["detail"][0]["loc"] == ["body","temporal"]
+    assert "Temporal range must have exactly 2 values" in body["detail"][0]["msg"]
+
+
+def test_sparql_too_long_temporal():
+    res = httpx.post(
+        url=f"{FASTAPROXY_BASE_URL}/sparql",
+        json={
+            "query": OCCURRENCE_QUERY,
+            "temporal": ["1991-09-17", "2038-01-19", "2038-01-19"],
+        },
+        timeout=TIMEOUT_VAL,
+    )
+
+    assert res.status_code == 422
+
+    body = res.json()
+
+    assert body["detail"][0]["type"] == "value_error"
+    assert body["detail"][0]["loc"] == ["body","temporal"]
+    assert "Temporal range must have exactly 2 values" in body["detail"][0]["msg"]
+
+
 def test_cache_returns_same_result():
-    payload = {
-        "query": OCCURRENCE_QUERY,
-    }
- 
     first_query = httpx.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
-        json=payload,
+        json={
+            "query": OCCURRENCE_QUERY,
+        },
         timeout=TIMEOUT_VAL,
     )
     second_query = httpx.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
-        json=payload,
+        json={
+            "query": OCCURRENCE_QUERY,
+        },
         timeout=TIMEOUT_VAL,
     )
 
@@ -239,14 +335,12 @@ def test_cache_returns_same_result():
 
 
 def test_cache_second_request_is_faster():
-    payload = {
-        "query": EVENT_QUERY,
-    }
-
     t0 = time.monotonic()
     first_query = httpx.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
-        json=payload,
+        json={
+            "query": EVENT_QUERY,
+        },
         timeout=TIMEOUT_VAL,
     )
     first_duration = time.monotonic() - t0
@@ -254,7 +348,9 @@ def test_cache_second_request_is_faster():
     t0 = time.monotonic()
     second_query = httpx.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
-        json=payload,
+        json={
+            "query": EVENT_QUERY,
+        },
         timeout=TIMEOUT_VAL,
     )
     second_duration = time.monotonic() - t0

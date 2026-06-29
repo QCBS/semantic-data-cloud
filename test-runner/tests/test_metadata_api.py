@@ -139,6 +139,142 @@ def test_metadata_search_impossible_license():
     assert res.json()["datasets"] == []
 
 
+def test_metadata_search_min_lon_gt_180():
+    res = httpx.get(
+        url=f"{METADATA_API_BASE_URL}/datasets/search",
+        params={
+            "min_lon": 195.0,
+        }
+    )
+
+    assert res.status_code == 422
+
+    body = res.json()
+
+    assert body["detail"][0]["type"] == "less_than_equal"
+    assert body["detail"][0]["loc"] == ["query", "min_lon"]
+    assert body["detail"][0]["msg"] == "Input should be less than or equal to 180"
+
+
+def test_metadata_search_min_lon_lt_m180():
+    res = httpx.get(
+        url=f"{METADATA_API_BASE_URL}/datasets/search",
+        params={
+            "min_lon": -195.0,
+        }
+    )
+
+    assert res.status_code == 422
+
+    body = res.json()
+
+    assert body["detail"][0]["type"] == "greater_than_equal"
+    assert body["detail"][0]["loc"] == ["query", "min_lon"]
+    assert body["detail"][0]["msg"] == "Input should be greater than or equal to -180"
+
+
+def test_metadata_search_max_lon_gt_180():
+    res = httpx.get(
+        url=f"{METADATA_API_BASE_URL}/datasets/search",
+        params={
+            "max_lon": 195.0,
+        }
+    )
+
+    assert res.status_code == 422
+
+    body = res.json()
+
+    assert body["detail"][0]["type"] == "less_than_equal"
+    assert body["detail"][0]["loc"] == ["query", "max_lon"]
+    assert body["detail"][0]["msg"] == "Input should be less than or equal to 180"
+
+
+def test_metadata_search_max_lon_lt_m180():
+    res = httpx.get(
+        url=f"{METADATA_API_BASE_URL}/datasets/search",
+        params={
+            "max_lon": -195.0,
+        }
+    )
+
+    assert res.status_code == 422
+
+    body = res.json()
+
+    assert body["detail"][0]["type"] == "greater_than_equal"
+    assert body["detail"][0]["loc"] == ["query", "max_lon"]
+    assert body["detail"][0]["msg"] == "Input should be greater than or equal to -180"
+
+
+def test_metadata_search_min_lat_gt_90():
+    res = httpx.get(
+        url=f"{METADATA_API_BASE_URL}/datasets/search",
+        params={
+            "min_lat": 95.0,
+        }
+    )
+
+    assert res.status_code == 422
+
+    body = res.json()
+
+    assert body["detail"][0]["type"] == "less_than_equal"
+    assert body["detail"][0]["loc"] == ["query", "min_lat"]
+    assert body["detail"][0]["msg"] == "Input should be less than or equal to 90"
+
+
+def test_metadata_search_min_lat_lt_m90():
+    res = httpx.get(
+        url=f"{METADATA_API_BASE_URL}/datasets/search",
+        params={
+            "min_lat": -95.0,
+        }
+    )
+
+    assert res.status_code == 422
+
+    body = res.json()
+
+    assert body["detail"][0]["type"] == "greater_than_equal"
+    assert body["detail"][0]["loc"] == ["query", "min_lat"]
+    assert body["detail"][0]["msg"] == "Input should be greater than or equal to -90"
+
+
+def test_metadata_search_max_lat_gt_90():
+    res = httpx.get(
+        url=f"{METADATA_API_BASE_URL}/datasets/search",
+        params={
+            "max_lat": 95.0,
+        }
+    )
+
+    assert res.status_code == 422
+
+    body = res.json()
+
+    assert body["detail"][0]["type"] == "less_than_equal"
+    assert body["detail"][0]["loc"] == ["query", "max_lat"]
+    assert body["detail"][0]["msg"] == "Input should be less than or equal to 90"
+
+
+def test_metadata_search_max_lat_lt_m90():
+    res = httpx.get(
+        url=f"{METADATA_API_BASE_URL}/datasets/search",
+        params={
+            "max_lat": -95.0,
+        }
+    )
+
+    assert res.status_code == 422
+
+    body = res.json()
+
+    assert body["detail"][0]["type"] == "greater_than_equal"
+    assert body["detail"][0]["loc"] == ["query", "max_lat"]
+    assert body["detail"][0]["msg"] == "Input should be greater than or equal to -90"
+
+
 def test_citations_known_dataset():
     res = httpx.post(
         f"{METADATA_API_BASE_URL}/datasets/citations",

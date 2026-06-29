@@ -234,6 +234,42 @@ async def test_sparql_non_numeric_spatial_value_rejected():
 
 
 @pytest.mark.asyncio
+async def test_sparql_temporal_begin_after_end_is_rejected():
+    async with get_client() as client:
+        result = await client.call_tool(
+            "sparql_query",
+            {
+                "sparql": OCCURRENCE_QUERY,
+                "temporal": ["2038-01-19", "1991-09-17"],
+            },
+        )
+
+        text = result.content[0].text
+        #
+        assert text
+        assert "API error" in text
+        assert "begin_date must be <= end_date" in text
+
+
+@pytest.mark.asyncio
+async def test_sparql_non_iso_8601_dates_rejected():
+    async with get_client() as client:
+        result = await client.call_tool(
+            "sparql_query",
+            {
+                "sparql": OCCURRENCE_QUERY,
+                "temporal": ["08/15/89", "08/21/89"],
+            },
+        )
+
+        text = result.content[0].text
+        #
+        assert text
+        assert "API error" in text
+        assert "dates must be in YYYY-MM-DD format" in text
+
+
+@pytest.mark.asyncio
 async def test_sparql_too_short_bbox_is_rejected():
     async with get_client() as client:
         result = await client.call_tool(
