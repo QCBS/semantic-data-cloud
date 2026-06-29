@@ -6,7 +6,7 @@ import logging
 import os
 from threading import Lock
 #
-from fastapi import FastAPI, Query, Response, HTTPException, Depends, Request
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 #
