@@ -4,7 +4,7 @@ import hashlib
 import logging
 import os
 #
-from fastapi import FastAPI, HTTPException, Request, status, Depends
+from fastapi import FastAPI, HTTPException, Request, status, Depends, Response
 from glide import GlideClient, GlideClientConfiguration, NodeAddress
 from httpx import AsyncClient, AsyncHTTPTransport, HTTPError
 import orjson
@@ -117,7 +117,10 @@ async def sparql_query(
 
     cached = await cache.get(cache_key)
     if cached:
-        return orjson.loads(cached)
+        return Response(
+            content=cached,
+            media_type="application/sparql-results+json",
+        )
 
     # NOTE: Changes to not block the event loop
     #
@@ -126,7 +129,7 @@ async def sparql_query(
         info = await to_thread(registry.get_or_create, dataset_ids)
 
     try:
-        response = await client.post(
+        res = await client.post(
             f"{info.ontop_url}/sparql",
             headers={
                 "Accept": "application/sparql-results+json",
@@ -140,17 +143,20 @@ async def sparql_query(
             detail=f"SPARQL request failed: {e}",
         )
 
-    if response.status_code != 200:
+    if res.status_code != 200:
         raise HTTPException(
-            status_code=response.status_code,
+            status_code=res.status_code,
             detail={
-                "error": response.text
+                "error": res.text
             }
         )
 
-    result = response.json()
+    sparql_json_s = orjson.dumps(res.json())
 
-    await cache.set(cache_key, orjson.dumps(result))
+    await cache.set(cache_key, sparql_json_s)
     await cache.expire(cache_key, TTL_VAL)
 
-    return result
+    return Response(
+        content=sparql_json_s,
+        media_type="application/sparql-results+json",
+    )
