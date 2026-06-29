@@ -8,7 +8,7 @@ Base URL: `http://localhost:8000` (default)
 
 ### POST /sparql
 
-Requests against the `/sparql` endpoint can be made similarly to a conventional JSON POST prescribed by the [SPARQL 1.1 Protocol](https://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/).
+Requests against the `/sparql` endpoint use a JSON POST body, with the SPARQL query as the value associated with the `query` key. Note that this is a convenience deviation from the [SPARQL 1.1 Protocol](https://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/), which does not define a JSON-based request format. Standard SPARQL clients sending `application/x-www-form-urlencoded` or `application/sparql-query` bodies will need to be adapted accordingly.
 
 **Request body** (`application/json`)
 
