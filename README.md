@@ -4,11 +4,11 @@ An application that allows SPARQL-based queries over biodiversity datasets using
 
 ## Overview
 
-Biodiversity data is commonly published as [Darwin Core Archives](https://ipt.gbif.org/manual/en/ipt/latest/dwca-guide#what-is-darwin-core-archive-dwc-a) distributed across institutional repositories. The newly proposed [Darwin Core Data Package](https://www.gbif.org/composition/3Be8w9RzbjHtK2brXxTtun/introducing-the-darwin-core-data-package) format introduces additional semantics and flexibility, but also increased complexity in data integration and querying. Querying across multiple such datasets typically requires either centralising the data or negotiating heterogeneous APIs.
+Biodiversity data is commonly published as [Darwin Core Archives](https://ipt.gbif.org/manual/en/ipt/latest/dwca-guide#what-is-darwin-core-archive-dwc-a) distributed across institutional repositories. The newly proposed Darwin Core Data Package ([DwC-DP](https://www.gbif.org/composition/3Be8w9RzbjHtK2brXxTtun/introducing-the-darwin-core-data-package)) format introduces additional semantics and flexibility, but also increased complexity in data integration and querying. Querying across multiple such datasets typically requires either centralising the data or negotiating heterogeneous APIs.
 
-The [Darwin Core Conceptual Model](https://dwc.tdwg.org/cm/), which is the basis for the DwC DP,  is a highly interconnected data model. In this regard, it is well suited to graph representations, making the Resource Description Framework ([RDF](https://www.w3.org/TR/rdf11-primer/)) a clean, intuitive and semantically-rich data model. However, transforming tabular datasets into RDF represents a considerable Extract, Transform, Load (ETL) process and raises deduplication concerns, as the dataset must then exist in two different forms.
+The Darwin Core Conceptual Model ([DwC-CM](https://dwc.tdwg.org/cm/)), which is the basis for DwC-DP, is a highly interconnected data model. In this regard, it is well suited to graph representations, making the Resource Description Framework ([RDF](https://www.w3.org/TR/rdf11-primer/)) a clean, intuitive and semantically-rich data model. However, transforming tabular datasets into RDF represents a considerable Extract, Transform, Load (ETL) process and raises deduplication concerns, as the data must be maintained in both a relational database and a triplestore.
 
-This project takes a different approach: data tables contained in each Data Package are hosted as Parquet files on object storage. On demand, a materialised DuckDB database is assembled from the relevant files and exposed through a SPARQL interface via a Virtual Knowledge Graph (VKG). Datasets can then be queried using a lightweight Web Ontology Language ([OWL](https://www.w3.org/TR/2012/REC-owl2-primer-20121211/)) ontology based primarily on [Darwin Core](https://dwc.tdwg.org/list/) terms, without any ETL step or permanent data duplication.
+This project takes a different approach: data tables contained in each DwC-DP are hosted as Parquet files on object storage. On demand, a materialised DuckDB database of views is assembled from the relevant files and exposed through a SPARQL interface via a Virtual Knowledge Graph (VKG). Datasets can then be queried using a lightweight Web Ontology Language ([OWL](https://www.w3.org/TR/2012/REC-owl2-primer-20121211/)) ontology based primarily on [Darwin Core](https://dwc.tdwg.org/list/) terms, without any ETL step or permanent data duplication.
 
 ## Why a Semantic Data Cloud?
 
@@ -21,7 +21,7 @@ This project takes a different approach: data tables contained in each Data Pack
 
 ## Usage
 
-The application brings the semantic expressivity of [the SPARQL 1.1 Query Language](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) to users, letting them declare exactly the data they need across related entities. For example, the following query retrieves occurrences of Antarctic lanternfish (*Electrona antarctica*) and their life stage, linked to material entities as evidence, along with the material entity's disposition, preparations, the event date, and the recording agent:
+The application brings the semantic expressivity of [RDF](https://www.w3.org/TR/rdf11-concepts/) and [the SPARQL 1.1 Query Language](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) to users, letting them declare exactly the data they need across related entities. For example, the following query retrieves occurrences of Antarctic lanternfish (*Electrona antarctica*) and their life stage, linked to material entities as evidence, along with the material entity's disposition, preparations, the event date, and the recording agent:
 
 ```sparql
 PREFIX dcterms: <http://purl.org/dc/terms/>
@@ -101,7 +101,7 @@ graph LR
 
 As this example illustrates, biodiversity data is inherently graph-structured, with rich relationships between occurrences, events, material entities, and agents that are difficult to represent in flat tables.
 
-Queries are submitted as a JSON payload over [HTTP](https://datatracker.ietf.org/doc/html/rfc9110), following the [SPARQL 1.1 Protocol](https://www.w3.org/TR/sparql11-protocol/), to the `/sparql` endpoint. The SPARQL query should be contained in the `query` field of the JSON payload.
+Queries are submitted as a JSON payload over [HTTP](https://datatracker.ietf.org/doc/html/rfc9110) to the `/sparql` endpoint. The SPARQL query should be contained in the `query` field of the JSON payload.
 
 The request body can also include `bbox`, `temporal`, and `licenses` fields to narrow which datasets are loaded before the query runs, restricting the result, for instance, to only datasets that consider South American records from 2000 to 2015 and published under CC-BY-NC-4.0. See the [API reference](/docs/api.md) for the full request/response specification.
 
@@ -109,7 +109,7 @@ Each generated context also produces a citations file listing the source dataset
 
 ## Live instance
 
-A live instance of the application is running, covering around 50 datasets across various domains, downloaded from [GBIF](https://www.gbif.org) and converted to the exploded Darwin Core Data Package format described in the [starter guide](/docs/starter.md) documentation. It is fully queryable and requires no installation.
+A live instance of the application is running, covering around 50 datasets across various domains, downloaded from [GBIF](https://www.gbif.org) and converted to the exploded Darwin Core Data Package format described in the [starter guide](/docs/starter.md) documentation. It is fully queryable and requires no installation or deployment.
 
 The live instance exposes the following services/endpoints:
 
@@ -125,11 +125,11 @@ curl -X POST https://data.qcbs.ca/sparql \
   -d '{"query": "PREFIX dcterms: <http://purl.org/dc/terms/> PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/> SELECT ?lifeStage ?eventDate ?eventType ?disposition ?preparations ?preferredAgentName ?agentType WHERE { ?occ a dwc:Occurrence ; dwc:scientificName \"Electrona antarctica\" ; dwc:lifeStage ?lifeStage ; dwcdp:happenedDuring ?evt ; dwcdp:recordedBy ?agt . ?evt a dwc:Event ; dwc:eventDate ?eventDate ; dwc:eventType ?eventType . ?mat a dwc:MaterialEntity ; dwc:disposition ?disposition ; dwc:preparations ?preparations ; dwcdp:evidenceFor ?occ ; dwcdp:collectedDuring ?evt . ?agt a dcterms:Agent ; dcterms:title ?preferredAgentName ; dwc:agentType ?agentType . } LIMIT 10"}'
 ```
 
-The returned results will follow the standard [SPARQL 1.1 Query Results JSON format](https://www.w3.org/TR/sparql11-results-json/). The above command can be adapted to your favorite language and HTTP request library (e.g. [Requests](https://requests.readthedocs.io/en/latest/) in Python).
+The returned results will follow the standard [SPARQL 1.1 Query Results JSON format](https://www.w3.org/TR/sparql11-results-json/). The above command can be adapted to your favorite language and HTTP request library (e.g. [Requests](https://requests.readthedocs.io/en/latest/) in Python) or command-line tool (e.g. [Wget](https://www.gnu.org/software/wget/)).
 
 More information about the considered datasets can be obtained by considering the metadata catalog, where full dataset EML data can be requested in JSON-LD format. For example, metadata about the BROKE-West dataset can be obtained by visiting [https://data.qcbs.ca/metadata-api/dataset/broke-west-fish](https://data.qcbs.ca/metadata-api/dataset/broke-west-fish).
 
-Additionally, the deployment also offers a SPARQL-LLM chatbot, which consists of an open-source LLM with access to the SPARQL endpoint through the MCP server. Users may interact with it through the [chat interface](https://data.qcbs.ca/chat), which accepts plain-language questions and constructs the underlying SPARQL for you.
+Additionally, the deployment also offers a SPARQL-LLM chatbot, which consists of an open-source LLM with access to the SPARQL endpoint through the built-in Model Context Protocol ([MCP](https://modelcontextprotocol.io/docs/getting-started/intro)) server. Users may interact with it through the [chat interface](https://data.qcbs.ca/chat), which accepts natural language questions, builds and run the underlying SPARQL query for you and will answer back.
 
 ## Local deployment
 
@@ -146,21 +146,11 @@ The application exposes three services:
   2. The EML metadata catalog at: [http://localhost:7788](http://localhost:7788)
   3. The MCP server at: [http://localhost:9000/mcp](http://localhost:9000/mcp)
 
-Before starting the stack, create a `.env` file in the project root with credentials for the S3-compatible object storage hosting your datasets:
-
-```env
-OBJECT_STORE_BASE_URL=https://your-public-object-url-base
-S3_ACCESS_ID=your_access_key_id
-S3_ACCESS_SECRET=your_secret_access_key
-S3_BUCKET_NAME=your_bucket_name
-S3_ENDPOINT_URL=https://your-object-storage-endpoint
-```
-
 To host your own datasets rather than connect to an existing bucket, see the [starter guide](/docs/starter.md) for how to prepare and upload Darwin Core Data Packages.
 
 ## Documentation
 
-Additional detailed documentation can be found in the [`docs/`](/docs/) directory:
+Additional, more detailed documentation can be found in the [`docs/`](/docs/) directory:
   - [Architecture](/docs/architecture.md), describing the overall architecture, components, design of the application.
   - [API reference](/docs/api.md), describing the endpoint specification and request/response formats.
   - [Ontology and mappings](/docs/ontology.md), describing the Darwin Core OWL ontology and OBDA mapping conventions.

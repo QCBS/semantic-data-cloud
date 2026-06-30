@@ -2,7 +2,7 @@
 
 ## Overview
 
-The application exposes a natural language interface through the [Model Context Protocol](https://modelcontextprotocol.io/docs/getting-started/intro) (MCP). An MCP server runs on port 9000, built with [FastMCP](https://gofastmcp.com/servers/server), and provides a single tool (`sparql_query`) that translates natural language biodiversity questions into SPARQL queries and executes them against the endpoint.
+The application exposes a natural language interface through the Model Context Protocol ([MCP](https://modelcontextprotocol.io/docs/getting-started/intro)). An MCP server runs on port 9000, built with [FastMCP](https://gofastmcp.com/servers/server), and provides a tool (`sparql_query`) that interaction between LLMs and the SPARQL endpoint of the application.
 
 ---
 
@@ -62,7 +62,7 @@ This illustrates how the interface can make datasets from other countries and la
 
 ## Connecting from VS Code
 
-Create a `.vscode/mcp.json` file in your workspace:
+In order to connect to the MCP server from VS Code, you need to [add the MCP server](https://code.visualstudio.com/docs/agent-customization/mcp-servers). To do so, you need to create a `.vscode/` directory as well as a `mcp.json` within it, such as the following:
 
 ```json
 {
@@ -76,7 +76,7 @@ Create a `.vscode/mcp.json` file in your workspace:
 }
 ```
 
-Reload your VS Code window after saving the file. The server will appear in the MCP tools panel and can be invoked from any AI chat interface that supports MCP.
+After saving the file, reload your VS Code window. The server will appear in the MCP tools panel and can be invoked from any AI chat interface that supports MCP.
 
 Note that if you are running the application locally, the URL of the biomcp server should be `http://localhost:9000/mcp` instead.
 

@@ -58,7 +58,7 @@ Before converting, ensure all column names follow `snake_case`. The application 
 Here are a few points to be careful when converting to Parquet:
   1. Despite the `.csv` extension, Darwin Core table files are tab-separated (`.tsv`) files. Make sure to set the delimiter accordingly.
   2. Some level of column separation should be done prior to conversion to Parquet. This means that the `occurrence.csv` considered here is not the same as `occurrence.csv` in Darwin Core Archives (which is usually a combination of properties associated with occurrence, events and locations). In the `occurrence.csv` considered here, only fields [considered in the Darwin Core Data Package schema for occurrence](https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/occurrence.json) are considered.
-  3. Be mindful that some properties need additional attention, such as those that begin with numbers (e.g. `mixs:0000066` should be named `_16s_recover_software`), those that begin with capital letters (e.g. `photoshop:Credit` should be named `credit`) or that have numbers within them (e.g. `ggbn:ratioOfAbsorbance260_280` should be named `ratio_of_absorbance_260_280`).
+  3. Be mindful that some properties need additional attention, such as those that begin with numbers (e.g. [`mixs:0000066`](https://genomicsstandardsconsortium.github.io/mixs/0000066/) should be named `_16s_recover_software`), those that begin with capital letters (e.g. [`photoshop:Credit`](https://developer.adobe.com/xmp/docs/xmp-namespaces/photoshop/) should be named `credit`) or that have numbers within them (e.g. [`ggbn:ratioOfAbsorbance260_280`](https://www.ggbn.org/ggbn_portal/site/wf?p=ggbn:ratioOfAbsorbance260_280) should be named `ratio_of_absorbance_260_280`).
 
 The regular expression in the code below should take care of most cases. Please validate results, column names and data types, before uploading them to S3. If you are unsure about a property's name, you can look for it in the [dwcowl.obda](/ontop/mappings/dwcowl.obda) file and look up its mapping.
 
@@ -132,7 +132,7 @@ datasets/
 
 Each top-level directory under `datasets/` represents a single dataset. It must contain the `eml.json` metadata file alongside all converted `.parquet` table files.
 
-When uploading files, set the canned Access Control List (ACL) to [`public-read`](https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html). This is required for DuckDB to have `READ` access and be able to query the files directly from object storage.
+When uploading files, set the canned Access Control List ([ACL](https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html)) to `public-read`. This is required for DuckDB to have `READ` access and be able to query the files directly from object storage.
 
 ### Using Boto3
 
@@ -192,7 +192,9 @@ s5cmd --endpoint-url https://your-object-storage-endpoint \
 
 ## Setting up an environment variables file
 
-Create a `.env` file in the project root with the following variables:
+The application loads its object storage credentials and endpoints from environment variables at startup rather than hardcoding them in the configuration. This keeps sensitive credentials out of the codebase and allows configuration changes without modifying the code.
+
+Before starting the stack, create a `.env` file in the project root (the same directory as the project's `docker-compose.yml` file) containing the following variables:
 
 ```env
 OBJECT_STORE_BASE_URL=https://your-public-object-url-base
@@ -202,4 +204,4 @@ S3_BUCKET_NAME=your_bucket_name
 S3_ENDPOINT_URL=https://your-object-storage-endpoint
 ```
 
-Between these variables, `S3_ENDPOINT_URL` is the private endpoint used for authenticated operations such as uploads, while `OBJECT_STORE_BASE_URL` is the public-facing base URL through which DuckDB reads stored objects. These two values may differ depending on your storage provider.
+Depending on your storage provider, `OBJECT_STORE_BASE_URL` and `S3_ENDPOINT_URL` may refer to the same host or different ones (e.g., an API endpoint vs. a CDN public URL). Ensure each is set appropriately for your provider.

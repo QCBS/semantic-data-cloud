@@ -45,11 +45,11 @@ Results follow the standard [SPARQL 1.1 Query Results JSON format](https://www.w
 
 **Caching**
 
-Responses are cached in Valkey. The cache key is derived from the set of matched dataset IDs and the SPARQL query text. Two requests with different bounding boxes that resolve to the same dataset combination will share cache entries for identical queries. Cache TTL is controlled by the `TTL_VAL` environment variable (default: 70 seconds).
+Responses are cached in Valkey. The cache key is derived from the set of matched dataset IDs and the SPARQL query text. Two requests with different bounding boxes that resolve to the same dataset combination will share cache entries for identical queries. Cache TTL is controlled by the `TTL_VAL` environment variable (default: 1 week).
 
 **Cold start**
 
-The first request for a new dataset combination triggers DuckDB table materialisation and Ontop container startup. This typically takes 15–60 seconds depending on dataset size and operating system. Subsequent requests for the same combination reuse the running container and are served within seconds. If the request is repeated, then response time is almost instantaneous due to Valkey caching.
+The first request for a new dataset combination triggers ontology files editing, DuckDB view creation, and Ontop container startup. This typically takes 10–30 seconds depending on dataset size and operating system. Subsequent requests for the same combination reuse the running container and are served within seconds. If the request is repeated, then response time is almost instantaneous due to Valkey caching.
 
 ---
 
@@ -74,7 +74,7 @@ List all registered datasets with pagination.
 
 ### GET /dataset/{dataset_id}
 
-Return the full EML/JSON-LD metadata record for a single dataset, including its asset list.
+Return the full EML JSON-LD metadata record for a single dataset, including its asset list.
 
 **Response** (`application/ld+json`)
 
@@ -87,12 +87,14 @@ The EML document as JSON-LD, augmented with an `assets` array and a `self` link:
   "additionalMetadata": { "..." : "..." },
   "dataset": { "..." : "..." },
   "assets": [
-    { "href": "https://storage.example.org/dataset-id/occurrence.parquet", "mimetype": "application/vnd.apache.parquet" },
-    { "href": "https://storage.example.org/dataset-id/event.parquet", "mimetype": "application/vnd.apache.parquet" }
+    { "href": "https://storage.example.org/datasets/dataset-id/occurrence.parquet", "mimetype": "application/vnd.apache.parquet" },
+    { "href": "https://storage.example.org/datasets/dataset-id/event.parquet", "mimetype": "application/vnd.apache.parquet" }
   ],
   "self": "http://localhost:7788/dataset/dataset-id"
 }
 ```
+
+The media type for the Parquet files is `application/vnd.apache.parquet`, [as registered by the IANA](https://www.iana.org/assignments/media-types/application/vnd.apache.parquet).
 
 ---
 

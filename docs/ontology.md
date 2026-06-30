@@ -79,7 +79,7 @@ source     SELECT occurrence_id, scientific_name FROM FROM dwcowl.main.occurrenc
 
 The string `dwcowl` in the SQL `FROM` clause is the DuckDB catalog name. It is replaced at runtime by the container manager with the quoted context hash (e.g. `"95cb752fb61d60a2"`) for each per-context database file. The quoting is necessary because the hash begins with a digit, making it an invalid bare SQL identifier.
 
-A strict `snake_case` naming convention is used for all column names in the Parquet files (and ultimately in the database views), to maximise portability across operating systems and database systems. This was also the naming convention was adopted in [the originally proposed DwC DP schema](https://github.com/gbif/dwc-dp-examples/blob/master/gbif/dwc_dp_schema.sql).
+A strict `snake_case` naming convention is used for all column names in the Parquet files (and ultimately in the database views), to maximise portability across operating systems and database systems. This was also the naming convention was adopted in [the originally proposed DwC-DP schema](https://github.com/gbif/dwc-dp-examples/blob/master/gbif/dwc_dp_schema.sql).
 
 ---
 
@@ -107,13 +107,13 @@ As the application is oriented towards open-access to biodiversity data, no auth
 
 ## Database metadata (`dwcowl.json`)
 
-The database metadata file provides Ontop with a complete description of the DWC DP table schema: column names, data types, nullability, primary key declarations, and foreign key relationships.
+The database metadata file provides Ontop with a complete description of the DWC-DP table schema: column names, data types, nullability, primary key declarations, and foreign key relationships.
 
 By taking database keys and other integrity constraints into account, Ontop can infer when multiple query atoms necessarily refer to the same database tuple. This allows it to eliminate redundant self-joins during SPARQL-to-SQL translation, producing simpler and more efficient SQL queries.
 
 See the pages on the role [of primary keys](https://ontop-vkg.org/tutorial/mapping/primary-keys.html) and [of foreign keys](https://ontop-vkg.org/tutorial/mapping/foreign-keys.html) for a quick overview, as well as [Rodríguez-Muro and Rezk (2015)](https://www.sciencedirect.com/science/article/pii/S1570826815000153) for a more thorough explanation on the matter.
 
-The metadata file was produced by running the [Ontop CLI](https://ontop-vkg.org/guide/cli.html) against a DuckDB instance populated with a modified DWC DP schema. This schema was based on the JSON files available at the [GBIF repository of schemas](https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/), but also includes additional tables used by the application.
+The metadata file was produced by running the [Ontop CLI](https://ontop-vkg.org/guide/cli.html) against a DuckDB instance populated with a modified DWC-DP schema. This schema was based on the JSON files available at the [GBIF repository of schemas](https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/), but also includes additional tables used by the application.
 
 **Note:** The Ontop CLI's `extract-db-metadata` command produces a blank output with DuckDB JDBC driver 1.5.2.1 (the version considered by the application). Consequently, for database metadata extraction, version 1.5.1 of the driver was used (this fact can be seen at the bottom of the [metadata.json](/ontop/mappings/dwcowl.json) file). This does not affect the application, as Ontop only relies on the extracted metadata contained in the file.
 
@@ -121,14 +121,6 @@ The metadata file was produced by running the [Ontop CLI](https://ontop-vkg.org/
 
 ## Ontop version and JDBC driver
 
-The application uses the `ontop/ontop:5.5.0` Docker image. The DuckDB JDBC driver (`duckdb_jdbc-1.5.2.1.jar`) is downloaded from the [Maven repository](https://repo1.maven.org/maven2/org/duckdb/duckdb_jdbc/) and added to `/opt/ontop/jdbc/` at image build time:
-
-```dockerfile
-FROM ontop/ontop:5.5.0
-USER root
-ADD https://repo1.maven.org/maven2/org/duckdb/duckdb_jdbc/1.5.2.1/duckdb_jdbc-1.5.2.1.jar \
-    /opt/ontop/jdbc/
-ENV CLASSPATH="/opt/ontop/jdbc/duckdb_jdbc-1.5.2.1.jar:${CLASSPATH}"
-```
+The application uses the `ontop/ontop:5.5.0` Docker image. The DuckDB JDBC driver (`duckdb_jdbc-1.5.2.1.jar`) is downloaded from the [Maven repository](https://repo1.maven.org/maven2/org/duckdb/duckdb_jdbc/) and added to Ontop's library directory for JDBC driver JAR files (`/opt/ontop/jdbc/`) [at image build time](/ontop/Dockerfile):
 
 If the DuckDB JDBC driver version is updated, the `duckdb` Python package version in `fastaproxy/requirements.txt` should be kept in alignment, as DuckDB file format compatibility is version-sensitive.
