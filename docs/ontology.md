@@ -31,7 +31,7 @@ The ontology declares three types of entities:
 - **Data properties**, which describe attributes of those entities using literal values such as text or numbers (for example, `dwc:decimalLatitude`, `dwc:organismQuantity`, or `dwc:scientificName`).
 - **Object properties**, which define relationships between entities, linking one instance to another (for example, relating a `dwc:Occurrence` instance to a `dwc:Event` instance via `dwcdp:happenedDuring`).
 
-The ontology is compliant to a specific OWL 2 profile, namely, the [OWL 2 QL](https://www.w3.org/2007/OWL/wiki/Profiles-v2.html#OWL_2_QL) profile. This is a requirement for Ontop to be able to translate the SPARQL queries to SQL (see [this paper](https://link.springer.com/article/10.1007/s10817-007-9078-x) for more details). The ontology is validated as conformant with the OWL 2 QL profile using [ROBOT's ontology profile validation](https://robot.obolibrary.org/validate-profile), which checks it against the W3C OWL 2 profile specification.
+The ontology is compliant to a specific OWL 2 profile, namely, the [OWL 2 QL](https://www.w3.org/2007/OWL/wiki/Profiles-v2.html#OWL_2_QL) profile. This is a requirement for Ontop to be able to translate the SPARQL queries to SQL (see [Calvanese et al. (2007)](https://link.springer.com/article/10.1007/s10817-007-9078-x) for more details). The ontology is validated as conformant with the OWL 2 QL profile using [ROBOT's ontology profile validation](https://robot.obolibrary.org/validate-profile), which checks it against the W3C OWL 2 profile specification.
 
 Ontop uses this ontology during query reformulation. It supports OWL 2 QL reasoning, which means subclass and subproperty hierarchies declared in the ontology are respected during query answering, though these features are kept minimal in the current version. For a full view of the ontology, consider loading the `.ttl` file into an ontology editor such as [Protégé](https://protege.stanford.edu/).
 
@@ -111,7 +111,7 @@ The database metadata file provides Ontop with a complete description of the DWC
 
 By taking database keys and other integrity constraints into account, Ontop can infer when multiple query atoms necessarily refer to the same database tuple. This allows it to eliminate redundant self-joins during SPARQL-to-SQL translation, producing simpler and more efficient SQL queries.
 
-See the pages on the role [of primary keys](https://ontop-vkg.org/tutorial/mapping/primary-keys.html) and [of foreign keys](https://ontop-vkg.org/tutorial/mapping/foreign-keys.html) for a quick overview, as well as [this paper](https://www.sciencedirect.com/science/article/pii/S1570826815000153) for a more thorough explanation on the matter.
+See the pages on the role [of primary keys](https://ontop-vkg.org/tutorial/mapping/primary-keys.html) and [of foreign keys](https://ontop-vkg.org/tutorial/mapping/foreign-keys.html) for a quick overview, as well as [Rodríguez-Muro and Rezk (2015)](https://www.sciencedirect.com/science/article/pii/S1570826815000153) for a more thorough explanation on the matter.
 
 The metadata file was produced by running the [Ontop CLI](https://ontop-vkg.org/guide/cli.html) against a DuckDB instance populated with a modified DWC DP schema. This schema was based on the JSON files available at the [GBIF repository of schemas](https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/), but also includes additional tables used by the application.
 

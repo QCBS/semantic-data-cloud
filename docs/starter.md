@@ -10,7 +10,7 @@ This guide walks through the steps required to prepare and host a Darwin Core Da
 
 ## Converting EML XML files to JSON-LD
 
-The convention for Ecological Metadata Language ([EML](https://eml.ecoinformatics.org/)) is eXtensible Markup Language ([XML](https://www.w3.org/TR/xml/)). However, despite being highly structured, XML is verbose and less convenient for modern web APIs and database-backed applications than JSON. Therefore, JSON, and more specifically [JSON-LD](https://www.w3.org/TR/json-ld11/), would represent a better serialization of EML (see also [this paper](https://joss.theoj.org/papers/10.21105/joss.01276)). The application considers EML metadata as JSON-LD, using the `.json` extension.
+The convention for Ecological Metadata Language ([EML](https://eml.ecoinformatics.org/)) is eXtensible Markup Language ([XML](https://www.w3.org/TR/xml/)). However, despite being highly structured, XML is verbose and less convenient for modern web APIs and database-backed applications than JSON. Therefore, JSON, and more specifically [JSON-LD](https://www.w3.org/TR/json-ld11/), would represent a better serialization of EML (see also [Boettiger (2019)](https://joss.theoj.org/papers/10.21105/joss.01276)). The application considers EML metadata as JSON-LD, using the `.json` extension.
 
 The conversion can be performed quickly using the R packages [EML](https://docs.ropensci.org/EML/) for reading `.xml` files and [jsonlite](https://jeroen.r-universe.dev/jsonlite) for serialising them to `.json` as:
 
