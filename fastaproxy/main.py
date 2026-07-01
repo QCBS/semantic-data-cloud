@@ -1,9 +1,10 @@
 from asyncio import Lock, to_thread
 from contextlib import asynccontextmanager
 import hashlib
+import logging
 import os
 #
-from fastapi import FastAPI, HTTPException, Request, status, Depends
+from fastapi import Depends, FastAPI, HTTPException, Request, Response, status
 from glide import GlideClient, GlideClientConfiguration, NodeAddress
 from httpx import AsyncClient, AsyncHTTPTransport, HTTPError
 import orjson
@@ -11,6 +12,11 @@ import orjson
 from container_manager import ContainerRegistry
 from db_builder import build_db, context_hash
 from schemas.sparql import QueryRequest
+
+
+class SuppressHealthcheck(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        return "/health" not in record.getMessage()
 
 
 TTL_VAL = int(os.getenv("TTL_VAL", 70))
@@ -24,7 +30,9 @@ def make_cache_key(ctx_hash: str, sparql: bytes) -> str:
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI):    
+    logging.getLogger("uvicorn.access").addFilter(SuppressHealthcheck())
+
     config = GlideClientConfiguration(addresses=[NodeAddress("valkey", 6379)])
     app.state.glide = await GlideClient.create(config)
     transport = AsyncHTTPTransport(retries=0)
@@ -58,6 +66,11 @@ def get_lock(request: Request) -> Lock:
 
 
 app = FastAPI(title="sdc-fastapi-proxy", lifespan=lifespan)
+
+
+@app.get("/health")
+async def get_health():
+    return {"status": "ok"}
 
 
 @app.post("/sparql")
@@ -104,7 +117,10 @@ async def sparql_query(
 
     cached = await cache.get(cache_key)
     if cached:
-        return orjson.loads(cached)
+        return Response(
+            content=cached,
+            media_type="application/sparql-results+json",
+        )
 
     # NOTE: Changes to not block the event loop
     #
@@ -113,7 +129,7 @@ async def sparql_query(
         info = await to_thread(registry.get_or_create, dataset_ids)
 
     try:
-        response = await client.post(
+        res = await client.post(
             f"{info.ontop_url}/sparql",
             headers={
                 "Accept": "application/sparql-results+json",
@@ -127,17 +143,20 @@ async def sparql_query(
             detail=f"SPARQL request failed: {e}",
         )
 
-    if response.status_code != 200:
+    if res.status_code != 200:
         raise HTTPException(
-            status_code=response.status_code,
+            status_code=res.status_code,
             detail={
-                "error": response.text
+                "error": res.text
             }
         )
 
-    result = response.json()
+    sparql_json_s = orjson.dumps(res.json())
 
-    await cache.set(cache_key, orjson.dumps(result))
+    await cache.set(cache_key, sparql_json_s)
     await cache.expire(cache_key, TTL_VAL)
 
-    return result
+    return Response(
+        content=sparql_json_s,
+        media_type="application/sparql-results+json",
+    )

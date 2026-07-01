@@ -1,5 +1,4 @@
 from __future__ import annotations
-from datetime import date
 from pathlib import Path
 import sys
 #
@@ -79,7 +78,7 @@ async def sparql_query(
         ),
     ] = None,
     temporal: Annotated[
-        list[date] | None,
+        list[str] | None,
         Field(
             description="Date range as [start_date, end_date] in ISO 8601 format (YYYY-MM-DD)",
             min_length=2,
