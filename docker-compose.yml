@@ -73,9 +73,9 @@ services:
       - ./ontop/mappings:/app/config
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
-      valkey:
-        condition: service_healthy
       metadata-api:
+        condition: service_healthy
+      valkey:
         condition: service_healthy
     ports:
       - "8000:8000"
