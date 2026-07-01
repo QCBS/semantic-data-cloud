@@ -2,12 +2,14 @@ FROM python:3.14.2-slim
 
 RUN apt-get update && apt-get install -y curl
 
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+
 WORKDIR /app
 
-COPY requirements.txt .
+COPY pyproject.toml uv.lock .
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN uv sync --frozen
 
 COPY . .
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
