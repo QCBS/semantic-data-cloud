@@ -144,15 +144,21 @@ An empty list is returned (i.e. not a `404`) when no datasets match.
 
 ---
 
-### GET /datasets/citations
+### POST /datasets/citations
 
 Return citation strings for a list of dataset identifiers.
 
-**Query parameters**
+**Request body** (`application/json`)
 
-| Parameter | Type | Required | Description |
+| Field | Type | Required | Description |
 |---|---|---|---|
-| `dataset_names` | `[string]` | Yes | One or more dataset identifiers. Repeatable: `?dataset_names=id-a&dataset_names=id-b` |
+| `dataset_names` | `[string]` | Yes | One or more dataset identifiers |
+
+```json
+{
+  "dataset_names": ["dataset-a", "dataset-b", "..."]
+}
+```
 
 **Response**
 
