@@ -6,7 +6,7 @@ import logging
 import os
 from threading import Lock
 #
-from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 #
@@ -121,7 +121,10 @@ async def get_dataset(
     row = await loop.run_in_executor(None, _query)
 
     if not row:
-        raise HTTPException(status_code=404, detail="Dataset not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Dataset not found",
+        )
 
     return Response(row[0], media_type="application/ld+json")
 
@@ -211,7 +214,10 @@ async def get_citations(
     lock: Lock = Depends(get_lock),
 ):
     if not body.dataset_names:
-        raise HTTPException(status_code=400, detail="dataset_names cannot be empty")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="dataset_names cannot be empty",
+        )
 
     loop = asyncio.get_event_loop()
 
