@@ -14,7 +14,7 @@ services:
     build: 
       context: metadata-fast-api
       dockerfile: Dockerfile
-    command: "uv run uvicorn main:app --proxy-headers --host 0.0.0.0 --port 8000"
+    command: "uvicorn main:app --proxy-headers --host 0.0.0.0 --port 8000"
     volumes:
       - ./metadatadb:/data
       - ./metadata-fast-api:/app
