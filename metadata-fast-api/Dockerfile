@@ -8,7 +8,7 @@ ENV UV_PROJECT_ENVIRONMENT=/usr/local
 
 WORKDIR /app
 
-COPY pyproject.toml uv.lock .
+COPY pyproject.toml uv.lock ./
 
 RUN uv sync --frozen
 
