@@ -1,0 +1,13 @@
+[project]
+name = "app"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "docker==7.1.0",
+    "duckdb==1.5.2",
+    "fastapi==0.136.1",
+    "httpx==0.28.1",
+    "orjson==3.11.9",
+    "uvicorn[standard]==0.46.0",
+    "valkey-glide==2.3.1",
+]
