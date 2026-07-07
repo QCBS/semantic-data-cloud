@@ -5,12 +5,18 @@ import json
 import logging
 import os
 from threading import Lock
+import time
 #
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 #
 from s3io import s3_to_duckdb, duckdb_connect
+
+
+# WARN: Use uvicorn's error logger. Probably remove along with timings after.
+#
+logger = logging.getLogger("uvicorn.error")
 
 
 # NOTE: Tiny Pydantic model for dataset citations POST requests
@@ -29,6 +35,8 @@ METADATA_API_PORT = os.getenv("METADATA_API_PORT")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    start = time.perf_counter()
+
     logging.getLogger("uvicorn.access").addFilter(SuppressHealthcheck())
 
     ddb = duckdb_connect()
@@ -37,12 +45,16 @@ async def lifespan(app: FastAPI):
     app.state.ddb = ddb
     app.state.lock = lock
 
-    loop = asyncio.get_event_loop()
+    after_init = time.perf_counter()
+
+    loop = asyncio.get_running_loop()
     success = await loop.run_in_executor(None, lambda: s3_to_duckdb("eml", ".json", ddb))
-    if success:
-        print("Successfully loaded S3 data into DuckDB.")
-    else:
-        print("Failed to load S3 data into DuckDB.")
+
+    after_load = time.perf_counter()
+
+    logger.info(f"DuckDB init: {after_init - start:.3f}s")
+    logger.info(f"S3 load: {after_load - after_init:.3f}s")
+    logger.info(f"Total startup: {after_load - start:.3f}s")
 
     yield
 

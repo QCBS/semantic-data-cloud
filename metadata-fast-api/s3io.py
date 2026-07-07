@@ -4,6 +4,7 @@ from pathlib import Path
 #
 import boto3
 import duckdb
+import orjson
 
 
 METADATA_DB_PATH = Path("/data/metadatadb.duckdb")
@@ -104,7 +105,7 @@ def read_eml_from_s3(dataset, ddb):
     try:
         print(f"Reading from S3: bucket={bucket}, key={key}")
         response = s3_client.get_object(Bucket=bucket, Key=key)
-        content = json.loads(response["Body"].read().decode("utf-8"))
+        content = orjson.loads(response["Body"].read().decode("utf-8"))
     except Exception as exc:
         print(f"S3 file reading error: {exc}")
         return None
@@ -112,15 +113,15 @@ def read_eml_from_s3(dataset, ddb):
     try:
         if len(dataset["assets"]) > 0:
             content["assets"] = list(dataset["assets"].values())
-            if "occurrence.parquet" in dataset["assets"]:
-                href = dataset["assets"]["occurrence.parquet"]["href"]
-                content["recordedTaxa"] = species_from_occurrences(href, ddb)
+            # if "occurrence.parquet" in dataset["assets"]:
+            #     href = dataset["assets"]["occurrence.parquet"]["href"]
+            #     content["recordedTaxa"] = species_from_occurrences(href, ddb)
 
         content["self"] = f"http://localhost:{METADATA_API_PORT}/dataset/{dataset['name']}"
 
         ddb.execute(
             "INSERT INTO datasets (name, eml_content) VALUES (?, ?);",
-            [dataset["folder"].replace("datasets/", ""), json.dumps(content)],
+            [dataset["folder"].replace("datasets/", ""), orjson.dumps(content)],
         )
 
         ddb.execute("""
@@ -241,12 +242,12 @@ def s3_to_duckdb(target_name, extension, ddb):
         return False
 
 
-def species_from_occurrences(href, ddb):
-    try:
-        species_list = ddb.execute(
-            "SELECT DISTINCT scientific_name FROM read_parquet(?);",
-            [href],
-        )
-        return [row[0] for row in species_list.fetchall() if row[0] is not None]
-    except Exception:
-        return []
+# def species_from_occurrences(href, ddb):
+#     try:
+#         species_list = ddb.execute(
+#             "SELECT DISTINCT scientific_name FROM read_parquet(?);",
+#             [href],
+#         )
+#         return [row[0] for row in species_list.fetchall() if row[0] is not None]
+#     except Exception:
+#         return []
