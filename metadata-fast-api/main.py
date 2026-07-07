@@ -14,7 +14,7 @@ from pydantic import BaseModel
 from s3io import s3_to_duckdb, duckdb_connect
 
 
-# WARN: Use uvicorn's error logger. Probably remove along with timings after.
+# WARN: Use uvicorn's error logger to output times. Probably remove along with timings after.
 #
 logger = logging.getLogger("uvicorn.error")
 

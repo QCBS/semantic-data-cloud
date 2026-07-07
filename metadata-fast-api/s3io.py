@@ -1,10 +1,11 @@
 import json
 import os
+from concurrent.futures import as_completed, ThreadPoolExecutor
 from pathlib import Path
+from threading import Lock
 #
 import boto3
 import duckdb
-import orjson
 
 
 METADATA_DB_PATH = Path("/data/metadatadb.duckdb")
@@ -51,7 +52,7 @@ def list_eml_files_in_bucket(target_name, extension):
             params = {
                 "Bucket": bucket,
                 "Prefix": "datasets/",
-			}
+            }
             if continuation_token:
                 params["ContinuationToken"] = continuation_token
 
@@ -64,10 +65,10 @@ def list_eml_files_in_bucket(target_name, extension):
                 dataset_name = os.path.dirname(key)
                 if dataset_name not in datasets:
                     datasets[dataset_name] = {
-						"name": dataset_name.replace("datasets/", ""),
+                        "name": dataset_name.replace("datasets/", ""),
                         "folder": None,
                         "assets": dict(),
-					}
+                    }
                 if name == target_name and ext.lower() == extension.lower():
                     datasets[dataset_name]["folder"] = dataset_name
                 if ext.lower() == ".parquet":
@@ -77,6 +78,7 @@ def list_eml_files_in_bucket(target_name, extension):
                 break
 
             continuation_token = response.get("NextContinuationToken")
+
     except Exception as exc:
         print(f"There was an error listing files in S3: {exc}")
         return False
@@ -96,7 +98,7 @@ def create_asset(folder, file_name):
     }
 
 
-def read_eml_from_s3(dataset, ddb):
+def _fetch_eml_from_s3(dataset) -> tuple[dict, dict] | None:
     s3_client = create_s3_res()
 
     bucket = os.getenv("S3_BUCKET_NAME")
@@ -105,11 +107,15 @@ def read_eml_from_s3(dataset, ddb):
     try:
         print(f"Reading from S3: bucket={bucket}, key={key}")
         response = s3_client.get_object(Bucket=bucket, Key=key)
-        content = orjson.loads(response["Body"].read().decode("utf-8"))
+        content = json.loads(response["Body"].read().decode("utf-8"))
+        return dataset, content
+
     except Exception as exc:
-        print(f"S3 file reading error: {exc}")
+        print(f"S3 file reading error for {dataset['name']}: {exc}")
         return None
 
+
+def _write_eml_to_duckdb(dataset, content, ddb):
     try:
         if len(dataset["assets"]) > 0:
             content["assets"] = list(dataset["assets"].values())
@@ -121,7 +127,7 @@ def read_eml_from_s3(dataset, ddb):
 
         ddb.execute(
             "INSERT INTO datasets (name, eml_content) VALUES (?, ?);",
-            [dataset["folder"].replace("datasets/", ""), orjson.dumps(content)],
+            [dataset["folder"].replace("datasets/", ""), json.dumps(content)],
         )
 
         ddb.execute("""
@@ -223,31 +229,50 @@ def read_eml_from_s3(dataset, ddb):
         """)
 
     except Exception as exc:
-        print(f"Database error: {exc}")
-        return None
-
-    return content
+        print(f"Database error for {dataset['name']}: {exc}")
 
 
-def s3_to_duckdb(target_name, extension, ddb):
+def s3_to_duckdb(target_name, extension, ddb, max_workers=20):
     try:
         datasets = list_eml_files_in_bucket(target_name, extension)
+
         if not isinstance(datasets, dict):
-            return False
-        for dataset in datasets.values():
-            read_eml_from_s3(dataset, ddb)
-        return True
+            raise RuntimeError("No datasets found in S3")
+
+        db_lock = Lock()
+
+        def fetch_and_insert(dataset):
+            result = _fetch_eml_from_s3(dataset)
+            if result is None:
+                return
+            dataset, content = result
+
+            with db_lock:
+                _write_eml_to_duckdb(dataset, content, ddb)
+
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {
+                executor.submit(fetch_and_insert, dataset): dataset
+                for dataset in datasets.values()
+            }
+
+            for future in as_completed(futures):
+                exc = future.exception()
+                if exc:
+                    dataset = futures[future]
+                    print(f"Error processing dataset {dataset['name']}: {exc}")
+
     except Exception as exc:
         print(f"There was an error processing the S3 data: {exc}")
-        return False
 
 
-# def species_from_occurrences(href, ddb):
-#     try:
-#         species_list = ddb.execute(
-#             "SELECT DISTINCT scientific_name FROM read_parquet(?);",
-#             [href],
-#         )
-#         return [row[0] for row in species_list.fetchall() if row[0] is not None]
-#     except Exception:
-#         return []
+def species_from_occurrences(href, ddb):
+    try:
+        species_list = ddb.execute(
+            "SELECT DISTINCT scientific_name FROM read_parquet(?);",
+            [href],
+        )
+        return [row[0] for row in species_list.fetchall() if row[0] is not None]
+
+    except Exception:
+        return []
