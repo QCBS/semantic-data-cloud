@@ -85,7 +85,7 @@ app.add_middleware(
 async def read_root(
     ddb = Depends(get_ddb),
 ):
-    loop = asyncio.get_event_loop()
+    loop = asyncio.get_running_loop()
 
     datasets = await loop.run_in_executor(None, lambda: _list_datasets(1, 10, ddb))
 
@@ -110,7 +110,7 @@ async def get_list_datasets(
     page_size: int = Query(10, ge=1, le=100),
     ddb = Depends(get_ddb),
 ):
-    loop = asyncio.get_event_loop()
+    loop = asyncio.get_running_loop()
 
     return await loop.run_in_executor(None, lambda: _list_datasets(page, page_size, ddb))
 
@@ -120,7 +120,7 @@ async def get_dataset(
     dataset_id: str,
     ddb = Depends(get_ddb),
 ):
-    loop = asyncio.get_event_loop()
+    loop = asyncio.get_running_loop()
 
     def _query():
         return ddb.execute(
@@ -181,7 +181,7 @@ async def search_datasets(
 ):
     params = [min_lon, max_lon, min_lat, max_lat, begin_date, end_date]
 
-    loop = asyncio.get_event_loop()
+    loop = asyncio.get_running_loop()
 
     def _query():
         if licenses:
@@ -228,7 +228,7 @@ async def get_citations(
             detail="dataset_names cannot be empty",
         )
 
-    loop = asyncio.get_event_loop()
+    loop = asyncio.get_running_loop()
 
     def _query():
         return ddb.execute(
