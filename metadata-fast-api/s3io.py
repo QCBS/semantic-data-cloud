@@ -130,6 +130,11 @@ def _write_eml_to_duckdb(dataset, content, ddb):
             [dataset["folder"].replace("datasets/", ""), json.dumps(content)],
         )
 
+    except Exception as exc:
+        print(f"Database error for {dataset['name']}: {exc}")
+
+
+def _materialize_derived_columns(ddb):
         ddb.execute("""
             WITH extracted_coords AS (
                 SELECT
@@ -228,9 +233,6 @@ def _write_eml_to_duckdb(dataset, content, ddb):
             WHERE datasets.name = extracted_citation.name;
         """)
 
-    except Exception as exc:
-        print(f"Database error for {dataset['name']}: {exc}")
-
 
 def s3_to_duckdb(target_name, extension, ddb, max_workers=20):
     try:
@@ -243,8 +245,10 @@ def s3_to_duckdb(target_name, extension, ddb, max_workers=20):
 
         def fetch_and_insert(dataset):
             result = _fetch_eml_from_s3(dataset)
+
             if result is None:
                 return
+
             dataset, content = result
 
             with db_lock:
@@ -261,6 +265,9 @@ def s3_to_duckdb(target_name, extension, ddb, max_workers=20):
                 if exc:
                     dataset = futures[future]
                     print(f"Error processing dataset {dataset['name']}: {exc}")
+
+        with db_lock:
+            _materialize_derived_columns(ddb)
 
     except Exception as exc:
         print(f"There was an error processing the S3 data: {exc}")
