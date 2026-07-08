@@ -4,14 +4,14 @@ from datetime import date
 import json
 import logging
 import os
-from threading import Lock
 import time
 #
+import duckdb
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 #
-from s3io import s3_to_duckdb, duckdb_connect
+from s3io import s3_to_duckdb, duckdb_connect, METADATA_DB_PATH
 
 
 # WARN: Use uvicorn's error logger to output times. Probably remove along with timings after.
@@ -40,10 +40,6 @@ async def lifespan(app: FastAPI):
     logging.getLogger("uvicorn.access").addFilter(SuppressHealthcheck())
 
     ddb = duckdb_connect()
-    lock = Lock()
-
-    app.state.ddb = ddb
-    app.state.lock = lock
 
     after_init = time.perf_counter()
 
@@ -56,18 +52,21 @@ async def lifespan(app: FastAPI):
     logger.info(f"S3 load: {after_load - after_init:.3f}s")
     logger.info(f"Total startup: {after_load - start:.3f}s")
 
-    yield
-
+    # WARN: Explicitly close the metadata database here after populating it
+    #
     ddb.close()
 
+    yield
 
-# NOTE: Dependency functions
+
+# WARN: Open a fresh read-only connection per request and guarantees it's closed afterwards
 #
-def get_lock(request: Request) -> Lock:
-    return request.app.state.lock
-
 def get_ddb(request: Request):
-    return request.app.state.ddb
+    conn = duckdb.connect(str(METADATA_DB_PATH), read_only=True)
+    try:
+        yield conn
+    finally:
+        conn.close()
 
 
 app = FastAPI(title="sdc-metadata-fast-api", lifespan=lifespan)
@@ -85,10 +84,11 @@ app.add_middleware(
 @app.get("/")
 async def read_root(
     ddb = Depends(get_ddb),
-    lock: Lock = Depends(get_lock),
 ):
     loop = asyncio.get_event_loop()
-    datasets = await loop.run_in_executor(None, lambda: _list_datasets(1, 10, ddb, lock))
+
+    datasets = await loop.run_in_executor(None, lambda: _list_datasets(1, 10, ddb))
+
     return {
         "title": "Welcome to the QCBS Semantic Data Cloud API!",
         "description": "A metadata catalog of biodiversity and ecological datasets described using Ecological Metadata Language (EML), providing standardized, machine-readable metadata and access to associated data assets for discovery, integration, and analysis.",
@@ -109,26 +109,24 @@ async def get_list_datasets(
     page: int = Query(1, ge=1),
     page_size: int = Query(10, ge=1, le=100),
     ddb = Depends(get_ddb),
-    lock: Lock = Depends(get_lock),
 ):
     loop = asyncio.get_event_loop()
-    return await loop.run_in_executor(None, lambda: _list_datasets(page, page_size, ddb, lock))
+
+    return await loop.run_in_executor(None, lambda: _list_datasets(page, page_size, ddb))
 
 
 @app.get("/dataset/{dataset_id}")
 async def get_dataset(
     dataset_id: str,
     ddb = Depends(get_ddb),
-    lock: Lock = Depends(get_lock),
 ):
     loop = asyncio.get_event_loop()
 
     def _query():
-        with lock:
-            return ddb.execute(
-                "SELECT eml_content FROM datasets WHERE name = ?;",
-                [dataset_id],
-            ).fetchone()
+        return ddb.execute(
+            "SELECT eml_content FROM datasets WHERE name = ?;",
+            [dataset_id],
+        ).fetchone()
 
     row = await loop.run_in_executor(None, _query)
 
@@ -180,42 +178,42 @@ async def search_datasets(
         description="SPDX IDs of the licenses requested",
     ),
     ddb = Depends(get_ddb),
-    lock: Lock = Depends(get_lock),
 ):
     params = [min_lon, max_lon, min_lat, max_lat, begin_date, end_date]
+
     loop = asyncio.get_event_loop()
 
     def _query():
-        with lock:
-            if licenses:
-                return ddb.execute("""
-                    SELECT name
-                    FROM datasets
-                    WHERE
-                        max_lon >= ?
-                        AND min_lon <= ?
-                        AND max_lat >= ?
-                        AND min_lat <= ?
-                        AND end_date >= ?
-                        AND begin_date <= ?
-                        AND license_id = ANY(?)
-                    ;
-                """, params + [licenses]).fetchall()
-            else:
-                return ddb.execute("""
-                    SELECT name
-                    FROM datasets
-                    WHERE
-                        max_lon >= ?
-                        AND min_lon <= ?
-                        AND max_lat >= ?
-                        AND min_lat <= ?
-                        AND end_date >= ?
-                        AND begin_date <= ?
-                    ;
-                """, params).fetchall()
+        if licenses:
+            return ddb.execute("""
+                SELECT name
+                FROM datasets
+                WHERE
+                    max_lon >= ?
+                    AND min_lon <= ?
+                    AND max_lat >= ?
+                    AND min_lat <= ?
+                    AND end_date >= ?
+                    AND begin_date <= ?
+                    AND license_id = ANY(?)
+                ;
+            """, params + [licenses]).fetchall()
+        else:
+            return ddb.execute("""
+                SELECT name
+                FROM datasets
+                WHERE
+                    max_lon >= ?
+                    AND min_lon <= ?
+                    AND max_lat >= ?
+                    AND min_lat <= ?
+                    AND end_date >= ?
+                    AND begin_date <= ?
+                ;
+            """, params).fetchall()
 
     rows = await loop.run_in_executor(None, _query)
+
     return {"datasets": [row[0] for row in rows]}
 
 
@@ -223,7 +221,6 @@ async def search_datasets(
 async def get_citations(
     body: CitationRequest,
     ddb = Depends(get_ddb),
-    lock: Lock = Depends(get_lock),
 ):
     if not body.dataset_names:
         raise HTTPException(
@@ -234,13 +231,13 @@ async def get_citations(
     loop = asyncio.get_event_loop()
 
     def _query():
-        with lock:
-            return ddb.execute(
-                "SELECT dataset_citation FROM datasets WHERE name = ANY(?);",
-                (body.dataset_names,)
-            ).fetchall()
+        return ddb.execute(
+            "SELECT dataset_citation FROM datasets WHERE name = ANY(?);",
+            (body.dataset_names,)
+        ).fetchall()
 
     rows = await loop.run_in_executor(None, _query)
+
     return {"citations": [row[0] for row in rows]}
 
 
@@ -250,16 +247,15 @@ def _list_datasets(
         page: int,
         page_size: int,
         ddb,
-        lock: Lock,
 ) -> dict:
     offset = (page - 1) * page_size
 
-    with lock:
-        total = ddb.execute("SELECT COUNT(*) FROM datasets;").fetchone()[0]
-        rows = ddb.execute(
-            "SELECT name, eml_content FROM datasets ORDER BY name LIMIT ? OFFSET ?;",
-            [page_size, offset],
-        ).fetchall()
+    total = ddb.execute("SELECT COUNT(*) FROM datasets;").fetchone()[0]
+
+    rows = ddb.execute(
+        "SELECT name, eml_content FROM datasets ORDER BY name LIMIT ? OFFSET ?;",
+        [page_size, offset],
+    ).fetchall()
 
     datasets = {}
     for dataset_id, eml in rows:
