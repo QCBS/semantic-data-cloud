@@ -21,7 +21,7 @@ This project takes a different approach: data tables contained in each DwC-DP ar
 
 ## Usage
 
-The application brings the semantic expressivity of [RDF](https://www.w3.org/TR/rdf11-concepts/) and [the SPARQL 1.1 Query Language](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) to users, letting them declare exactly the data they need across related entities. For example, the following query retrieves occurrences of Antarctic lanternfish (*Electrona antarctica*) and their life stage, linked to material entities as evidence, along with the material entity's disposition, preparations, the event date, and the recording agent:
+The application brings the semantic expressivity of [RDF](https://www.w3.org/TR/rdf11-concepts/) and [the SPARQL Query Language](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) to users, letting them declare exactly the data they need across related entities. For example, the following query retrieves occurrences of Antarctic lanternfish (*Electrona antarctica*) and their life stage, linked to material entities as evidence, along with the material entity's disposition, preparations, the event date, and the recording agent:
 
 ```sparql
 PREFIX dcterms: <http://purl.org/dc/terms/>
