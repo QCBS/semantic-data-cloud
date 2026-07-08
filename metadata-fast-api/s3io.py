@@ -47,45 +47,39 @@ def list_eml_files_in_bucket(target_name, extension):
     datasets = dict()
     continuation_token = None
 
-    try:
-        while True:
-            params = {
-                "Bucket": bucket,
-                "Prefix": "datasets/",
-            }
-            if continuation_token:
-                params["ContinuationToken"] = continuation_token
+    while True:
+        params = {
+            "Bucket": bucket,
+            "Prefix": "datasets/",
+        }
+        if continuation_token:
+            params["ContinuationToken"] = continuation_token
 
-            response = s3_client.list_objects_v2(**params)
+        response = s3_client.list_objects_v2(**params)
 
-            for obj in response.get("Contents", []):
-                key = obj["Key"]
-                file_name = os.path.basename(key)
-                name, ext = os.path.splitext(file_name)
-                dataset_name = os.path.dirname(key)
-                if dataset_name not in datasets:
-                    datasets[dataset_name] = {
-                        "name": dataset_name.replace("datasets/", ""),
-                        "folder": None,
-                        "assets": dict(),
-                    }
-                if name == target_name and ext.lower() == extension.lower():
-                    datasets[dataset_name]["folder"] = dataset_name
-                if ext.lower() == ".parquet":
-                    datasets[dataset_name]["assets"][file_name] = create_asset(dataset_name, file_name)
+        for obj in response.get("Contents", []):
+            key = obj["Key"]
+            file_name = os.path.basename(key)
+            name, ext = os.path.splitext(file_name)
+            dataset_name = os.path.dirname(key)
+            if dataset_name not in datasets:
+                datasets[dataset_name] = {
+                    "name": dataset_name.replace("datasets/", ""),
+                    "folder": None,
+                    "assets": dict(),
+                }
+            if name == target_name and ext.lower() == extension.lower():
+                datasets[dataset_name]["folder"] = dataset_name
+            if ext.lower() == ".parquet":
+                datasets[dataset_name]["assets"][file_name] = create_asset(dataset_name, file_name)
 
-            if not response.get("IsTruncated"):
-                break
+        if not response.get("IsTruncated"):
+            break
 
-            continuation_token = response.get("NextContinuationToken")
-
-    except Exception as exc:
-        print(f"There was an error listing files in S3: {exc}")
-        return False
+        continuation_token = response.get("NextContinuationToken")
 
     if not datasets:
         print("No matching files found in S3.")
-        return []
 
     return datasets
 
