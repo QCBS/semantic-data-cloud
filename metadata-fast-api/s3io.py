@@ -92,10 +92,9 @@ def create_asset(folder, file_name):
     }
 
 
-def _fetch_eml_from_s3(dataset) -> tuple[dict, dict] | None:
-    s3_client = create_s3_res()
-
+def _fetch_eml_from_s3(dataset, s3_client) -> tuple[dict, dict] | None:
     bucket = os.getenv("S3_BUCKET_NAME")
+
     key = f"{dataset['folder']}/eml.json"
 
     try:
@@ -235,10 +234,11 @@ def s3_to_duckdb(target_name, extension, ddb, max_workers=20):
         if not isinstance(datasets, dict):
             raise RuntimeError("No datasets found in S3")
 
+        s3_client = create_s3_res()
         db_lock = Lock()
 
         def fetch_and_insert(dataset):
-            result = _fetch_eml_from_s3(dataset)
+            result = _fetch_eml_from_s3(dataset, s3_client)
 
             if result is None:
                 return
