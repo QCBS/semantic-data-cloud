@@ -146,10 +146,10 @@ import boto3
 
 s3_client = boto3.client(
     service_name="s3",
-	  aws_access_key_id=os.getenv("S3_ACCESS_ID"),
-	  aws_secret_access_key=os.getenv("S3_ACCESS_SECRET"),
-	  endpoint_url=os.getenv("S3_ENDPOINT_URL"),
-	  use_ssl=True,
+    aws_access_key_id=os.getenv("S3_ACCESS_ID"),
+    aws_secret_access_key=os.getenv("S3_ACCESS_SECRET"),
+    endpoint_url=os.getenv("S3_ENDPOINT_URL"),
+    use_ssl=True,
 )
 
 bucket = os.getenv("S3_BUCKET_NAME")
