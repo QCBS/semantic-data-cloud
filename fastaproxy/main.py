@@ -109,7 +109,10 @@ async def sparql_query(
     dataset_ids: list[str] = search_resp.json().get("datasets", [])
 
     if not dataset_ids:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "No datasets found for the given spatial and temporal filters.")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No datasets found for the given spatial and temporal filters.",
+        )
 
     ctx_hash = context_hash(dataset_ids)
 
@@ -154,19 +157,12 @@ async def sparql_query(
             }
         )
 
-    # WARN: Temporary debug print statements
-    #
-    print(res.status_code)
-    print(res.text)
-    print(res.headers)
-    print(res.headers["content-type"])
-
     if "application/sparql-results+json" in res.headers["content-type"]:
         sparql_json_s = res.content.decode("utf-8")
 
         await cache.set(
-            cache_key,
-            orjson.dumps({
+            key=cache_key,
+            value=orjson.dumps({
                 "body": sparql_json_s,
                 "media_type": res.headers["content-type"],
             })
@@ -182,8 +178,8 @@ async def sparql_query(
         sparql_ttl_s = res.content.decode("utf-8")
 
         await cache.set(
-            cache_key,
-            orjson.dumps({
+            key=cache_key,
+            value=orjson.dumps({
                 "media_type": res.headers["content-type"],
                 "body": sparql_ttl_s,
             })
