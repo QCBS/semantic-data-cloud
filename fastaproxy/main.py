@@ -179,7 +179,7 @@ async def sparql_query(
         )
 
     elif "text/turtle" in res.headers["content-type"]:
-        sparql_ttl_s = res.text
+        sparql_ttl_s = res.content.decode("utf-8")
 
         await cache.set(
             cache_key,
