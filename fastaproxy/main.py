@@ -116,10 +116,13 @@ async def sparql_query(
     cache_key = make_cache_key(ctx_hash, sparql_bytes)
 
     cached = await cache.get(cache_key)
+
     if cached:
+        cached = orjson.loads(cached)
+
         return Response(
-            content=cached,
-            media_type="application/sparql-results+json",
+            content=cached["body"],
+            media_type=cached["media_type"],
         )
 
     # NOTE: Changes to not block the event loop
@@ -159,9 +162,15 @@ async def sparql_query(
     print(res.headers["content-type"])
 
     if "application/sparql-results+json" in res.headers["content-type"]:
-        sparql_json_s = res.text
+        sparql_json_s = res.content.decode("utf-8")
 
-        await cache.set(cache_key, sparql_json_s)
+        await cache.set(
+            cache_key,
+            orjson.dumps({
+                "body": sparql_json_s,
+                "media_type": res.headers["content-type"],
+            }).decode("utf-8")
+        )
         await cache.expire(cache_key, TTL_VAL)
 
         return Response(
@@ -169,10 +178,16 @@ async def sparql_query(
             media_type="application/sparql-results+json",
         )
 
-    elif "text/turtle;charset" in res.headers["content-type"]:
+    elif "text/turtle" in res.headers["content-type"]:
         sparql_ttl_s = res.text
 
-        await cache.set(cache_key, sparql_ttl_s)
+        await cache.set(
+            cache_key,
+            orjson.dumps({
+                "media_type": res.headers["content-type"],
+                "body": sparql_ttl_s,
+            }).decode("utf-8")
+        )
         await cache.expire(cache_key, TTL_VAL)
 
         return Response(
