@@ -1,4 +1,3 @@
-import json
 import os
 from concurrent.futures import as_completed, ThreadPoolExecutor
 from pathlib import Path
@@ -6,7 +5,7 @@ from threading import Lock
 #
 import boto3
 import duckdb
-
+import orjson
 
 METADATA_DB_PATH = Path("/data/metadatadb.duckdb")
 METADATA_API_PORT = os.getenv("METADATA_API_PORT")
@@ -100,7 +99,7 @@ def _fetch_eml_from_s3(dataset, s3_client) -> tuple[dict, dict] | None:
     try:
         print(f"Reading from S3: bucket={bucket}, key={key}")
         response = s3_client.get_object(Bucket=bucket, Key=key)
-        content = json.loads(response["Body"].read().decode("utf-8"))
+        content = orjson.loads(response["Body"].read())
         return dataset, content
 
     except Exception as exc:
@@ -120,7 +119,7 @@ def _write_eml_to_duckdb(dataset, content, ddb):
 
         ddb.execute(
             "INSERT INTO datasets (name, eml_content) VALUES (?, ?);",
-            [dataset["folder"].replace("datasets/", ""), json.dumps(content)],
+            [dataset["folder"].replace("datasets/", ""), orjson.dumps(content).decode("utf-8")],
         )
 
     except Exception as exc:

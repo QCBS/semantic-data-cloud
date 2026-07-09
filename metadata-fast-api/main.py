@@ -1,7 +1,6 @@
 import asyncio
 from contextlib import asynccontextmanager
 from datetime import date
-import json
 import logging
 import os
 import time
@@ -9,6 +8,7 @@ import time
 import duckdb
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
+import orjson
 from pydantic import BaseModel
 #
 from s3io import s3_to_duckdb, duckdb_connect, METADATA_DB_PATH
@@ -259,7 +259,7 @@ def _list_datasets(
 
     datasets = {}
     for dataset_id, eml in rows:
-        datasets[dataset_id] = json.loads(eml) if isinstance(eml, str) else eml
+        datasets[dataset_id] = orjson.loads(eml) if isinstance(eml, str) else eml
 
     return {
         "page": page,
