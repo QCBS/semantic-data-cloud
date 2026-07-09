@@ -158,7 +158,7 @@ async def sparql_query(
     print(res.headers)
     print(res.headers["content-type"])
 
-    if res.headers["content-type"] == "application/sparql-results+json;charset=UTF-8":
+    if "application/sparql-results+json" in res.headers["content-type"]:
         sparql_json_s = res.text
 
         await cache.set(cache_key, sparql_json_s)
@@ -169,7 +169,7 @@ async def sparql_query(
             media_type="application/sparql-results+json",
         )
 
-    elif res.headers["content-type"] == "text/turtle;charset=UTF-8":
+    elif "text/turtle;charset" in res.headers["content-type"]:
         sparql_ttl_s = res.text
 
         await cache.set(cache_key, sparql_ttl_s)
