@@ -30,7 +30,7 @@ def make_cache_key(ctx_hash: str, sparql: bytes) -> str:
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):    
+async def lifespan(app: FastAPI):
     logging.getLogger("uvicorn.access").addFilter(SuppressHealthcheck())
 
     config = GlideClientConfiguration(addresses=[NodeAddress("valkey", 6379)])
@@ -132,7 +132,7 @@ async def sparql_query(
         res = await client.post(
             f"{info.ontop_url}/sparql",
             headers={
-                "Accept": "application/sparql-results+json",
+                # "Accept": "application/sparql-results+json",
                 "Content-Type": "application/sparql-query",
             },
             content=sparql_bytes,
@@ -151,12 +151,31 @@ async def sparql_query(
             }
         )
 
-    sparql_json_s = orjson.dumps(res.json())
+    # WARN: Temporary debug print statements
+    #
+    print(res.status_code)
+    print(res.text)
+    print(res.headers)
+    print(res.headers["content-type"])
 
-    await cache.set(cache_key, sparql_json_s)
-    await cache.expire(cache_key, TTL_VAL)
+    if res.headers["content-type"] == "application/sparql-results+json;charset=UTF-8":
+        sparql_json_s = res.text
 
-    return Response(
-        content=sparql_json_s,
-        media_type="application/sparql-results+json",
-    )
+        await cache.set(cache_key, sparql_json_s)
+        await cache.expire(cache_key, TTL_VAL)
+
+        return Response(
+            content=sparql_json_s,
+            media_type="application/sparql-results+json",
+        )
+
+    elif res.headers["content-type"] == "text/turtle;charset=UTF-8":
+        sparql_ttl_s = res.text
+
+        await cache.set(cache_key, sparql_ttl_s)
+        await cache.expire(cache_key, TTL_VAL)
+
+        return Response(
+            content=sparql_ttl_s,
+            media_type="text/turtle",
+        )
