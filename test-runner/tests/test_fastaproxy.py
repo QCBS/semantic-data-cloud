@@ -11,6 +11,8 @@ TIMEOUT_VAL = 60.0
 OCCURRENCE_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1"
 NAMED_VAR_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ ?sciName WHERE { ?occ a dwc:Occurrence ; dwc:scientificName ?sciName . } LIMIT 5"
 EVENT_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?evt WHERE { ?occ a dwc:Event } LIMIT 1"
+#
+ASK_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> ASK { ?occ a dwc:Occurrence }"
 
 
 def test_health_endpoint():
@@ -99,6 +101,26 @@ def test_sparql_with_license_filter():
         body = res.json()
         assert "head" in body
         assert "results" in body
+
+
+def test_sparql_ask_query():
+    res = httpx.post(
+        url=f"{FASTAPROXY_BASE_URL}/sparql",
+        json={
+            "query": ASK_QUERY,
+        },
+        timeout=TIMEOUT_VAL,
+    )
+
+    assert res.status_code == 200
+
+    body = res.json()
+
+    assert "head" in body
+    assert "boolean" in body
+
+    assert body["head"] == {}
+    assert isinstance(body["boolean"], bool)
 
 
 def test_sparql_no_datasets_found_returns_404():
