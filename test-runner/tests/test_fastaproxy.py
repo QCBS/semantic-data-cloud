@@ -115,6 +115,7 @@ def test_sparql_ask_query():
     )
 
     assert res.status_code == 200
+    assert "application/sparql-results+json" in res.headers["content-type"]
 
     body = res.json()
 
@@ -137,6 +138,7 @@ def test_sparql_construct_query():
     )
 
     assert res.status_code == 200
+    assert "text/turtle" in res.headers["content-type"]
 
     body = res.text
 
@@ -155,6 +157,7 @@ def test_sparql_describe_query():
     )
 
     assert res.status_code == 200
+    assert "text/turtle" in res.headers["content-type"]
 
     body = res.text
 
