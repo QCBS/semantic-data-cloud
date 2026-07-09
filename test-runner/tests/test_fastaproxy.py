@@ -14,6 +14,7 @@ EVENT_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?evt WHERE { ?
 #
 ASK_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> ASK { ?occ a dwc:Occurrence }"
 CONSTRUCT_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> CONSTRUCT { ?occ a dwc:Occurrence . } WHERE { ?occ a dwc:Occurrence . } LIMIT 1"
+DESCRIBE_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/> DESCRIBE <https://biobang.org/occurrence/BROKE_WEST_RMT_101_RMT8_217697_Postmeta>"
 
 
 def test_health_endpoint():
@@ -140,6 +141,26 @@ def test_sparql_construct_query():
     body = res.text
 
     assert "@prefix rdf:" in body
+
+
+# TODO: Maybe expand verification using rdflib
+#
+def test_sparql_describe_query():
+    res = httpx.post(
+        url=f"{FASTAPROXY_BASE_URL}/sparql",
+        json={
+            "query": DESCRIBE_QUERY,
+        },
+        timeout=TIMEOUT_VAL,
+    )
+
+    assert res.status_code == 200
+
+    body = res.text
+
+    assert "@prefix rdf:" in body
+    assert "@prefix dwc:" in body
+    assert "@prefix dwcdp:" in body
 
 
 def test_sparql_no_datasets_found_returns_404():
