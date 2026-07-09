@@ -169,7 +169,7 @@ async def sparql_query(
             orjson.dumps({
                 "body": sparql_json_s,
                 "media_type": res.headers["content-type"],
-            }).decode("utf-8")
+            })
         )
         await cache.expire(cache_key, TTL_VAL)
 
@@ -186,7 +186,7 @@ async def sparql_query(
             orjson.dumps({
                 "media_type": res.headers["content-type"],
                 "body": sparql_ttl_s,
-            }).decode("utf-8")
+            })
         )
         await cache.expire(cache_key, TTL_VAL)
 
