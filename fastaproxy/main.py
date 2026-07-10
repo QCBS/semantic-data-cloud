@@ -88,6 +88,7 @@ async def sparql_query(
 
     min_lon, min_lat, max_lon, max_lat = body.bbox
     begin_date, end_date = body.temporal
+
     sparql_bytes = body.query.encode("utf-8")
 
     search_params = [
@@ -106,6 +107,8 @@ async def sparql_query(
         f"{METADATA_API_BASE}/datasets/search",
         params=search_params,
     )
+
+    search_resp.raise_for_status()
 
     dataset_ids: list[str] = search_resp.json().get("datasets", [])
 
