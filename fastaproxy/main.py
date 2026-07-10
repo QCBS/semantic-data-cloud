@@ -5,7 +5,7 @@ import logging
 import os
 #
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, status
-from glide import GlideClient, GlideClientConfiguration, NodeAddress
+from glide import ExpirySet, ExpiryType, GlideClient, GlideClientConfiguration, NodeAddress
 from httpx import AsyncClient, AsyncHTTPTransport, HTTPError
 import orjson
 #
@@ -22,6 +22,11 @@ class SuppressHealthcheck(logging.Filter):
 TTL_VAL = int(os.getenv("TTL_VAL", 70))
 TIMEOUT_VAL = float(os.getenv("TIMEOUT_VAL", 100))
 METADATA_API_BASE = os.getenv("METADATA_API_BASE", "http://metadata-api:8000")
+#
+CACHE_EXPIRY = ExpirySet(
+    expiry_type=ExpiryType.SEC,
+    value=TTL_VAL,
+)
 
 
 def make_cache_key(ctx_hash: str, sparql: bytes) -> str:
@@ -122,7 +127,7 @@ async def sparql_query(
 
     cache_key = make_cache_key(ctx_hash, sparql_bytes)
 
-    cached = await cache.get(cache_key)
+    cached = await cache.get(key=cache_key)
 
     if cached:
         cached = orjson.loads(cached)
@@ -168,9 +173,9 @@ async def sparql_query(
             value=orjson.dumps({
                 "body": sparql_json_s,
                 "media_type": res.headers["content-type"],
-            })
+            }),
+            expiry=CACHE_EXPIRY,
         )
-        await cache.expire(cache_key, TTL_VAL)
 
         return Response(
             content=sparql_json_s,
@@ -185,9 +190,9 @@ async def sparql_query(
             value=orjson.dumps({
                 "body": sparql_ttl_s,
                 "media_type": res.headers["content-type"],
-            })
+            }),
+            expiry=CACHE_EXPIRY,
         )
-        await cache.expire(cache_key, TTL_VAL)
 
         return Response(
             content=sparql_ttl_s,
