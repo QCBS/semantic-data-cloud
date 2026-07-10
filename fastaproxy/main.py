@@ -158,7 +158,7 @@ async def sparql_query(
         )
 
     if "application/sparql-results+json" in res.headers["content-type"]:
-        sparql_json_s = res.content.decode("utf-8")
+        sparql_json_s = res.text
 
         await cache.set(
             key=cache_key,
@@ -175,7 +175,7 @@ async def sparql_query(
         )
 
     elif "text/turtle" in res.headers["content-type"]:
-        sparql_ttl_s = res.content.decode("utf-8")
+        sparql_ttl_s = res.text
 
         await cache.set(
             key=cache_key,
