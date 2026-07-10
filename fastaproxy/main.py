@@ -46,6 +46,7 @@ async def lifespan(app: FastAPI):
     yield
 
     await app.state.http.aclose()
+
     if app.state.glide:
         await app.state.glide.close()
 
@@ -179,8 +180,8 @@ async def sparql_query(
         await cache.set(
             key=cache_key,
             value=orjson.dumps({
-                "media_type": res.headers["content-type"],
                 "body": sparql_ttl_s,
+                "media_type": res.headers["content-type"],
             })
         )
         await cache.expire(cache_key, TTL_VAL)
