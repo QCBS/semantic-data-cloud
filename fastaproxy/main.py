@@ -138,7 +138,6 @@ async def sparql_query(
         res = await client.post(
             f"{info.ontop_url}/sparql",
             headers={
-                # "Accept": "application/sparql-results+json",
                 "Content-Type": "application/sparql-query",
             },
             content=sparql_bytes,
