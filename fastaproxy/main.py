@@ -5,7 +5,7 @@ import logging
 import os
 #
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, status
-from glide import GlideClient, GlideClientConfiguration, NodeAddress
+from glide import ExpirySet, ExpiryType, GlideClient, GlideClientConfiguration, NodeAddress
 from httpx import AsyncClient, AsyncHTTPTransport, HTTPError
 import orjson
 #
@@ -22,6 +22,11 @@ class SuppressHealthcheck(logging.Filter):
 TTL_VAL = int(os.getenv("TTL_VAL", 70))
 TIMEOUT_VAL = float(os.getenv("TIMEOUT_VAL", 100))
 METADATA_API_BASE = os.getenv("METADATA_API_BASE", "http://metadata-api:8000")
+#
+CACHE_EXPIRY = ExpirySet(
+    expiry_type=ExpiryType.SEC,
+    value=TTL_VAL,
+)
 
 
 def make_cache_key(ctx_hash: str, sparql: bytes) -> str:
@@ -30,7 +35,7 @@ def make_cache_key(ctx_hash: str, sparql: bytes) -> str:
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):    
+async def lifespan(app: FastAPI):
     logging.getLogger("uvicorn.access").addFilter(SuppressHealthcheck())
 
     config = GlideClientConfiguration(addresses=[NodeAddress("valkey", 6379)])
@@ -46,6 +51,7 @@ async def lifespan(app: FastAPI):
     yield
 
     await app.state.http.aclose()
+
     if app.state.glide:
         await app.state.glide.close()
 
@@ -87,6 +93,7 @@ async def sparql_query(
 
     min_lon, min_lat, max_lon, max_lat = body.bbox
     begin_date, end_date = body.temporal
+
     sparql_bytes = body.query.encode("utf-8")
 
     search_params = [
@@ -106,20 +113,28 @@ async def sparql_query(
         params=search_params,
     )
 
+    search_resp.raise_for_status()
+
     dataset_ids: list[str] = search_resp.json().get("datasets", [])
 
     if not dataset_ids:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "No datasets found for the given spatial and temporal filters.")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No datasets found for the given spatial and temporal filters.",
+        )
 
     ctx_hash = context_hash(dataset_ids)
 
     cache_key = make_cache_key(ctx_hash, sparql_bytes)
 
-    cached = await cache.get(cache_key)
+    cached = await cache.get(key=cache_key)
+
     if cached:
+        cached = orjson.loads(cached)
+
         return Response(
-            content=cached,
-            media_type="application/sparql-results+json",
+            content=cached["body"],
+            media_type=cached["media_type"],
         )
 
     # NOTE: Changes to not block the event loop
@@ -132,7 +147,6 @@ async def sparql_query(
         res = await client.post(
             f"{info.ontop_url}/sparql",
             headers={
-                "Accept": "application/sparql-results+json",
                 "Content-Type": "application/sparql-query",
             },
             content=sparql_bytes,
@@ -151,12 +165,36 @@ async def sparql_query(
             }
         )
 
-    sparql_json_s = orjson.dumps(res.json())
+    if "application/sparql-results+json" in res.headers["content-type"]:
+        sparql_json_s = res.text
 
-    await cache.set(cache_key, sparql_json_s)
-    await cache.expire(cache_key, TTL_VAL)
+        await cache.set(
+            key=cache_key,
+            value=orjson.dumps({
+                "body": sparql_json_s,
+                "media_type": res.headers["content-type"],
+            }),
+            expiry=CACHE_EXPIRY,
+        )
 
-    return Response(
-        content=sparql_json_s,
-        media_type="application/sparql-results+json",
-    )
+        return Response(
+            content=sparql_json_s,
+            media_type="application/sparql-results+json",
+        )
+
+    elif "text/turtle" in res.headers["content-type"]:
+        sparql_ttl_s = res.text
+
+        await cache.set(
+            key=cache_key,
+            value=orjson.dumps({
+                "body": sparql_ttl_s,
+                "media_type": res.headers["content-type"],
+            }),
+            expiry=CACHE_EXPIRY,
+        )
+
+        return Response(
+            content=sparql_ttl_s,
+            media_type="text/turtle",
+        )

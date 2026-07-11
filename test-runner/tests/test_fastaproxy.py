@@ -11,6 +11,10 @@ TIMEOUT_VAL = 60.0
 OCCURRENCE_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1"
 NAMED_VAR_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ ?sciName WHERE { ?occ a dwc:Occurrence ; dwc:scientificName ?sciName . } LIMIT 5"
 EVENT_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?evt WHERE { ?occ a dwc:Event } LIMIT 1"
+#
+ASK_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> ASK { ?occ a dwc:Occurrence }"
+CONSTRUCT_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> CONSTRUCT { ?occ a dwc:Occurrence . } WHERE { ?occ a dwc:Occurrence . } LIMIT 1"
+DESCRIBE_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/> DESCRIBE <https://biobang.org/occurrence/BROKE_WEST_RMT_101_RMT8_217697_Postmeta>"
 
 
 def test_health_endpoint():
@@ -99,6 +103,67 @@ def test_sparql_with_license_filter():
         body = res.json()
         assert "head" in body
         assert "results" in body
+
+
+def test_sparql_ask_query():
+    res = httpx.post(
+        url=f"{FASTAPROXY_BASE_URL}/sparql",
+        json={
+            "query": ASK_QUERY,
+        },
+        timeout=TIMEOUT_VAL,
+    )
+
+    assert res.status_code == 200
+    assert "application/sparql-results+json" in res.headers["content-type"]
+
+    body = res.json()
+
+    assert "head" in body
+    assert "boolean" in body
+
+    assert body["head"] == {}
+    assert isinstance(body["boolean"], bool)
+
+
+# TODO: Maybe expand verification using rdflib
+#
+def test_sparql_construct_query():
+    res = httpx.post(
+        url=f"{FASTAPROXY_BASE_URL}/sparql",
+        json={
+            "query": CONSTRUCT_QUERY,
+        },
+        timeout=TIMEOUT_VAL,
+    )
+
+    assert res.status_code == 200
+    assert "text/turtle" in res.headers["content-type"]
+
+    body = res.text
+
+    assert "@prefix rdf:" in body
+
+
+# TODO: Maybe expand verification using rdflib
+#
+def test_sparql_describe_query():
+    res = httpx.post(
+        url=f"{FASTAPROXY_BASE_URL}/sparql",
+        json={
+            "query": DESCRIBE_QUERY,
+        },
+        timeout=TIMEOUT_VAL,
+    )
+
+    assert res.status_code == 200
+    assert "text/turtle" in res.headers["content-type"]
+
+    body = res.text
+
+    assert "@prefix rdf:" in body
+    assert "@prefix dwc:" in body
+    assert "@prefix dwcdp:" in body
 
 
 def test_sparql_no_datasets_found_returns_404():
