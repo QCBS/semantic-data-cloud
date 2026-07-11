@@ -14,7 +14,7 @@ Requests against the `/sparql` endpoint use a JSON POST body, with the SPARQL qu
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `query` | `string` | Yes | A valid SPARQL 1.1 SELECT query, prefixes must be declared explicitly |
+| `query` | `string` | Yes | A valid SPARQL 1.1 query. Supported query forms include `[SELECT](https://www.w3.org/TR/sparql11-query/#select)`, `[ASK](https://www.w3.org/TR/sparql11-query/#ask)`, `[CONSTRUCT](https://www.w3.org/TR/sparql11-query/#construct)` and `[DESCRIBE](https://www.w3.org/TR/sparql11-query/#describe)`. Prefixes must be declared explicitly |
 | `bbox` | `[float, float, float, float]` | No | Bounding box as `[min_lon, min_lat, max_lon, max_lat]` in WGS84. Default: `[-180.0, -90.0, 180.0, 90.0]` |
 | `temporal` | `[string, string]` | No | Temporal range as `["YYYY-MM-DD", "YYYY-MM-DD"]` (begin, end inclusive). Default: `['0001-01-01', '2038-01-19']` |
 | `licenses` | `[string, ...]` | No | SPDX license identifiers to restrict which datasets are loaded, see the [SPDX License List](https://spdx.org/licenses/). Default: `None` |
@@ -25,9 +25,20 @@ Requests against the `/sparql` endpoint use a JSON POST body, with the SPARQL qu
 - `temporal`: must contain exactly 2 ISO 8601 dates (`YYYY-MM-DD`), with `begin ≤ end`.
 - `licenses`: no format validation. Values are matched against the `license_id` field in dataset metadata, which is expected to be a valid SPDX license identifier.
 
-**Response** (`application/sparql-results+json`)
+**Response**
 
-Results follow the standard [SPARQL 1.1 Query Results JSON format](https://www.w3.org/TR/sparql11-results-json/):
+The response format depends on the SPARQL query form used in the request:
+
+| Query form | `Content-Type` | Format |
+|---|---|---|
+| `SELECT`, `ASK` | `application/sparql-results+json` | [SPARQL 1.1 Query Results JSON](https://www.w3.org/TR/sparql11-results-json/) |
+| `CONSTRUCT`, `DESCRIBE` | `text/turtle` | [RDF 1.1 Turtle](https://www.w3.org/TR/turtle/) |
+
+No `Accept` header is required or considered on the request, the response format is determined solely by the query form used in `query`.
+
+`ASK` queries return the standard results JSON format with a top-level `boolean` field in place of `results.bindings`.
+
+*`SELECT` / `ASK` example (`application/sparql-results+json`):*
 
 ```json
 {
@@ -43,9 +54,18 @@ Results follow the standard [SPARQL 1.1 Query Results JSON format](https://www.w
 }
 ```
 
+*`CONSTRUCT` / `DESCRIBE` example (`text/turtle`):*
+
+```turtle
+@prefix dwc: <http://rs.tdwg.org/dwc/terms/> .
+
+<https://biobang.org/occurrence/abc123>
+    dwc:scientificName "Acanthurus mata" .
+```
+
 **Caching**
 
-Responses are cached in Valkey. The cache key is derived from the set of matched dataset IDs and the SPARQL query text. Two requests with different bounding boxes that resolve to the same dataset combination will share cache entries for identical queries. Cache TTL is controlled by the `TTL_VAL` environment variable (default: 1 week).
+Responses are cached in Valkey. The cache key is derived from the set of matched dataset IDs and the SPARQL query text. The query form itself is not part of the key, since the query text already determines it. Two requests with different bounding boxes that resolve to the same dataset combination will share cache entries for identical queries. Cache TTL is controlled by the `TTL_VAL` environment variable (default: 1 week).
 
 **Cold start**
 
