@@ -21,7 +21,7 @@ This project takes a different approach: data tables contained in each DwC-DP ar
 
 ## Usage
 
-The application brings the semantic expressivity of [RDF](https://www.w3.org/TR/rdf11-concepts/) and [the SPARQL Query Language](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) to users, letting them declare exactly the data they need across related entities. For example, the following query retrieves occurrences of Antarctic lanternfish (*Electrona antarctica*) and their life stage, linked to material entities as evidence, along with the material entity's disposition, preparations, the event date, and the recording agent:
+The application brings the semantic expressivity of [the RDF data model](https://www.w3.org/TR/rdf11-concepts/) and [the SPARQL Query Language](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) to users, letting them declare exactly the data they need across related entities. For example, the following [SELECT](https://www.w3.org/TR/sparql11-query/#select) query retrieves occurrences of Antarctic lanternfish (*Electrona antarctica*) and their life stage, linked to material entities as evidence, along with the material entity's disposition, preparations, the event date, and the recording agent:
 
 ```sparql
 PREFIX dcterms: <http://purl.org/dc/terms/>
@@ -101,7 +101,16 @@ graph LR
 
 As this example illustrates, biodiversity data is inherently graph-structured, with rich relationships between occurrences, events, material entities, and agents that are difficult to represent in flat tables.
 
-Queries are submitted as a JSON payload over [HTTP](https://datatracker.ietf.org/doc/html/rfc9110) to the `/sparql` endpoint. The SPARQL query should be contained in the `query` field of the JSON payload.
+The full record for an occurrence (i.e. not just the variables declared in a `SELECT` clause) can be obtained in a machine-readable format with a [DESCRIBE](https://www.w3.org/TR/sparql11-query/#describe) query using the resource's URI/IRI (see [RFC 3986](https://www.rfc-editor.org/info/rfc3986/) and [RFC 3987](https://www.rfc-editor.org/info/rfc3987/)), such as:
+
+```sparql
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
+
+DESCRIBE <https://biobang.org/occurrence/BROKE_WEST_RMT_031_RMT8_217697_Larvae>
+```
+
+Queries are submitted as a JSON payload over [HTTP](https://datatracker.ietf.org/doc/html/rfc9110) to the `/sparql` endpoint. The SPARQL query should be contained in the `query` field of the JSON payload. The application supports all four [SPARQL query forms](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/#QueryForms) ([SELECT](https://www.w3.org/TR/sparql11-query/#select), [ASK](https://www.w3.org/TR/sparql11-query/#ask), [CONSTRUCT](https://www.w3.org/TR/sparql11-query/#construct) and [DESCRIBE](https://www.w3.org/TR/sparql11-query/#describe)). `SELECT` and `ASK` queries return results in [SPARQL 1.1 Query Results JSON](https://www.w3.org/TR/sparql11-results-json/), whereas `CONSTRUCT` and `DESCRIBE` queries return an RDF graph  in [RDF 1.1 Turtle](https://www.w3.org/TR/turtle/) format. See the [API reference](/docs/api.md) for the full request/response specification.
 
 The request body can also include `bbox`, `temporal`, and `licenses` fields to narrow which datasets are loaded before the query runs, restricting the result, for instance, to only datasets that consider South American records from 2000 to 2015 and published under CC-BY-NC-4.0. See the [API reference](/docs/api.md) for the full request/response specification.
 
@@ -125,7 +134,7 @@ curl -X POST https://data.qcbs.ca/sparql \
   -d '{"query": "PREFIX dcterms: <http://purl.org/dc/terms/> PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/> SELECT ?lifeStage ?eventDate ?eventType ?disposition ?preparations ?preferredAgentName ?agentType WHERE { ?occ a dwc:Occurrence ; dwc:scientificName \"Electrona antarctica\" ; dwc:lifeStage ?lifeStage ; dwcdp:happenedDuring ?evt ; dwcdp:recordedBy ?agt . ?evt a dwc:Event ; dwc:eventDate ?eventDate ; dwc:eventType ?eventType . ?mat a dwc:MaterialEntity ; dwc:disposition ?disposition ; dwc:preparations ?preparations ; dwcdp:evidenceFor ?occ ; dwcdp:collectedDuring ?evt . ?agt a dcterms:Agent ; dcterms:title ?preferredAgentName ; dwc:agentType ?agentType . } LIMIT 10"}'
 ```
 
-The returned results will follow the standard [SPARQL 1.1 Query Results JSON format](https://www.w3.org/TR/sparql11-results-json/). The above command can be adapted to your favorite language and HTTP request library (e.g. [Requests](https://requests.readthedocs.io/en/latest/) in Python) or command-line tool (e.g. [Wget](https://www.gnu.org/software/wget/)).
+The returned results will follow the standard [SPARQL 1.1 Query Results JSON format](https://www.w3.org/TR/sparql11-results-json/). The above command can be adapted to your favorite language and HTTP request library (e.g. [Requests](https://requests.readthedocs.io/en/latest/) in Python) or command-line tool (e.g. [Wget](https://www.gnu.org/software/wget/)). The same request pattern applies to other query forms, only the `query` field's value needs to be changed.
 
 More information about the considered datasets can be obtained by considering the metadata catalog, where full dataset EML data can be requested in JSON-LD format. For example, metadata about the BROKE-West dataset can be obtained by visiting [https://data.qcbs.ca/metadata-api/dataset/broke-west-fish](https://data.qcbs.ca/metadata-api/dataset/broke-west-fish).
 
