@@ -118,7 +118,7 @@ Each generated context also produces a citations file listing the source dataset
 
 ## Live instance
 
-A live instance of the application is running, covering around 50 datasets across various domains, downloaded from [GBIF](https://www.gbif.org) and converted to the exploded Darwin Core Data Package format described in the [starter guide](/docs/starter.md) documentation. It is fully queryable and requires no installation or deployment.
+A live instance of the application is running, covering around 50 datasets across various domains, downloaded from [GBIF](https://www.gbif.org) and converted to the exploded Darwin Core Data Package format described in the [starter guide](/docs/starter.md) documentation. See the [dataset information document](/docs/datasets.md) for more information about the datasets available. It is fully queryable and requires no installation or deployment.
 
 The live instance exposes the following services/endpoints:
 
@@ -165,3 +165,4 @@ Additional, more detailed documentation can be found in the [`docs/`](/docs/) di
   - [Ontology and mappings](/docs/ontology.md), describing the Darwin Core OWL ontology and OBDA mapping conventions.
   - [MCP server](/docs/mcp.md), describing a natural language interface via the Model Context Protocol.
   - [Starter guide](/docs/starter.md), for help regarding how to prepare and host Darwin Core Data Packages for use with the application.
+  - [Datasets info](/docs/datasets.md), for a brief summary of the datasets contained in the live instance of the application.
