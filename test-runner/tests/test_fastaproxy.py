@@ -257,7 +257,7 @@ def test_temporal_start_after_end():
     body = res.json()
 
     assert body["detail"][0]["type"] == "value_error"
-    assert body["detail"][0]["loc"] == ["body","temporal"]
+    assert body["detail"][0]["loc"] == ["body", "temporal"]
     assert "begin_date must be <= end_date" in body["detail"][0]["msg"]
 
 
@@ -278,7 +278,7 @@ def test_invalid_sparql_syntax():
     res = httpx.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
-            "query": "SPARQL IS SELECT * FROM FUN",
+            "query": "SPARQL IS SELECT * FROM FUN;",
         },
         timeout=TIMEOUT_VAL,
     )
@@ -316,7 +316,7 @@ def test_sparql_too_short_bbox():
     body = res.json()
 
     assert body["detail"][0]["type"] == "value_error"
-    assert body["detail"][0]["loc"] == ["body","bbox"]
+    assert body["detail"][0]["loc"] == ["body", "bbox"]
     assert "Spatial range bbox must have exactly 4 values" in body["detail"][0]["msg"]
 
 
@@ -335,7 +335,7 @@ def test_sparql_too_long_bbox():
     body = res.json()
 
     assert body["detail"][0]["type"] == "value_error"
-    assert body["detail"][0]["loc"] == ["body","bbox"]
+    assert body["detail"][0]["loc"] == ["body", "bbox"]
     assert "Spatial range bbox must have exactly 4 values" in body["detail"][0]["msg"]
 
 
@@ -354,7 +354,7 @@ def test_sparql_too_short_temporal():
     body = res.json()
 
     assert body["detail"][0]["type"] == "value_error"
-    assert body["detail"][0]["loc"] == ["body","temporal"]
+    assert body["detail"][0]["loc"] == ["body", "temporal"]
     assert "Temporal range must have exactly 2 values" in body["detail"][0]["msg"]
 
 
@@ -373,7 +373,7 @@ def test_sparql_too_long_temporal():
     body = res.json()
 
     assert body["detail"][0]["type"] == "value_error"
-    assert body["detail"][0]["loc"] == ["body","temporal"]
+    assert body["detail"][0]["loc"] == ["body", "temporal"]
     assert "Temporal range must have exactly 2 values" in body["detail"][0]["msg"]
 
 
@@ -423,7 +423,7 @@ def test_cache_second_request_is_faster():
     assert first_query.status_code == 200
     assert second_query.status_code == 200
 
-    # WARN: If rerun, the cache is already set, so this test will fail
+    # WARN: If rerun, the cache is already set, so this test will fail. Consider running `valkey-cli` FLUSHDB.
     #
     assert second_duration < first_duration / 2.0, f"Cache did not accelerate response: first={first_duration:.2f}s second={second_duration:.2f}s"
 

@@ -110,7 +110,7 @@ The flow of data in the application can be summarized by the following sequence:
 
   5. fastaproxy calls `registry.get_or_create(dataset_ids)`
     → if `ontop-{context_hash}` is running and healthy: reuse
-    → else: generate per-context `.properties` and `.obda` files,
+    → else: generate per-context `.properties` `.obda` and `.json` files,
             docker run `ontop-{context_hash}`,
             wait for `/actuator/health` → 200
 

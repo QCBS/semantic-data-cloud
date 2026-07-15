@@ -38,7 +38,7 @@ No `Accept` header is required or considered on the request, the response format
 
 `ASK` queries return the standard results JSON format with a top-level `boolean` field in place of `results.bindings`.
 
-*`SELECT` / `ASK` example (`application/sparql-results+json`):*
+**`SELECT`** / **`ASK`** example (`application/sparql-results+json`):*
 
 ```json
 {
@@ -46,20 +46,26 @@ No `Accept` header is required or considered on the request, the response format
   "results": {
     "bindings": [
       {
-        "subj": { "type": "uri", "value": "https://biobang.org/occurrence/abc123" },
-        "sciName": { "type": "literal", "value": "Acanthurus mata" }
+        "subj": {
+          "type": "uri",
+          "value": "https://biobang.org/occurrence/abc123"
+        },
+        "sciName": {
+          "type": "literal",
+          "value": "Acanthurus mata"
+        }
       }
     ]
   }
 }
 ```
 
-*`CONSTRUCT` / `DESCRIBE` example (`text/turtle`):*
+**`CONSTRUCT`** / **`DESCRIBE`** example (`text/turtle`):*
 
 ```turtle
 @prefix dwc: <http://rs.tdwg.org/dwc/terms/> .
 
-<https://biobang.org/occurrence/abc123>
+<https://biobang.org/occurrence/abc123> a dwc:Occurrence ;
     dwc:scientificName "Acanthurus mata" .
 ```
 
@@ -107,8 +113,14 @@ The EML document as JSON-LD, augmented with an `assets` array and a `self` link:
   "additionalMetadata": { "..." : "..." },
   "dataset": { "..." : "..." },
   "assets": [
-    { "href": "https://storage.example.org/datasets/dataset-id/occurrence.parquet", "mimetype": "application/vnd.apache.parquet" },
-    { "href": "https://storage.example.org/datasets/dataset-id/event.parquet", "mimetype": "application/vnd.apache.parquet" }
+    {
+      "href": "https://storage.example.org/datasets/dataset-id/occurrence.parquet",
+      "mimetype": "application/vnd.apache.parquet"
+    },
+    {
+      "href": "https://storage.example.org/datasets/dataset-id/event.parquet",
+      "mimetype": "application/vnd.apache.parquet"
+    }
   ],
   "self": "http://localhost:7788/dataset/dataset-id"
 }
@@ -176,7 +188,11 @@ Return citation strings for a list of dataset identifiers.
 
 ```json
 {
-  "dataset_names": ["dataset-a", "dataset-b", "..."]
+  "dataset_names": [
+    "dataset-a",
+    "dataset-b",
+    "..."
+  ]
 }
 ```
 
