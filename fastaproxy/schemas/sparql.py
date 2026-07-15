@@ -43,5 +43,3 @@ class QueryRequest(BaseModel):
         if begin > end:
             raise ValueError("begin_date must be <= end_date")
         return value
-
-
