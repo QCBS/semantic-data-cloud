@@ -92,36 +92,34 @@ class ContainerRegistry:
         raise TimeoutError(f"Ontop container at {ontop_url} did not become healthy within {ONTOP_STARTUP_TIMEOUT}s!")
 
     def _write_properties(self, ctx_hash: str) -> Path:
-        template_path = MAPPING_DIR / "dwcowl.properties"
-
-        template = template_path.read_text()
+        template = (MAPPING_DIR / "dwcowl.properties").read_text()
 
         props = template.replace("dwcowl", ctx_hash)
 
         props_path = DB_DIR / f"{ctx_hash}.properties"
         props_path.write_text(props)
+
         return props_path
 
     def _write_obda(self, ctx_hash: str) -> Path:
-        template_path = MAPPING_DIR / "dwcowl.obda"
+        template = (MAPPING_DIR / "dwcowl.obda").read_text()
 
-        template = template_path.read_text()
         obda = template.replace("dwcowl", f'"{ctx_hash}"')
 
         obda_path = DB_DIR / f"{ctx_hash}.obda"
         obda_path.write_text(obda)
+
         return obda_path
 
     def _write_metadata(self, ctx_hash: str) -> Path:
-
         template = (MAPPING_DIR / "dwcowl.json").read_text()
 
         metadata = template.replace('\\"dwcowl\\"', f'\\"{ctx_hash}\\"')
 
-        path = DB_DIR / f"{ctx_hash}.json"
-        path.write_text(metadata)
+        metadata_path = DB_DIR / f"{ctx_hash}.json"
+        metadata_path.write_text(metadata)
 
-        return path
+        return metadata_path
 
     def _start(self, ctx_hash: str) -> ContainerInfo:
         props_path = self._write_properties(ctx_hash)
