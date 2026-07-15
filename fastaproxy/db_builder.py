@@ -44,8 +44,9 @@ def _merge_assets(tables: dict[str, list[str]], dataset_json: dict) -> None:
         if name in tables:
             tables[name].append(href)
 
+
 def _get_datasets_citations(dataset_ids: list[str], ctx_hash: str) -> None:
-    citation_file = DB_DIR / f"{ctx_hash}-citations.txt"
+    citation_file = DB_DIR / f"{ctx_hash}.txt"
 
     if not citation_file.exists():
         citation_resp = httpx.post(

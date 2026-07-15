@@ -118,7 +118,7 @@ class ContainerRegistry:
 
         metadata = template.replace('\\"dwcowl\\"', f'\\"{ctx_hash}\\"')
 
-        path = DB_DIR / f"{ctx_hash}.metadata.json"
+        path = DB_DIR / f"{ctx_hash}.json"
         path.write_text(metadata)
 
         return path
