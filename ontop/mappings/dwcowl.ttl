@@ -4757,6 +4757,12 @@ minext:name rdf:type owl:DatatypeProperty ;
                                 skos:example "ISDsoil1" .
 
 
+###  https://w3id.org/mixs/0001225
+<https://w3id.org/mixs/0001225> rdf:type owl:DatatypeProperty ;
+                                rdfs:label "Sample Collection Method" ;
+                                skos:definition "The method employed for collecting the sample." .
+
+
 ###  https://w3id.org/mixs/0001320
 <https://w3id.org/mixs/0001320> rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Taxonomy ID of DNA Sample" ;
