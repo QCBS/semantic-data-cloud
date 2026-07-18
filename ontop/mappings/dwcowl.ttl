@@ -701,8 +701,8 @@ ggbn:methodDeterminationConcentrationAndRatios rdf:type owl:DatatypeProperty ;
 ###  http://data.ggbn.org/schemas/ggbn/terms/ratioOfAbsorbance260_230
 ggbn:ratioOfAbsorbance260_230 rdf:type owl:DatatypeProperty ;
                               rdfs:range xsd:decimal ;
-                              rdfs:label "Ratio Of Absorbance 260/230 (DNA)" ,
-                                         "Ratio of absorbance at 260 nm and 230 nm assessing DNA purity (mostly secondary measure, indicates mainly EDTA, carbohydrates, phenol), (DNA samples only)." ;
+                              rdfs:label "Ratio Of Absorbance 260/230 (DNA)" ;
+                              skos:definition "Ratio of absorbance at 260 nm and 230 nm assessing DNA purity (mostly secondary measure, indicates mainly EDTA, carbohydrates, phenol), (DNA samples only)." ;
                               skos:example 1.89 .
 
 
@@ -750,8 +750,8 @@ xmp:MetadataDate rdf:type owl:DatatypeProperty ;
 ###  http://ns.adobe.com/xap/1.0/Rating
 xmp:Rating rdf:type owl:DatatypeProperty ;
            rdfs:range xsd:string ;
-           rdfs:label "A user-assigned rating for this file. The value shall be -1 or in the range [0..5], where -1 indicates \\\"rejected\\\" and 0 indicates \\\"unrated\\\". If xmp:Rating is not present, a value of 0 should be assumed." ,
-                      "Rating" ;
+           rdfs:label "Rating" ;
+           skos:definition "A user-assigned rating for this file. The value shall be -1 or in the range [0..5], where -1 indicates \"rejected\" and 0 indicates \"unrated\". If xmp:Rating is not present, a value of 0 should be assumed." ;
            skos:example "1" ,
                         "5" .
 
@@ -880,8 +880,8 @@ bibo:pages rdf:type owl:DatatypeProperty ;
 
 ###  http://purl.org/ontology/bibo/volume
 bibo:volume rdf:type owl:DatatypeProperty ;
-            rdfs:label "A volume number of a dcterms:BibliographicResource." ,
-                       "Volume" .
+            rdfs:label "Volume" ;
+            skos:definition "A volume number of a dcterms:BibliographicResource." .
 
 
 ###  http://purl.org/ontology/mo/sample_rate
@@ -1008,8 +1008,8 @@ miqe:baselineValue rdf:type owl:DatatypeProperty ;
 ###  http://rs.gbif.org/terms/miqe/contaminationAssessment
 miqe:contaminationAssessment rdf:type owl:DatatypeProperty ;
                              rdfs:label "Contamination Assessment" ;
-                             skos:definition "true"^^xsd:boolean ,
-                                             "Whether DNA or RNA contamination assessment was done or not." .
+                             skos:definition "Whether DNA or RNA contamination assessment was done or not." ;
+                             skos:example "true"^^xsd:boolean .
 
 
 ###  http://rs.gbif.org/terms/miqe/estimatedNumberOfCopies
@@ -1088,12 +1088,6 @@ miqe:thresholdQuantificationCycle rdf:type owl:DatatypeProperty ;
                                   skos:example 0.3 .
 
 
-###  http://rs.tdwg.org/ac/terms/MetadataLanguageLiteral
-ac:MetadataLanguageLiteral rdf:type owl:DatatypeProperty ;
-                           rdfs:label "Metadata Language Literal" ;
-                           skos:definition "Language of description and other metadata (but not necessarily of the image itself) represented as an ISO639-2 three letter language code." .
-
-
 ###  http://rs.tdwg.org/ac/terms/attributionLinkURL
 ac:attributionLinkURL rdf:type owl:DatatypeProperty ;
                       rdfs:label "Attribution Link URL" ;
@@ -1167,16 +1161,16 @@ ac:frameRate rdf:type owl:DatatypeProperty ;
 ac:freqHigh rdf:type owl:DatatypeProperty ;
             rdfs:range xsd:decimal ;
             rdfs:label "Upper Frequency Bound" ;
-            skos:definition 60 ,
-                            "The highest frequency of the phenomena reflected in the multimedia item or Region of Interest." .
+            skos:definition "The highest frequency of the phenomena reflected in the multimedia item or Region of Interest." ;
+            skos:example 60 .
 
 
 ###  http://rs.tdwg.org/ac/terms/freqLow
 ac:freqLow rdf:type owl:DatatypeProperty ;
            rdfs:range xsd:decimal ;
            rdfs:label "Lower Frequency Bound" ;
-           skos:definition 60 ,
-                           "The lowest frequency of the phenomena reflected in the multimedia item or Region of Interest." .
+           skos:definition "The lowest frequency of the phenomena reflected in the multimedia item or Region of Interest." ;
+           skos:example 60 .
 
 
 ###  http://rs.tdwg.org/ac/terms/fundingAttribution
@@ -1267,8 +1261,8 @@ ac:metadataCreatorLiteral rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/ac/terms/metadataLanguageLiteral
 ac:metadataLanguageLiteral rdf:type owl:DatatypeProperty ;
-                           rdfs:label "Language of description and other metadata (but not necessarily of the image itself) represented as an ISO639-2 three letter language code." ,
-                                      "Metadata Language Literal" .
+                           rdfs:label "Metadata Language Literal" ;
+                           skos:definition "Language of description and other metadata (but not necessarily of the image itself) represented as an ISO639-2 three letter language code." .
 
 
 ###  http://rs.tdwg.org/ac/terms/metadataProvider
@@ -1717,8 +1711,8 @@ dwc:assertionType rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/dwc/terms/assertionUnit
 dwc:assertionUnit rdf:type owl:DatatypeProperty ;
-                  rdfs:label "Assertion Unit" ,
-                             "Unit associated with the value in dwc:assertionValue or dwc:assertionValueNumeric." ;
+                  rdfs:label "Assertion Unit" ;
+                  skos:definition "Unit associated with the value in dwc:assertionValue or dwc:assertionValueNumeric." ;
                   skos:example "g" ,
                                "m" ,
                                "ml" ,
@@ -2001,16 +1995,16 @@ dwc:day rdf:type owl:DatatypeProperty ;
 dwc:decimalLatitude rdf:type owl:DatatypeProperty ;
                     rdfs:range xsd:decimal ;
                     rdfs:label "Decimal Latitude" ;
-                    skos:definition -41.0983423 ,
-                                    "A geographic latitude (in decimal degrees, using the spatial reference system given in dwc:geodeticDatum) of a dcterms:Location." .
+                    skos:definition "A geographic latitude (in decimal degrees, using the spatial reference system given in dwc:geodeticDatum) of a dcterms:Location." ;
+                    skos:example -41.0983423 .
 
 
 ###  http://rs.tdwg.org/dwc/terms/decimalLongitude
 dwc:decimalLongitude rdf:type owl:DatatypeProperty ;
                      rdfs:range xsd:decimal ;
                      rdfs:label "Decimal Longitude" ;
-                     skos:definition -121.1761111 ,
-                                     "A geographic longitude (in decimal degrees, using the spatial reference system given in dwc:geodeticDatum) of a dcterms:Location." .
+                     skos:definition "A geographic longitude (in decimal degrees, using the spatial reference system given in dwc:geodeticDatum) of a dcterms:Location." ;
+                     skos:example -121.1761111 .
 
 
 ###  http://rs.tdwg.org/dwc/terms/degreeOfEstablishment
@@ -2205,8 +2199,8 @@ dwc:eventDate rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/dwc/terms/eventEffort
 dwc:eventEffort rdf:type owl:DatatypeProperty ;
-                rdfs:label "An amount of effort expended during a dwc:Event." ,
-                           "Event Effort" ;
+                rdfs:label "Event Effort" ;
+                skos:definition "An amount of effort expended during a dwc:Event." ;
                 skos:example "10 km by foot" ,
                              "10 observer-hours" ,
                              "30 km by car" ,
@@ -2222,8 +2216,8 @@ dwc:eventID rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/dwc/terms/eventReferences
 dwc:eventReferences rdf:type owl:DatatypeProperty ;
-                    rdfs:label "A list (concatenated and separated) of dcterms:BibliographicResources associated with a dwc:Event." ,
-                               "Event References" ;
+                    rdfs:label "Event References" ;
+                    skos:definition "A list (concatenated and separated) of dcterms:BibliographicResources associated with a dwc:Event." ;
                     skos:example "Christopher J. Conroy, Jennifer L. Neuwald. 2008. Phylogeographic study of the California vole, Microtus californicus Journal of Mammalogy, 89(3):755-767." ,
                                  "Steven R. Hoofer and Ronald A. Van Den Bussche. 2001. Phylogenetic Relationships of Plecotine Bats and Allies Based on Mitochondrial Ribosomal Sequences. Journal of Mammalogy 82(1):131-137. | Walker, Faith M., Jeffrey T. Foster, Kevin P. Drees, Carol L. Chambers. 2014. Spotted bat (Euderma maculatum) microsatellite discovery using illumina sequencing. Conservation Genetics Resources" ,
                                  "http://www.sciencemag.org/cgi/content/abstract/322/5899/261" .
@@ -2282,8 +2276,8 @@ dwc:family rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/feedbackURL
 dwc:feedbackURL rdf:type owl:DatatypeProperty ;
                 rdfs:label "Feedback URL" ;
-                skos:definition "A uniform resource locator (URL) that points to a webpage on which a form may be submitted to gather feedback about the record." ,
-                                "https://example.com/new?title=New+issue&body=This+comment+is+about+CAN12345" .
+                skos:definition "A uniform resource locator (URL) that points to a webpage on which a form may be submitted to gather feedback about the record." ;
+                skos:example "https://example.com/new?title=New+issue&body=This+comment+is+about+CAN12345" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/fieldNotes
@@ -2380,8 +2374,8 @@ dwc:geologicalContextID rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/georeferenceProtocol
 dwc:georeferenceProtocol rdf:type owl:DatatypeProperty ;
                          rdfs:label "Georeference Protocol" ;
-                         skos:definition "A description or reference to a dwc:Protocol used to determine a spatial footprint, coordinates, and uncertainties." ,
-                                         "Georeferencing Quick Reference Guide (Zermoglio et al. 2020, https://doi.org/10.35035/e09p-h128)" .
+                         skos:definition "A description or reference to a dwc:Protocol used to determine a spatial footprint, coordinates, and uncertainties." ;
+                         skos:example "Georeferencing Quick Reference Guide (Zermoglio et al. 2020, https://doi.org/10.35035/e09p-h128)" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/georeferenceProtocolID
@@ -2655,7 +2649,7 @@ dwc:latestAgeOrHighestStage rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/latestEonOrHighestEonothem
 dwc:latestEonOrHighestEonothem rdf:type owl:DatatypeProperty ;
                                rdfs:label "Latest Eon Or Highest Eonothem" ;
-                               skos:definition "he full name of the latest possible geochronologic eon or highest chronostratigraphic eonothem or the informal name (Precambrian) attributable to the stratigraphic horizon from which the dwc:MaterialEntity was collected." ;
+                               skos:definition "The full name of the latest possible geochronologic eon or highest chronostratigraphic eonothem or the informal name (Precambrian) attributable to the stratigraphic horizon from which the dwc:MaterialEntity was collected." ;
                                skos:example "Phanerozoic" ,
                                             "Proterozoic" .
 
@@ -2767,25 +2761,25 @@ dwc:materialEntityRemarks rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/materialEntityType
 dwc:materialEntityType rdf:type owl:DatatypeProperty ;
                        rdfs:label "Material Entity Type" ;
-                       rdfs:seeAlso "Anthropogenic Artifact" ,
-                                    "Blood sampling cards" ,
-                                    "Macrofossil" ,
-                                    "Mesofossil" ,
-                                    "Microfossil" ,
-                                    "Oversized fossil" ,
-                                    "Pinned object/specimen" ,
-                                    "Spore print" ,
-                                    "Taxidermy mount" ;
                        skos:definition "A narrow category that best matches the nature of a dwc:MaterialEntity." ;
-                       skos:example "Compound Specimen" ,
+                       skos:example "Anthropogenic Artifact" ,
+                                    "Blood sampling cards" ,
+                                    "Compound Specimen" ,
                                     "Core" ,
                                     "Cut/polished gemstone" ,
                                     "Environmental sample" ,
                                     "Macro-object" ,
+                                    "Macrofossil" ,
+                                    "Mesofossil" ,
                                     "Micro-object" ,
+                                    "Microfossil" ,
                                     "Microscope slide" ,
                                     "Mixed Materials" ,
-                                    "Oversized object" .
+                                    "Oversized fossil" ,
+                                    "Oversized object" ,
+                                    "Pinned object/specimen" ,
+                                    "Spore print" ,
+                                    "Taxidermy mount" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/materialReferences
@@ -3338,25 +3332,6 @@ dwc:relationshipRemarks rdf:type owl:DatatypeProperty ;
                         skos:definition "Comments or notes about a dwc:ResourceRelationship." .
 
 
-###  http://rs.tdwg.org/dwc/terms/relationshipType
-dwc:relationshipType rdf:type owl:DatatypeProperty ;
-                     rdfs:label "Relationship Of Resource" ;
-                     skos:definition "The relationship of the subject (identified by dwc:resourceID) to the object (identified by dwc:relatedResourceID)." ;
-                     skos:example "\\on slab with" ,
-                                  "duplicate of" ,
-                                  "host of" ,
-                                  "located within" ,
-                                  "mother of" ,
-                                  "offspring of" ,
-                                  "parasite of" ,
-                                  "pollinated by members of taxon" ,
-                                  "pollinated specific plant" ,
-                                  "pollinator of members of taxon" ,
-                                  "same as" ,
-                                  "sibling of" ,
-                                  "valid synonym of" .
-
-
 ###  http://rs.tdwg.org/dwc/terms/reproductiveCondition
 dwc:reproductiveCondition rdf:type owl:DatatypeProperty ;
                           rdfs:label "Reproductive Condition" ;
@@ -3684,8 +3659,7 @@ dwc:verbatimCoordinates rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/verbatimDepth
 dwc:verbatimDepth rdf:type owl:DatatypeProperty ;
                   rdfs:label "Verbatim Depth" ;
-                  skos:definition "The original description of the depth below the local surface." ,
-                                  "Verbatim Depth" ;
+                  skos:definition "The original description of the depth below the local surface." ;
                   skos:example "100-200 m" .
 
 
@@ -3774,16 +3748,16 @@ dwc:vernacularName rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/verticalDatum
 dwc:verticalDatum rdf:type owl:DatatypeProperty ;
                   rdfs:label "Vertical Datum" ;
-                  skos:definition "EGM2008" ,
-                                  "EGM84" ,
-                                  "EGM96" ,
-                                  "EPSG:7030" ,
-                                  "PGM2000A" ,
-                                  "PGM2004" ,
-                                  "PGM2006" ,
-                                  "PGM2007" ,
-                                  "he vertical datum used as the reference upon which the values in the elevation terms are based." ,
-                                  "not recorded" .
+                  skos:definition "The vertical datum used as the reference upon which the values in the elevation terms are based." ;
+                  skos:example "EGM2008" ,
+                               "EGM84" ,
+                               "EGM96" ,
+                               "EPSG:7030" ,
+                               "PGM2000A" ,
+                               "PGM2004" ,
+                               "PGM2006" ,
+                               "PGM2007" ,
+                               "not recorded" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/vitality
@@ -3813,13 +3787,6 @@ dwc:year rdf:type owl:DatatypeProperty ;
          skos:definition "The four-digit year in which the dwc:Event occurred, according to the Common Era Calendar." ;
          skos:example 1160 ,
                       2008 .
-
-
-###  http://rs.tdwg.org/dwcdp/terms/referenceType
-dwcdp:referenceType rdf:type owl:DatatypeProperty ;
-                    rdfs:comment "Recommended best practice is to use a controlled vocabulary." ;
-                    rdfs:label "Reference Type" ;
-                    skos:definition "A category that best matches the nature of a dcterms:BibliographicResource." .
 
 
 ###  http://rs.tdwg.org/eco/terms/absentTaxa
@@ -3895,8 +3862,8 @@ eco:geospatialScopeAreaUnit rdf:type owl:DatatypeProperty ;
 eco:geospatialScopeAreaValue rdf:type owl:DatatypeProperty ;
                              rdfs:range xsd:decimal ;
                              rdfs:label "Geospatial Scope Area Value" ;
-                             skos:definition 25 ,
-                                             "The numeric value for the total area of a geospatial scope of a dwc:Event." .
+                             skos:definition "The numeric value for the total area of a geospatial scope of a dwc:Event." ;
+                             skos:example 25 .
 
 
 ###  http://rs.tdwg.org/eco/terms/hasMaterialSamples
@@ -4043,7 +4010,7 @@ eco:reportedExtremeConditions rdf:type owl:DatatypeProperty ;
 eco:reportedWeather rdf:type owl:DatatypeProperty ;
                     rdfs:label "Reported Weather" ;
                     skos:definition "A list of weather or climatic conditions present during a dwc:Event." ;
-                    skos:example "{\\\"minimumTemperatureInDegreesFahrenheit\\\": 18, \\\"maximumTemperatureInDegreesFahrenheit\\\": 32}" .
+                    skos:example "{\"minimumTemperatureInDegreesFahrenheit\": 18, \"maximumTemperatureInDegreesFahrenheit\": 32}" .
 
 
 ###  http://rs.tdwg.org/eco/terms/samplingEffortProtocol
@@ -4284,8 +4251,8 @@ minext:name rdf:type owl:DatatypeProperty ;
 ###  https://w3id.org/mixs/0000023
 <https://w3id.org/mixs/0000023> rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Extrachromosomal Elements" ;
-                                skos:definition 5 ,
-                                                "Do plasmids exist of significant phenotypic consequence (e.g. ones that determine virulence or antibiotic resistance). Megaplasmids? Other plasmids (borrelia has 15+ plasmids)." .
+                                skos:definition "Do plasmids exist of significant phenotypic consequence (e.g. ones that determine virulence or antibiotic resistance). Megaplasmids? Other plasmids (borrelia has 15+ plasmids)." ;
+                                skos:example 5 .
 
 
 ###  https://w3id.org/mixs/0000024
@@ -4708,9 +4675,9 @@ minext:name rdf:type owl:DatatypeProperty ;
 
 ###  https://w3id.org/mixs/0000083
 <https://w3id.org/mixs/0000083> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Predicted Genome Structure" ,
-                                           "non-segmented" ;
-                                skos:definition "Expected structure of the viral genome." .
+                                rdfs:label "Predicted Genome Structure" ;
+                                skos:definition "Expected structure of the viral genome." ;
+                                skos:example "non-segmented" .
 
 
 ###  https://w3id.org/mixs/0000084
@@ -5206,7 +5173,8 @@ dwc:UsagePolicy rdf:type owl:Class ;
 
 ###  http://www.w3.org/ns/adms#Identifier
 adms:Identifier rdf:type owl:Class ;
-                rdfs:label "Identifier" .
+                rdfs:label "Identifier" ;
+                skos:definition "This class is based on the UN/CEFACT Identifier complex type defined in See Section 5.8 of Core Components Data Type Catalogue Version 3.1 (http://www.unece.org/fileadmin/DAM/cefact/codesfortrade/CCTS/CCTS-DTCatalogueVersopm3p1.pdf)." .
 
 
 ###  Generated by the OWL API (version 4.5.25.2023-02-15T19:15:49Z) https://github.com/owlcs/owlapi
