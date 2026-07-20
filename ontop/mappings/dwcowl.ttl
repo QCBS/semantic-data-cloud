@@ -671,6 +671,141 @@ ecoiri:samplingEffortProtocol rdf:type owl:ObjectProperty ;
                               skos:definition "An identifier for a dwc:Protocol used to determine a eco:samplingEffortValue." .
 
 
+###  https://w3id.org/mixs/0000005
+<https://w3id.org/mixs/0000005> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Contamination Screening Input" ;
+                                skos:definition "The type of sequence data used as input." ;
+                                skos:example "https://w3id.org/mixs/ContamScreenInputEnum#contigs" .
+
+
+###  https://w3id.org/mixs/0000015
+<https://w3id.org/mixs/0000015> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Relationship To Oxygen" ;
+                                skos:definition "Is this organism an aerobe, anaerobe? Please note that aerobic and anaerobic are valid descriptors for microbial environments." ;
+                                skos:example "https://w3id.org/mixs/RelToOxygenEnum#anaerobe" .
+
+
+###  https://w3id.org/mixs/0000028
+<https://w3id.org/mixs/0000028> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Observed Biotic Relationship" ;
+                                skos:definition "Description of relationship(s) between the subject organism and other organism(s) it is associated with. E.g., parasite on species X; mutualist with species Y. The target organism is the subject of the relationship, and the other organism(s) is the object." ;
+                                skos:example "https://w3id.org/mixs/BioticRelationshipEnum#free%20living" .
+
+
+###  https://w3id.org/mixs/0000032
+<https://w3id.org/mixs/0000032> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Trophic Level" ;
+                                skos:definition "Trophic levels are the feeding position in a food chain. Microbes can be a range of producers (e.g. chemolithotroph)." ;
+                                skos:example "https://w3id.org/mixs/TrophicLevelEnum#heterotroph" .
+
+
+###  https://w3id.org/mixs/0000036
+<https://w3id.org/mixs/0000036> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Virus Enrichment Approach" ;
+                                skos:definition "List of approaches used to enrich the sample for viruses, if any." ;
+                                skos:example "https://w3id.org/mixs/VirusEnrichApprEnum#DNAse" ,
+                                             "https://w3id.org/mixs/VirusEnrichApprEnum#FeCl%20Precipitation" ,
+                                             "https://w3id.org/mixs/VirusEnrichApprEnum#filtration" ,
+                                             "https://w3id.org/mixs/VirusEnrichApprEnum#ultracentrifugation" .
+
+
+###  https://w3id.org/mixs/0000041
+<https://w3id.org/mixs/0000041> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Library Layout" ;
+                                skos:definition "Specify whether to expect single, paired, or other configuration of reads." ;
+                                skos:example "https://w3id.org/mixs/LibLayoutEnum#paired" .
+
+
+###  https://w3id.org/mixs/0000051
+<https://w3id.org/mixs/0000051> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Sequence Quality Check" ;
+                                skos:definition "Indicate if the sequence has been called by automatic systems (none) or undergone a manual editing procedure (e.g. by inspecting the raw data or chromatograms). Applied only for sequences that are not submitted to SRA,ENA or DRA" ;
+                                skos:example "https://w3id.org/mixs/SeqQualityCheckEnum#none" .
+
+
+###  https://w3id.org/mixs/0000053
+<https://w3id.org/mixs/0000053> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Taxonomic Identity Marker" ;
+                                skos:definition "The phylogenetic marker(s) used to assign an organism name to the SAG or MAG." ;
+                                skos:example "https://w3id.org/mixs/TaxIdentEnum#other" .
+
+
+###  https://w3id.org/mixs/0000055
+<https://w3id.org/mixs/0000055> rdf:type owl:ObjectProperty ;
+                                rdfs:label "WGA Amplification Approach" ;
+                                skos:definition "Method used to amplify genomic DNA in preparation for sequencing." ;
+                                skos:example "https://w3id.org/mixs/WgaAmpApprEnum#mda%20based" .
+
+
+###  https://w3id.org/mixs/0000056
+<https://w3id.org/mixs/0000056> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Assembly Quality" ;
+                                skos:definition "The assembly quality category is based on sets of criteria outlined for each assembly quality category." ;
+                                skos:example "https://w3id.org/mixs/AssemblyQualEnum#High-quality%20draft%20genome" .
+
+
+###  https://w3id.org/mixs/0000071
+<https://w3id.org/mixs/0000071> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Completeness Approach" ;
+                                skos:definition "The approach used to determine the completeness of a given genomic assembly, which would typically make use of a set of conserved marker genes or a closely related reference genome. For UViG completeness, include reference genome or group used, and contig feature suggesting a complete genome." ;
+                                skos:example "https://w3id.org/mixs/ComplApprEnum#other" .
+
+
+###  https://w3id.org/mixs/0000075
+<https://w3id.org/mixs/0000075> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Sorting Technology" ;
+                                skos:definition "Method used to sort/isolate cells or particles of interest." ;
+                                skos:example "https://w3id.org/mixs/SortTechEnum#optical%20manipulation" .
+
+
+###  https://w3id.org/mixs/0000076
+<https://w3id.org/mixs/0000076> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Method used to free DNA from interior of the cell(s) or particle(s)." ,
+                                           "Single Cell Or Viral Particle Lysis Approach" ;
+                                skos:example "https://w3id.org/mixs/ScLysisApproachEnum#enzymatic" .
+
+
+###  https://w3id.org/mixs/0000077
+<https://w3id.org/mixs/0000077> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Binning Parameters" ;
+                                skos:definition "The parameters that have been applied during the extraction of genomes from metagenomic datasets." ;
+                                skos:example "https://w3id.org/mixs/BinParamEnum#coverage" ,
+                                             "https://w3id.org/mixs/BinParamEnum#kmer" .
+
+
+###  https://w3id.org/mixs/0000080
+<https://w3id.org/mixs/0000080> rdf:type owl:ObjectProperty ;
+                                rdfs:label "MAG Coverage Software" ;
+                                skos:definition "Tool(s) used to determine the genome coverage if coverage is used as a binning parameter in the extraction of genomes from metagenomic datasets." ;
+                                skos:example "https://w3id.org/mixs/MagCovSoftwareEnum#bbmap" .
+
+
+###  https://w3id.org/mixs/0000082
+<https://w3id.org/mixs/0000082> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Predicted Genome Type" ;
+                                skos:definition "Type of genome predicted for the UViG." .
+
+
+###  https://w3id.org/mixs/0000083
+<https://w3id.org/mixs/0000083> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Predicted Genome Structure" ;
+                                skos:definition "Expected structure of the viral genome." ;
+                                skos:example "https://w3id.org/mixs/PredGenomeStrucEnum#non-segmented" .
+
+
+###  https://w3id.org/mixs/0000088
+<https://w3id.org/mixs/0000088> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Host Prediction Approach" ;
+                                skos:definition "Tool or approach used for host prediction" ;
+                                skos:example "https://w3id.org/mixs/HostPredApprEnum#CRISPR%20spacer%20match" .
+
+
+###  https://w3id.org/mixs/0001321
+<https://w3id.org/mixs/0001321> rdf:type owl:ObjectProperty ;
+                                rdfs:label "Negative Control Type" ;
+                                skos:definition "The substance or equipment used as a negative control in an investigation." .
+
+
 #################################################################
 #    Data properties
 #################################################################
@@ -4164,13 +4299,6 @@ minext:name rdf:type owl:DatatypeProperty ;
                                 skos:example "doi:10.1016/j.syapm.2018.01.009" .
 
 
-###  https://w3id.org/mixs/0000005
-<https://w3id.org/mixs/0000005> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Contamination Screening Input" ;
-                                skos:definition "The type of sequence data used as input." ;
-                                skos:example "contigs" .
-
-
 ###  https://w3id.org/mixs/0000006
 <https://w3id.org/mixs/0000006> rdf:type owl:DatatypeProperty ;
                                 rdfs:label "WGA Amplification Kit" ;
@@ -4204,13 +4332,6 @@ minext:name rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Environmental Medium" ;
                                 skos:definition "In this field, report which environmental material or materials (pipe separated) immediately surrounded your sample or specimen prior to sampling, using one or more subclasses of ENVO’s environmental material class: http://purl.obolibrary.org/obo/ENVO_00010483. Format (one term): termLabel [termID]; Format (multiple terms): termLabel [termID]|termLabel [termID]|termLabel [termID]. Example: Annotating a fish swimming in the upper 100 m of the Atlantic Ocean, consider: ocean water [ENVO:00002151]. Example: Annotating a duck on a pond consider: pond water [ENVO:00002228]|air ENVO_00002005. If needed, request new terms on the ENVO tracker, identified here: http://www.obofoundry.org/ontology/envo.html." ;
                                 skos:example "bluegrass field soil [ENVO:00005789]" .
-
-
-###  https://w3id.org/mixs/0000015
-<https://w3id.org/mixs/0000015> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Relationship To Oxygen" ;
-                                skos:definition "Is this organism an aerobe, anaerobe? Please note that aerobic and anaerobic are valid descriptors for microbial environments." ;
-                                skos:example "aerobe" .
 
 
 ###  https://w3id.org/mixs/0000016
@@ -4283,13 +4404,6 @@ minext:name rdf:type owl:DatatypeProperty ;
                                 skos:example "human, animal, plant, fungi, bacteria" .
 
 
-###  https://w3id.org/mixs/0000028
-<https://w3id.org/mixs/0000028> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Observed Biotic Relationship" ;
-                                skos:definition "Description of relationship(s) between the subject organism and other organism(s) it is associated with. E.g., parasite on species X; mutualist with species Y. The target organism is the subject of the relationship, and the other organism(s) is the object." ;
-                                skos:example "free living" .
-
-
 ###  https://w3id.org/mixs/0000029
 <https://w3id.org/mixs/0000029> rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Host Scientific Name" ;
@@ -4308,13 +4422,6 @@ minext:name rdf:type owl:DatatypeProperty ;
 <https://w3id.org/mixs/0000031> rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Host Disease Status" ;
                                 skos:definition "List of diseases with which the host has been diagnosed; can include multiple diagnoses. The value of the field depends on host; for humans the terms should be chosen from the DO (Human Disease Ontology) at https://www.disease-ontology.org, non-human host diseases are free text." .
-
-
-###  https://w3id.org/mixs/0000032
-<https://w3id.org/mixs/0000032> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Trophic Level" ;
-                                skos:definition "Trophic levels are the feeding position in a food chain. Microbes can be a range of producers (e.g. chemolithotroph)." ;
-                                skos:example "heterotroph" .
 
 
 ###  https://w3id.org/mixs/0000033
@@ -4336,16 +4443,6 @@ minext:name rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Source Of UViGs" ;
                                 skos:definition "Type of dataset from which the UViG was obtained." ;
                                 skos:example "viral fraction metagenome (virome)" .
-
-
-###  https://w3id.org/mixs/0000036
-<https://w3id.org/mixs/0000036> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Virus Enrichment Approach" ;
-                                skos:definition "List of approaches used to enrich the sample for viruses, if any." ;
-                                skos:example "DNAse" ,
-                                             "FeCl Precipitation" ,
-                                             "filtration" ,
-                                             "ultracentrifugation" .
 
 
 ###  https://w3id.org/mixs/0000037
@@ -4375,13 +4472,6 @@ minext:name rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Library Reads Sequenced" ;
                                 skos:definition "Total number of clones sequenced from the library." ;
                                 skos:example 20 .
-
-
-###  https://w3id.org/mixs/0000041
-<https://w3id.org/mixs/0000041> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Library Layout" ;
-                                skos:definition "Specify whether to expect single, paired, or other configuration of reads." ;
-                                skos:example "paired" .
 
 
 ###  https://w3id.org/mixs/0000042
@@ -4448,13 +4538,6 @@ minext:name rdf:type owl:DatatypeProperty ;
                                 skos:example "454 Genome Sequencer FLX [OBI:0000702]" .
 
 
-###  https://w3id.org/mixs/0000051
-<https://w3id.org/mixs/0000051> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Sequence Quality Check" ;
-                                skos:definition "Indicate if the sequence has been called by automatic systems (none) or undergone a manual editing procedure (e.g. by inspecting the raw data or chromatograms). Applied only for sequences that are not submitted to SRA, ENA or DRA." ;
-                                skos:example "none" .
-
-
 ###  https://w3id.org/mixs/0000052
 <https://w3id.org/mixs/0000052> rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Chimera Check Software" ;
@@ -4462,32 +4545,11 @@ minext:name rdf:type owl:DatatypeProperty ;
                                 skos:example "uchime;v4.1;default parameters" .
 
 
-###  https://w3id.org/mixs/0000053
-<https://w3id.org/mixs/0000053> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Taxonomic Identity Marker" ;
-                                skos:definition "The phylogenetic marker(s) used to assign an organism name to the SAG or MAG." ;
-                                skos:example "other" .
-
-
 ###  https://w3id.org/mixs/0000054
 <https://w3id.org/mixs/0000054> rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Single Cell Or Viral Particle Lysis Kit Protocol" ;
                                 skos:definition "Name of the kit or standard protocol used for cell(s) or particle(s) lysis." ;
                                 skos:example "ambion single cell lysis kit" .
-
-
-###  https://w3id.org/mixs/0000055
-<https://w3id.org/mixs/0000055> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "WGA Amplification Approach" ;
-                                skos:definition "Method used to amplify genomic DNA in preparation for sequencing." ;
-                                skos:example "mda based" .
-
-
-###  https://w3id.org/mixs/0000056
-<https://w3id.org/mixs/0000056> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Assembly Quality" ;
-                                skos:definition "The assembly quality category is based on sets of criteria outlined for each assembly quality category." ;
-                                skos:example "High-quality draft genome" .
 
 
 ###  https://w3id.org/mixs/0000057
@@ -4588,13 +4650,6 @@ minext:name rdf:type owl:DatatypeProperty ;
                                 skos:example "checkm" .
 
 
-###  https://w3id.org/mixs/0000071
-<https://w3id.org/mixs/0000071> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Completeness Approach" ;
-                                skos:definition "The approach used to determine the completeness of a given genomic assembly, which would typically make use of a set of conserved marker genes or a closely related reference genome. For UViG completeness, include reference genome or group used, and contig feature suggesting a complete genome." ;
-                                skos:example "other" .
-
-
 ###  https://w3id.org/mixs/0000072
 <https://w3id.org/mixs/0000072> rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Contamination Score" ;
@@ -4616,28 +4671,6 @@ minext:name rdf:type owl:DatatypeProperty ;
                                 skos:example "anvi'o" .
 
 
-###  https://w3id.org/mixs/0000075
-<https://w3id.org/mixs/0000075> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Sorting Technology" ;
-                                skos:definition "Method used to sort/isolate cells or particles of interest." ;
-                                skos:example "optical manipulation" .
-
-
-###  https://w3id.org/mixs/0000076
-<https://w3id.org/mixs/0000076> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Single Cell Or Viral Particle Lysis Approach" ;
-                                skos:definition "Method used to free DNA from interior of the cell(s) or particle(s)." ;
-                                skos:example "enzymatic" .
-
-
-###  https://w3id.org/mixs/0000077
-<https://w3id.org/mixs/0000077> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Binning Parameters" ;
-                                skos:definition "The parameters that have been applied during the extraction of genomes from metagenomic datasets." ;
-                                skos:example "coverage" ,
-                                             "kmer" .
-
-
 ###  https://w3id.org/mixs/0000078
 <https://w3id.org/mixs/0000078> rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Binning Software" ;
@@ -4652,32 +4685,11 @@ minext:name rdf:type owl:DatatypeProperty ;
                                 skos:example "false"^^xsd:boolean .
 
 
-###  https://w3id.org/mixs/0000080
-<https://w3id.org/mixs/0000080> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "MAG Coverage Software" ;
-                                skos:definition "Tool(s) used to determine the genome coverage if coverage is used as a binning parameter in the extraction of genomes from metagenomic datasets." ;
-                                skos:example "bbmap" .
-
-
 ###  https://w3id.org/mixs/0000081
 <https://w3id.org/mixs/0000081> rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Viral Identification Software" ;
                                 skos:definition "Tool(s) used for the identification of UViG as a viral genome, software or protocol name including version number, parameters, and cutoffs used." ;
                                 skos:example "VirSorter; 1.0.4; Virome database, category 2" .
-
-
-###  https://w3id.org/mixs/0000082
-<https://w3id.org/mixs/0000082> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Predicted Genome Type" ;
-                                skos:definition "Type of genome predicted for the UViG." ;
-                                skos:example "dsDNA" .
-
-
-###  https://w3id.org/mixs/0000083
-<https://w3id.org/mixs/0000083> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Predicted Genome Structure" ;
-                                skos:definition "Expected structure of the viral genome." ;
-                                skos:example "non-segmented" .
 
 
 ###  https://w3id.org/mixs/0000084
@@ -4706,13 +4718,6 @@ minext:name rdf:type owl:DatatypeProperty ;
                                 rdfs:label "OTU Database" ;
                                 skos:definition "Reference database (i.e. sequences not generated as part of the current study) used to cluster new genomes in \"species-level\" OTUs, if any." ;
                                 skos:example "NCBI Viral RefSeq;83" .
-
-
-###  https://w3id.org/mixs/0000088
-<https://w3id.org/mixs/0000088> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Tool Or Approach Used For Host Prediction" ;
-                                skos:definition "Tool or approach used for host prediction." ;
-                                skos:example "CRISPR spacer match" .
 
 
 ###  https://w3id.org/mixs/0000089
@@ -4768,12 +4773,6 @@ minext:name rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Taxonomy ID of DNA Sample" ;
                                 skos:definition "NCBI taxon id of the sample. Maybe be a single taxon or mixed taxa sample. Use `synthetic metagenome` for mock community/positive controls, or `blank sample` for negative controls." ;
                                 skos:example "Gut Metagenome [NCBITaxon:749906]" .
-
-
-###  https://w3id.org/mixs/0001321
-<https://w3id.org/mixs/0001321> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Negative Control Type" ;
-                                skos:definition "The substance or equipment used as a negative control in an investigation." .
 
 
 ###  https://w3id.org/mixs/0001322
