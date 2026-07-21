@@ -33,7 +33,7 @@ The ontology declares three types of entities:
 
 The ontology is compliant to a specific OWL 2 profile, namely, the [OWL 2 QL](https://www.w3.org/2007/OWL/wiki/Profiles-v2.html#OWL_2_QL) profile. This is a requirement for Ontop to be able to translate the SPARQL queries to SQL (see [Calvanese et al. (2007)](https://link.springer.com/article/10.1007/s10817-007-9078-x) for more details). The ontology is validated as conformant with the OWL 2 QL profile using [ROBOT's ontology profile validation](https://robot.obolibrary.org/validate-profile), which checks it against the W3C OWL 2 profile specification.
 
-Ontop uses this ontology during query reformulation. It supports OWL 2 QL reasoning, which means subclass and subproperty hierarchies declared in the ontology are respected during query answering, though these features are kept minimal in the current version. For a full view of the ontology, consider loading the `.ttl` file into an ontology editor such as [Protégé](https://protege.stanford.edu/).
+Ontop uses this ontology during query reformulation. It supports OWL 2 QL reasoning, which means subclass and subproperty hierarchies declared in the ontology are respected during query answering, though these features are kept minimal in the current version. For a full view of the ontology, consider loading the `.ttl` file into an ontology editor such as [Protégé](https://protege.stanford.edu/). More specifically, [the Ontop Protégé bundle](https://github.com/ontop/ontop/releases) is recommended, in order to be able to also view and inspect the OBDA mappings.
 
 ### Deductive closure of transitive properties
 
