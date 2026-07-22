@@ -121,4 +121,8 @@ def build_db(dataset_ids: list[str]) -> Path:
 
     con.close()
 
+    # WARN: Change ownership of the duckdb database
+    #
+    os.chown(db_path, uid=999, gid=999)
+
     return db_path
