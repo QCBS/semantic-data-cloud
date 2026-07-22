@@ -10,4 +10,8 @@ RUN apt-get update && apt-get install -y ca-certificates \
 
 ADD "https://repo1.maven.org/maven2/org/duckdb/duckdb_jdbc/${DUCKDB_JDBC_VERSION}/duckdb_jdbc-${DUCKDB_JDBC_VERSION}.jar" /opt/ontop/jdbc/
 
+RUN chmod 644 "/opt/ontop/jdbc/duckdb_jdbc-${DUCKDB_JDBC_VERSION}.jar"
+
 ENV CLASSPATH="/opt/ontop/jdbc/duckdb_jdbc-${DUCKDB_JDBC_VERSION}.jar:${CLASSPATH}"
+
+USER ontop
