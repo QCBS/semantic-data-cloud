@@ -38,10 +38,10 @@ def make_cache_key(ctx_hash: str, sparql: bytes) -> str:
 async def lifespan(app: FastAPI):
     logging.getLogger("uvicorn.access").addFilter(SuppressHealthcheck())
 
-    config = GlideClientConfiguration(addresses=[NodeAddress("valkey", 6379)])
-    app.state.glide = await GlideClient.create(config)
-    transport = AsyncHTTPTransport(retries=0)
+    config = GlideClientConfiguration(addresses=[NodeAddress(host="valkey", port=6379)])
+    app.state.glide = await GlideClient.create(config=config)
 
+    transport = AsyncHTTPTransport(retries=0)
     app.state.http = AsyncClient(timeout=TIMEOUT_VAL, transport=transport)
 
     app.state.registry = ContainerRegistry()
