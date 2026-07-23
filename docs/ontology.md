@@ -115,12 +115,4 @@ See the pages on the role [of primary keys](https://ontop-vkg.org/tutorial/mappi
 
 The metadata file was produced by running the [Ontop CLI](https://ontop-vkg.org/guide/cli.html) against a DuckDB instance populated with a modified DWC-DP schema. This schema was based on the JSON files available at the [GBIF repository of schemas](https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/), but also includes additional tables used by the application.
 
-**Note:** The Ontop CLI's `extract-db-metadata` command produces a blank output with DuckDB JDBC driver 1.5.2.1 (the version considered by the application). Consequently, for database metadata extraction, version 1.5.1 of the driver was used (this fact can be seen at the bottom of the [metadata.json](/ontop/mappings/dwcowl.json) file). This does not affect the application, as Ontop only relies on the extracted metadata contained in the file.
-
----
-
-## Ontop version and JDBC driver
-
-The application uses the `ontop/ontop:5.5.0` Docker image. The DuckDB JDBC driver (`duckdb_jdbc-1.5.2.1.jar`) is downloaded from the [Maven repository](https://repo1.maven.org/maven2/org/duckdb/duckdb_jdbc/) and added to Ontop's library directory for JDBC driver JAR files (`/opt/ontop/jdbc/`) [at image build time](/ontop/Dockerfile):
-
-If the DuckDB JDBC driver version is updated, the `duckdb` Python package version in `fastaproxy/requirements.txt` should be kept in alignment, as DuckDB file format compatibility is version-sensitive.
+**Note:** When used with a DuckDB JDBC driver version above 1.5.1.0, the Ontop CLI's `extract-db-metadata` command produces incomplete output, notably omitting the primary and foreign key assertions that Ontop relies on to optimize SPARQL-to-SQL translation optimization. Consequently, driver version 1.5.1.0 was used for database metadata extraction (this fact can be seen at the bottom of the [metadata.json](/ontop/mappings/dwcowl.json) file). This does not affect the application at runtime, as Ontop only relies on the metadata already captured in that file.
