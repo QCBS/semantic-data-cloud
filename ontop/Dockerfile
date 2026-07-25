@@ -1,6 +1,6 @@
 FROM ontop/ontop:5.5.0
 
-ARG DUCKDB_JDBC_VERSION="1.5.2.1"
+ARG DUCKDB_JDBC_VERSION="1.5.5.0"
 
 USER root
 
