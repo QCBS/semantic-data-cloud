@@ -21,7 +21,7 @@ This project takes a different approach: data tables contained in each DwC-DP ar
 
 ## Usage
 
-The application brings the semantic expressivity of [the RDF data model](https://www.w3.org/TR/rdf11-concepts/) and [the SPARQL Query Language](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) to users, letting them declare exactly the data they need across related entities. For example, the following [SELECT](https://www.w3.org/TR/sparql11-query/#select) query retrieves occurrences of Antarctic lanternfish (*Electrona antarctica*) and their life stage, linked to material entities as evidence, along with the material entity's disposition, preparations, the event date, and the recording agent:
+The application brings the semantic expressivity of [the RDF data model](https://www.w3.org/TR/rdf11-concepts/) and [the SPARQL query language](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/) to users, letting them declare exactly the data they need across related entities. For example, the following [SELECT](https://www.w3.org/TR/sparql11-query/#select) query retrieves occurrences of Antarctic lanternfish (*Electrona antarctica*) and their life stage, linked to material entities as evidence, along with the material entity's disposition, preparations, the event date, and the recording agent:
 
 ```sparql
 PREFIX dcterms: <http://purl.org/dc/terms/>
@@ -111,6 +111,8 @@ DESCRIBE <https://biobang.org/occurrence/BROKE_WEST_RMT_031_RMT8_217697_Larvae>
 ```
 
 Queries are submitted as a JSON payload over [HTTP](https://datatracker.ietf.org/doc/html/rfc9110) to the `/sparql` endpoint. The SPARQL query should be contained in the `query` field of the JSON payload. The application supports all four [SPARQL query forms](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/#QueryForms) ([SELECT](https://www.w3.org/TR/sparql11-query/#select), [ASK](https://www.w3.org/TR/sparql11-query/#ask), [CONSTRUCT](https://www.w3.org/TR/sparql11-query/#construct) and [DESCRIBE](https://www.w3.org/TR/sparql11-query/#describe)). `SELECT` and `ASK` queries return results in [SPARQL 1.1 Query Results JSON](https://www.w3.org/TR/sparql11-results-json/), whereas `CONSTRUCT` and `DESCRIBE` queries return an RDF graph  in [RDF 1.1 Turtle](https://www.w3.org/TR/turtle/) format. See the [API reference](/docs/api.md) for the full request/response specification.
+
+For additional, more complex SPARQL `SELECT` queries, consult [the LLM prompt document](/biomcp/prompts/darwin-core-schema.md). Although it was written for an agentic LLM, it is also intended to be readable by humans and contains and the queries can be run against the live instance.
 
 The request body can also include `bbox`, `temporal`, and `licenses` fields to narrow which datasets are loaded before the query runs, restricting the result, for instance, to only datasets that consider South American records from 2000 to 2015 and published under CC-BY-NC-4.0. See the [API reference](/docs/api.md) for the full request/response specification.
 
