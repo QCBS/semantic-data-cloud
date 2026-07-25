@@ -1,10 +1,14 @@
 FROM python:3.14.2-slim
 
+COPY --from=ghcr.io/astral-sh/uv:0.11.26 /uv /usr/local/bin/uv
+
+ENV UV_PROJECT_ENVIRONMENT=/usr/local
+
 WORKDIR /app
 
-COPY requirements.txt .
+COPY pyproject.toml uv.lock .
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN uv sync --frozen
 
 COPY . .
 
