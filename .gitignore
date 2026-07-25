@@ -1,7 +1,7 @@
-metadatadb/
-db/
-.vscode/
-
-__pycache__/
 .venv/
+.vscode/
+__pycache__/
+db/
+metadatadb/
+
 .env
