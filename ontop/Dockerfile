@@ -4,7 +4,8 @@ ARG DUCKDB_JDBC_VERSION="1.5.5.0"
 
 USER root
 
-RUN apt-get update && apt-get install -y ca-certificates \
+RUN apt-get update \
+    && apt-get install -y ca-certificates \
     && update-ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
