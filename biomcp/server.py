@@ -8,35 +8,28 @@ from typing import Annotated
 #
 from sparql_client import run_sparql, rows_to_markdown
 
+
 PROMPTS_PATH = Path(__file__).parent / "prompts"
 DWC_SCHEMA = (PROMPTS_PATH / "darwin-core-schema.md").read_text(encoding="utf-8")
 
+
 _TOOL_DESCRIPTION = f"""
-Translate a natural language biodiversity question into a SPARQL SELECT query
-and execute it against the Darwin Core linked-data endpoint.
+Translate a natural language biodiversity question into a SPARQL SELECT query and execute it against the Darwin Core linked-data endpoint.
 
 Your primary job is writing correct SPARQL. Focus on that.
 
 OPTIONAL geographic, temporal and license scoping:
   bbox     — [min_lon, min_lat, max_lon, max_lat] in WGS84.
-             Only supply this when the user explicitly asks to restrict results
-             to a geographic area AND that restriction is meant to filter which
-             datasets are loaded, not just to filter rows in the query.
-             Note: a dataset with global coverage will still be included even
-             when a bbox is given — the bbox selects datasets whose declared
-             coverage intersects the box, not datasets that contain only that area.
+             Only supply this when the user explicitly asks to restrict results to a geographic area AND that restriction is meant to filter which datasets are loaded, not just to filter rows in the query.
+             Note: A dataset with global coverage will still be included even when a bbox is given — the bbox selects datasets whose declared coverage intersects the box, not datasets that contain only that area.
   temporal — ["YYYY-MM-DD", "YYYY-MM-DD"].
-             Only supply this when the user explicitly asks to restrict by
-             data collection period at the dataset level.
+             Only supply this when the user explicitly asks to restrict by data collection period at the dataset level.
   licenses — ["CC-BY-4.0", "CC0-1.0", ...].
-             List of SPDX license identifiers used to restrict which datasets
-             are loaded. Only supply this when the user explicitly requests
-             licensing constraints (for example: "CC-BY data only",
-             "public-domain records", or "exclude non-commercial licenses").
-             This filters datasets by their declared license and is not a
-             SPARQL filter on individual records.
+             List of SPDX license identifiers used to restrict which datasets are loaded. Only supply this when the user explicitly requests licensing constraints (for example: "CC-BY data only", "public-domain records", or "exclude non-commercial licenses").
+             Note: This filters datasets by their declared license and is not a SPARQL filter on individual records.
 
 When in doubt, omit bbox, temporal and licenses entirely. Most questions do not need them.
+
 If a query returns 0 results, check the SPARQL before adjusting the bbox.
 
 ---
@@ -49,12 +42,10 @@ mcp = FastMCP(
     instructions="""
 You have one tool: sparql_query.
 
-Your job is to translate natural language biodiversity questions into correct
-SPARQL queries using the Darwin Core OWL ontology, then execute them.
+Your job is to translate natural language biodiversity questions into correct SPARQL queries using the Darwin Core OWL ontology, then execute them.
 
-The parameters bbox, temporal and licenses are optional.
-Omit them unless the user explicitly asks to scope the query to a specific geographic
-region, time period or license at the dataset level.
+The parameters bbox, temporal and licenses are optional. Omit them unless the user explicitly asks to scope the query to a specific geographic region, time period or license at the dataset level.
+
 Do not fill them in "helpfully", leave them empty by default.
 """.strip()
 )
@@ -93,6 +84,7 @@ async def sparql_query(
     ] = None,
 ) -> str:
     """Execute a SPARQL query against the biodiversity endpoint."""
+
     print(f"[sparql_query] bbox={bbox} temporal={temporal} licenses={licenses}", file=sys.stderr)
     print(f"[sparql_query] query={sparql}", file=sys.stderr)
 
@@ -117,10 +109,12 @@ async def sparql_query(
         )
 
     table = rows_to_markdown(rows[:500])
+
     note = (
         "\n\n_Capped at 500 rows. Add a more specific FILTER to narrow results._"
         if len(rows) >= 500 else ""
     )
+
     return table + note
 
 

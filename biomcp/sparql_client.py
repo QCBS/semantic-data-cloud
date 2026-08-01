@@ -4,10 +4,12 @@ import sys
 from dotenv import load_dotenv
 from httpx import AsyncClient, HTTPStatusError, TimeoutException
 
+
 load_dotenv()
 
 SPARQL_ENDPOINT = os.getenv("SPARQL_ENDPOINT", "http://fastaproxy-sdc:8000/sparql")
 TIMEOUT_VAL = float(os.getenv("TIMEOUT_VAL", 100))
+
 
 async def run_sparql(
     sparql: str,
@@ -31,9 +33,10 @@ async def run_sparql(
 
         async with AsyncClient(timeout=TIMEOUT_VAL) as client:
             response = await client.post(
-                SPARQL_ENDPOINT,
+                url=SPARQL_ENDPOINT,
                 json=payload,
             )
+
             response.raise_for_status()
 
     except TimeoutException:
@@ -41,6 +44,7 @@ async def run_sparql(
             f"The endpoint did not respond within {TIMEOUT_VAL}s. "
             "Try adding a LIMIT clause or narrowing the query."
         )
+
     except HTTPStatusError as err:
         return [], f"HTTP {err.response.status_code}: {err.response.text}"
 
@@ -49,6 +53,7 @@ async def run_sparql(
         {var: cell.get("value", "") for var, cell in binding.items()}
         for binding in bindings
     ]
+
     return rows, ""
 
 
@@ -60,7 +65,9 @@ def rows_to_markdown(rows: list[dict[str, str]]) -> str:
     header_row = "| " + " | ".join(headers) + " |"
     sep = "| " + " | ".join("---" for _ in headers) + " |"
     data_rows = [
-        "| " + " | ".join(str(row.get(h, "")) for h in headers) + " |"
+        "| " + " | ".join(str(row.get(head, "")) for head in headers) + " |"
         for row in rows
     ]
-    return "\n".join([header_row, sep] + data_rows) + f"\n\n_{len(rows)} row(s) returned._"
+    final_row = f"\n\n_{len(rows)} row(s) returned._"
+
+    return "\n".join([header_row, sep] + data_rows) + final_row
