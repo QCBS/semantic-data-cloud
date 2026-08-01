@@ -16,7 +16,6 @@ async def get_client():
     async with streamable_http_client(MCP_URL) as (
         read_stream,
         write_stream,
-        terminate_on_close,
     ):
         async with ClientSession(read_stream, write_stream) as session:
             await session.initialize()
