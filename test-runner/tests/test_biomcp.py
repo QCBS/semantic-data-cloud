@@ -44,7 +44,7 @@ async def test_all_tools_have_descriptions():
         for tool in result.tools:
             assert tool.name
             assert tool.description
-            assert tool.inputSchema
+            assert tool.input_schema
 
 
 @pytest.mark.asyncio
@@ -59,7 +59,7 @@ async def test_sparql_query_schema_has_required_fields():
     async with get_client() as client:
         result = await client.list_tools()
         tool = next(t for t in result.tools if t.name == "sparql_query")
-        schema = tool.inputSchema
+        schema = tool.input_schema
 
         assert "sparql" in schema["properties"]
         assert "sparql" in schema.get("required", [])
