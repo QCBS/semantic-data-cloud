@@ -1,11 +1,8 @@
 import os
 import sys
 #
-from dotenv import load_dotenv
 from httpx import AsyncClient, HTTPStatusError, TimeoutException
 
-
-load_dotenv()
 
 SPARQL_ENDPOINT = os.getenv("SPARQL_ENDPOINT", "http://fastaproxy-sdc:8000/sparql")
 TIMEOUT_VAL = float(os.getenv("TIMEOUT_VAL", 100))
