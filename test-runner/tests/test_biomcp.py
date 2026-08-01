@@ -58,7 +58,7 @@ async def test_sparql_query_available():
 async def test_sparql_query_schema_has_required_fields():
     async with get_client() as client:
         result = await client.list_tools()
-        tool = next(t for t in result.tools if t.name == "sparql_query")
+        tool = next(tool for tool in result.tools if tool.name == "sparql_query")
         schema = tool.input_schema
 
         assert "sparql" in schema["properties"]
