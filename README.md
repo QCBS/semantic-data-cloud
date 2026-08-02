@@ -152,6 +152,13 @@ cd semantic-data-cloud
 docker compose up --build
 ```
 
+On first run, two additional steps are required before starting the stack. The Docker network needs to be created and the extended Ontop image needs to be built, as:
+
+```bash
+docker network create -d bridge dwc-net
+docker build ontop
+```
+
 The application exposes three services:
   1. The SPARQL proxy at: [http://localhost:8000](http://localhost:8000)
   2. The EML metadata catalog at: [http://localhost:7788](http://localhost:7788)
