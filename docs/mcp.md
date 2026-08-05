@@ -88,7 +88,7 @@ Exposing an MCP server for SPARQL queries enables higher-level reasoning workflo
 
 In this setup, the MCP server acts as a tool provider, and the agent is responsible for interpreting user input, selecting when to call `sparql_query` (and possibly other tools), as well as composing multi-step reasoning chains if needed.
 
-The following example uses [LangChain agents](https://docs.langchain.com/oss/python/langchain/agents) with an MCP client and an [Ollama](https://ollama.com/)-hosted model:
+The following example uses [LangChain agents](https://docs.langchain.com/oss/python/langchain/agents) with an MCP client and an [Ollama](https://ollama.com/)-hosted large langugage model:
 
 ```python
 import asyncio
@@ -112,7 +112,10 @@ async def main():
       temperature=0.0,
     )
 
-    agent = create_agent(model, tools)
+    agent = create_agent(
+      model=model,
+      tools=tools
+    )
 
     result = await agent.ainvoke({
       "messages": [

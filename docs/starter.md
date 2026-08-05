@@ -132,7 +132,7 @@ datasets/
 
 Each top-level directory under `datasets/` represents a single dataset. It must contain the `eml.json` metadata file alongside all converted `.parquet` table files.
 
-When uploading files, set the canned Access Control List ([ACL](https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html)) to `public-read`. This is required for DuckDB to have `READ` access and be able to query the files directly from object storage.
+When uploading files, set the canned Access Control List ([ACL](https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html)) to [`public-read`](https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#canned-acl). This is required for DuckDB to have `READ` access and be able to query the files directly from object storage.
 
 ### Using Boto3
 

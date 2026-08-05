@@ -111,7 +111,7 @@ The database metadata file provides Ontop with a complete description of the DWC
 
 By taking database keys and other integrity constraints into account, Ontop can infer when multiple query atoms necessarily refer to the same database tuple. This allows it to eliminate redundant self-joins during SPARQL-to-SQL translation, producing simpler and more efficient SQL queries.
 
-See the pages on the role [of primary keys](https://ontop-vkg.org/tutorial/mapping/primary-keys.html) and [of foreign keys](https://ontop-vkg.org/tutorial/mapping/foreign-keys.html) for a quick overview, as well as [Rodríguez-Muro and Rezk (2015)](https://www.sciencedirect.com/science/article/pii/S1570826815000153) for a more thorough explanation on the matter.
+See the Ontop documentation pages on the role [of primary keys](https://ontop-vkg.org/tutorial/mapping/primary-keys.html) and [of foreign keys](https://ontop-vkg.org/tutorial/mapping/foreign-keys.html) for a quick overview, as well as [Rodríguez-Muro and Rezk (2015)](https://www.sciencedirect.com/science/article/pii/S1570826815000153) for a more thorough explanation on the matter.
 
 The metadata file was produced by running the [Ontop CLI](https://ontop-vkg.org/guide/cli.html) against a DuckDB instance populated with a modified DWC-DP schema. This schema was based on the JSON files available at the [GBIF repository of schemas](https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/), but also includes additional tables used by the application.
 

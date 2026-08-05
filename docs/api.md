@@ -2,7 +2,7 @@
 
 ## fastaproxy-sdc
 
-Base URL: `http://localhost:8000` (default)
+Base URL: [http://localhost:8000] (default)
 
 ---
 
@@ -36,9 +36,7 @@ The response format depends on the SPARQL query form used in the request:
 
 No `Accept` header is required or considered on the request, the response format is determined solely by the query form used in `query`.
 
-`ASK` queries return the standard results JSON format with a top-level `boolean` field in place of `results.bindings`.
-
-**`SELECT`** / **`ASK`** example (`application/sparql-results+json`):*
+**`SELECT`** / **`ASK`** example (`application/sparql-results+json`):
 
 ```json
 {
@@ -60,7 +58,9 @@ No `Accept` header is required or considered on the request, the response format
 }
 ```
 
-**`CONSTRUCT`** / **`DESCRIBE`** example (`text/turtle`):*
+`ASK` queries return the standard results JSON format with a top-level `boolean` field in place of `results.bindings`.
+
+**`CONSTRUCT`** / **`DESCRIBE`** example (`text/turtle`):
 
 ```turtle
 @prefix dwc: <http://rs.tdwg.org/dwc/terms/> .
@@ -71,7 +71,7 @@ No `Accept` header is required or considered on the request, the response format
 
 **Caching**
 
-Responses are cached in Valkey. The cache key is derived from the set of matched dataset IDs and the SPARQL query text. The query form itself is not part of the key, since the query text already determines it. Two requests with different bounding boxes that resolve to the same dataset combination will share cache entries for identical queries. Cache TTL is controlled by the `TTL_VAL` environment variable (default: 1 week).
+Responses are cached in Valkey. The cache key is derived from the set of matched dataset IDs and the SPARQL query text. The query form itself is not part of the key, since the query text already determines it. Two requests with different bounding boxes that resolve to the same dataset combination will share cache entries for identical queries. Cache TTL is controlled by the `TTL_VAL` environment variable (default: `604800` seconds, 1 week).
 
 **Cold start**
 
@@ -81,7 +81,7 @@ The first request for a new dataset combination triggers ontology files editing,
 
 ## metadata-api
 
-Base URL: `http://localhost:7788` (default, mapped to internal port 8000)
+Base URL: [http://localhost:7788] (default, mapped to internal port 8000)
 
 ---
 
