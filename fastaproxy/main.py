@@ -19,7 +19,7 @@ class SuppressHealthcheck(logging.Filter):
         return "/health" not in record.getMessage()
 
 
-TTL_VAL = int(os.getenv("TTL_VAL", 70))
+TTL_VAL = int(os.getenv("TTL_VAL", 604800))
 TIMEOUT_VAL = float(os.getenv("TIMEOUT_VAL", 100))
 METADATA_API_BASE = os.getenv("METADATA_API_BASE", "http://metadata-api:8000")
 #
