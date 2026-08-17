@@ -5138,6 +5138,7 @@ dwc:ResourceRelationship rdf:type owl:Class ;
 
 ###  http://rs.tdwg.org/dwc/terms/Survey
 dwc:Survey rdf:type owl:Class ;
+           rdfs:subClassOf dwc:Event ;
            rdfs:label "Survey" ;
            skos:definition "A biotic survey or inventory." ;
            skos:example "a botanical survey of a protected area to assess native and invasive plant species" ,
