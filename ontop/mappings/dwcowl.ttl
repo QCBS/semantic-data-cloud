@@ -5136,22 +5136,6 @@ dwc:ResourceRelationship rdf:type owl:Class ;
                                       "an instance of a dwc:Organism is the mother of another instance of a dwc:Organism" .
 
 
-###  http://rs.tdwg.org/dwc/terms/Survey
-dwc:Survey rdf:type owl:Class ;
-           rdfs:subClassOf dwc:Event ;
-           rdfs:label "Survey" ;
-           skos:definition "A biotic survey or inventory." ;
-           skos:example "a botanical survey of a protected area to assess native and invasive plant species" ,
-                        "a camera trap deployment in a rainforest to monitor large mammals" ,
-                        "a coverboard survey for reptiles in forested environments" ,
-                        "a frog call survey in wetlands across breeding seasons" ,
-                        "a habitat- or ecosystem-level survey (e.g., coral reef health assessment, forest biodiversity assessment)" ,
-                        "a macroinvertebrate sampling in a freshwater stream to assess water quality" ,
-                        "a pollinator survey in an agricultural landscape" ,
-                        "a wetland vegetation mapping" ,
-                        "an environmental impact assessment (e.g., pre-construction biological baseline survey for a wind farm project)" .
-
-
 ###  http://rs.tdwg.org/dwc/terms/SurveyAgentRole
 dwc:SurveyAgentRole rdf:type owl:Class ;
                     rdfs:label "Survey Agent Role" ;
@@ -5185,6 +5169,22 @@ dwc:SurveyTargetDefinition rdf:type owl:Class ;
 dwc:UsagePolicy rdf:type owl:Class ;
                 rdfs:label "Usage Policy" ;
                 skos:definition "Information about rights, usage, and attribution statements applicable to an entity." .
+
+
+###  http://rs.tdwg.org/eco/terms/Survey
+eco:Survey rdf:type owl:Class ;
+           rdfs:subClassOf dwc:Event ;
+           rdfs:label "Survey" ;
+           skos:definition "A biotic survey or inventory." ;
+           skos:example "a botanical survey of a protected area to assess native and invasive plant species" ,
+                        "a camera trap deployment in a rainforest to monitor large mammals" ,
+                        "a coverboard survey for reptiles in forested environments" ,
+                        "a frog call survey in wetlands across breeding seasons" ,
+                        "a habitat- or ecosystem-level survey (e.g., coral reef health assessment, forest biodiversity assessment)" ,
+                        "a macroinvertebrate sampling in a freshwater stream to assess water quality" ,
+                        "a pollinator survey in an agricultural landscape" ,
+                        "a wetland vegetation mapping" ,
+                        "an environmental impact assessment (e.g., pre-construction biological baseline survey for a wind farm project)" .
 
 
 ###  http://www.w3.org/ns/adms#Identifier
