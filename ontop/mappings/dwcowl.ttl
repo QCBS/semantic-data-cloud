@@ -5175,7 +5175,7 @@ dwc:UsagePolicy rdf:type owl:Class ;
 eco:Survey rdf:type owl:Class ;
            rdfs:subClassOf dwc:Event ;
            rdfs:label "Survey" ;
-           skos:definition "A biotic survey or inventory." ;
+           skos:definition "A dwc:Event intentionally designed to characterize a defined biotic target or domain in such a way that the resulting dwc:Occurrences can be interpreted collectively to support ecological and monitoring inference (such as detectability, abundance, species co-occurence, spatial distribution, or temporal trends), rather than merely documenting individual observations or gathered material." ;
            skos:example "a botanical survey of a protected area to assess native and invasive plant species" ,
                         "a camera trap deployment in a rainforest to monitor large mammals" ,
                         "a coverboard survey for reptiles in forested environments" ,
