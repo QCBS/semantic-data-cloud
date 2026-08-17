@@ -4909,6 +4909,16 @@ dwc:GeologicalContextMedia rdf:type owl:Class ;
                            skos:definition "A dwc:GeologicalContext as content in a dwc:Media entity." .
 
 
+###  http://rs.tdwg.org/dwc/terms/GeologicalMaterial
+dwc:GeologicalMaterial rdf:type owl:Class ;
+                       rdfs:subClassOf dwc:MaterialEntity ;
+                       rdfs:label "Geological Material" ;
+                       skos:definition "A dwc:MaterialEntity that is geological in nature." ;
+                       skos:example "a specific mineral" ,
+                                    "a specific ore" ,
+                                    "a specific rock" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/Identification
 dwc:Identification rdf:type owl:Class ;
                    rdfs:label "Identification" ;
