@@ -280,6 +280,12 @@ dwcdp:analysisOf rdf:type owl:ObjectProperty ;
                  skos:definition "An object property used to relate a dwc:NucleotideAnalysis to a dwc:MaterialEntity it is an analysis of." .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/assertedBy
+dwcdp:assertedBy rdf:type owl:ObjectProperty ;
+                 rdfs:label "An object property used to relate a dwc:Assertion to the dcterms:Agent that made it." ,
+                            "Asserted By" .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/authoredBy
 dwcdp:authoredBy rdf:type owl:ObjectProperty ;
                  rdfs:label "Authored By" ;
