@@ -288,7 +288,8 @@ dwcdp:authoredBy rdf:type owl:ObjectProperty ;
 
 ###  http://rs.tdwg.org/dwcdp/terms/basedOn
 dwcdp:basedOn rdf:type owl:ObjectProperty ;
-              rdfs:label "Based On" .
+              rdfs:label "Based On" ;
+              skos:definition "An object property used to relate a dwc:Identification to the resource it is based on." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/collectedBy
