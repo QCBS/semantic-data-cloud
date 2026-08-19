@@ -4811,6 +4811,12 @@ dcterms:Location rdf:type owl:Class ;
                               "the place defined by a georeference" .
 
 
+###  http://rs.tdwg.org/ac/terms/Media
+ac:Media rdf:type owl:Class ;
+         rdfs:label "Media" ;
+         skos:definition "A digital or physical media resource." .
+
+
 ###  http://rs.tdwg.org/chrono/terms/ChronometricAge
 chrono:ChronometricAge rdf:type owl:Class ;
                        rdfs:label "Chronometric Age" ;
@@ -4978,12 +4984,6 @@ dwc:MaterialEntityMedia rdf:type owl:Class ;
 dwc:MaterialEntityReference rdf:type owl:Class ;
                             rdfs:label "Material Entity Reference" ;
                             skos:definition "A dcterms:BibliographicResource relatd to a dwc:MaterialEntity." .
-
-
-###  http://rs.tdwg.org/dwc/terms/Media
-dwc:Media rdf:type owl:Class ;
-          rdfs:label "Media" ;
-          skos:definition "A dcmi:MediaType or other media type with other entities as subject matter." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/MediaAgentRole
