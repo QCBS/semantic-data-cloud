@@ -760,8 +760,8 @@ ecoiri:samplingEffortProtocol rdf:type owl:ObjectProperty ;
 
 ###  https://w3id.org/mixs/0000076
 <https://w3id.org/mixs/0000076> rdf:type owl:ObjectProperty ;
-                                rdfs:label "Method used to free DNA from interior of the cell(s) or particle(s)." ,
-                                           "Single Cell Or Viral Particle Lysis Approach" ;
+                                rdfs:label "Single Cell Or Viral Particle Lysis Approach" ;
+                                skos:definition "Method used to free DNA from interior of the cell(s) or particle(s)." ;
                                 skos:example "https://w3id.org/mixs/ScLysisApproachEnum#enzymatic" .
 
 
