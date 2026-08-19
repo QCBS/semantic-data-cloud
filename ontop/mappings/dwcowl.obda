@@ -185,7 +185,7 @@ target		:molecular-protocol-reference/{reference_id}/{molecular_protocol_id} a d
 source		SELECT * FROM dwcowl.main.molecular_protocol_reference
 
 mappingId	nucleotide_analysis
-target		:nucleotide-analysis/{nucleotide_analysis_id} a dwc:NucleotideAnalysis ; dwc:eventID {event_id}^^xsd:string ; dwc:molecularProtocolID {molecular_protocol_id}^^xsd:string ; dwc:nucleotideAnalysisID {nucleotide_analysis_id}^^xsd:string ; dwc:nucleotideSequenceID {nucleotide_sequence_id}^^xsd:string ; dwc:readCount {read_count}^^xsd:integer ; dwc:totalReadCount {total_read_count}^^xsd:integer ; dwcdp:analysisOf :material-entity/{material_entity_id} ; dwcdp:followed :molecular-protocol/{molecular_protocol_id} ; dwcdp:materialCollectedDuring :event/{event_id} ; dwcdp:produced :nucleotide-sequence/{nucleotide_sequence_id} . 
+target		:nucleotide-analysis/{nucleotide_analysis_id} a dwc:NucleotideAnalysis ; dwc:eventID {event_id}^^xsd:string ; dwc:molecularProtocolID {molecular_protocol_id}^^xsd:string ; dwc:nucleotideAnalysisID {nucleotide_analysis_id}^^xsd:string ; dwc:nucleotideSequenceID {nucleotide_sequence_id}^^xsd:string ; dwc:readCount {read_count}^^xsd:integer ; dwc:processedTotalReadCount {total_read_count}^^xsd:integer ; dwcdp:analysisOf :material-entity/{material_entity_id} ; dwcdp:followed :molecular-protocol/{molecular_protocol_id} ; dwcdp:materialCollectedDuring :event/{event_id} ; dwcdp:produced :nucleotide-sequence/{nucleotide_sequence_id} . 
 source		SELECT * FROM dwcowl.main.nucleotide_analysis
 
 mappingId	occurrence

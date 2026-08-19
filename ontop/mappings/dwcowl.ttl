@@ -3299,6 +3299,16 @@ dwc:preparations rdf:type owl:DatatypeProperty ;
                               "whole animal (EtOH) | tissue (EDTA)" .
 
 
+###  http://rs.tdwg.org/dwc/terms/processedTotalReadCount
+dwc:processedTotalReadCount rdf:type owl:DatatypeProperty ;
+                            rdfs:range xsd:integer ;
+                            rdfs:label "Total Read Count" ;
+                            skos:definition "The total number of reads obtained for a processed dwc:NucleotideSequence during a dwc:NucleotideAnalysis." ;
+                            skos:example 345987 ,
+                                         50638 ,
+                                         764032 .
+
+
 ###  http://rs.tdwg.org/dwc/terms/projectID
 dwc:projectID rdf:type owl:DatatypeProperty ;
               rdfs:label "Project ID" ;
@@ -3360,7 +3370,10 @@ dwc:provenanceID rdf:type owl:DatatypeProperty ;
 dwc:readCount rdf:type owl:DatatypeProperty ;
               rdfs:range xsd:integer ;
               rdfs:label "Read Count" ;
-              skos:definition "A number of reads for a dwc:NucleotideSequence in a dwc:NucleotideAnalysis." .
+              skos:definition "The number of reads obtained for a processed dwc:NucleotideSequence during a dwc:NucleotideAnalysis." ;
+              skos:example 325 ,
+                           73591 ,
+                           8302 .
 
 
 ###  http://rs.tdwg.org/dwc/terms/recordedBy
@@ -3761,13 +3774,6 @@ dwc:taxonRemarks rdf:type owl:DatatypeProperty ;
 dwc:taxonSortOrder rdf:type owl:DatatypeProperty ;
                    rdfs:label "Taxon Sort Order" ;
                    skos:definition "A numerical position of a dwc:Taxon in a taxonFormula." .
-
-
-###  http://rs.tdwg.org/dwc/terms/totalReadCount
-dwc:totalReadCount rdf:type owl:DatatypeProperty ;
-                   rdfs:range xsd:integer ;
-                   rdfs:label "Total Read Count" ;
-                   skos:definition "A total number of reads in a dwc:NucleotideAnalysis." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/typeStatus
