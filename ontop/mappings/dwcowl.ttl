@@ -992,7 +992,7 @@ dcterms:modified rdf:type owl:DatatypeProperty ;
 ###  http://purl.org/dc/terms/title
 dcterms:title rdf:type owl:DatatypeProperty ;
               rdfs:label "Title" ;
-              skos:definition "A name given to a resource." .
+              skos:definition "A name given to the resource." .
 
 
 ###  http://purl.org/ontology/bibo/edition
@@ -1382,6 +1382,17 @@ ac:mediaSpeed rdf:type owl:DatatypeProperty ;
                            60 .
 
 
+###  http://rs.tdwg.org/ac/terms/mediaType
+ac:mediaType rdf:type owl:DatatypeProperty ;
+             rdfs:label "Media Type" ;
+             skos:definition "A category that best matches the nature of an ac:Media resource." ;
+             skos:example "InteractiveResource" ,
+                          "MovingImage" ,
+                          "Sound" ,
+                          "StillImage" ,
+                          "Text" .
+
+
 ###  http://rs.tdwg.org/ac/terms/metadataCreator
 ac:metadataCreator rdf:type owl:DatatypeProperty ;
                    rdfs:label "Metadata Creator ID" ;
@@ -1463,6 +1474,15 @@ ac:reviewerComments rdf:type owl:DatatypeProperty ;
 ac:reviewerLiteral rdf:type owl:DatatypeProperty ;
                    rdfs:label "Reviewer Literal" ;
                    skos:definition "A name of a dcterms:Agent primarily responsible for providing the ac:reviewerComments" .
+
+
+###  http://rs.tdwg.org/ac/terms/serviceExpectation
+ac:serviceExpectation rdf:type owl:DatatypeProperty ;
+                      rdfs:label "Service Expectation" ;
+                      skos:definition "A term that describes what service expectations users may have of the ac:accessURI." ;
+                      skos:example "authenticate" ,
+                                   "online" ,
+                                   "published (non digital)" .
 
 
 ###  http://rs.tdwg.org/ac/terms/startTime
