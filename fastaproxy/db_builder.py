@@ -83,7 +83,7 @@ def build_db(dataset_ids: list[str]) -> Path:
 
     with duckdb.connect(database=str(db_path)) as con:
         for table_name, paths in tables.items():
-            rel = con.read_parquet(file_globs=paths, union_by_name=True)
+            rel = con.read_parquet(paths, union_by_name=True)
             rel.create_view(view_name=table_name)
 
         # NOTE: Create views to handle the dwc:SurveyTarget definition
