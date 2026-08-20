@@ -3853,6 +3853,532 @@
     "name" : [ "\"event\"" ],
     "otherNames" : [ [ "\"main\"", "\"event\"" ], [ "\"dwcowl\"", "\"main\"", "\"event\"" ] ]
   }, {
+    "uniqueConstraints" : [ {
+      "name" : "dwcowl_main_v_survey_pk",
+      "determinants" : [ "\"survey_id\"" ],
+      "isPrimaryKey" : true
+    } ],
+    "foreignKeys" : [ {
+      "name" : "dwcowl_main_v_survey_fk_354",
+      "from" : {
+        "relation" : [ "\"v_survey\"" ],
+        "columns" : [ "\"event_id\"" ]
+      },
+      "to" : {
+        "relation" : [ "\"event\"" ],
+        "columns" : [ "\"event_id\"" ]
+      }
+    }, {
+      "name" : "dwcowl_main_v_survey_fk_355",
+      "from" : {
+        "relation" : [ "\"v_survey\"" ],
+        "columns" : [ "\"location_id\"" ]
+      },
+      "to" : {
+        "relation" : [ "\"v_location\"" ],
+        "columns" : [ "\"location_id\"" ]
+      }
+    } ],
+    "columns" : [ {
+      "name" : "\"survey_id\"",
+      "isNullable" : false,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_id\"",
+      "isNullable" : false,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"site_count\"",
+      "isNullable" : true,
+      "datatype" : "INTEGER"
+    }, {
+      "name" : "\"site_nesting_description\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_site_descriptions\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_site_names\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"geospatial_scope_area_value\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"geospatial_scope_area_unit\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"total_area_sampled_unit\"",
+      "isNullable" : true,
+      "datatype" : "INTEGER"
+    }, {
+      "name" : "\"total_area_sampled_value\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"reported_extreme_conditions\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"reported_weather\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_duration_value\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"event_duration_unit\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"taxon_completeness_reported\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"taxon_completeness_protocols\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"is_absence_reported\"",
+      "isNullable" : true,
+      "datatype" : "BOOLEAN"
+    }, {
+      "name" : "\"absent_taxa\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"has_non_target_taxa\"",
+      "isNullable" : true,
+      "datatype" : "BOOLEAN"
+    }, {
+      "name" : "\"non_target_taxa\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"are_non_target_taxa_fully_reported\"",
+      "isNullable" : true,
+      "datatype" : "BOOLEAN"
+    }, {
+      "name" : "\"has_non_target_organisms\"",
+      "isNullable" : true,
+      "datatype" : "BOOLEAN"
+    }, {
+      "name" : "\"verbatim_target_scope\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"identified_by\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"identified_by_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"identification_references\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"compilation_types\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"compilation_source_types\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"inventory_types\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"protocol_names\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"protocol_descriptions\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"protocol_references\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"is_abundance_reported\"",
+      "isNullable" : true,
+      "datatype" : "BOOLEAN"
+    }, {
+      "name" : "\"is_abundance_cap_reported\"",
+      "isNullable" : true,
+      "datatype" : "BOOLEAN"
+    }, {
+      "name" : "\"abundance_cap\"",
+      "isNullable" : true,
+      "datatype" : "INTEGER"
+    }, {
+      "name" : "\"is_vegetation_cover_reported\"",
+      "isNullable" : true,
+      "datatype" : "BOOLEAN"
+    }, {
+      "name" : "\"is_least_specific_target_category_quantity_inclusive\"",
+      "isNullable" : true,
+      "datatype" : "BOOLEAN"
+    }, {
+      "name" : "\"has_vouchers\"",
+      "isNullable" : true,
+      "datatype" : "BOOLEAN"
+    }, {
+      "name" : "\"voucher_institutions\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"has_material_samples\"",
+      "isNullable" : true,
+      "datatype" : "BOOLEAN"
+    }, {
+      "name" : "\"material_sample_types\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"sample_size_value\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"sample_size_unit\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"sampling_performed_by\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"sampling_performed_by_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"is_sampling_effort_reported\"",
+      "isNullable" : true,
+      "datatype" : "BOOLEAN"
+    }, {
+      "name" : "\"sampling_effort_protocol\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"sampling_effort_protocol_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"sampling_effort_value\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"sampling_effort_unit\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"information_withheld\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"data_generalizations\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"feedback_url\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"parent_event_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"preferred_event_name\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_category\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_type\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"dataset_name\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"dataset_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"field_number\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_conducted_by\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_conducted_by_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_date\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_time\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"start_day_of_year\"",
+      "isNullable" : true,
+      "datatype" : "INTEGER"
+    }, {
+      "name" : "\"end_day_of_year\"",
+      "isNullable" : true,
+      "datatype" : "INTEGER"
+    }, {
+      "name" : "\"year\"",
+      "isNullable" : true,
+      "datatype" : "INTEGER"
+    }, {
+      "name" : "\"month\"",
+      "isNullable" : true,
+      "datatype" : "INTEGER"
+    }, {
+      "name" : "\"day\"",
+      "isNullable" : true,
+      "datatype" : "INTEGER"
+    }, {
+      "name" : "\"verbatim_event_date\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_locality\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_elevation\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_depth\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_coordinates\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_latitude\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_longitude\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_coordinate_system\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_srs\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeference_verification_status\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"habitat\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_effort\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"field_notes\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_references\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_remarks\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"location_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"higher_geography_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"higher_geography\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"continent\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"water_body\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"island_group\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"island\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"country\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"country_code\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"state_province\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"county\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"municipality\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"locality\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"site_number\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"minimum_elevation_in_meters\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"maximum_elevation_in_meters\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"vertical_datum\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"minimum_depth_in_meters\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"maximum_depth_in_meters\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"minimum_distance_above_surface_in_meters\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"maximum_distance_above_surface_in_meters\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"location_remarks\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"decimal_latitude\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"decimal_longitude\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"geodetic_datum\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"coordinate_uncertainty_in_meters\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"coordinate_precision\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"point_radius_spatial_fit\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"footprint_wkt\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"footprint_srs\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"footprint_spatial_fit\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeferenced_by\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeferenced_by_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeferenced_date\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeference_protocol\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeference_protocol_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeference_sources\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeference_remarks\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"preferred_spatial_representation\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"geological_context_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    } ],
+    "name" : [ "\"v_survey\"" ],
+    "otherNames" : [ [ "\"main\"", "\"v_survey\"" ], [ "\"dwcowl\"", "\"main\"", "\"v_survey\"" ] ]
+  }, {
     "foreignKeys" : [ {
       "name" : "dwcowl_main_part_of_transitive_occurrence_fk_279",
       "from" : {
@@ -6932,7 +7458,7 @@
     "driverName" : "DuckDBJ",
     "driverVersion" : "1.0",
     "quotationString" : "\"",
-    "extractionTime" : "2026-07-18T12:21:09",
+    "extractionTime" : "2026-08-19T16:15:14",
     "idFactoryType" : "DUCKDB"
   }
 }
