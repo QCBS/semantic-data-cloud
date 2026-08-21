@@ -1,7 +1,7 @@
 {
   "relations" : [ {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_bibliographic_resource_fk_267",
+      "name" : "dwcowl_main_part_of_transitive_bibliographic_resource_fk_272",
       "from" : {
         "relation" : [ "\"part_of_transitive_bibliographic_resource\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -11,7 +11,7 @@
         "columns" : [ "\"reference_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_bibliographic_resource_fk_269",
+      "name" : "dwcowl_main_part_of_transitive_bibliographic_resource_fk_274",
       "from" : {
         "relation" : [ "\"part_of_transitive_bibliographic_resource\"" ],
         "columns" : [ "\"child\"" ]
@@ -110,7 +110,7 @@
     "otherNames" : [ [ "\"main\"", "\"event_identifier\"" ], [ "\"dwcowl\"", "\"main\"", "\"event_identifier\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_target_fk_335",
+      "name" : "dwcowl_main_survey_target_fk_340",
       "from" : {
         "relation" : [ "\"survey_target\"" ],
         "columns" : [ "\"survey_id\"" ]
@@ -378,7 +378,7 @@
     "otherNames" : [ [ "\"main\"", "\"identification\"" ], [ "\"dwcowl\"", "\"main\"", "\"identification\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_reference_fk_259",
+      "name" : "dwcowl_main_organism_reference_fk_264",
       "from" : {
         "relation" : [ "\"organism_reference\"" ],
         "columns" : [ "\"organism_id\"" ]
@@ -388,7 +388,7 @@
         "columns" : [ "\"organism_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_organism_reference_fk_261",
+      "name" : "dwcowl_main_organism_reference_fk_266",
       "from" : {
         "relation" : [ "\"organism_reference\"" ],
         "columns" : [ "\"reference_id\"" ]
@@ -546,7 +546,7 @@
     "otherNames" : [ [ "\"main\"", "\"identification_taxon\"" ], [ "\"dwcowl\"", "\"main\"", "\"identification_taxon\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_media_identifier_fk_162",
+      "name" : "dwcowl_main_media_identifier_fk_167",
       "from" : {
         "relation" : [ "\"media_identifier\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -688,7 +688,7 @@
     "otherNames" : [ [ "\"main\"", "\"derived_from_transitive_media\"" ], [ "\"dwcowl\"", "\"main\"", "\"derived_from_transitive_media\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_occurrence_protocol_fk_220",
+      "name" : "dwcowl_main_occurrence_protocol_fk_225",
       "from" : {
         "relation" : [ "\"occurrence_protocol\"" ],
         "columns" : [ "\"occurrence_id\"" ]
@@ -698,7 +698,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_occurrence_protocol_fk_222",
+      "name" : "dwcowl_main_occurrence_protocol_fk_227",
       "from" : {
         "relation" : [ "\"occurrence_protocol\"" ],
         "columns" : [ "\"protocol_id\"" ]
@@ -721,7 +721,7 @@
     "otherNames" : [ [ "\"main\"", "\"occurrence_protocol\"" ], [ "\"dwcowl\"", "\"main\"", "\"occurrence_protocol\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_protocol_fk_326",
+      "name" : "dwcowl_main_survey_protocol_fk_331",
       "from" : {
         "relation" : [ "\"survey_protocol\"" ],
         "columns" : [ "\"protocol_id\"" ]
@@ -731,7 +731,7 @@
         "columns" : [ "\"protocol_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_survey_protocol_fk_328",
+      "name" : "dwcowl_main_survey_protocol_fk_333",
       "from" : {
         "relation" : [ "\"survey_protocol\"" ],
         "columns" : [ "\"survey_id\"" ]
@@ -754,7 +754,7 @@
     "otherNames" : [ [ "\"main\"", "\"survey_protocol\"" ], [ "\"dwcowl\"", "\"main\"", "\"survey_protocol\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_usage_policy_fk_148",
+      "name" : "dwcowl_main_material_usage_policy_fk_153",
       "from" : {
         "relation" : [ "\"material_usage_policy\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -764,7 +764,7 @@
         "columns" : [ "\"material_entity_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_material_usage_policy_fk_150",
+      "name" : "dwcowl_main_material_usage_policy_fk_155",
       "from" : {
         "relation" : [ "\"material_usage_policy\"" ],
         "columns" : [ "\"usage_policy_id\"" ]
@@ -787,7 +787,7 @@
     "otherNames" : [ [ "\"main\"", "\"material_usage_policy\"" ], [ "\"dwcowl\"", "\"main\"", "\"material_usage_policy\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_identifier_fk_323",
+      "name" : "dwcowl_main_survey_identifier_fk_328",
       "from" : {
         "relation" : [ "\"survey_identifier\"" ],
         "columns" : [ "\"survey_id\"" ]
@@ -831,7 +831,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_media_assertion_fk_160",
+      "name" : "dwcowl_main_media_assertion_fk_165",
       "from" : {
         "relation" : [ "\"media_assertion\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -939,7 +939,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_assertion_fk_232",
+      "name" : "dwcowl_main_organism_assertion_fk_237",
       "from" : {
         "relation" : [ "\"organism_assertion\"" ],
         "columns" : [ "\"organism_id\"" ]
@@ -1042,498 +1042,12 @@
     "otherNames" : [ [ "\"main\"", "\"organism_assertion\"" ], [ "\"dwcowl\"", "\"main\"", "\"organism_assertion\"" ] ]
   }, {
     "uniqueConstraints" : [ {
-      "name" : "dwcowl_main_v_occurrence_pk",
-      "determinants" : [ "\"occurrence_id\"" ],
-      "isPrimaryKey" : true
-    } ],
-    "foreignKeys" : [ {
-      "name" : "dwcowl_main_v_occurrence_fk_354",
-      "from" : {
-        "relation" : [ "\"v_occurrence\"" ],
-        "columns" : [ "\"event_id\"" ]
-      },
-      "to" : {
-        "relation" : [ "\"event\"" ],
-        "columns" : [ "\"event_id\"" ]
-      }
-    }, {
-      "name" : "dwcowl_main_v_occurrence_fk_355",
-      "from" : {
-        "relation" : [ "\"v_occurrence\"" ],
-        "columns" : [ "\"location_id\"" ]
-      },
-      "to" : {
-        "relation" : [ "\"v_location\"" ],
-        "columns" : [ "\"location_id\"" ]
-      }
-    } ],
-    "columns" : [ {
-      "name" : "\"occurrence_id\"",
-      "isNullable" : false,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"event_id\"",
-      "isNullable" : false,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"behavior\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"caste\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"cause_of_death\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"data_generalizations\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"date_identified\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"degree_of_establishment\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"establishment_means\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"external_classification_source\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"feedback_url\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"identification_remarks\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"identification_references\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"identification_verification_status\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"identified_by\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"identified_by_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"information_withheld\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"is_part_of_occurrence_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"life_stage\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"occurrence_references\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"occurrence_remarks\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"occurrence_status\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"organism_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"organism_name\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"organism_quantity\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"organism_quantity_type\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"organism_remarks\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"organism_scope\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"pathway\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"recorded_by\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"recorded_by_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"reproductive_condition\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"sex\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"scientific_name\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"scientific_name_authorship\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"scientific_name_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"substrate\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"survey_target_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"taxon_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"taxon_rank\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"verbatim_identification\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"vernacular_name\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"vitality\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"location_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"continent\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"coordinate_precision\"",
-      "isNullable" : true,
-      "datatype" : "DOUBLE"
-    }, {
-      "name" : "\"coordinate_uncertainty_in_meters\"",
-      "isNullable" : true,
-      "datatype" : "DOUBLE"
-    }, {
-      "name" : "\"country\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"country_code\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"county\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"dataset_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"dataset_name\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"day\"",
-      "isNullable" : true,
-      "datatype" : "INTEGER"
-    }, {
-      "name" : "\"decimal_latitude\"",
-      "isNullable" : true,
-      "datatype" : "DOUBLE"
-    }, {
-      "name" : "\"decimal_longitude\"",
-      "isNullable" : true,
-      "datatype" : "DOUBLE"
-    }, {
-      "name" : "\"end_day_of_year\"",
-      "isNullable" : true,
-      "datatype" : "INTEGER"
-    }, {
-      "name" : "\"event_category\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"event_conducted_by\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"event_conducted_by_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"event_date\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"event_effort\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"event_references\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"event_remarks\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"event_time\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"event_type\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"field_notes\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"field_number\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"footprint_wkt\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"footprint_spatial_fit\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"footprint_srs\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"geodetic_datum\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"geological_context_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"georeference_protocol\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"georeference_protocol_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"georeference_remarks\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"georeference_sources\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"georeference_verification_status\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"georeferenced_by\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"georeferenced_by_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"georeferenced_date\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"habitat\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"higher_geography\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"higher_geography_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"island\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"island_group\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"locality\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"location_remarks\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"maximum_depth_in_meters\"",
-      "isNullable" : true,
-      "datatype" : "DOUBLE"
-    }, {
-      "name" : "\"maximum_distance_above_surface_in_meters\"",
-      "isNullable" : true,
-      "datatype" : "DOUBLE"
-    }, {
-      "name" : "\"maximum_elevation_in_meters\"",
-      "isNullable" : true,
-      "datatype" : "DOUBLE"
-    }, {
-      "name" : "\"minimum_depth_in_meters\"",
-      "isNullable" : true,
-      "datatype" : "DOUBLE"
-    }, {
-      "name" : "\"minimum_distance_above_surface_in_meters\"",
-      "isNullable" : true,
-      "datatype" : "DOUBLE"
-    }, {
-      "name" : "\"minimum_elevation_in_meters\"",
-      "isNullable" : true,
-      "datatype" : "DOUBLE"
-    }, {
-      "name" : "\"month\"",
-      "isNullable" : true,
-      "datatype" : "INTEGER"
-    }, {
-      "name" : "\"municipality\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"parent_event_id\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"point_radius_spatial_fit\"",
-      "isNullable" : true,
-      "datatype" : "DOUBLE"
-    }, {
-      "name" : "\"preferred_event_name\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"preferred_spatial_representation\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"site_number\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"start_day_of_year\"",
-      "isNullable" : true,
-      "datatype" : "INTEGER"
-    }, {
-      "name" : "\"state_province\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"verbatim_coordinate_system\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"verbatim_coordinates\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"verbatim_depth\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"verbatim_elevation\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"verbatim_event_date\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"verbatim_latitude\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"verbatim_locality\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"verbatim_longitude\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"verbatim_srs\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"vertical_datum\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"water_body\"",
-      "isNullable" : true,
-      "datatype" : "VARCHAR"
-    }, {
-      "name" : "\"year\"",
-      "isNullable" : true,
-      "datatype" : "INTEGER"
-    } ],
-    "name" : [ "\"v_occurrence\"" ],
-    "otherNames" : [ [ "\"main\"", "\"v_occurrence\"" ], [ "\"dwcowl\"", "\"main\"", "\"v_occurrence\"" ] ]
-  }, {
-    "uniqueConstraints" : [ {
       "name" : "dwcowl_main_molecular_protocol_assertion_pk",
       "determinants" : [ "\"assertion_id\"" ],
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_molecular_protocol_assertion_fk_181",
+      "name" : "dwcowl_main_molecular_protocol_assertion_fk_186",
       "from" : {
         "relation" : [ "\"molecular_protocol_assertion\"" ],
         "columns" : [ "\"molecular_protocol_id\"" ]
@@ -1636,7 +1150,7 @@
     "otherNames" : [ [ "\"main\"", "\"molecular_protocol_assertion\"" ], [ "\"dwcowl\"", "\"main\"", "\"molecular_protocol_assertion\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_material_fk_271",
+      "name" : "dwcowl_main_part_of_transitive_material_fk_276",
       "from" : {
         "relation" : [ "\"part_of_transitive_material\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -1646,7 +1160,7 @@
         "columns" : [ "\"material_entity_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_material_fk_273",
+      "name" : "dwcowl_main_part_of_transitive_material_fk_278",
       "from" : {
         "relation" : [ "\"part_of_transitive_material\"" ],
         "columns" : [ "\"child\"" ]
@@ -1792,7 +1306,7 @@
     "otherNames" : [ [ "\"main\"", "\"geological_context_media\"" ], [ "\"dwcowl\"", "\"main\"", "\"geological_context_media\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_interaction_agent_role_fk_243",
+      "name" : "dwcowl_main_organism_interaction_agent_role_fk_248",
       "from" : {
         "relation" : [ "\"organism_interaction_agent_role\"" ],
         "columns" : [ "\"agent_id\"" ]
@@ -1802,7 +1316,7 @@
         "columns" : [ "\"agent_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_organism_interaction_agent_role_fk_245",
+      "name" : "dwcowl_main_organism_interaction_agent_role_fk_250",
       "from" : {
         "relation" : [ "\"organism_interaction_agent_role\"" ],
         "columns" : [ "\"organism_interaction_id\"" ]
@@ -1845,7 +1359,7 @@
     "otherNames" : [ [ "\"main\"", "\"organism_interaction_agent_role\"" ], [ "\"dwcowl\"", "\"main\"", "\"organism_interaction_agent_role\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_protocol_fk_136",
+      "name" : "dwcowl_main_material_protocol_fk_141",
       "from" : {
         "relation" : [ "\"material_protocol\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -1855,7 +1369,7 @@
         "columns" : [ "\"material_entity_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_material_protocol_fk_138",
+      "name" : "dwcowl_main_material_protocol_fk_143",
       "from" : {
         "relation" : [ "\"material_protocol\"" ],
         "columns" : [ "\"protocol_id\"" ]
@@ -2027,7 +1541,7 @@
     "otherNames" : [ [ "\"main\"", "\"event_assertion\"" ], [ "\"dwcowl\"", "\"main\"", "\"event_assertion\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_media_fk_132",
+      "name" : "dwcowl_main_material_media_fk_137",
       "from" : {
         "relation" : [ "\"material_media\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -2037,7 +1551,7 @@
         "columns" : [ "\"media_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_material_media_fk_134",
+      "name" : "dwcowl_main_material_media_fk_139",
       "from" : {
         "relation" : [ "\"material_media\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -2178,7 +1692,7 @@
     "otherNames" : [ [ "\"main\"", "\"organism\"" ], [ "\"dwcowl\"", "\"main\"", "\"organism\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_identifier_fk_234",
+      "name" : "dwcowl_main_organism_identifier_fk_239",
       "from" : {
         "relation" : [ "\"organism_identifier\"" ],
         "columns" : [ "\"organism_id\"" ]
@@ -2363,7 +1877,7 @@
     "otherNames" : [ [ "\"main\"", "\"agent_media\"" ], [ "\"dwcowl\"", "\"main\"", "\"agent_media\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_occurrence_media_fk_216",
+      "name" : "dwcowl_main_occurrence_media_fk_221",
       "from" : {
         "relation" : [ "\"occurrence_media\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -2373,7 +1887,7 @@
         "columns" : [ "\"media_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_occurrence_media_fk_218",
+      "name" : "dwcowl_main_occurrence_media_fk_223",
       "from" : {
         "relation" : [ "\"occurrence_media\"" ],
         "columns" : [ "\"occurrence_id\"" ]
@@ -2433,7 +1947,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_interaction_assertion_fk_249",
+      "name" : "dwcowl_main_organism_interaction_assertion_fk_254",
       "from" : {
         "relation" : [ "\"organism_interaction_assertion\"" ],
         "columns" : [ "\"organism_interaction_id\"" ]
@@ -2569,7 +2083,7 @@
     "otherNames" : [ [ "\"main\"", "\"happened_during_transitive_reflexive_event\"" ], [ "\"dwcowl\"", "\"main\"", "\"happened_during_transitive_reflexive_event\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_occurrence_identifier_fk_213",
+      "name" : "dwcowl_main_occurrence_identifier_fk_218",
       "from" : {
         "relation" : [ "\"occurrence_identifier\"" ],
         "columns" : [ "\"occurrence_id\"" ]
@@ -2608,7 +2122,7 @@
     "otherNames" : [ [ "\"main\"", "\"occurrence_identifier\"" ], [ "\"dwcowl\"", "\"main\"", "\"occurrence_identifier\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_material_fk_287",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_material_fk_292",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_material\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -2618,7 +2132,7 @@
         "columns" : [ "\"material_entity_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_material_fk_289",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_material_fk_294",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_material\"" ],
         "columns" : [ "\"child\"" ]
@@ -2754,7 +2268,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_assertion_fk_123",
+      "name" : "dwcowl_main_material_assertion_fk_128",
       "from" : {
         "relation" : [ "\"material_assertion\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -2890,7 +2404,7 @@
     "otherNames" : [ [ "\"main\"", "\"derived_from_transitive_reflexive_media\"" ], [ "\"dwcowl\"", "\"main\"", "\"derived_from_transitive_reflexive_media\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_reference_fk_330",
+      "name" : "dwcowl_main_survey_reference_fk_335",
       "from" : {
         "relation" : [ "\"survey_reference\"" ],
         "columns" : [ "\"reference_id\"" ]
@@ -2900,7 +2414,7 @@
         "columns" : [ "\"reference_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_survey_reference_fk_332",
+      "name" : "dwcowl_main_survey_reference_fk_337",
       "from" : {
         "relation" : [ "\"survey_reference\"" ],
         "columns" : [ "\"survey_id\"" ]
@@ -2932,7 +2446,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_fk_115",
+      "name" : "dwcowl_main_material_fk_120",
       "from" : {
         "relation" : [ "\"material\"" ],
         "columns" : [ "\"event_id\"" ]
@@ -3155,7 +2669,7 @@
     "otherNames" : [ [ "\"main\"", "\"material\"" ], [ "\"dwcowl\"", "\"main\"", "\"material\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_bibliographic_resource_fk_283",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_bibliographic_resource_fk_288",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_bibliographic_resource\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -3165,7 +2679,7 @@
         "columns" : [ "\"reference_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_bibliographic_resource_fk_285",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_bibliographic_resource_fk_290",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_bibliographic_resource\"" ],
         "columns" : [ "\"child\"" ]
@@ -3193,7 +2707,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_occurrence_assertion_fk_211",
+      "name" : "dwcowl_main_occurrence_assertion_fk_216",
       "from" : {
         "relation" : [ "\"occurrence_assertion\"" ],
         "columns" : [ "\"occurrence_id\"" ]
@@ -3329,7 +2843,7 @@
     "otherNames" : [ [ "\"main\"", "\"happened_during_transitive_event\"" ], [ "\"dwcowl\"", "\"main\"", "\"happened_during_transitive_event\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_media_agent_role_fk_154",
+      "name" : "dwcowl_main_media_agent_role_fk_159",
       "from" : {
         "relation" : [ "\"media_agent_role\"" ],
         "columns" : [ "\"agent_id\"" ]
@@ -3339,7 +2853,7 @@
         "columns" : [ "\"agent_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_media_agent_role_fk_156",
+      "name" : "dwcowl_main_media_agent_role_fk_161",
       "from" : {
         "relation" : [ "\"media_agent_role\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -3382,7 +2896,7 @@
     "otherNames" : [ [ "\"main\"", "\"media_agent_role\"" ], [ "\"dwcowl\"", "\"main\"", "\"media_agent_role\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_media_fk_275",
+      "name" : "dwcowl_main_part_of_transitive_media_fk_280",
       "from" : {
         "relation" : [ "\"part_of_transitive_media\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -3392,7 +2906,7 @@
         "columns" : [ "\"media_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_media_fk_277",
+      "name" : "dwcowl_main_part_of_transitive_media_fk_282",
       "from" : {
         "relation" : [ "\"part_of_transitive_media\"" ],
         "columns" : [ "\"child\"" ]
@@ -3415,7 +2929,7 @@
     "otherNames" : [ [ "\"main\"", "\"part_of_transitive_media\"" ], [ "\"dwcowl\"", "\"main\"", "\"part_of_transitive_media\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_interaction_media_fk_251",
+      "name" : "dwcowl_main_organism_interaction_media_fk_256",
       "from" : {
         "relation" : [ "\"organism_interaction_media\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -3425,7 +2939,7 @@
         "columns" : [ "\"media_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_organism_interaction_media_fk_253",
+      "name" : "dwcowl_main_organism_interaction_media_fk_258",
       "from" : {
         "relation" : [ "\"organism_interaction_media\"" ],
         "columns" : [ "\"organism_interaction_id\"" ]
@@ -3551,7 +3065,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_interaction_fk_239",
+      "name" : "dwcowl_main_organism_interaction_fk_244",
       "from" : {
         "relation" : [ "\"organism_interaction\"" ],
         "columns" : [ "\"event_id\"" ]
@@ -3561,7 +3075,7 @@
         "columns" : [ "\"event_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_organism_interaction_fk_241",
+      "name" : "dwcowl_main_organism_interaction_fk_246",
       "from" : {
         "relation" : [ "\"organism_interaction\"" ],
         "columns" : [ "\"subject_occurrence_id\"" ]
@@ -3625,7 +3139,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_occurrence_fk_203",
+      "name" : "dwcowl_main_occurrence_fk_208",
       "from" : {
         "relation" : [ "\"occurrence\"" ],
         "columns" : [ "\"event_id\"" ]
@@ -3901,7 +3415,7 @@
     "otherNames" : [ [ "\"main\"", "\"bibliographic_resource\"" ], [ "\"dwcowl\"", "\"main\"", "\"bibliographic_resource\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_geological_context_fk_125",
+      "name" : "dwcowl_main_material_geological_context_fk_130",
       "from" : {
         "relation" : [ "\"material_geological_context\"" ],
         "columns" : [ "\"geological_context_id\"" ]
@@ -3911,7 +3425,7 @@
         "columns" : [ "\"geological_context_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_material_geological_context_fk_127",
+      "name" : "dwcowl_main_material_geological_context_fk_132",
       "from" : {
         "relation" : [ "\"material_geological_context\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -3934,7 +3448,7 @@
     "otherNames" : [ [ "\"main\"", "\"material_geological_context\"" ], [ "\"dwcowl\"", "\"main\"", "\"material_geological_context\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_provenance_fk_140",
+      "name" : "dwcowl_main_material_provenance_fk_145",
       "from" : {
         "relation" : [ "\"material_provenance\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -3944,7 +3458,7 @@
         "columns" : [ "\"material_entity_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_material_provenance_fk_142",
+      "name" : "dwcowl_main_material_provenance_fk_147",
       "from" : {
         "relation" : [ "\"material_provenance\"" ],
         "columns" : [ "\"provenance_id\"" ]
@@ -4866,7 +4380,7 @@
     "otherNames" : [ [ "\"main\"", "\"v_survey\"" ], [ "\"dwcowl\"", "\"main\"", "\"v_survey\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_occurrence_fk_279",
+      "name" : "dwcowl_main_part_of_transitive_occurrence_fk_284",
       "from" : {
         "relation" : [ "\"part_of_transitive_occurrence\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -4876,7 +4390,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_occurrence_fk_281",
+      "name" : "dwcowl_main_part_of_transitive_occurrence_fk_286",
       "from" : {
         "relation" : [ "\"part_of_transitive_occurrence\"" ],
         "columns" : [ "\"child\"" ]
@@ -5097,7 +4611,7 @@
     "otherNames" : [ [ "\"main\"", "\"usage_policy\"" ], [ "\"dwcowl\"", "\"main\"", "\"usage_policy\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_media_provenance_fk_165",
+      "name" : "dwcowl_main_media_provenance_fk_170",
       "from" : {
         "relation" : [ "\"media_provenance\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -5107,7 +4621,7 @@
         "columns" : [ "\"media_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_media_provenance_fk_167",
+      "name" : "dwcowl_main_media_provenance_fk_172",
       "from" : {
         "relation" : [ "\"media_provenance\"" ],
         "columns" : [ "\"provenance_id\"" ]
@@ -5130,7 +4644,7 @@
     "otherNames" : [ [ "\"main\"", "\"media_provenance\"" ], [ "\"dwcowl\"", "\"main\"", "\"media_provenance\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_agent_role_fk_117",
+      "name" : "dwcowl_main_material_agent_role_fk_122",
       "from" : {
         "relation" : [ "\"material_agent_role\"" ],
         "columns" : [ "\"agent_id\"" ]
@@ -5140,7 +4654,7 @@
         "columns" : [ "\"agent_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_material_agent_role_fk_119",
+      "name" : "dwcowl_main_material_agent_role_fk_124",
       "from" : {
         "relation" : [ "\"material_agent_role\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -5773,7 +5287,7 @@
     "otherNames" : [ [ "\"main\"", "\"molecular_protocol\"" ], [ "\"dwcowl\"", "\"main\"", "\"molecular_protocol\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_agent_role_fk_315",
+      "name" : "dwcowl_main_survey_agent_role_fk_320",
       "from" : {
         "relation" : [ "\"survey_agent_role\"" ],
         "columns" : [ "\"agent_id\"" ]
@@ -5783,7 +5297,7 @@
         "columns" : [ "\"agent_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_survey_agent_role_fk_317",
+      "name" : "dwcowl_main_survey_agent_role_fk_322",
       "from" : {
         "relation" : [ "\"survey_agent_role\"" ],
         "columns" : [ "\"survey_id\"" ]
@@ -5891,7 +5405,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_relationship_fk_265",
+      "name" : "dwcowl_main_organism_relationship_fk_270",
       "from" : {
         "relation" : [ "\"organism_relationship\"" ],
         "columns" : [ "\"subject_organism_id\"" ]
@@ -6023,7 +5537,7 @@
     "otherNames" : [ [ "\"main\"", "\"event_media\"" ], [ "\"dwcowl\"", "\"main\"", "\"event_media\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_occurrence_agent_role_fk_205",
+      "name" : "dwcowl_main_occurrence_agent_role_fk_210",
       "from" : {
         "relation" : [ "\"occurrence_agent_role\"" ],
         "columns" : [ "\"agent_id\"" ]
@@ -6033,7 +5547,7 @@
         "columns" : [ "\"agent_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_occurrence_agent_role_fk_207",
+      "name" : "dwcowl_main_occurrence_agent_role_fk_212",
       "from" : {
         "relation" : [ "\"occurrence_agent_role\"" ],
         "columns" : [ "\"occurrence_id\"" ]
@@ -6109,7 +5623,7 @@
     "otherNames" : [ [ "\"main\"", "\"protocol\"" ], [ "\"dwcowl\"", "\"main\"", "\"protocol\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_media_fk_291",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_media_fk_296",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_media\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -6119,7 +5633,7 @@
         "columns" : [ "\"media_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_media_fk_293",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_media_fk_298",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_media\"" ],
         "columns" : [ "\"child\"" ]
@@ -6212,7 +5726,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_fk_313",
+      "name" : "dwcowl_main_survey_fk_318",
       "from" : {
         "relation" : [ "\"survey\"" ],
         "columns" : [ "\"event_id\"" ]
@@ -6439,7 +5953,7 @@
     "otherNames" : [ [ "\"main\"", "\"survey\"" ], [ "\"dwcowl\"", "\"main\"", "\"survey\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_reference_fk_144",
+      "name" : "dwcowl_main_material_reference_fk_149",
       "from" : {
         "relation" : [ "\"material_reference\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -6449,7 +5963,7 @@
         "columns" : [ "\"material_entity_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_material_reference_fk_146",
+      "name" : "dwcowl_main_material_reference_fk_151",
       "from" : {
         "relation" : [ "\"material_reference\"" ],
         "columns" : [ "\"reference_id\"" ]
@@ -6476,7 +5990,7 @@
     "otherNames" : [ [ "\"main\"", "\"material_reference\"" ], [ "\"dwcowl\"", "\"main\"", "\"material_reference\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_molecular_protocol_reference_fk_183",
+      "name" : "dwcowl_main_molecular_protocol_reference_fk_188",
       "from" : {
         "relation" : [ "\"molecular_protocol_reference\"" ],
         "columns" : [ "\"molecular_protocol_id\"" ]
@@ -6486,7 +6000,7 @@
         "columns" : [ "\"molecular_protocol_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_molecular_protocol_reference_fk_185",
+      "name" : "dwcowl_main_molecular_protocol_reference_fk_190",
       "from" : {
         "relation" : [ "\"molecular_protocol_reference\"" ],
         "columns" : [ "\"reference_id\"" ]
@@ -6513,7 +6027,7 @@
     "otherNames" : [ [ "\"main\"", "\"molecular_protocol_reference\"" ], [ "\"dwcowl\"", "\"main\"", "\"molecular_protocol_reference\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_occurrence_reference_fk_224",
+      "name" : "dwcowl_main_occurrence_reference_fk_229",
       "from" : {
         "relation" : [ "\"occurrence_reference\"" ],
         "columns" : [ "\"occurrence_id\"" ]
@@ -6523,7 +6037,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_occurrence_reference_fk_226",
+      "name" : "dwcowl_main_occurrence_reference_fk_231",
       "from" : {
         "relation" : [ "\"occurrence_reference\"" ],
         "columns" : [ "\"reference_id\"" ]
@@ -6549,8 +6063,494 @@
     "name" : [ "\"occurrence_reference\"" ],
     "otherNames" : [ [ "\"main\"", "\"occurrence_reference\"" ], [ "\"dwcowl\"", "\"main\"", "\"occurrence_reference\"" ] ]
   }, {
+    "uniqueConstraints" : [ {
+      "name" : "dwcowl_main_j_occurrence_pk",
+      "determinants" : [ "\"occurrence_id\"" ],
+      "isPrimaryKey" : true
+    } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_identifier_fk_129",
+      "name" : "dwcowl_main_j_occurrence_fk_115",
+      "from" : {
+        "relation" : [ "\"j_occurrence\"" ],
+        "columns" : [ "\"event_id\"" ]
+      },
+      "to" : {
+        "relation" : [ "\"event\"" ],
+        "columns" : [ "\"event_id\"" ]
+      }
+    }, {
+      "name" : "dwcowl_main_j_occurrence_fk_116",
+      "from" : {
+        "relation" : [ "\"j_occurrence\"" ],
+        "columns" : [ "\"location_id\"" ]
+      },
+      "to" : {
+        "relation" : [ "\"v_location\"" ],
+        "columns" : [ "\"location_id\"" ]
+      }
+    } ],
+    "columns" : [ {
+      "name" : "\"occurrence_id\"",
+      "isNullable" : false,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_id\"",
+      "isNullable" : false,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"behavior\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"caste\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"cause_of_death\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"data_generalizations\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"date_identified\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"degree_of_establishment\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"establishment_means\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"external_classification_source\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"feedback_url\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"identification_remarks\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"identification_references\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"identification_verification_status\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"identified_by\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"identified_by_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"information_withheld\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"is_part_of_occurrence_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"life_stage\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"occurrence_references\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"occurrence_remarks\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"occurrence_status\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"organism_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"organism_name\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"organism_quantity\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"organism_quantity_type\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"organism_remarks\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"organism_scope\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"pathway\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"recorded_by\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"recorded_by_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"reproductive_condition\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"sex\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"scientific_name\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"scientific_name_authorship\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"scientific_name_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"substrate\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"survey_target_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"taxon_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"taxon_rank\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_identification\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"vernacular_name\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"vitality\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"location_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"continent\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"coordinate_precision\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"coordinate_uncertainty_in_meters\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"country\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"country_code\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"county\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"dataset_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"dataset_name\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"day\"",
+      "isNullable" : true,
+      "datatype" : "INTEGER"
+    }, {
+      "name" : "\"decimal_latitude\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"decimal_longitude\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"end_day_of_year\"",
+      "isNullable" : true,
+      "datatype" : "INTEGER"
+    }, {
+      "name" : "\"event_category\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_conducted_by\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_conducted_by_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_date\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_effort\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_references\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_remarks\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_time\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"event_type\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"field_notes\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"field_number\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"footprint_wkt\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"footprint_spatial_fit\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"footprint_srs\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"geodetic_datum\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"geological_context_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeference_protocol\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeference_protocol_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeference_remarks\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeference_sources\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeference_verification_status\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeferenced_by\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeferenced_by_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"georeferenced_date\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"habitat\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"higher_geography\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"higher_geography_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"island\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"island_group\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"locality\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"location_remarks\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"maximum_depth_in_meters\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"maximum_distance_above_surface_in_meters\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"maximum_elevation_in_meters\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"minimum_depth_in_meters\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"minimum_distance_above_surface_in_meters\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"minimum_elevation_in_meters\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"month\"",
+      "isNullable" : true,
+      "datatype" : "INTEGER"
+    }, {
+      "name" : "\"municipality\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"parent_event_id\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"point_radius_spatial_fit\"",
+      "isNullable" : true,
+      "datatype" : "DOUBLE"
+    }, {
+      "name" : "\"preferred_event_name\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"preferred_spatial_representation\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"site_number\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"start_day_of_year\"",
+      "isNullable" : true,
+      "datatype" : "INTEGER"
+    }, {
+      "name" : "\"state_province\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_coordinate_system\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_coordinates\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_depth\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_elevation\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_event_date\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_latitude\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_locality\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_longitude\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"verbatim_srs\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"vertical_datum\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"water_body\"",
+      "isNullable" : true,
+      "datatype" : "VARCHAR"
+    }, {
+      "name" : "\"year\"",
+      "isNullable" : true,
+      "datatype" : "INTEGER"
+    } ],
+    "name" : [ "\"j_occurrence\"" ],
+    "otherNames" : [ [ "\"main\"", "\"j_occurrence\"" ], [ "\"dwcowl\"", "\"main\"", "\"j_occurrence\"" ] ]
+  }, {
+    "foreignKeys" : [ {
+      "name" : "dwcowl_main_material_identifier_fk_134",
       "from" : {
         "relation" : [ "\"material_identifier\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -6589,7 +6589,7 @@
     "otherNames" : [ [ "\"main\"", "\"material_identifier\"" ], [ "\"dwcowl\"", "\"main\"", "\"material_identifier\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_media_usage_policy_fk_169",
+      "name" : "dwcowl_main_media_usage_policy_fk_174",
       "from" : {
         "relation" : [ "\"media_usage_policy\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -6599,7 +6599,7 @@
         "columns" : [ "\"media_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_media_usage_policy_fk_171",
+      "name" : "dwcowl_main_media_usage_policy_fk_176",
       "from" : {
         "relation" : [ "\"media_usage_policy\"" ],
         "columns" : [ "\"usage_policy_id\"" ]
@@ -7270,7 +7270,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_nucleotide_analysis_fk_189",
+      "name" : "dwcowl_main_nucleotide_analysis_fk_194",
       "from" : {
         "relation" : [ "\"nucleotide_analysis\"" ],
         "columns" : [ "\"event_id\"" ]
@@ -7280,7 +7280,7 @@
         "columns" : [ "\"event_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_nucleotide_analysis_fk_191",
+      "name" : "dwcowl_main_nucleotide_analysis_fk_196",
       "from" : {
         "relation" : [ "\"nucleotide_analysis\"" ],
         "columns" : [ "\"molecular_protocol_id\"" ]
@@ -7290,7 +7290,7 @@
         "columns" : [ "\"molecular_protocol_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_nucleotide_analysis_fk_193",
+      "name" : "dwcowl_main_nucleotide_analysis_fk_198",
       "from" : {
         "relation" : [ "\"nucleotide_analysis\"" ],
         "columns" : [ "\"nucleotide_sequence_id\"" ]
@@ -7422,7 +7422,7 @@
     "otherNames" : [ [ "\"main\"", "\"provenance\"" ], [ "\"dwcowl\"", "\"main\"", "\"provenance\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_molecular_protocol_agent_role_fk_175",
+      "name" : "dwcowl_main_molecular_protocol_agent_role_fk_180",
       "from" : {
         "relation" : [ "\"molecular_protocol_agent_role\"" ],
         "columns" : [ "\"agent_id\"" ]
@@ -7432,7 +7432,7 @@
         "columns" : [ "\"agent_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_molecular_protocol_agent_role_fk_177",
+      "name" : "dwcowl_main_molecular_protocol_agent_role_fk_182",
       "from" : {
         "relation" : [ "\"molecular_protocol_agent_role\"" ],
         "columns" : [ "\"molecular_protocol_id\"" ]
@@ -7480,7 +7480,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_assertion_fk_321",
+      "name" : "dwcowl_main_survey_assertion_fk_326",
       "from" : {
         "relation" : [ "\"survey_assertion\"" ],
         "columns" : [ "\"survey_id\"" ]
@@ -7583,7 +7583,7 @@
     "otherNames" : [ [ "\"main\"", "\"survey_assertion\"" ], [ "\"dwcowl\"", "\"main\"", "\"survey_assertion\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_interaction_reference_fk_255",
+      "name" : "dwcowl_main_organism_interaction_reference_fk_260",
       "from" : {
         "relation" : [ "\"organism_interaction_reference\"" ],
         "columns" : [ "\"organism_interaction_id\"" ]
@@ -7593,7 +7593,7 @@
         "columns" : [ "\"organism_interaction_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_organism_interaction_reference_fk_257",
+      "name" : "dwcowl_main_organism_interaction_reference_fk_262",
       "from" : {
         "relation" : [ "\"organism_interaction_reference\"" ],
         "columns" : [ "\"reference_id\"" ]
@@ -7766,7 +7766,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_nucleotide_analysis_assertion_fk_197",
+      "name" : "dwcowl_main_nucleotide_analysis_assertion_fk_202",
       "from" : {
         "relation" : [ "\"nucleotide_analysis_assertion\"" ],
         "columns" : [ "\"nucleotide_analysis_id\"" ]
@@ -7869,7 +7869,7 @@
     "otherNames" : [ [ "\"main\"", "\"nucleotide_analysis_assertion\"" ], [ "\"dwcowl\"", "\"main\"", "\"nucleotide_analysis_assertion\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_protocol_reference_fk_301",
+      "name" : "dwcowl_main_protocol_reference_fk_306",
       "from" : {
         "relation" : [ "\"protocol_reference\"" ],
         "columns" : [ "\"protocol_id\"" ]
@@ -7879,7 +7879,7 @@
         "columns" : [ "\"protocol_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_protocol_reference_fk_303",
+      "name" : "dwcowl_main_protocol_reference_fk_308",
       "from" : {
         "relation" : [ "\"protocol_reference\"" ],
         "columns" : [ "\"reference_id\"" ]
@@ -7906,7 +7906,7 @@
     "otherNames" : [ [ "\"main\"", "\"protocol_reference\"" ], [ "\"dwcowl\"", "\"main\"", "\"protocol_reference\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_occurrence_fk_295",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_occurrence_fk_300",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_occurrence\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -7916,7 +7916,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_occurrence_fk_297",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_occurrence_fk_302",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_occurrence\"" ],
         "columns" : [ "\"child\"" ]
@@ -7944,7 +7944,7 @@
     "driverName" : "DuckDBJ",
     "driverVersion" : "1.0",
     "quotationString" : "\"",
-    "extractionTime" : "2026-08-21T12:43:19",
+    "extractionTime" : "2026-08-21T13:53:00",
     "idFactoryType" : "DUCKDB"
   }
 }

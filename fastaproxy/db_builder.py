@@ -128,7 +128,7 @@ def build_db(dataset_ids: list[str]) -> Path:
         #
         con.execute("""
         -- dwc:Occurrence entity recreated with a join.
-        CREATE VIEW v_occurrence AS
+        CREATE VIEW j_occurrence AS
         SELECT *
         FROM occurrence
         JOIN event ON occurrence.event_id = event.event_id;
