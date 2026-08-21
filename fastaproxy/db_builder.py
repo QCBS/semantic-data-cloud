@@ -114,6 +114,16 @@ def build_db(dataset_ids: list[str]) -> Path:
         WHERE rn = 1;
         """)
 
+        # NOTE: Create a view to join the survey table with its event-based context
+        #
+        con.execute("""
+        -- eco:Survey entity recreated with a join.
+        CREATE VIEW v_survey AS
+        SELECT *
+        FROM survey
+        JOIN event ON survey.event_id = event.event_id;
+        """)
+
         # NOTE: Add transitive and transitive_reflexive views
         #
         con.execute(CREATE_TARP_VIEWS_SQL)
