@@ -5060,6 +5060,7 @@ dwc:NucleotideSequence rdf:type owl:Class ;
 
 ###  http://rs.tdwg.org/dwc/terms/Occurrence
 dwc:Occurrence rdf:type owl:Class ;
+               rdfs:subClassOf dwc:Event ;
                rdfs:label "Occurrence" ;
                skos:definition "A state of a dwc:Organism in a dwc:Event." ;
                skos:example "a fungus in Central Park in the summer of 1929" ,
