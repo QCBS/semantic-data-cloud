@@ -3309,7 +3309,7 @@ dwc:preparations rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/processedTotalReadCount
 dwc:processedTotalReadCount rdf:type owl:DatatypeProperty ;
                             rdfs:range xsd:integer ;
-                            rdfs:label "Total Read Count" ;
+                            rdfs:label "Processed Total Read Count" ;
                             skos:definition "The total number of reads obtained for a processed dwc:NucleotideSequence during a dwc:NucleotideAnalysis." ;
                             skos:example 345987 ,
                                          50638 ,
