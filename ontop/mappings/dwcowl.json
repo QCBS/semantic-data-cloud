@@ -694,7 +694,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       },
       "to" : {
-        "relation" : [ "\"occurrence\"" ],
+        "relation" : [ "\"j_occurrence\"" ],
         "columns" : [ "\"occurrence_id\"" ]
       }
     }, {
@@ -1893,7 +1893,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       },
       "to" : {
-        "relation" : [ "\"occurrence\"" ],
+        "relation" : [ "\"j_occurrence\"" ],
         "columns" : [ "\"occurrence_id\"" ]
       }
     } ],
@@ -2089,7 +2089,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       },
       "to" : {
-        "relation" : [ "\"occurrence\"" ],
+        "relation" : [ "\"j_occurrence\"" ],
         "columns" : [ "\"occurrence_id\"" ]
       }
     } ],
@@ -2713,7 +2713,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       },
       "to" : {
-        "relation" : [ "\"occurrence\"" ],
+        "relation" : [ "\"j_occurrence\"" ],
         "columns" : [ "\"occurrence_id\"" ]
       }
     } ],
@@ -3081,7 +3081,7 @@
         "columns" : [ "\"subject_occurrence_id\"" ]
       },
       "to" : {
-        "relation" : [ "\"occurrence\"" ],
+        "relation" : [ "\"j_occurrence\"" ],
         "columns" : [ "\"occurrence_id\"" ]
       }
     } ],
@@ -4386,7 +4386,7 @@
         "columns" : [ "\"ancestor\"" ]
       },
       "to" : {
-        "relation" : [ "\"occurrence\"" ],
+        "relation" : [ "\"j_occurrence\"" ],
         "columns" : [ "\"occurrence_id\"" ]
       }
     }, {
@@ -4396,7 +4396,7 @@
         "columns" : [ "\"child\"" ]
       },
       "to" : {
-        "relation" : [ "\"occurrence\"" ],
+        "relation" : [ "\"j_occurrence\"" ],
         "columns" : [ "\"occurrence_id\"" ]
       }
     } ],
@@ -5553,7 +5553,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       },
       "to" : {
-        "relation" : [ "\"occurrence\"" ],
+        "relation" : [ "\"j_occurrence\"" ],
         "columns" : [ "\"occurrence_id\"" ]
       }
     } ],
@@ -6033,7 +6033,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       },
       "to" : {
-        "relation" : [ "\"occurrence\"" ],
+        "relation" : [ "\"j_occurrence\"" ],
         "columns" : [ "\"occurrence_id\"" ]
       }
     }, {
@@ -7912,7 +7912,7 @@
         "columns" : [ "\"ancestor\"" ]
       },
       "to" : {
-        "relation" : [ "\"occurrence\"" ],
+        "relation" : [ "\"j_occurrence\"" ],
         "columns" : [ "\"occurrence_id\"" ]
       }
     }, {
@@ -7922,7 +7922,7 @@
         "columns" : [ "\"child\"" ]
       },
       "to" : {
-        "relation" : [ "\"occurrence\"" ],
+        "relation" : [ "\"j_occurrence\"" ],
         "columns" : [ "\"occurrence_id\"" ]
       }
     } ],
@@ -7944,7 +7944,7 @@
     "driverName" : "DuckDBJ",
     "driverVersion" : "1.0",
     "quotationString" : "\"",
-    "extractionTime" : "2026-08-21T13:53:00",
+    "extractionTime" : "2026-08-21T14:55:08",
     "idFactoryType" : "DUCKDB"
   }
 }
