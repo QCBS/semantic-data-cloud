@@ -1191,13 +1191,13 @@ miqe:pcr_analysis_software rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.gbif.org/terms/miqe/pcr_primer_lod
 miqe:pcr_primer_lod rdf:type owl:DatatypeProperty ;
-                    rdfs:label "pcr_primer_lod" ;
+                    rdfs:label "PCR Assay Limit Of Detection" ;
                     skos:definition "The assay’s ability to detect the target at low levels." .
 
 
 ###  http://rs.gbif.org/terms/miqe/pcr_primer_loq
 miqe:pcr_primer_loq rdf:type owl:DatatypeProperty ;
-                    rdfs:label "pcr_primer_loq" ;
+                    rdfs:label "PCR Assay Limit Of Quantification" ;
                     skos:definition "The assay’s ability to quantify copy number at low levels." .
 
 
