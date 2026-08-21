@@ -124,6 +124,16 @@ def build_db(dataset_ids: list[str]) -> Path:
         JOIN event ON survey.event_id = event.event_id;
         """)
 
+        # NOTE: Create a view to join the occurrence table with its event-based context
+        #
+        con.execute("""
+        -- dwc:Occurrence entity recreated with a join.
+        CREATE VIEW v_occurrence AS
+        SELECT *
+        FROM occurrence
+        JOIN event ON occurrence.event_id = event.event_id;
+        """)
+
         # NOTE: Add transitive and transitive_reflexive views
         #
         con.execute(CREATE_TARP_VIEWS_SQL)
