@@ -5062,8 +5062,9 @@ dwc:NucleotideSequence rdf:type owl:Class ;
 dwc:Occurrence rdf:type owl:Class ;
                rdfs:subClassOf dwc:Event ;
                rdfs:label "Occurrence" ;
-               skos:definition "A state of a dwc:Organism in a dwc:Event." ;
+               skos:definition "A dwc:Event that establishes the state of a dwc:Organism at a particular place and time." ;
                skos:example "a fungus in Central Park in the summer of 1929" ,
+                            "a male lance-tailed manakin in a courtship display on Isla Boca Brava" ,
                             "a virus in a plant leaf in the New York Botanical Garden at 15:29 on 2014-10-23" ,
                             "a wolf pack on the shore of Kluane Lake in 1988" .
 
