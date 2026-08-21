@@ -129,7 +129,14 @@ def build_db(dataset_ids: list[str]) -> Path:
         con.execute("""
         -- dwc:Occurrence entity recreated with a join.
         CREATE VIEW j_occurrence AS
-        SELECT *
+        SELECT
+            occurrence.*,
+            event.* EXCLUDE (parent_event_id),
+            CASE
+                WHEN occurrence.event_id <> occurrence.occurrence_id
+                    THEN occurrence.event_id
+                ELSE event.parent_event_id
+            END AS parent_event_id
         FROM occurrence
         JOIN event ON occurrence.event_id = event.event_id;
         """)
