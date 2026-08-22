@@ -420,7 +420,7 @@ dwcdp:hasContent rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/hasDefinition
 dwcdp:hasDefinition rdf:type owl:ObjectProperty ;
                     rdfs:label "Has Definition" ;
-                    skos:definition "An object property used to relate a dwc:SurveyTarget to a dwc:Definition." .
+                    skos:definition "An object property used to relate an eco:SurveyTarget to a dwc:Definition." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/hasMedia
@@ -627,7 +627,7 @@ dwcdp:storedIn rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/targetFor
 dwcdp:targetFor rdf:type owl:ObjectProperty ;
                 rdfs:label "Target For" ;
-                skos:definition "An object property to relate a dwc:SurveyTarget to the eco:Survey it is a target for." .
+                skos:definition "An object property to relate an eco:SurveyTarget to the eco:Survey it is a target for." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/taxonFor
@@ -2685,14 +2685,6 @@ dwc:identifiedByID rdf:type owl:DatatypeProperty ;
                    skos:definition "An identifier for a dcterms:Agent responsible for making a taxonomic determination of a dwc:Organism." .
 
 
-###  http://rs.tdwg.org/dwc/terms/includeOrExclude
-dwc:includeOrExclude rdf:type owl:DatatypeProperty ;
-                     rdfs:label "Include Or Exclude" ;
-                     skos:definition "Whether the combination of dwc:surveyTargetType and dwc:surveyTargetValue is included or excluded in a dwc:SurveyTarget." ;
-                     skos:example "exclude" ,
-                                  "include" .
-
-
 ###  http://rs.tdwg.org/dwc/terms/informationWithheld
 dwc:informationWithheld rdf:type owl:DatatypeProperty ;
                         rdfs:label "Information Withheld" ;
@@ -2754,14 +2746,6 @@ dwc:isPartOfMaterialEntityID rdf:type owl:DatatypeProperty ;
 dwc:isPartOfOccurrenceID rdf:type owl:DatatypeProperty ;
                          rdfs:label "Is Part Of Occurrence ID" ;
                          skos:definition "An identifier for a dwc:Occurrence of which this dwc:Occurrence is a part." .
-
-
-###  http://rs.tdwg.org/dwc/terms/isSurveyTargetFullyReported
-dwc:isSurveyTargetFullyReported rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Is Survey Target Fully Reported" ;
-                                skos:definition "A declaration of whether the counts for an instance of the dwc:SurveyTarget report everything that matches the declared dwc:SurveyTarget." ;
-                                skos:example "false"^^xsd:boolean ,
-                                             "true"^^xsd:boolean .
 
 
 ###  http://rs.tdwg.org/dwc/terms/island
@@ -3693,45 +3677,6 @@ dwc:substrate rdf:type owl:DatatypeProperty ;
                            "wooden board fence" .
 
 
-###  http://rs.tdwg.org/dwc/terms/surveyTargetID
-dwc:surveyTargetID rdf:type owl:DatatypeProperty ;
-                   rdfs:label "Survey Target ID" ;
-                   skos:definition "An identifier for a dwc:SurveyTarget." .
-
-
-###  http://rs.tdwg.org/dwc/terms/surveyTargetType
-dwc:surveyTargetType rdf:type owl:DatatypeProperty ;
-                     rdfs:label "Survey Target Type" ;
-                     skos:definition "A scope a dwc:SurveyTarget describes." ;
-                     skos:example "establishmentMeans" ,
-                                  "growthForm" ,
-                                  "habitat" ,
-                                  "lifeStage" ,
-                                  "minimum length" ,
-                                  "sex" ,
-                                  "taxon" .
-
-
-###  http://rs.tdwg.org/dwc/terms/surveyTargetUnit
-dwc:surveyTargetUnit rdf:type owl:DatatypeProperty ;
-                     rdfs:label "Survey Target Unit" ;
-                     skos:definition "Unit associated with a value in dwc:surveyTargetValue." .
-
-
-###  http://rs.tdwg.org/dwc/terms/surveyTargetValue
-dwc:surveyTargetValue rdf:type owl:DatatypeProperty ;
-                      rdfs:label "Survey Target Value" ;
-                      skos:definition "A value of a characteristic to include or exclude in a dwc:SurveyTarget for a given dwc:surveyTargetType." ;
-                      skos:example "Aves" ,
-                                   "adult" ,
-                                   "female" ,
-                                   "height" ,
-                                   "native" ,
-                                   "oak savannah" ,
-                                   "tree" ,
-                                   "weight" .
-
-
 ###  http://rs.tdwg.org/dwc/terms/taxonAssignmentMethod
 dwc:taxonAssignmentMethod rdf:type owl:DatatypeProperty ;
                           rdfs:label "Taxon Assignment Method" ;
@@ -4061,6 +4006,14 @@ eco:hasVouchers rdf:type owl:DatatypeProperty ;
                              "true"^^xsd:boolean .
 
 
+###  http://rs.tdwg.org/eco/terms/includeOrExclude
+eco:includeOrExclude rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Include Or Exclude" ;
+                     skos:definition "Whether to include or exclude eco:surveyTargetValue in a scope categorized by eco:surveyTargetType." ;
+                     skos:example "exclude" ,
+                                  "include" .
+
+
 ###  http://rs.tdwg.org/eco/terms/inventoryTypes
 eco:inventoryTypes rdf:type owl:DatatypeProperty ;
                    rdfs:label "Inventory Types" ;
@@ -4113,6 +4066,14 @@ eco:isSamplingEffortReported rdf:type owl:DatatypeProperty ;
                                           "true"^^xsd:boolean .
 
 
+###  http://rs.tdwg.org/eco/terms/isSurveyTargetFullyReported
+eco:isSurveyTargetFullyReported rdf:type owl:DatatypeProperty ;
+                                rdfs:label "Is Survey Target Fully Reported" ;
+                                skos:definition "Whether an eco:SurveyTarget can be used to infer absence of detection because all counts of detected dwc:Occurrences matching an eco:SurveyTarget were fully reported." ;
+                                skos:example "false"^^xsd:boolean ,
+                                             "true"^^xsd:boolean .
+
+
 ###  http://rs.tdwg.org/eco/terms/isVegetationCoverReported
 eco:isVegetationCoverReported rdf:type owl:DatatypeProperty ;
                               rdfs:label "Is Vegetation Cover Reported" ;
@@ -4141,7 +4102,7 @@ eco:nonTargetTaxa rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/eco/terms/protocolDescriptions
 eco:protocolDescriptions rdf:type owl:DatatypeProperty ;
                          rdfs:label "Protocol Descriptions" ;
-                         skos:definition "A detailed description of the dwc:Protocols used during a dwc:Survey." ;
+                         skos:definition "A detailed description of the dwc:Protocols used during an eco:Survey." ;
                          skos:example "Three conventional harp traps (3.2m ht x 2.2m w) were established in flight path zones for a period of 4 hrs at dawn and dusk for a total of 10 trap nights. Traps were visited on an hourly basis during each deployment period and the trap catch recorded for species, size, weight, sex, age and maternal status." .
 
 
@@ -4229,6 +4190,45 @@ eco:siteNestingDescription rdf:type owl:DatatypeProperty ;
 eco:surveyID rdf:type owl:DatatypeProperty ;
              rdfs:label "Survey ID" ;
              skos:definition "An identifier for an eco:Survey." .
+
+
+###  http://rs.tdwg.org/eco/terms/surveyTargetID
+eco:surveyTargetID rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Survey Target ID" ;
+                   skos:definition "An identifier for an eco:SurveyTarget." .
+
+
+###  http://rs.tdwg.org/eco/terms/surveyTargetType
+eco:surveyTargetType rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Survey Target Type" ;
+                     skos:definition "A scope an eco:SurveyTarget describes." ;
+                     skos:example "establishmentMeans" ,
+                                  "growthForm" ,
+                                  "habitat" ,
+                                  "lifeStage" ,
+                                  "minimum length" ,
+                                  "sex" ,
+                                  "taxon" .
+
+
+###  http://rs.tdwg.org/eco/terms/surveyTargetUnit
+eco:surveyTargetUnit rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Survey Target Unit" ;
+                     skos:definition "Unit associated with a value in eco:surveyTargetValue." .
+
+
+###  http://rs.tdwg.org/eco/terms/surveyTargetValue
+eco:surveyTargetValue rdf:type owl:DatatypeProperty ;
+                      rdfs:label "Survey Target Value" ;
+                      skos:definition "A value of a characteristic to include or exclude in an eco:SurveyTarget for a given eco:surveyTargetType." ;
+                      skos:example "Aves" ,
+                                   "adult" ,
+                                   "female" ,
+                                   "height" ,
+                                   "native" ,
+                                   "oak savannah" ,
+                                   "tree" ,
+                                   "weight" .
 
 
 ###  http://rs.tdwg.org/eco/terms/taxonCompletenessProtocols
@@ -5184,17 +5184,6 @@ dwc:SurveyReference rdf:type owl:Class ;
                     skos:definition "A dcterms:BibliographicResource related to an eco:Survey." .
 
 
-###  http://rs.tdwg.org/dwc/terms/SurveyTarget
-dwc:SurveyTarget rdf:type owl:Class ;
-                 rdfs:label "Survey Target" ;
-                 skos:definition "An intended scope for dwc:Occurrences in an eco:Survey." ;
-                 skos:example "Oncorhynchus mykiss and Oncorhynchus clarkii (only)" ,
-                              "all bird species" ,
-                              "all bird species except Larus gulls, fulmars and kittiwakes" ,
-                              "all total lengths except < 12 inches" ,
-                              "reproductive female Ctenomys sociabilis (only)" .
-
-
 ###  http://rs.tdwg.org/dwc/terms/SurveyTargetDefinition
 dwc:SurveyTargetDefinition rdf:type owl:Class ;
                            rdfs:label "Survey Target Definition" ;
@@ -5221,6 +5210,17 @@ eco:Survey rdf:type owl:Class ;
                         "a pollinator survey in an agricultural landscape" ,
                         "a wetland vegetation mapping" ,
                         "an environmental impact assessment (e.g., pre-construction biological baseline survey for a wind farm project)" .
+
+
+###  http://rs.tdwg.org/eco/terms/SurveyTarget
+eco:SurveyTarget rdf:type owl:Class ;
+                 rdfs:label "Survey Target" ;
+                 skos:definition "An intended scope for dwc:Occurrences in an eco:Survey." ;
+                 skos:example "Oncorhynchus mykiss and Oncorhynchus clarkii (only)" ,
+                              "all bird species" ,
+                              "all bird species except Larus gulls, fulmars and kittiwakes" ,
+                              "all total lengths except < 12 inches" ,
+                              "reproductive female Ctenomys sociabilis (only)" .
 
 
 ###  http://www.w3.org/ns/adms#Identifier
