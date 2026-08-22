@@ -603,13 +603,13 @@ dwcdp:roleHolder rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/samplingBy
 dwcdp:samplingBy rdf:type owl:ObjectProperty ;
                  rdfs:label "Samping By" ;
-                 skos:definition "An object property used to relate a dwc:Survey to the dcterms:Agent responsible for performing the sampling." .
+                 skos:definition "An object property used to relate an eco:Survey to the dcterms:Agent responsible for performing the sampling." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/satisfied
 dwcdp:satisfied rdf:type owl:ObjectProperty ;
                 rdfs:label "Satisfied" ;
-                skos:definition "An object property to relate a dwc:Occurrence to the dwc:Survey target it satisfied." .
+                skos:definition "An object property to relate a dwc:Occurrence to the eco:SurveyTarget it satisfied." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/spatialLocation
@@ -627,7 +627,7 @@ dwcdp:storedIn rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/targetFor
 dwcdp:targetFor rdf:type owl:ObjectProperty ;
                 rdfs:label "Target For" ;
-                skos:definition "An object property to relate a dwc:SurveyTarget to the dwc:Survey it is a target for." .
+                skos:definition "An object property to relate a dwc:SurveyTarget to the eco:Survey it is a target for." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/taxonFor
@@ -4258,7 +4258,7 @@ eco:totalAreaSampledUnit rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/eco/terms/totalAreaSampledValue
 eco:totalAreaSampledValue rdf:type owl:DatatypeProperty ;
                           rdfs:label "Total Area Sampled Value" ;
-                          skos:definition "The numeric value for the total area dwc:Surveyed during a dwc:Event." ;
+                          skos:definition "The numeric value for the total area surveyed during a dwc:Event." ;
                           skos:example 0.8 .
 
 
@@ -5181,7 +5181,7 @@ dwc:SurveyAgentRole rdf:type owl:Class ;
 ###  http://rs.tdwg.org/dwc/terms/SurveyReference
 dwc:SurveyReference rdf:type owl:Class ;
                     rdfs:label "Survey Reference" ;
-                    skos:definition "A dcterms:BibliographicResource related to a dwc:Survey." .
+                    skos:definition "A dcterms:BibliographicResource related to an eco:Survey." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/SurveyTarget
