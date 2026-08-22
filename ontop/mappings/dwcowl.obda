@@ -302,7 +302,7 @@ source		SELECT * FROM dwcowl.main.occurrence_reference
 
 mappingId	organism_interaction
 target		:organism-interaction/{organism_interaction_id} a dwc:OrganismInteraction ; dc:source {external_related_occurrence_source}^^xsd:string ; dwc:eventID {event_id}^^xsd:string ; dwc:externalRelatedOccurrenceID {external_related_occurrence_id}^^xsd:string ; dwc:feedbackURL {feedback_url}^^xsd:string ; dwc:organismInteractionDescription {organism_interaction_description}^^xsd:string ; dwc:organismInteractionID {organism_interaction_id}^^xsd:string ; dwc:organismInteractionType {organism_interaction_type}^^xsd:string ; dwc:relatedOccurrenceID {related_occurrence_id}^^xsd:string ; dwc:relatedOrganismPart {related_organism_part}^^xsd:string ; dwc:subjectOccurrenceID {subject_occurrence_id}^^xsd:string ; dwc:subjectOrganismPart {subject_organism_part}^^xsd:string ; dwcdp:happenedDuring :event/{event_id} ; dwcdp:interactionBy :event/{subject_occurrence_id} ; dwcdp:interactionWith :event/{related_occurrence_id} . 
-source		SELECT * FROM dwcowl.main.organism_interaction
+source		SELECT * FROM dwcowl.main.j_organism_interaction
 
 mappingId	organism_interaction_agent_role
 target		:organism-interaction-agent-role/{agent_id}/{organism_interaction_id} a dwc:OrganismInteractionAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:organismInteractionID {organism_interaction_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :organism-interaction/{organism_interaction_id} ; dwcdp:roleHolder :agent/{agent_id} . 
