@@ -132,6 +132,12 @@ bibo:status rdf:type owl:ObjectProperty ;
             skos:definition "An indication of whether a dcterms:BibliographicResource was peer reviewed." .
 
 
+###  http://rs.tdwg.org/ac/terms/CVterm
+ac:CVterm rdf:type owl:ObjectProperty ;
+          rdfs:label "Subject Category" ;
+          skos:definition "An IRI of a controlled vocabulary value for the subject category of an ac:Media resource." .
+
+
 ###  http://rs.tdwg.org/ac/terms/accessURI
 ac:accessURI rdf:type owl:ObjectProperty ;
              rdfs:label "Access URI" ;
@@ -236,12 +242,6 @@ dwciri:samplingPerformedBy rdf:type owl:ObjectProperty ;
                            rdfs:label "Sampling Performed By" ;
                            skos:definition "An identifier for a dcterms:Agent responsible for sampling." ;
                            skos:example "https://orcid.org/0000-0002-1825-0097" .
-
-
-###  http://rs.tdwg.org/dwc/iri/subjectCategory
-dwciri:subjectCategory rdf:type owl:ObjectProperty ;
-                       rdfs:label "Subject Category" ;
-                       skos:definition "An IRI of a controlled vocabulary value for the subject category of an ac:Media resource." .
 
 
 ###  http://rs.tdwg.org/dwc/iri/surveyTargetUnit
@@ -1230,6 +1230,12 @@ miqe:thresholdQuantificationCycle rdf:type owl:DatatypeProperty ;
                                   skos:example 0.3 .
 
 
+###  http://rs.tdwg.org/ac/terms/CVtermLiteral
+ac:CVtermLiteral rdf:type owl:DatatypeProperty ;
+                 rdfs:label "Subject Category" ;
+                 skos:definition "A category for the content of an ac:Media resource." .
+
+
 ###  http://rs.tdwg.org/ac/terms/attributionLinkURL
 ac:attributionLinkURL rdf:type owl:DatatypeProperty ;
                       rdfs:label "Attribution Link URL" ;
@@ -1505,10 +1511,10 @@ ac:startTimestamp rdf:type owl:DatatypeProperty ;
                   skos:definition "The beginning of a temporal region, specified as real-world clock time ISO 8601 timestamps, using UTC timezone, with an optional fractional part to indicate milliseconds or finer. There is no limit on the number of decimal places for the decimal fraction." .
 
 
-###  http://rs.tdwg.org/ac/terms/subjectCategorySource
-ac:subjectCategorySource rdf:type owl:DatatypeProperty ;
-                         rdfs:label "Subject Category Source" ;
-                         skos:definition "A reference to a controlled vocabulary in which the definition of a value in dwc:subjectCategory is given." .
+###  http://rs.tdwg.org/ac/terms/subjectCategoryVocabulary
+ac:subjectCategoryVocabulary rdf:type owl:DatatypeProperty ;
+                             rdfs:label "Subject Category Source" ;
+                             skos:definition "A reference to a controlled vocabulary in which the definition of a value in dwc:subjectCategory is given." .
 
 
 ###  http://rs.tdwg.org/ac/terms/subjectOrientationLiteral
@@ -3642,12 +3648,6 @@ dwc:subgenus rdf:type owl:DatatypeProperty ;
              skos:definition "The full scientific name of the subgenus in which the dwc:Taxon is classified." ;
              skos:example "Abacetus (Parastygis)" ,
                           "Dicranum subgen. Orthodicranum" .
-
-
-###  http://rs.tdwg.org/dwc/terms/subjectCategory
-dwc:subjectCategory rdf:type owl:DatatypeProperty ;
-                    rdfs:label "Subject Category" ;
-                    skos:definition "A category for the content of an ac:Media resource." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/subjectOccurrenceID
