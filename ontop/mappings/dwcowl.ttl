@@ -5099,6 +5099,7 @@ dwc:Organism rdf:type owl:Class ;
 
 ###  http://rs.tdwg.org/dwc/terms/OrganismInteraction
 dwc:OrganismInteraction rdf:type owl:Class ;
+                        rdfs:subClassOf dwc:Event ;
                         rdfs:label "Organism Interaction" ;
                         skos:definition "An interaction between two dwc:Organisms during a dwc:Event." ;
                         skos:example "a Mallophora ruficauda hunting an Apis mellifera in flight" ,
