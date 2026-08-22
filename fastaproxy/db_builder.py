@@ -141,6 +141,23 @@ def build_db(dataset_ids: list[str]) -> Path:
         JOIN event ON occurrence.event_id = event.event_id;
         """)
 
+        # NOTE: Create a view to join the organism_interaction table with its event-based context
+        #
+        con.execute("""
+        -- dwc:OrganismInteraction entity recreated with a join.
+        CREATE VIEW j_organism_interaction AS
+        SELECT
+            organism_interaction.*,
+            event.* EXCLUDE (parent_event_id),
+            CASE
+                WHEN organism_interaction.event_id <> organism_interaction.organism_interaction_id
+                    THEN organism_interaction.event_id
+                ELSE event.parent_event_id
+            END AS parent_event_id
+        FROM organism_interaction
+        JOIN event ON organism_interaction.event_id = event.event_id;
+        """)
+
         # NOTE: Add transitive and transitive_reflexive views
         #
         con.execute(CREATE_TARP_VIEWS_SQL)
