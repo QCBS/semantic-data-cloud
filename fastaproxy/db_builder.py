@@ -118,7 +118,7 @@ def build_db(dataset_ids: list[str]) -> Path:
         #
         con.execute("""
         -- eco:Survey entity recreated with a join.
-        CREATE VIEW v_survey AS
+        CREATE VIEW j_survey AS
         SELECT *
         FROM survey
         JOIN event ON survey.event_id = event.event_id;
