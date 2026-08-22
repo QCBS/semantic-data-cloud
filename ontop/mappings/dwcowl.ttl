@@ -171,19 +171,19 @@ ac:reviewer rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/ac/terms/subjectOrientation
 ac:subjectOrientation rdf:type owl:ObjectProperty ;
                       rdfs:label "Subject Orientation" ;
-                      skos:definition "Specific orientation (= direction, view angle) of the subject represented in the dwc:Media resource with respect to the acquisition device, denoted by an IRI." .
+                      skos:definition "Specific orientation (= direction, view angle) of the subject represented in the ac:Media resource with respect to the acquisition device, denoted by an IRI." .
 
 
 ###  http://rs.tdwg.org/ac/terms/subjectPart
 ac:subjectPart rdf:type owl:ObjectProperty ;
                rdfs:label "Subject Part" ;
-               skos:definition "The portion or product of organism morphology, behaviour, environment, etc. that is either predominantly shown or particularly well exemplified by the dwc:Media resource, denoted by an IRI." .
+               skos:definition "The portion or product of organism morphology, behaviour, environment, etc. that is either predominantly shown or particularly well exemplified by the ac:Media resource, denoted by an IRI." .
 
 
 ###  http://rs.tdwg.org/ac/terms/subtype
 ac:subtype rdf:type owl:ObjectProperty ;
            rdfs:label "Subtype" ;
-           skos:definition "A class, represented by an IRI, that provides for more specialization of a dwc:Media resource type than dcterms:type." .
+           skos:definition "A class, represented by an IRI, that provides for more specialization of an ac:Media resource type than dcterms:type." .
 
 
 ###  http://rs.tdwg.org/ac/terms/variant
@@ -241,7 +241,7 @@ dwciri:samplingPerformedBy rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwc/iri/subjectCategory
 dwciri:subjectCategory rdf:type owl:ObjectProperty ;
                        rdfs:label "Subject Category" ;
-                       skos:definition "An IRI of a controlled vocabulary value for the subject category of a dwc:Media resource." .
+                       skos:definition "An IRI of a controlled vocabulary value for the subject category of an ac:Media resource." .
 
 
 ###  http://rs.tdwg.org/dwc/iri/surveyTargetUnit
@@ -414,7 +414,7 @@ dwcdp:happenedDuringTransitiveReflexive rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/hasContent
 dwcdp:hasContent rdf:type owl:ObjectProperty ;
                  rdfs:label "Has Content" ;
-                 skos:definition "An object property to identify the object content in a relationship-type entity depicting an entity in a dwc:Media instance." .
+                 skos:definition "An object property to identify the object content in a relationship-type entity depicting an entity in an ac:Media instance." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/hasDefinition
@@ -427,7 +427,7 @@ dwcdp:hasDefinition rdf:type owl:ObjectProperty ;
 dwcdp:hasMedia rdf:type owl:ObjectProperty ;
                owl:inverseOf dwcdp:isMediaOf ;
                rdfs:label "Has Media" ;
-               skos:definition "An object property to relate a resource to a dwc:Media instance depicting it." .
+               skos:definition "An object property to relate a resource to an ac:Media instance depicting it." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/hasProvenance
@@ -474,7 +474,7 @@ dwcdp:interactionWith rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/isMediaOf
 dwcdp:isMediaOf rdf:type owl:ObjectProperty ;
                 rdfs:label "Is Media Of" ;
-                skos:definition "An object property to relate a dwc:Media instance to a resource it is a media of." .
+                skos:definition "An object property to relate an ac:Media instance to a resource it is a media of." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/materialCollectedDuring
@@ -639,7 +639,7 @@ dwcdp:taxonFor rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/thisMedia
 dwcdp:thisMedia rdf:type owl:ObjectProperty ;
                 rdfs:label "This Media" ;
-                skos:definition "An object property to identify the subject media in a relationship-type entity depicting an entity in a dwc:Media instance." .
+                skos:definition "An object property to identify the subject media in a relationship-type entity depicting an entity in an ac:Media instance." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/usagePolicyFor
@@ -1269,7 +1269,7 @@ ac:commenterLiteral rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/comments
 ac:comments rdf:type owl:DatatypeProperty ;
             rdfs:label "Comments" ;
-            skos:definition "Any comment provided on the dwc:Media resource, as free-form text." .
+            skos:definition "Any comment provided on the ac:Media resource, as free-form text." .
 
 
 ###  http://rs.tdwg.org/ac/terms/digitizationDate
@@ -1282,7 +1282,7 @@ ac:digitizationDate rdf:type owl:DatatypeProperty ;
 ac:endTime rdf:type owl:DatatypeProperty ;
            rdfs:range xsd:decimal ;
            rdfs:label "End Time In Seconds" ;
-           skos:definition "The end of a temporal region, specified as an absolute offset relative to the beginning of a dwc:Media resource (this corresponds to Normal Play Time RFC 2326), specified as seconds, with an optional fractional part to indicate milliseconds or finer." .
+           skos:definition "The end of a temporal region, specified as an absolute offset relative to the beginning of an ac:Media resource (this corresponds to Normal Play Time RFC 2326), specified as seconds, with an optional fractional part to indicate milliseconds or finer." .
 
 
 ###  http://rs.tdwg.org/ac/terms/endTimestamp
@@ -1328,7 +1328,7 @@ ac:fundingAttribution rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/furtherInformationURL
 ac:furtherInformationURL rdf:type owl:DatatypeProperty ;
                          rdfs:label "Further Information URL" ;
-                         skos:definition "A URL of a website that provides additional information about the version of the dwc:Media resource that is provided by the Service Access Point." .
+                         skos:definition "A URL of a website that provides additional information about the version of the ac:Media resource that is provided by the Service Access Point." .
 
 
 ###  http://rs.tdwg.org/ac/terms/hashFunction
@@ -1355,7 +1355,7 @@ ac:hashValue rdf:type owl:DatatypeProperty ;
 ac:heightFrac rdf:type owl:DatatypeProperty ;
               rdfs:range xsd:decimal ;
               rdfs:label "Fractional Height" ;
-              skos:definition "The height of the bounding rectangle, expressed as a decimal fraction of the height of a dwc:Media resource." ;
+              skos:definition "The height of the bounding rectangle, expressed as a decimal fraction of the height of an ac:Media resource." ;
               skos:example 0.5 ,
                            1 .
 
@@ -1370,7 +1370,7 @@ ac:licenseLogoURL rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/licensingException
 ac:licensingException rdf:type owl:DatatypeProperty ;
                       rdfs:label "Licensing Exception" ;
-                      skos:definition "The licensing statement for this variant of the dwc:Media resource if different from that given in the dcterms:license property of the resource." .
+                      skos:definition "The licensing statement for this variant of the ac:Media resource if different from that given in the dcterms:license property of the resource." .
 
 
 ###  http://rs.tdwg.org/ac/terms/mediaDuration
@@ -1433,7 +1433,7 @@ ac:metadataProviderLiteral rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/physicalSetting
 ac:physicalSetting rdf:type owl:DatatypeProperty ;
                    rdfs:label "Physical Setting" ;
-                   skos:definition "The setting of the content represented in a dwc:Media resource, such as images, sounds, and movies if the provider deems them relevant." ;
+                   skos:definition "The setting of the content represented in an ac:Media resource, such as images, sounds, and movies if the provider deems them relevant." ;
                    skos:example "Artificial" ,
                                 "Edited" ,
                                 "Natural" .
@@ -1442,13 +1442,13 @@ ac:physicalSetting rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/provider
 ac:provider rdf:type owl:DatatypeProperty ;
             rdfs:label "Provider ID" ;
-            skos:definition "An identifier for a dcterms:Agent responsible for presenting the dwc:Media resource." .
+            skos:definition "An identifier for a dcterms:Agent responsible for presenting the ac:Media resource." .
 
 
 ###  http://rs.tdwg.org/ac/terms/providerLiteral
 ac:providerLiteral rdf:type owl:DatatypeProperty ;
                    rdfs:label "Provider" ;
-                   skos:definition "A name of a dcterms:Agent responsible for presenting the dwc:Media resource." .
+                   skos:definition "A name of a dcterms:Agent responsible for presenting the ac:Media resource." .
 
 
 ###  http://rs.tdwg.org/ac/terms/providerManagedID
@@ -1461,7 +1461,7 @@ ac:providerManagedID rdf:type owl:DatatypeProperty ;
 ac:radius rdf:type owl:DatatypeProperty ;
           rdfs:range xsd:integer ;
           rdfs:label "Radius" ;
-          skos:definition "The radius of a bounding circle or arc, expressed as a fraction of the width of a dwc:Media resource." ;
+          skos:definition "The radius of a bounding circle or arc, expressed as a fraction of the width of an ac:Media resource." ;
           skos:example 100 .
 
 
@@ -1496,7 +1496,7 @@ ac:serviceExpectation rdf:type owl:DatatypeProperty ;
 ac:startTime rdf:type owl:DatatypeProperty ;
              rdfs:range xsd:decimal ;
              rdfs:label "Start Time In Seconds" ;
-             skos:definition "The beginning of a temporal region, specified as an absolute offset relative to the beginning of a dwc:Media resource (this corresponds to Normal Play Time RFC 2326), specified as seconds, with an optional fractional part to indicate milliseconds or finer." .
+             skos:definition "The beginning of a temporal region, specified as an absolute offset relative to the beginning of an ac:Media resource (this corresponds to Normal Play Time RFC 2326), specified as seconds, with an optional fractional part to indicate milliseconds or finer." .
 
 
 ###  http://rs.tdwg.org/ac/terms/startTimestamp
@@ -1514,19 +1514,19 @@ ac:subjectCategorySource rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/subjectOrientationLiteral
 ac:subjectOrientationLiteral rdf:type owl:DatatypeProperty ;
                              rdfs:label "Subject Orientation Literal" ;
-                             skos:definition "Specific orientation (= direction, view angle) of the subject represented in the dwc:Media resource with respect to the acquisition device, denoted by a controlled value string." .
+                             skos:definition "Specific orientation (= direction, view angle) of the subject represented in the ac:Media resource with respect to the acquisition device, denoted by a controlled value string." .
 
 
 ###  http://rs.tdwg.org/ac/terms/subjectPartLiteral
 ac:subjectPartLiteral rdf:type owl:DatatypeProperty ;
                       rdfs:label "Subject Part Literal" ;
-                      skos:definition "The portion or product of organism morphology, behaviour, environment, etc. that is either predominantly shown or particularly well exemplified by the dwc:Media resource, denoted by a controlled value string." .
+                      skos:definition "The portion or product of organism morphology, behaviour, environment, etc. that is either predominantly shown or particularly well exemplified by the ac:Media resource, denoted by a controlled value string." .
 
 
 ###  http://rs.tdwg.org/ac/terms/subtypeLiteral
 ac:subtypeLiteral rdf:type owl:DatatypeProperty ;
                   rdfs:label "Subtype Literal" ;
-                  skos:definition "A subcategory that allows further specialization of a dwc:Media resource type than mediaType." .
+                  skos:definition "A subcategory that allows further specialization of an ac:Media resource type than mediaType." .
 
 
 ###  http://rs.tdwg.org/ac/terms/tag
@@ -1561,7 +1561,7 @@ ac:variantLiteral rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/widthFrac
 ac:widthFrac rdf:type owl:DatatypeProperty ;
              rdfs:label "Fractional Width" ;
-             skos:definition "The width of the bounding rectangle, expressed as a decimal fraction of the width of a dwc:Media resource." ;
+             skos:definition "The width of the bounding rectangle, expressed as a decimal fraction of the width of an ac:Media resource." ;
              skos:example 0.5 ,
                           1 .
 
@@ -1570,7 +1570,7 @@ ac:widthFrac rdf:type owl:DatatypeProperty ;
 ac:xFrac rdf:type owl:DatatypeProperty ;
          rdfs:range xsd:decimal ;
          rdfs:label "Fractional X" ;
-         skos:definition "The horizontal position of a reference point, measured from the left side of a dwc:Media resource and expressed as a decimal fraction of the width of a dwc:Media resource." ;
+         skos:definition "The horizontal position of a reference point, measured from the left side of an ac:Media resource and expressed as a decimal fraction of the width of an ac:Media resource." ;
          skos:example 0.5 ,
                       1 .
 
@@ -1578,7 +1578,7 @@ ac:xFrac rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/yFrac
 ac:yFrac rdf:type owl:DatatypeProperty ;
          rdfs:label "Fractional Y" ;
-         skos:definition "The vertical position of a reference point, measured from the top of a dwc:Media resource and expressed as a decimal fraction of the height of a dwc:Media resource." ;
+         skos:definition "The vertical position of a reference point, measured from the top of an ac:Media resource and expressed as a decimal fraction of the height of an ac:Media resource." ;
          skos:example 0.5 ,
                       1 .
 
@@ -2209,7 +2209,7 @@ dwc:derivedFromMaterialEntityID rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/derivedFromMediaID
 dwc:derivedFromMediaID rdf:type owl:DatatypeProperty ;
                        rdfs:label "Derived From Media ID" ;
-                       skos:definition "An identifier for a dwc:Media resource from which this dwc:Media resource was derived." .
+                       skos:definition "An identifier for an ac:Media resource from which this ac:Media resource was derived." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/digitalSpecimenID
@@ -2963,7 +2963,7 @@ dwc:maximumElevationInMeters rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/mediaID
 dwc:mediaID rdf:type owl:DatatypeProperty ;
             rdfs:label "Media ID" ;
-            skos:definition "An identifier for a dwc:Media resource." .
+            skos:definition "An identifier for an ac:Media resource." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/member
@@ -3647,7 +3647,7 @@ dwc:subgenus rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/subjectCategory
 dwc:subjectCategory rdf:type owl:DatatypeProperty ;
                     rdfs:label "Subject Category" ;
-                    skos:definition "A category for the content of a dwc:Media resource." .
+                    skos:definition "A category for the content of an ac:Media resource." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/subjectOccurrenceID
@@ -4897,7 +4897,7 @@ dwc:ChronometricAgeAgentRole rdf:type owl:Class ;
 ###  http://rs.tdwg.org/dwc/terms/ChronometricAgeMedia
 dwc:ChronometricAgeMedia rdf:type owl:Class ;
                          rdfs:label "Chronometric Age Media" ;
-                         skos:definition "A chrono:ChronometricAge as content in a dwc:Media entity." .
+                         skos:definition "A chrono:ChronometricAge as content in an ac:Media entity." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/ChronometricAgeReference
@@ -4946,7 +4946,7 @@ dwc:GeologicalContext rdf:type owl:Class ;
 ###  http://rs.tdwg.org/dwc/terms/GeologicalContextMedia
 dwc:GeologicalContextMedia rdf:type owl:Class ;
                            rdfs:label "Geological Context Media" ;
-                           skos:definition "A dwc:GeologicalContext as content in a dwc:Media entity." .
+                           skos:definition "A dwc:GeologicalContext as content in an ac:Media entity." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/GeologicalMaterial
@@ -5011,7 +5011,7 @@ dwc:MaterialEntityAgentRole rdf:type owl:Class ;
 ###  http://rs.tdwg.org/dwc/terms/MaterialEntityMedia
 dwc:MaterialEntityMedia rdf:type owl:Class ;
                         rdfs:label "Material Entity Media" ;
-                        skos:definition "A dwc:MaterialEntity as content in a dwc:Media entity." .
+                        skos:definition "A dwc:MaterialEntity as content in an ac:Media entity." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/MaterialEntityReference
@@ -5023,7 +5023,7 @@ dwc:MaterialEntityReference rdf:type owl:Class ;
 ###  http://rs.tdwg.org/dwc/terms/MediaAgentRole
 dwc:MediaAgentRole rdf:type owl:Class ;
                    rdfs:label "Media Agent Role" ;
-                   skos:definition "A role filled by a dcterms:Agent with respect to a dwc:Media entity." .
+                   skos:definition "A role filled by a dcterms:Agent with respect to an ac:Media entity." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/MolecularProtocol
@@ -5079,7 +5079,7 @@ dwc:OccurrenceAgentRole rdf:type owl:Class ;
 ###  http://rs.tdwg.org/dwc/terms/OccurrenceMedia
 dwc:OccurrenceMedia rdf:type owl:Class ;
                     rdfs:label "Occurrence Media" ;
-                    skos:definition "A dwc:Occurrence as content in a dwc:Media entity." .
+                    skos:definition "A dwc:Occurrence as content in an ac:Media entity." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/OccurrenceReference
@@ -5119,7 +5119,7 @@ dwc:OrganismInteractionAgentRole rdf:type owl:Class ;
 ###  http://rs.tdwg.org/dwc/terms/OrganismInteractionMedia
 dwc:OrganismInteractionMedia rdf:type owl:Class ;
                              rdfs:label "Organism Interaction Media" ;
-                             skos:definition "A dwc:OrganismInteraction as content in a dwc:Media entity." .
+                             skos:definition "A dwc:OrganismInteraction as content in an ac:Media entity." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/OrganismInteractionReference
