@@ -32,7 +32,7 @@
 @base <https://biobang.org/> .
 
 <http://example.org/dwcowl#> rdf:type owl:Ontology ;
-                              dc:description "An OWL 2 QL compliant ontology based on terms from biodiversity related vocabularies used to describe Darwin Core Data Packages." .
+                              dc:description "An OWL 2 QL compliant ontology based on Darwin Core Conceptual Model semantics, using terms from biodiversity-related vocabularies to describe Darwin Core Data Packages." .
 
 #################################################################
 #    Annotation properties
