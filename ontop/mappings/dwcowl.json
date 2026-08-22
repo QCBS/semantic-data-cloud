@@ -1322,7 +1322,7 @@
         "columns" : [ "\"organism_interaction_id\"" ]
       },
       "to" : {
-        "relation" : [ "\"organism_interaction\"" ],
+        "relation" : [ "\"j_organism_interaction\"" ],
         "columns" : [ "\"organism_interaction_id\"" ]
       }
     } ],
@@ -1953,7 +1953,7 @@
         "columns" : [ "\"organism_interaction_id\"" ]
       },
       "to" : {
-        "relation" : [ "\"organism_interaction\"" ],
+        "relation" : [ "\"j_organism_interaction\"" ],
         "columns" : [ "\"organism_interaction_id\"" ]
       }
     } ],
@@ -2945,7 +2945,7 @@
         "columns" : [ "\"organism_interaction_id\"" ]
       },
       "to" : {
-        "relation" : [ "\"organism_interaction\"" ],
+        "relation" : [ "\"j_organism_interaction\"" ],
         "columns" : [ "\"organism_interaction_id\"" ]
       }
     } ],
@@ -7589,7 +7589,7 @@
         "columns" : [ "\"organism_interaction_id\"" ]
       },
       "to" : {
-        "relation" : [ "\"organism_interaction\"" ],
+        "relation" : [ "\"j_organism_interaction\"" ],
         "columns" : [ "\"organism_interaction_id\"" ]
       }
     }, {
@@ -8320,7 +8320,7 @@
     "driverName" : "DuckDBJ",
     "driverVersion" : "1.0",
     "quotationString" : "\"",
-    "extractionTime" : "2026-08-22T14:29:42",
+    "extractionTime" : "2026-08-22T14:50:21",
     "idFactoryType" : "DUCKDB"
   }
 }
