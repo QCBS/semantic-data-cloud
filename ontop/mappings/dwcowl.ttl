@@ -3693,12 +3693,6 @@ dwc:substrate rdf:type owl:DatatypeProperty ;
                            "wooden board fence" .
 
 
-###  http://rs.tdwg.org/dwc/terms/surveyID
-dwc:surveyID rdf:type owl:DatatypeProperty ;
-             rdfs:label "Survey ID" ;
-             skos:definition "An identifier for a dwc:Survey." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/surveyTargetID
 dwc:surveyTargetID rdf:type owl:DatatypeProperty ;
                    rdfs:label "Survey Target ID" ;
@@ -4229,6 +4223,12 @@ eco:siteNestingDescription rdf:type owl:DatatypeProperty ;
                            rdfs:label "Site Nesting Description" ;
                            skos:definition "5 sampling sites of 3-5 plots each" ;
                            skos:example "Textual description of a hierarchical sampling design." .
+
+
+###  http://rs.tdwg.org/eco/terms/surveyID
+eco:surveyID rdf:type owl:DatatypeProperty ;
+             rdfs:label "Survey ID" ;
+             skos:definition "An identifier for an eco:Survey." .
 
 
 ###  http://rs.tdwg.org/eco/terms/taxonCompletenessProtocols
