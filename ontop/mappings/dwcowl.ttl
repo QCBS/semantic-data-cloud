@@ -200,8 +200,8 @@ ac:variantIRI rdf:type owl:ObjectProperty ;
 
 ###  http://rs.tdwg.org/dwc/iri/agentRole
 dwciri:agentRole rdf:type owl:ObjectProperty ;
-                 rdfs:label "Agent Role" ,
-                            "An IRI of the controlled vocabulary value for a role of a dcterms:Agent." .
+                 rdfs:label "Agent Role" ;
+                 skos:definition "An IRI of the controlled vocabulary value for a role of a dcterms:Agent." .
 
 
 ###  http://rs.tdwg.org/dwc/iri/assertionType
@@ -3565,6 +3565,7 @@ dwc:samplingPerformedByID rdf:type owl:DatatypeProperty ;
 dwc:scientificName rdf:type owl:DatatypeProperty ;
                    rdfs:range xsd:string ;
                    rdfs:label "Scientific Name" ;
+                   skos:definition "The full scientific name, with authorship and date information if known. When forming part of a dwc:Identification, this should be the name in lowest level taxonomic rank that can be determined." ;
                    skos:example "Agrostis stolonifera L. × Polypogon monspeliensis (L.) Desf." ,
                                 "Ambystoma tigrinum diaboli" ,
                                 "Coleoptera" ,
@@ -5083,8 +5084,8 @@ dwc:OccurrenceMedia rdf:type owl:Class ;
 
 ###  http://rs.tdwg.org/dwc/terms/OccurrenceReference
 dwc:OccurrenceReference rdf:type owl:Class ;
-                        rdfs:label "A dcterms:BibliographicResource related to a dwc:Occurrence." ,
-                                   "Occurrence Reference" .
+                        rdfs:label "Occurrence Reference" ;
+                        skos:definition "A dcterms:BibliographicResource related to a dwc:Occurrence." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/Organism
