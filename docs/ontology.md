@@ -79,7 +79,7 @@ source     SELECT occurrence_id, scientific_name FROM FROM dwcowl.main.occurrenc
 
 The string `dwcowl` in the SQL `FROM` clause is the DuckDB catalog name. It is replaced at runtime by the container manager with the quoted context hash (e.g. `"95cb752fb61d60a2"`) for each per-context database file. The quoting is necessary because the hash begins with a digit, making it an invalid bare SQL identifier.
 
-A strict `snake_case` naming convention is used for all column names in the Parquet files (and ultimately in the database views), to maximise portability across operating systems and database systems. This was also the naming convention was adopted in [the originally proposed DwC-DP schema](https://github.com/gbif/dwc-dp-examples/blob/master/gbif/dwc_dp_schema.sql).
+A strict `snake_case` naming convention is used for all column names in the Parquet files (and ultimately in the database views), to maximise portability across operating systems and database systems. It is similar in nature, but more legible, than the `flatcase` naming convention used in the monthly snapshots of GBIF occurrences [hosted as Parquet files on AWS](https://registry.opendata.aws/gbif/). This was also the naming convention that was adopted in [the originally proposed DwC-DP schema](https://github.com/gbif/dwc-dp-examples/blob/master/gbif/dwc_dp_schema.sql).
 
 ---
 
