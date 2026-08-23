@@ -2674,7 +2674,7 @@ dwc:identificationRemarks rdf:type owl:DatatypeProperty ;
 dwc:identificationVerificationStatus rdf:type owl:DatatypeProperty ;
                                      rdfs:label "Identification VerificationStatus" ;
                                      skos:definition "A categorical indicator of the extent to which a taxonomic determination has been verified to be correct." ;
-                                     skos:example 0 .
+                                     skos:example "0" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/identifiedBy
