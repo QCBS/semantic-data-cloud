@@ -1,7 +1,7 @@
 {
   "relations" : [ {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_bibliographic_resource_fk_284",
+      "name" : "dwcowl_main_part_of_transitive_bibliographic_resource_fk_285",
       "from" : {
         "relation" : [ "\"part_of_transitive_bibliographic_resource\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -11,7 +11,7 @@
         "columns" : [ "\"reference_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_bibliographic_resource_fk_286",
+      "name" : "dwcowl_main_part_of_transitive_bibliographic_resource_fk_287",
       "from" : {
         "relation" : [ "\"part_of_transitive_bibliographic_resource\"" ],
         "columns" : [ "\"child\"" ]
@@ -110,7 +110,7 @@
     "otherNames" : [ [ "\"main\"", "\"event_identifier\"" ], [ "\"dwcowl\"", "\"main\"", "\"event_identifier\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_target_fk_352",
+      "name" : "dwcowl_main_survey_target_fk_353",
       "from" : {
         "relation" : [ "\"survey_target\"" ],
         "columns" : [ "\"survey_id\"" ]
@@ -378,7 +378,7 @@
     "otherNames" : [ [ "\"main\"", "\"identification\"" ], [ "\"dwcowl\"", "\"main\"", "\"identification\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_reference_fk_276",
+      "name" : "dwcowl_main_organism_reference_fk_277",
       "from" : {
         "relation" : [ "\"organism_reference\"" ],
         "columns" : [ "\"organism_id\"" ]
@@ -388,7 +388,7 @@
         "columns" : [ "\"organism_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_organism_reference_fk_278",
+      "name" : "dwcowl_main_organism_reference_fk_279",
       "from" : {
         "relation" : [ "\"organism_reference\"" ],
         "columns" : [ "\"reference_id\"" ]
@@ -535,7 +535,7 @@
       "datatype" : "VARCHAR"
     }, {
       "name" : "\"taxon_sort_order\"",
-      "isNullable" : true,
+      "isNullable" : false,
       "datatype" : "INTEGER"
     }, {
       "name" : "\"vernacular_name\"",
@@ -546,7 +546,7 @@
     "otherNames" : [ [ "\"main\"", "\"identification_taxon\"" ], [ "\"dwcowl\"", "\"main\"", "\"identification_taxon\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_media_identifier_fk_179",
+      "name" : "dwcowl_main_media_identifier_fk_180",
       "from" : {
         "relation" : [ "\"media_identifier\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -688,7 +688,7 @@
     "otherNames" : [ [ "\"main\"", "\"derived_from_transitive_media\"" ], [ "\"dwcowl\"", "\"main\"", "\"derived_from_transitive_media\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_occurrence_protocol_fk_237",
+      "name" : "dwcowl_main_occurrence_protocol_fk_238",
       "from" : {
         "relation" : [ "\"occurrence_protocol\"" ],
         "columns" : [ "\"occurrence_id\"" ]
@@ -698,7 +698,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_occurrence_protocol_fk_239",
+      "name" : "dwcowl_main_occurrence_protocol_fk_240",
       "from" : {
         "relation" : [ "\"occurrence_protocol\"" ],
         "columns" : [ "\"protocol_id\"" ]
@@ -721,7 +721,7 @@
     "otherNames" : [ [ "\"main\"", "\"occurrence_protocol\"" ], [ "\"dwcowl\"", "\"main\"", "\"occurrence_protocol\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_protocol_fk_343",
+      "name" : "dwcowl_main_survey_protocol_fk_344",
       "from" : {
         "relation" : [ "\"survey_protocol\"" ],
         "columns" : [ "\"protocol_id\"" ]
@@ -731,7 +731,7 @@
         "columns" : [ "\"protocol_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_survey_protocol_fk_345",
+      "name" : "dwcowl_main_survey_protocol_fk_346",
       "from" : {
         "relation" : [ "\"survey_protocol\"" ],
         "columns" : [ "\"survey_id\"" ]
@@ -754,7 +754,7 @@
     "otherNames" : [ [ "\"main\"", "\"survey_protocol\"" ], [ "\"dwcowl\"", "\"main\"", "\"survey_protocol\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_usage_policy_fk_165",
+      "name" : "dwcowl_main_material_usage_policy_fk_166",
       "from" : {
         "relation" : [ "\"material_usage_policy\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -764,7 +764,7 @@
         "columns" : [ "\"material_entity_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_material_usage_policy_fk_167",
+      "name" : "dwcowl_main_material_usage_policy_fk_168",
       "from" : {
         "relation" : [ "\"material_usage_policy\"" ],
         "columns" : [ "\"usage_policy_id\"" ]
@@ -787,7 +787,7 @@
     "otherNames" : [ [ "\"main\"", "\"material_usage_policy\"" ], [ "\"dwcowl\"", "\"main\"", "\"material_usage_policy\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_identifier_fk_340",
+      "name" : "dwcowl_main_survey_identifier_fk_341",
       "from" : {
         "relation" : [ "\"survey_identifier\"" ],
         "columns" : [ "\"survey_id\"" ]
@@ -831,7 +831,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_media_assertion_fk_177",
+      "name" : "dwcowl_main_media_assertion_fk_178",
       "from" : {
         "relation" : [ "\"media_assertion\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -939,7 +939,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_assertion_fk_249",
+      "name" : "dwcowl_main_organism_assertion_fk_250",
       "from" : {
         "relation" : [ "\"organism_assertion\"" ],
         "columns" : [ "\"organism_id\"" ]
@@ -1047,7 +1047,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_molecular_protocol_assertion_fk_198",
+      "name" : "dwcowl_main_molecular_protocol_assertion_fk_199",
       "from" : {
         "relation" : [ "\"molecular_protocol_assertion\"" ],
         "columns" : [ "\"molecular_protocol_id\"" ]
@@ -1150,7 +1150,7 @@
     "otherNames" : [ [ "\"main\"", "\"molecular_protocol_assertion\"" ], [ "\"dwcowl\"", "\"main\"", "\"molecular_protocol_assertion\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_material_fk_288",
+      "name" : "dwcowl_main_part_of_transitive_material_fk_289",
       "from" : {
         "relation" : [ "\"part_of_transitive_material\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -1160,7 +1160,7 @@
         "columns" : [ "\"material_entity_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_material_fk_290",
+      "name" : "dwcowl_main_part_of_transitive_material_fk_291",
       "from" : {
         "relation" : [ "\"part_of_transitive_material\"" ],
         "columns" : [ "\"child\"" ]
@@ -1306,7 +1306,7 @@
     "otherNames" : [ [ "\"main\"", "\"geological_context_media\"" ], [ "\"dwcowl\"", "\"main\"", "\"geological_context_media\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_interaction_agent_role_fk_260",
+      "name" : "dwcowl_main_organism_interaction_agent_role_fk_261",
       "from" : {
         "relation" : [ "\"organism_interaction_agent_role\"" ],
         "columns" : [ "\"agent_id\"" ]
@@ -1316,7 +1316,7 @@
         "columns" : [ "\"agent_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_organism_interaction_agent_role_fk_262",
+      "name" : "dwcowl_main_organism_interaction_agent_role_fk_263",
       "from" : {
         "relation" : [ "\"organism_interaction_agent_role\"" ],
         "columns" : [ "\"organism_interaction_id\"" ]
@@ -1359,7 +1359,7 @@
     "otherNames" : [ [ "\"main\"", "\"organism_interaction_agent_role\"" ], [ "\"dwcowl\"", "\"main\"", "\"organism_interaction_agent_role\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_protocol_fk_153",
+      "name" : "dwcowl_main_material_protocol_fk_154",
       "from" : {
         "relation" : [ "\"material_protocol\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -1369,7 +1369,7 @@
         "columns" : [ "\"material_entity_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_material_protocol_fk_155",
+      "name" : "dwcowl_main_material_protocol_fk_156",
       "from" : {
         "relation" : [ "\"material_protocol\"" ],
         "columns" : [ "\"protocol_id\"" ]
@@ -1541,7 +1541,7 @@
     "otherNames" : [ [ "\"main\"", "\"event_assertion\"" ], [ "\"dwcowl\"", "\"main\"", "\"event_assertion\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_media_fk_149",
+      "name" : "dwcowl_main_material_media_fk_150",
       "from" : {
         "relation" : [ "\"material_media\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -1551,7 +1551,7 @@
         "columns" : [ "\"media_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_material_media_fk_151",
+      "name" : "dwcowl_main_material_media_fk_152",
       "from" : {
         "relation" : [ "\"material_media\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -1692,7 +1692,7 @@
     "otherNames" : [ [ "\"main\"", "\"organism\"" ], [ "\"dwcowl\"", "\"main\"", "\"organism\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_identifier_fk_251",
+      "name" : "dwcowl_main_organism_identifier_fk_252",
       "from" : {
         "relation" : [ "\"organism_identifier\"" ],
         "columns" : [ "\"organism_id\"" ]
@@ -1877,7 +1877,7 @@
     "otherNames" : [ [ "\"main\"", "\"agent_media\"" ], [ "\"dwcowl\"", "\"main\"", "\"agent_media\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_occurrence_media_fk_233",
+      "name" : "dwcowl_main_occurrence_media_fk_234",
       "from" : {
         "relation" : [ "\"occurrence_media\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -1887,7 +1887,7 @@
         "columns" : [ "\"media_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_occurrence_media_fk_235",
+      "name" : "dwcowl_main_occurrence_media_fk_236",
       "from" : {
         "relation" : [ "\"occurrence_media\"" ],
         "columns" : [ "\"occurrence_id\"" ]
@@ -1947,7 +1947,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_interaction_assertion_fk_266",
+      "name" : "dwcowl_main_organism_interaction_assertion_fk_267",
       "from" : {
         "relation" : [ "\"organism_interaction_assertion\"" ],
         "columns" : [ "\"organism_interaction_id\"" ]
@@ -2083,7 +2083,7 @@
     "otherNames" : [ [ "\"main\"", "\"happened_during_transitive_reflexive_event\"" ], [ "\"dwcowl\"", "\"main\"", "\"happened_during_transitive_reflexive_event\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_occurrence_identifier_fk_230",
+      "name" : "dwcowl_main_occurrence_identifier_fk_231",
       "from" : {
         "relation" : [ "\"occurrence_identifier\"" ],
         "columns" : [ "\"occurrence_id\"" ]
@@ -2122,7 +2122,7 @@
     "otherNames" : [ [ "\"main\"", "\"occurrence_identifier\"" ], [ "\"dwcowl\"", "\"main\"", "\"occurrence_identifier\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_material_fk_304",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_material_fk_305",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_material\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -2132,7 +2132,7 @@
         "columns" : [ "\"material_entity_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_material_fk_306",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_material_fk_307",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_material\"" ],
         "columns" : [ "\"child\"" ]
@@ -2268,7 +2268,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_assertion_fk_140",
+      "name" : "dwcowl_main_material_assertion_fk_141",
       "from" : {
         "relation" : [ "\"material_assertion\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -2404,7 +2404,7 @@
     "otherNames" : [ [ "\"main\"", "\"derived_from_transitive_reflexive_media\"" ], [ "\"dwcowl\"", "\"main\"", "\"derived_from_transitive_reflexive_media\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_reference_fk_347",
+      "name" : "dwcowl_main_survey_reference_fk_348",
       "from" : {
         "relation" : [ "\"survey_reference\"" ],
         "columns" : [ "\"reference_id\"" ]
@@ -2414,7 +2414,7 @@
         "columns" : [ "\"reference_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_survey_reference_fk_349",
+      "name" : "dwcowl_main_survey_reference_fk_350",
       "from" : {
         "relation" : [ "\"survey_reference\"" ],
         "columns" : [ "\"survey_id\"" ]
@@ -2446,7 +2446,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_fk_132",
+      "name" : "dwcowl_main_material_fk_133",
       "from" : {
         "relation" : [ "\"material\"" ],
         "columns" : [ "\"event_id\"" ]
@@ -2669,7 +2669,7 @@
     "otherNames" : [ [ "\"main\"", "\"material\"" ], [ "\"dwcowl\"", "\"main\"", "\"material\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_bibliographic_resource_fk_300",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_bibliographic_resource_fk_301",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_bibliographic_resource\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -2679,7 +2679,7 @@
         "columns" : [ "\"reference_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_bibliographic_resource_fk_302",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_bibliographic_resource_fk_303",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_bibliographic_resource\"" ],
         "columns" : [ "\"child\"" ]
@@ -2707,7 +2707,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_occurrence_assertion_fk_228",
+      "name" : "dwcowl_main_occurrence_assertion_fk_229",
       "from" : {
         "relation" : [ "\"occurrence_assertion\"" ],
         "columns" : [ "\"occurrence_id\"" ]
@@ -2843,7 +2843,7 @@
     "otherNames" : [ [ "\"main\"", "\"happened_during_transitive_event\"" ], [ "\"dwcowl\"", "\"main\"", "\"happened_during_transitive_event\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_media_agent_role_fk_171",
+      "name" : "dwcowl_main_media_agent_role_fk_172",
       "from" : {
         "relation" : [ "\"media_agent_role\"" ],
         "columns" : [ "\"agent_id\"" ]
@@ -2853,7 +2853,7 @@
         "columns" : [ "\"agent_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_media_agent_role_fk_173",
+      "name" : "dwcowl_main_media_agent_role_fk_174",
       "from" : {
         "relation" : [ "\"media_agent_role\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -2896,7 +2896,7 @@
     "otherNames" : [ [ "\"main\"", "\"media_agent_role\"" ], [ "\"dwcowl\"", "\"main\"", "\"media_agent_role\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_media_fk_292",
+      "name" : "dwcowl_main_part_of_transitive_media_fk_293",
       "from" : {
         "relation" : [ "\"part_of_transitive_media\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -2906,7 +2906,7 @@
         "columns" : [ "\"media_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_media_fk_294",
+      "name" : "dwcowl_main_part_of_transitive_media_fk_295",
       "from" : {
         "relation" : [ "\"part_of_transitive_media\"" ],
         "columns" : [ "\"child\"" ]
@@ -2929,7 +2929,7 @@
     "otherNames" : [ [ "\"main\"", "\"part_of_transitive_media\"" ], [ "\"dwcowl\"", "\"main\"", "\"part_of_transitive_media\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_interaction_media_fk_268",
+      "name" : "dwcowl_main_organism_interaction_media_fk_269",
       "from" : {
         "relation" : [ "\"organism_interaction_media\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -2939,7 +2939,7 @@
         "columns" : [ "\"media_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_organism_interaction_media_fk_270",
+      "name" : "dwcowl_main_organism_interaction_media_fk_271",
       "from" : {
         "relation" : [ "\"organism_interaction_media\"" ],
         "columns" : [ "\"organism_interaction_id\"" ]
@@ -3065,7 +3065,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_interaction_fk_256",
+      "name" : "dwcowl_main_organism_interaction_fk_257",
       "from" : {
         "relation" : [ "\"organism_interaction\"" ],
         "columns" : [ "\"event_id\"" ]
@@ -3075,7 +3075,7 @@
         "columns" : [ "\"event_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_organism_interaction_fk_258",
+      "name" : "dwcowl_main_organism_interaction_fk_259",
       "from" : {
         "relation" : [ "\"organism_interaction\"" ],
         "columns" : [ "\"subject_occurrence_id\"" ]
@@ -3139,7 +3139,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_occurrence_fk_220",
+      "name" : "dwcowl_main_occurrence_fk_221",
       "from" : {
         "relation" : [ "\"occurrence\"" ],
         "columns" : [ "\"event_id\"" ]
@@ -3415,7 +3415,7 @@
     "otherNames" : [ [ "\"main\"", "\"bibliographic_resource\"" ], [ "\"dwcowl\"", "\"main\"", "\"bibliographic_resource\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_geological_context_fk_142",
+      "name" : "dwcowl_main_material_geological_context_fk_143",
       "from" : {
         "relation" : [ "\"material_geological_context\"" ],
         "columns" : [ "\"geological_context_id\"" ]
@@ -3425,7 +3425,7 @@
         "columns" : [ "\"geological_context_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_material_geological_context_fk_144",
+      "name" : "dwcowl_main_material_geological_context_fk_145",
       "from" : {
         "relation" : [ "\"material_geological_context\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -3448,7 +3448,7 @@
     "otherNames" : [ [ "\"main\"", "\"material_geological_context\"" ], [ "\"dwcowl\"", "\"main\"", "\"material_geological_context\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_provenance_fk_157",
+      "name" : "dwcowl_main_material_provenance_fk_158",
       "from" : {
         "relation" : [ "\"material_provenance\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -3458,7 +3458,7 @@
         "columns" : [ "\"material_entity_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_material_provenance_fk_159",
+      "name" : "dwcowl_main_material_provenance_fk_160",
       "from" : {
         "relation" : [ "\"material_provenance\"" ],
         "columns" : [ "\"provenance_id\"" ]
@@ -3854,7 +3854,7 @@
     "otherNames" : [ [ "\"main\"", "\"event\"" ], [ "\"dwcowl\"", "\"main\"", "\"event\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_occurrence_fk_296",
+      "name" : "dwcowl_main_part_of_transitive_occurrence_fk_297",
       "from" : {
         "relation" : [ "\"part_of_transitive_occurrence\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -3864,7 +3864,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_occurrence_fk_298",
+      "name" : "dwcowl_main_part_of_transitive_occurrence_fk_299",
       "from" : {
         "relation" : [ "\"part_of_transitive_occurrence\"" ],
         "columns" : [ "\"child\"" ]
@@ -3892,7 +3892,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_j_survey_fk_127",
+      "name" : "dwcowl_main_j_survey_fk_128",
       "from" : {
         "relation" : [ "\"j_survey\"" ],
         "columns" : [ "\"event_id\"" ]
@@ -3902,7 +3902,7 @@
         "columns" : [ "\"event_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_j_survey_fk_128",
+      "name" : "dwcowl_main_j_survey_fk_129",
       "from" : {
         "relation" : [ "\"j_survey\"" ],
         "columns" : [ "\"location_id\"" ]
@@ -4611,7 +4611,7 @@
     "otherNames" : [ [ "\"main\"", "\"usage_policy\"" ], [ "\"dwcowl\"", "\"main\"", "\"usage_policy\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_media_provenance_fk_182",
+      "name" : "dwcowl_main_media_provenance_fk_183",
       "from" : {
         "relation" : [ "\"media_provenance\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -4621,7 +4621,7 @@
         "columns" : [ "\"media_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_media_provenance_fk_184",
+      "name" : "dwcowl_main_media_provenance_fk_185",
       "from" : {
         "relation" : [ "\"media_provenance\"" ],
         "columns" : [ "\"provenance_id\"" ]
@@ -4644,7 +4644,7 @@
     "otherNames" : [ [ "\"main\"", "\"media_provenance\"" ], [ "\"dwcowl\"", "\"main\"", "\"media_provenance\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_agent_role_fk_134",
+      "name" : "dwcowl_main_material_agent_role_fk_135",
       "from" : {
         "relation" : [ "\"material_agent_role\"" ],
         "columns" : [ "\"agent_id\"" ]
@@ -4654,7 +4654,7 @@
         "columns" : [ "\"agent_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_material_agent_role_fk_136",
+      "name" : "dwcowl_main_material_agent_role_fk_137",
       "from" : {
         "relation" : [ "\"material_agent_role\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -5287,7 +5287,7 @@
     "otherNames" : [ [ "\"main\"", "\"molecular_protocol\"" ], [ "\"dwcowl\"", "\"main\"", "\"molecular_protocol\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_agent_role_fk_332",
+      "name" : "dwcowl_main_survey_agent_role_fk_333",
       "from" : {
         "relation" : [ "\"survey_agent_role\"" ],
         "columns" : [ "\"agent_id\"" ]
@@ -5297,7 +5297,7 @@
         "columns" : [ "\"agent_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_survey_agent_role_fk_334",
+      "name" : "dwcowl_main_survey_agent_role_fk_335",
       "from" : {
         "relation" : [ "\"survey_agent_role\"" ],
         "columns" : [ "\"survey_id\"" ]
@@ -5405,7 +5405,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_relationship_fk_282",
+      "name" : "dwcowl_main_organism_relationship_fk_283",
       "from" : {
         "relation" : [ "\"organism_relationship\"" ],
         "columns" : [ "\"subject_organism_id\"" ]
@@ -5537,7 +5537,7 @@
     "otherNames" : [ [ "\"main\"", "\"event_media\"" ], [ "\"dwcowl\"", "\"main\"", "\"event_media\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_occurrence_agent_role_fk_222",
+      "name" : "dwcowl_main_occurrence_agent_role_fk_223",
       "from" : {
         "relation" : [ "\"occurrence_agent_role\"" ],
         "columns" : [ "\"agent_id\"" ]
@@ -5547,7 +5547,7 @@
         "columns" : [ "\"agent_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_occurrence_agent_role_fk_224",
+      "name" : "dwcowl_main_occurrence_agent_role_fk_225",
       "from" : {
         "relation" : [ "\"occurrence_agent_role\"" ],
         "columns" : [ "\"occurrence_id\"" ]
@@ -5623,7 +5623,7 @@
     "otherNames" : [ [ "\"main\"", "\"protocol\"" ], [ "\"dwcowl\"", "\"main\"", "\"protocol\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_media_fk_308",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_media_fk_309",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_media\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -5633,7 +5633,7 @@
         "columns" : [ "\"media_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_media_fk_310",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_media_fk_311",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_media\"" ],
         "columns" : [ "\"child\"" ]
@@ -5726,7 +5726,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_fk_330",
+      "name" : "dwcowl_main_survey_fk_331",
       "from" : {
         "relation" : [ "\"survey\"" ],
         "columns" : [ "\"event_id\"" ]
@@ -5953,7 +5953,7 @@
     "otherNames" : [ [ "\"main\"", "\"survey\"" ], [ "\"dwcowl\"", "\"main\"", "\"survey\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_reference_fk_161",
+      "name" : "dwcowl_main_material_reference_fk_162",
       "from" : {
         "relation" : [ "\"material_reference\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -5963,7 +5963,7 @@
         "columns" : [ "\"material_entity_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_material_reference_fk_163",
+      "name" : "dwcowl_main_material_reference_fk_164",
       "from" : {
         "relation" : [ "\"material_reference\"" ],
         "columns" : [ "\"reference_id\"" ]
@@ -5990,7 +5990,7 @@
     "otherNames" : [ [ "\"main\"", "\"material_reference\"" ], [ "\"dwcowl\"", "\"main\"", "\"material_reference\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_molecular_protocol_reference_fk_200",
+      "name" : "dwcowl_main_molecular_protocol_reference_fk_201",
       "from" : {
         "relation" : [ "\"molecular_protocol_reference\"" ],
         "columns" : [ "\"molecular_protocol_id\"" ]
@@ -6000,7 +6000,7 @@
         "columns" : [ "\"molecular_protocol_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_molecular_protocol_reference_fk_202",
+      "name" : "dwcowl_main_molecular_protocol_reference_fk_203",
       "from" : {
         "relation" : [ "\"molecular_protocol_reference\"" ],
         "columns" : [ "\"reference_id\"" ]
@@ -6027,7 +6027,7 @@
     "otherNames" : [ [ "\"main\"", "\"molecular_protocol_reference\"" ], [ "\"dwcowl\"", "\"main\"", "\"molecular_protocol_reference\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_occurrence_reference_fk_241",
+      "name" : "dwcowl_main_occurrence_reference_fk_242",
       "from" : {
         "relation" : [ "\"occurrence_reference\"" ],
         "columns" : [ "\"occurrence_id\"" ]
@@ -6037,7 +6037,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_occurrence_reference_fk_243",
+      "name" : "dwcowl_main_occurrence_reference_fk_244",
       "from" : {
         "relation" : [ "\"occurrence_reference\"" ],
         "columns" : [ "\"reference_id\"" ]
@@ -6069,7 +6069,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_j_occurrence_fk_115",
+      "name" : "dwcowl_main_j_occurrence_fk_116",
       "from" : {
         "relation" : [ "\"j_occurrence\"" ],
         "columns" : [ "\"event_id\"" ]
@@ -6079,7 +6079,7 @@
         "columns" : [ "\"event_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_j_occurrence_fk_116",
+      "name" : "dwcowl_main_j_occurrence_fk_117",
       "from" : {
         "relation" : [ "\"j_occurrence\"" ],
         "columns" : [ "\"location_id\"" ]
@@ -6550,7 +6550,7 @@
     "otherNames" : [ [ "\"main\"", "\"j_occurrence\"" ], [ "\"dwcowl\"", "\"main\"", "\"j_occurrence\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_material_identifier_fk_146",
+      "name" : "dwcowl_main_material_identifier_fk_147",
       "from" : {
         "relation" : [ "\"material_identifier\"" ],
         "columns" : [ "\"material_entity_id\"" ]
@@ -6589,7 +6589,7 @@
     "otherNames" : [ [ "\"main\"", "\"material_identifier\"" ], [ "\"dwcowl\"", "\"main\"", "\"material_identifier\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_media_usage_policy_fk_186",
+      "name" : "dwcowl_main_media_usage_policy_fk_187",
       "from" : {
         "relation" : [ "\"media_usage_policy\"" ],
         "columns" : [ "\"media_id\"" ]
@@ -6599,7 +6599,7 @@
         "columns" : [ "\"media_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_media_usage_policy_fk_188",
+      "name" : "dwcowl_main_media_usage_policy_fk_189",
       "from" : {
         "relation" : [ "\"media_usage_policy\"" ],
         "columns" : [ "\"usage_policy_id\"" ]
@@ -7270,7 +7270,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_nucleotide_analysis_fk_206",
+      "name" : "dwcowl_main_nucleotide_analysis_fk_207",
       "from" : {
         "relation" : [ "\"nucleotide_analysis\"" ],
         "columns" : [ "\"event_id\"" ]
@@ -7280,7 +7280,7 @@
         "columns" : [ "\"event_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_nucleotide_analysis_fk_208",
+      "name" : "dwcowl_main_nucleotide_analysis_fk_209",
       "from" : {
         "relation" : [ "\"nucleotide_analysis\"" ],
         "columns" : [ "\"molecular_protocol_id\"" ]
@@ -7290,7 +7290,7 @@
         "columns" : [ "\"molecular_protocol_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_nucleotide_analysis_fk_210",
+      "name" : "dwcowl_main_nucleotide_analysis_fk_211",
       "from" : {
         "relation" : [ "\"nucleotide_analysis\"" ],
         "columns" : [ "\"nucleotide_sequence_id\"" ]
@@ -7422,7 +7422,7 @@
     "otherNames" : [ [ "\"main\"", "\"provenance\"" ], [ "\"dwcowl\"", "\"main\"", "\"provenance\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_molecular_protocol_agent_role_fk_192",
+      "name" : "dwcowl_main_molecular_protocol_agent_role_fk_193",
       "from" : {
         "relation" : [ "\"molecular_protocol_agent_role\"" ],
         "columns" : [ "\"agent_id\"" ]
@@ -7432,7 +7432,7 @@
         "columns" : [ "\"agent_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_molecular_protocol_agent_role_fk_194",
+      "name" : "dwcowl_main_molecular_protocol_agent_role_fk_195",
       "from" : {
         "relation" : [ "\"molecular_protocol_agent_role\"" ],
         "columns" : [ "\"molecular_protocol_id\"" ]
@@ -7480,7 +7480,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_assertion_fk_338",
+      "name" : "dwcowl_main_survey_assertion_fk_339",
       "from" : {
         "relation" : [ "\"survey_assertion\"" ],
         "columns" : [ "\"survey_id\"" ]
@@ -7583,7 +7583,7 @@
     "otherNames" : [ [ "\"main\"", "\"survey_assertion\"" ], [ "\"dwcowl\"", "\"main\"", "\"survey_assertion\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_organism_interaction_reference_fk_272",
+      "name" : "dwcowl_main_organism_interaction_reference_fk_273",
       "from" : {
         "relation" : [ "\"organism_interaction_reference\"" ],
         "columns" : [ "\"organism_interaction_id\"" ]
@@ -7593,7 +7593,7 @@
         "columns" : [ "\"organism_interaction_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_organism_interaction_reference_fk_274",
+      "name" : "dwcowl_main_organism_interaction_reference_fk_275",
       "from" : {
         "relation" : [ "\"organism_interaction_reference\"" ],
         "columns" : [ "\"reference_id\"" ]
@@ -7766,7 +7766,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_nucleotide_analysis_assertion_fk_214",
+      "name" : "dwcowl_main_nucleotide_analysis_assertion_fk_215",
       "from" : {
         "relation" : [ "\"nucleotide_analysis_assertion\"" ],
         "columns" : [ "\"nucleotide_analysis_id\"" ]
@@ -7874,7 +7874,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_j_organism_interaction_fk_120",
+      "name" : "dwcowl_main_j_organism_interaction_fk_121",
       "from" : {
         "relation" : [ "\"j_organism_interaction\"" ],
         "columns" : [ "\"event_id\"" ]
@@ -7884,7 +7884,7 @@
         "columns" : [ "\"event_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_j_organism_interaction_fk_122",
+      "name" : "dwcowl_main_j_organism_interaction_fk_123",
       "from" : {
         "relation" : [ "\"j_organism_interaction\"" ],
         "columns" : [ "\"subject_occurrence_id\"" ]
@@ -7894,7 +7894,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_j_organism_interaction_fk_123",
+      "name" : "dwcowl_main_j_organism_interaction_fk_124",
       "from" : {
         "relation" : [ "\"j_organism_interaction\"" ],
         "columns" : [ "\"location_id\"" ]
@@ -8245,7 +8245,7 @@
     "otherNames" : [ [ "\"main\"", "\"j_organism_interaction\"" ], [ "\"dwcowl\"", "\"main\"", "\"j_organism_interaction\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_protocol_reference_fk_318",
+      "name" : "dwcowl_main_protocol_reference_fk_319",
       "from" : {
         "relation" : [ "\"protocol_reference\"" ],
         "columns" : [ "\"protocol_id\"" ]
@@ -8255,7 +8255,7 @@
         "columns" : [ "\"protocol_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_protocol_reference_fk_320",
+      "name" : "dwcowl_main_protocol_reference_fk_321",
       "from" : {
         "relation" : [ "\"protocol_reference\"" ],
         "columns" : [ "\"reference_id\"" ]
@@ -8282,7 +8282,7 @@
     "otherNames" : [ [ "\"main\"", "\"protocol_reference\"" ], [ "\"dwcowl\"", "\"main\"", "\"protocol_reference\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_occurrence_fk_312",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_occurrence_fk_313",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_occurrence\"" ],
         "columns" : [ "\"ancestor\"" ]
@@ -8292,7 +8292,7 @@
         "columns" : [ "\"occurrence_id\"" ]
       }
     }, {
-      "name" : "dwcowl_main_part_of_transitive_reflexive_occurrence_fk_314",
+      "name" : "dwcowl_main_part_of_transitive_reflexive_occurrence_fk_315",
       "from" : {
         "relation" : [ "\"part_of_transitive_reflexive_occurrence\"" ],
         "columns" : [ "\"child\"" ]
@@ -8320,7 +8320,7 @@
     "driverName" : "DuckDBJ",
     "driverVersion" : "1.0",
     "quotationString" : "\"",
-    "extractionTime" : "2026-08-22T14:50:21",
+    "extractionTime" : "2026-08-23T14:21:43",
     "idFactoryType" : "DUCKDB"
   }
 }
