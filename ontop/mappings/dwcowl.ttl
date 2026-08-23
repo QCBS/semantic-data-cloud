@@ -2672,7 +2672,7 @@ dwc:identificationRemarks rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/dwc/terms/identificationVerificationStatus
 dwc:identificationVerificationStatus rdf:type owl:DatatypeProperty ;
-                                     rdfs:label "Identification VerificationStatus" ;
+                                     rdfs:label "Identification Verification Status" ;
                                      skos:definition "A categorical indicator of the extent to which a taxonomic determination has been verified to be correct." ;
                                      skos:example "0" .
 
@@ -4919,7 +4919,7 @@ dwc:Event rdf:type owl:Class ;
 
 ###  http://rs.tdwg.org/dwc/terms/EventAgentRole
 dwc:EventAgentRole rdf:type owl:Class ;
-                   rdfs:label "EventAgentRole" ;
+                   rdfs:label "Event Agent Role" ;
                    skos:definition "A role filled by a dcterms:Agent with respect to a dwc:Event." .
 
 
