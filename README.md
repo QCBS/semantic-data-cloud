@@ -17,6 +17,7 @@ This project takes a different approach: data tables contained in each DwC-DP ar
 - **Schema heterogeneity accommodation.** Datasets with differing numbers of tables and columns can be queried uniformly, without having to pad the Parquet data with empty columns or tables.
 - **Entity- and relationship-based querying.** SPARQL lets users think in terms of entities (e.g. occurrences, events, agents, etc.) and how they relate to one another, rather than reasoning about foreign keys and join conditions.
 - **Language-agnostic access.** Queries are submitted over plain HTTP, so any language or tool capable of making HTTP requests (e.g. Python, JavaScript, R, curl, etc.) can interact with the application.
+- **Compatibility with DwC-DP.** By building directly on the DwC-DP tables, existing datasets can be immediately queried semantically, without requiring changes to the original data.
 - **Context-scoped, on-demand containers.** Spatial, temporal, and license filters resolve the relevant datasets before a query runs, so each context spins up only the database views and container it actually needs.
 
 ## Usage
