@@ -8,7 +8,7 @@ Biodiversity data is commonly published as [Darwin Core Archives](https://ipt.gb
 
 The Darwin Core Conceptual Model ([DwC-CM](https://dwc.tdwg.org/cm/)), which is the basis for DwC-DP, is a highly interconnected data model. In this regard, it is well suited to graph representations, making the Resource Description Framework ([RDF](https://www.w3.org/TR/rdf11-primer/)) a clean, intuitive and semantically-rich data model. However, transforming tabular datasets into RDF represents a considerable Extract, Transform, Load (ETL) process and raises deduplication concerns, as the data must be maintained in both a relational database and a triplestore.
 
-This project takes a different approach: data tables contained in each DwC-DP are hosted as Parquet files on object storage. On demand, a materialised DuckDB database of views is assembled from the relevant files and exposed through a SPARQL interface via a Virtual Knowledge Graph (VKG). Datasets can then be queried using a lightweight Web Ontology Language ([OWL](https://www.w3.org/TR/2012/REC-owl2-primer-20121211/)) ontology based primarily on [Darwin Core](https://dwc.tdwg.org/list/) terms, without any ETL step or permanent data duplication.
+This project takes a different approach: data tables contained in each DwC-DP are hosted as Parquet files on object storage. On demand, a DuckDB database of views is assembled from the relevant files and exposed through a SPARQL interface via a Virtual Knowledge Graph (VKG). Datasets can then be queried using a lightweight Web Ontology Language ([OWL](https://www.w3.org/TR/2012/REC-owl2-primer-20121211/)) ontology based primarily on [Darwin Core](https://dwc.tdwg.org/list/) terms, without any ETL step or permanent data duplication.
 
 ## Why a Semantic Data Cloud?
 
