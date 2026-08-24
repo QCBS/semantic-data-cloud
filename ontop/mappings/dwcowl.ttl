@@ -3687,6 +3687,20 @@ dwc:taxonAssignmentMethod rdf:type owl:DatatypeProperty ;
                                        "identity cutoff: 0.97" .
 
 
+###  http://rs.tdwg.org/dwc/terms/taxonFormula
+dwc:taxonFormula rdf:type owl:DatatypeProperty ;
+                 rdfs:label "Taxon Formula" ;
+                 skos:definition "A string representing the pattern to use to construct a dwc:Identification from dwc:Taxon names and identification qualifiers." ;
+                 skos:example "A" ,
+                              "A ?" ,
+                              "A aff." ,
+                              "A and B" ,
+                              "A cf." ,
+                              "A or B" ,
+                              "A x B" ,
+                              "not A" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/taxonID
 dwc:taxonID rdf:type owl:DatatypeProperty ;
             rdfs:label "Taxon ID" ;
