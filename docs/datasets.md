@@ -1,6 +1,6 @@
 # Datasets
 
-The live instance considers datasets that were primarily obtained from [GBIF](https://www.gbif.org) and converted to the exploded Darwin Core Data Package format described described in the [starter guide](/docs/starter.md) documentation. Other sources for the datasets include [the DwC-DP test IPT](https://dwcdp-ipt.gbif-test.org), [OBIS](https://www.obis.org), [Movebank](https://www.movebank.org), [FRDR](https://www.frdr-dfdr.ca), [the Antenna/AMI API](https://demo.antenna.insectai.org/api/v2/), and the [DwC-DP examples GitHub repository](https://github.com/gbif/dwc-dp-examples).
+The live instance considers datasets that were primarily obtained from [GBIF](https://www.gbif.org) and converted to the exploded Darwin Core Data Package format described described in the [starter guide](/docs/starter.md) documentation. Other sources for the datasets include [the DwC-DP test IPT](https://dwcdp-ipt.gbif-test.org), [OBIS](https://www.obis.org), [Movebank](https://www.movebank.org), [FRDR](https://www.frdr-dfdr.ca), [the Antenna/AMI API](https://demo.antenna.insectai.org/api/v2/), and [the DwC-DP examples GitHub repository](https://github.com/gbif/dwc-dp-examples).
 
 Each row in the table below is a dataset considered in the instance. Note that, using the identifier, full EML metadata in JSON-LD format for any dataset can be available by visiting `https://data.qcbs.ca/metadata-api/dataset/{dataset-id}`.
 

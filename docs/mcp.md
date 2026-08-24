@@ -84,11 +84,11 @@ Note that if you are running the application locally, the URL of the biomcp serv
 
 ## Creating your own agents
 
-Exposing an MCP server for SPARQL queries enables higher-level reasoning workflows, where language models can autonomously decide when and how to use structured data tools.
+Exposing an MCP server for SPARQL queries enables higher-level reasoning and more complex workflows, where language models can autonomously decide when and how to use structured data tools.
 
-In this setup, the MCP server acts as a tool provider, and the agent is responsible for interpreting user input, selecting when to call `sparql_query` (and possibly other tools), as well as composing multi-step reasoning chains if needed.
+In the following setup, the MCP server acts as a tool provider, and the agent is responsible for interpreting user input, selecting when to call `sparql_query` (and possibly other tools), as well as composing multi-step reasoning chains if needed.
 
-The following example uses [LangChain agents](https://docs.langchain.com/oss/python/langchain/agents) with an MCP client and an [Ollama](https://ollama.com/)-hosted large langugage model:
+The example uses [LangChain agents](https://docs.langchain.com/oss/python/langchain/agents) with an MCP client and an [Ollama](https://ollama.com/)-hosted large langugage model:
 
 ```python
 import asyncio
