@@ -32,7 +32,7 @@
 @base <https://biobang.org/> .
 
 <http://example.org/dwcowl#> rdf:type owl:Ontology ;
-                              dc:description "An OWL 2 QL compliant ontology based on terms from biodiversity related vocabularies used to describe Darwin Core DataPackages." .
+                              dc:description "An OWL 2 QL compliant ontology based on Darwin Core Conceptual Model semantics, using terms from biodiversity-related vocabularies to describe Darwin Core Data Packages." .
 
 #################################################################
 #    Annotation properties
@@ -132,6 +132,12 @@ bibo:status rdf:type owl:ObjectProperty ;
             skos:definition "An indication of whether a dcterms:BibliographicResource was peer reviewed." .
 
 
+###  http://rs.tdwg.org/ac/terms/CVterm
+ac:CVterm rdf:type owl:ObjectProperty ;
+          rdfs:label "Subject Category" ;
+          skos:definition "An IRI of a controlled vocabulary value for the subject category of an ac:Media resource." .
+
+
 ###  http://rs.tdwg.org/ac/terms/accessURI
 ac:accessURI rdf:type owl:ObjectProperty ;
              rdfs:label "Access URI" ;
@@ -171,19 +177,19 @@ ac:reviewer rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/ac/terms/subjectOrientation
 ac:subjectOrientation rdf:type owl:ObjectProperty ;
                       rdfs:label "Subject Orientation" ;
-                      skos:definition "Specific orientation (= direction, view angle) of the subject represented in the dwc:Media resource with respect to the acquisition device, denoted by an IRI." .
+                      skos:definition "Specific orientation (= direction, view angle) of the subject represented in the ac:Media resource with respect to the acquisition device, denoted by an IRI." .
 
 
 ###  http://rs.tdwg.org/ac/terms/subjectPart
 ac:subjectPart rdf:type owl:ObjectProperty ;
                rdfs:label "Subject Part" ;
-               skos:definition "The portion or product of organism morphology, behaviour, environment, etc. that is either predominantly shown or particularly well exemplified by the dwc:Media resource, denoted by an IRI." .
+               skos:definition "The portion or product of organism morphology, behaviour, environment, etc. that is either predominantly shown or particularly well exemplified by the ac:Media resource, denoted by an IRI." .
 
 
 ###  http://rs.tdwg.org/ac/terms/subtype
 ac:subtype rdf:type owl:ObjectProperty ;
            rdfs:label "Subtype" ;
-           skos:definition "A class, represented by an IRI, that provides for more specialization of a dwc:Media resource type than dcterms:type." .
+           skos:definition "A class, represented by an IRI, that provides for more specialization of an ac:Media resource type than dcterms:type." .
 
 
 ###  http://rs.tdwg.org/ac/terms/variant
@@ -200,8 +206,8 @@ ac:variantIRI rdf:type owl:ObjectProperty ;
 
 ###  http://rs.tdwg.org/dwc/iri/agentRole
 dwciri:agentRole rdf:type owl:ObjectProperty ;
-                 rdfs:label "Agent Role" ,
-                            "An IRI of the controlled vocabulary value for a role of a dcterms:Agent." .
+                 rdfs:label "Agent Role" ;
+                 skos:definition "An IRI of the controlled vocabulary value for a role of a dcterms:Agent." .
 
 
 ###  http://rs.tdwg.org/dwc/iri/assertionType
@@ -236,12 +242,6 @@ dwciri:samplingPerformedBy rdf:type owl:ObjectProperty ;
                            rdfs:label "Sampling Performed By" ;
                            skos:definition "An identifier for a dcterms:Agent responsible for sampling." ;
                            skos:example "https://orcid.org/0000-0002-1825-0097" .
-
-
-###  http://rs.tdwg.org/dwc/iri/subjectCategory
-dwciri:subjectCategory rdf:type owl:ObjectProperty ;
-                       rdfs:label "Subject Category" ;
-                       skos:definition "An IRI of a controlled vocabulary value for the subject category of a dwc:Media resource." .
 
 
 ###  http://rs.tdwg.org/dwc/iri/surveyTargetUnit
@@ -280,6 +280,12 @@ dwcdp:analysisOf rdf:type owl:ObjectProperty ;
                  skos:definition "An object property used to relate a dwc:NucleotideAnalysis to a dwc:MaterialEntity it is an analysis of." .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/assertedBy
+dwcdp:assertedBy rdf:type owl:ObjectProperty ;
+                 rdfs:label "Asserted By" ;
+                 skos:definition "An object property used to relate a dwc:Assertion to the dcterms:Agent that made it." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/authoredBy
 dwcdp:authoredBy rdf:type owl:ObjectProperty ;
                  rdfs:label "Authored By" ;
@@ -288,7 +294,8 @@ dwcdp:authoredBy rdf:type owl:ObjectProperty ;
 
 ###  http://rs.tdwg.org/dwcdp/terms/basedOn
 dwcdp:basedOn rdf:type owl:ObjectProperty ;
-              rdfs:label "Based On" .
+              rdfs:label "Based On" ;
+              skos:definition "An object property used to relate a dwc:Identification to the resource it is based on." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/collectedBy
@@ -407,20 +414,20 @@ dwcdp:happenedDuringTransitiveReflexive rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/hasContent
 dwcdp:hasContent rdf:type owl:ObjectProperty ;
                  rdfs:label "Has Content" ;
-                 skos:definition "An object property to identify the object content in a relationship-type entity depicting an entity in a dwc:Media instance." .
+                 skos:definition "An object property to identify the object content in a relationship-type entity depicting an entity in an ac:Media instance." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/hasDefinition
 dwcdp:hasDefinition rdf:type owl:ObjectProperty ;
                     rdfs:label "Has Definition" ;
-                    skos:definition "An object property used to relate a dwc:SurveyTarget to a dwc:Definition." .
+                    skos:definition "An object property used to relate an eco:SurveyTarget to a dwc:Definition." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/hasMedia
 dwcdp:hasMedia rdf:type owl:ObjectProperty ;
                owl:inverseOf dwcdp:isMediaOf ;
                rdfs:label "Has Media" ;
-               skos:definition "An object property to relate a resource to a dwc:Media instance depicting it." .
+               skos:definition "An object property to relate a resource to an ac:Media instance depicting it." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/hasProvenance
@@ -467,7 +474,7 @@ dwcdp:interactionWith rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/isMediaOf
 dwcdp:isMediaOf rdf:type owl:ObjectProperty ;
                 rdfs:label "Is Media Of" ;
-                skos:definition "An object property to relate a dwc:Media instance to a resource it is a media of." .
+                skos:definition "An object property to relate an ac:Media instance to a resource it is a media of." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/materialCollectedDuring
@@ -596,13 +603,13 @@ dwcdp:roleHolder rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/samplingBy
 dwcdp:samplingBy rdf:type owl:ObjectProperty ;
                  rdfs:label "Samping By" ;
-                 skos:definition "An object property used to relate a dwc:Survey to the dcterms:Agent responsible for performing the sampling." .
+                 skos:definition "An object property used to relate an eco:Survey to the dcterms:Agent responsible for performing the sampling." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/satisfied
 dwcdp:satisfied rdf:type owl:ObjectProperty ;
                 rdfs:label "Satisfied" ;
-                skos:definition "An object property to relate a dwc:Occurrence to the dwc:Survey target it satisfied." .
+                skos:definition "An object property to relate a dwc:Occurrence to the eco:SurveyTarget it satisfied." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/spatialLocation
@@ -620,7 +627,7 @@ dwcdp:storedIn rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/targetFor
 dwcdp:targetFor rdf:type owl:ObjectProperty ;
                 rdfs:label "Target For" ;
-                skos:definition "An object property to relate a dwc:SurveyTarget to the dwc:Survey it is a target for." .
+                skos:definition "An object property to relate an eco:SurveyTarget to the eco:Survey it is a target for." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/taxonFor
@@ -632,7 +639,7 @@ dwcdp:taxonFor rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/thisMedia
 dwcdp:thisMedia rdf:type owl:ObjectProperty ;
                 rdfs:label "This Media" ;
-                skos:definition "An object property to identify the subject media in a relationship-type entity depicting an entity in a dwc:Media instance." .
+                skos:definition "An object property to identify the subject media in a relationship-type entity depicting an entity in an ac:Media instance." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/usagePolicyFor
@@ -760,8 +767,8 @@ ecoiri:samplingEffortProtocol rdf:type owl:ObjectProperty ;
 
 ###  https://w3id.org/mixs/0000076
 <https://w3id.org/mixs/0000076> rdf:type owl:ObjectProperty ;
-                                rdfs:label "Method used to free DNA from interior of the cell(s) or particle(s)." ,
-                                           "Single Cell Or Viral Particle Lysis Approach" ;
+                                rdfs:label "Single Cell Or Viral Particle Lysis Approach" ;
+                                skos:definition "Method used to free DNA from interior of the cell(s) or particle(s)." ;
                                 skos:example "https://w3id.org/mixs/ScLysisApproachEnum#enzymatic" .
 
 
@@ -992,7 +999,7 @@ dcterms:modified rdf:type owl:DatatypeProperty ;
 ###  http://purl.org/dc/terms/title
 dcterms:title rdf:type owl:DatatypeProperty ;
               rdfs:label "Title" ;
-              skos:definition "A name given to a resource." .
+              skos:definition "A name given to the resource." .
 
 
 ###  http://purl.org/ontology/bibo/edition
@@ -1184,13 +1191,13 @@ miqe:pcr_analysis_software rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.gbif.org/terms/miqe/pcr_primer_lod
 miqe:pcr_primer_lod rdf:type owl:DatatypeProperty ;
-                    rdfs:label "pcr_primer_lod" ;
+                    rdfs:label "PCR Assay Limit Of Detection" ;
                     skos:definition "The assay’s ability to detect the target at low levels." .
 
 
 ###  http://rs.gbif.org/terms/miqe/pcr_primer_loq
 miqe:pcr_primer_loq rdf:type owl:DatatypeProperty ;
-                    rdfs:label "pcr_primer_loq" ;
+                    rdfs:label "PCR Assay Limit Of Quantification" ;
                     skos:definition "The assay’s ability to quantify copy number at low levels." .
 
 
@@ -1221,6 +1228,12 @@ miqe:thresholdQuantificationCycle rdf:type owl:DatatypeProperty ;
                                   rdfs:label "Quantification Cycle Threshold" ;
                                   skos:definition "Threshold for change in fluorescence signal between cycles." ;
                                   skos:example 0.3 .
+
+
+###  http://rs.tdwg.org/ac/terms/CVtermLiteral
+ac:CVtermLiteral rdf:type owl:DatatypeProperty ;
+                 rdfs:label "Subject Category" ;
+                 skos:definition "A category for the content of an ac:Media resource." .
 
 
 ###  http://rs.tdwg.org/ac/terms/attributionLinkURL
@@ -1262,7 +1275,7 @@ ac:commenterLiteral rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/comments
 ac:comments rdf:type owl:DatatypeProperty ;
             rdfs:label "Comments" ;
-            skos:definition "Any comment provided on the dwc:Media resource, as free-form text." .
+            skos:definition "Any comment provided on the ac:Media resource, as free-form text." .
 
 
 ###  http://rs.tdwg.org/ac/terms/digitizationDate
@@ -1275,7 +1288,7 @@ ac:digitizationDate rdf:type owl:DatatypeProperty ;
 ac:endTime rdf:type owl:DatatypeProperty ;
            rdfs:range xsd:decimal ;
            rdfs:label "End Time In Seconds" ;
-           skos:definition "The end of a temporal region, specified as an absolute offset relative to the beginning of a dwc:Media resource (this corresponds to Normal Play Time RFC 2326), specified as seconds, with an optional fractional part to indicate milliseconds or finer." .
+           skos:definition "The end of a temporal region, specified as an absolute offset relative to the beginning of an ac:Media resource (this corresponds to Normal Play Time RFC 2326), specified as seconds, with an optional fractional part to indicate milliseconds or finer." .
 
 
 ###  http://rs.tdwg.org/ac/terms/endTimestamp
@@ -1321,7 +1334,7 @@ ac:fundingAttribution rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/furtherInformationURL
 ac:furtherInformationURL rdf:type owl:DatatypeProperty ;
                          rdfs:label "Further Information URL" ;
-                         skos:definition "A URL of a website that provides additional information about the version of the dwc:Media resource that is provided by the Service Access Point." .
+                         skos:definition "A URL of a website that provides additional information about the version of the ac:Media resource that is provided by the Service Access Point." .
 
 
 ###  http://rs.tdwg.org/ac/terms/hashFunction
@@ -1348,7 +1361,7 @@ ac:hashValue rdf:type owl:DatatypeProperty ;
 ac:heightFrac rdf:type owl:DatatypeProperty ;
               rdfs:range xsd:decimal ;
               rdfs:label "Fractional Height" ;
-              skos:definition "The height of the bounding rectangle, expressed as a decimal fraction of the height of a dwc:Media resource." ;
+              skos:definition "The height of the bounding rectangle, expressed as a decimal fraction of the height of an ac:Media resource." ;
               skos:example 0.5 ,
                            1 .
 
@@ -1363,7 +1376,7 @@ ac:licenseLogoURL rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/licensingException
 ac:licensingException rdf:type owl:DatatypeProperty ;
                       rdfs:label "Licensing Exception" ;
-                      skos:definition "The licensing statement for this variant of the dwc:Media resource if different from that given in the dcterms:license property of the resource." .
+                      skos:definition "The licensing statement for this variant of the ac:Media resource if different from that given in the dcterms:license property of the resource." .
 
 
 ###  http://rs.tdwg.org/ac/terms/mediaDuration
@@ -1380,6 +1393,17 @@ ac:mediaSpeed rdf:type owl:DatatypeProperty ;
               skos:definition "The decimal fraction representing the natural speed over the encoded speed." ;
               skos:example 0.2 ,
                            60 .
+
+
+###  http://rs.tdwg.org/ac/terms/mediaType
+ac:mediaType rdf:type owl:DatatypeProperty ;
+             rdfs:label "Media Type" ;
+             skos:definition "A category that best matches the nature of an ac:Media resource." ;
+             skos:example "InteractiveResource" ,
+                          "MovingImage" ,
+                          "Sound" ,
+                          "StillImage" ,
+                          "Text" .
 
 
 ###  http://rs.tdwg.org/ac/terms/metadataCreator
@@ -1415,7 +1439,7 @@ ac:metadataProviderLiteral rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/physicalSetting
 ac:physicalSetting rdf:type owl:DatatypeProperty ;
                    rdfs:label "Physical Setting" ;
-                   skos:definition "The setting of the content represented in a dwc:Media resource, such as images, sounds, and movies if the provider deems them relevant." ;
+                   skos:definition "The setting of the content represented in an ac:Media resource, such as images, sounds, and movies if the provider deems them relevant." ;
                    skos:example "Artificial" ,
                                 "Edited" ,
                                 "Natural" .
@@ -1424,13 +1448,13 @@ ac:physicalSetting rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/provider
 ac:provider rdf:type owl:DatatypeProperty ;
             rdfs:label "Provider ID" ;
-            skos:definition "An identifier for a dcterms:Agent responsible for presenting the dwc:Media resource." .
+            skos:definition "An identifier for a dcterms:Agent responsible for presenting the ac:Media resource." .
 
 
 ###  http://rs.tdwg.org/ac/terms/providerLiteral
 ac:providerLiteral rdf:type owl:DatatypeProperty ;
                    rdfs:label "Provider" ;
-                   skos:definition "A name of a dcterms:Agent responsible for presenting the dwc:Media resource." .
+                   skos:definition "A name of a dcterms:Agent responsible for presenting the ac:Media resource." .
 
 
 ###  http://rs.tdwg.org/ac/terms/providerManagedID
@@ -1443,7 +1467,7 @@ ac:providerManagedID rdf:type owl:DatatypeProperty ;
 ac:radius rdf:type owl:DatatypeProperty ;
           rdfs:range xsd:integer ;
           rdfs:label "Radius" ;
-          skos:definition "The radius of a bounding circle or arc, expressed as a fraction of the width of a dwc:Media resource." ;
+          skos:definition "The radius of a bounding circle or arc, expressed as a fraction of the width of an ac:Media resource." ;
           skos:example 100 .
 
 
@@ -1465,11 +1489,20 @@ ac:reviewerLiteral rdf:type owl:DatatypeProperty ;
                    skos:definition "A name of a dcterms:Agent primarily responsible for providing the ac:reviewerComments" .
 
 
+###  http://rs.tdwg.org/ac/terms/serviceExpectation
+ac:serviceExpectation rdf:type owl:DatatypeProperty ;
+                      rdfs:label "Service Expectation" ;
+                      skos:definition "A term that describes what service expectations users may have of the ac:accessURI." ;
+                      skos:example "authenticate" ,
+                                   "online" ,
+                                   "published (non digital)" .
+
+
 ###  http://rs.tdwg.org/ac/terms/startTime
 ac:startTime rdf:type owl:DatatypeProperty ;
              rdfs:range xsd:decimal ;
              rdfs:label "Start Time In Seconds" ;
-             skos:definition "The beginning of a temporal region, specified as an absolute offset relative to the beginning of a dwc:Media resource (this corresponds to Normal Play Time RFC 2326), specified as seconds, with an optional fractional part to indicate milliseconds or finer." .
+             skos:definition "The beginning of a temporal region, specified as an absolute offset relative to the beginning of an ac:Media resource (this corresponds to Normal Play Time RFC 2326), specified as seconds, with an optional fractional part to indicate milliseconds or finer." .
 
 
 ###  http://rs.tdwg.org/ac/terms/startTimestamp
@@ -1478,28 +1511,28 @@ ac:startTimestamp rdf:type owl:DatatypeProperty ;
                   skos:definition "The beginning of a temporal region, specified as real-world clock time ISO 8601 timestamps, using UTC timezone, with an optional fractional part to indicate milliseconds or finer. There is no limit on the number of decimal places for the decimal fraction." .
 
 
-###  http://rs.tdwg.org/ac/terms/subjectCategorySource
-ac:subjectCategorySource rdf:type owl:DatatypeProperty ;
-                         rdfs:label "Subject Category Source" ;
-                         skos:definition "A reference to a controlled vocabulary in which the definition of a value in dwc:subjectCategory is given." .
+###  http://rs.tdwg.org/ac/terms/subjectCategoryVocabulary
+ac:subjectCategoryVocabulary rdf:type owl:DatatypeProperty ;
+                             rdfs:label "Subject Category Source" ;
+                             skos:definition "A reference to a controlled vocabulary in which the definition of a value in dwc:subjectCategory is given." .
 
 
 ###  http://rs.tdwg.org/ac/terms/subjectOrientationLiteral
 ac:subjectOrientationLiteral rdf:type owl:DatatypeProperty ;
                              rdfs:label "Subject Orientation Literal" ;
-                             skos:definition "Specific orientation (= direction, view angle) of the subject represented in the dwc:Media resource with respect to the acquisition device, denoted by a controlled value string." .
+                             skos:definition "Specific orientation (= direction, view angle) of the subject represented in the ac:Media resource with respect to the acquisition device, denoted by a controlled value string." .
 
 
 ###  http://rs.tdwg.org/ac/terms/subjectPartLiteral
 ac:subjectPartLiteral rdf:type owl:DatatypeProperty ;
                       rdfs:label "Subject Part Literal" ;
-                      skos:definition "The portion or product of organism morphology, behaviour, environment, etc. that is either predominantly shown or particularly well exemplified by the dwc:Media resource, denoted by a controlled value string." .
+                      skos:definition "The portion or product of organism morphology, behaviour, environment, etc. that is either predominantly shown or particularly well exemplified by the ac:Media resource, denoted by a controlled value string." .
 
 
 ###  http://rs.tdwg.org/ac/terms/subtypeLiteral
 ac:subtypeLiteral rdf:type owl:DatatypeProperty ;
                   rdfs:label "Subtype Literal" ;
-                  skos:definition "A subcategory that allows further specialization of a dwc:Media resource type than mediaType." .
+                  skos:definition "A subcategory that allows further specialization of an ac:Media resource type than mediaType." .
 
 
 ###  http://rs.tdwg.org/ac/terms/tag
@@ -1534,7 +1567,7 @@ ac:variantLiteral rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/widthFrac
 ac:widthFrac rdf:type owl:DatatypeProperty ;
              rdfs:label "Fractional Width" ;
-             skos:definition "The width of the bounding rectangle, expressed as a decimal fraction of the width of a dwc:Media resource." ;
+             skos:definition "The width of the bounding rectangle, expressed as a decimal fraction of the width of an ac:Media resource." ;
              skos:example 0.5 ,
                           1 .
 
@@ -1543,7 +1576,7 @@ ac:widthFrac rdf:type owl:DatatypeProperty ;
 ac:xFrac rdf:type owl:DatatypeProperty ;
          rdfs:range xsd:decimal ;
          rdfs:label "Fractional X" ;
-         skos:definition "The horizontal position of a reference point, measured from the left side of a dwc:Media resource and expressed as a decimal fraction of the width of a dwc:Media resource." ;
+         skos:definition "The horizontal position of a reference point, measured from the left side of an ac:Media resource and expressed as a decimal fraction of the width of an ac:Media resource." ;
          skos:example 0.5 ,
                       1 .
 
@@ -1551,7 +1584,7 @@ ac:xFrac rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/ac/terms/yFrac
 ac:yFrac rdf:type owl:DatatypeProperty ;
          rdfs:label "Fractional Y" ;
-         skos:definition "The vertical position of a reference point, measured from the top of a dwc:Media resource and expressed as a decimal fraction of the height of a dwc:Media resource." ;
+         skos:definition "The vertical position of a reference point, measured from the top of an ac:Media resource and expressed as a decimal fraction of the height of an ac:Media resource." ;
          skos:example 0.5 ,
                       1 .
 
@@ -2182,7 +2215,7 @@ dwc:derivedFromMaterialEntityID rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/derivedFromMediaID
 dwc:derivedFromMediaID rdf:type owl:DatatypeProperty ;
                        rdfs:label "Derived From Media ID" ;
-                       skos:definition "An identifier for a dwc:Media resource from which this dwc:Media resource was derived." .
+                       skos:definition "An identifier for an ac:Media resource from which this ac:Media resource was derived." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/digitalSpecimenID
@@ -2639,9 +2672,9 @@ dwc:identificationRemarks rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/dwc/terms/identificationVerificationStatus
 dwc:identificationVerificationStatus rdf:type owl:DatatypeProperty ;
-                                     rdfs:label "Identification VerificationStatus" ;
+                                     rdfs:label "Identification Verification Status" ;
                                      skos:definition "A categorical indicator of the extent to which a taxonomic determination has been verified to be correct." ;
-                                     skos:example 0 .
+                                     skos:example "0" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/identifiedBy
@@ -2656,14 +2689,6 @@ dwc:identifiedBy rdf:type owl:DatatypeProperty ;
 dwc:identifiedByID rdf:type owl:DatatypeProperty ;
                    rdfs:label "Identified By ID" ;
                    skos:definition "An identifier for a dcterms:Agent responsible for making a taxonomic determination of a dwc:Organism." .
-
-
-###  http://rs.tdwg.org/dwc/terms/includeOrExclude
-dwc:includeOrExclude rdf:type owl:DatatypeProperty ;
-                     rdfs:label "Include Or Exclude" ;
-                     skos:definition "Whether the combination of dwc:surveyTargetType and dwc:surveyTargetValue is included or excluded in a dwc:SurveyTarget." ;
-                     skos:example "exclude" ,
-                                  "include" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/informationWithheld
@@ -2727,14 +2752,6 @@ dwc:isPartOfMaterialEntityID rdf:type owl:DatatypeProperty ;
 dwc:isPartOfOccurrenceID rdf:type owl:DatatypeProperty ;
                          rdfs:label "Is Part Of Occurrence ID" ;
                          skos:definition "An identifier for a dwc:Occurrence of which this dwc:Occurrence is a part." .
-
-
-###  http://rs.tdwg.org/dwc/terms/isSurveyTargetFullyReported
-dwc:isSurveyTargetFullyReported rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Is Survey Target Fully Reported" ;
-                                skos:definition "A declaration of whether the counts for an instance of the dwc:SurveyTarget report everything that matches the declared dwc:SurveyTarget." ;
-                                skos:example "false"^^xsd:boolean ,
-                                             "true"^^xsd:boolean .
 
 
 ###  http://rs.tdwg.org/dwc/terms/island
@@ -2952,7 +2969,7 @@ dwc:maximumElevationInMeters rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/mediaID
 dwc:mediaID rdf:type owl:DatatypeProperty ;
             rdfs:label "Media ID" ;
-            skos:definition "An identifier for a dwc:Media resource." .
+            skos:definition "An identifier for an ac:Media resource." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/member
@@ -3279,6 +3296,16 @@ dwc:preparations rdf:type owl:DatatypeProperty ;
                               "whole animal (EtOH) | tissue (EDTA)" .
 
 
+###  http://rs.tdwg.org/dwc/terms/processedTotalReadCount
+dwc:processedTotalReadCount rdf:type owl:DatatypeProperty ;
+                            rdfs:range xsd:integer ;
+                            rdfs:label "Processed Total Read Count" ;
+                            skos:definition "The total number of reads obtained for a processed dwc:NucleotideSequence during a dwc:NucleotideAnalysis." ;
+                            skos:example 345987 ,
+                                         50638 ,
+                                         764032 .
+
+
 ###  http://rs.tdwg.org/dwc/terms/projectID
 dwc:projectID rdf:type owl:DatatypeProperty ;
               rdfs:label "Project ID" ;
@@ -3340,7 +3367,10 @@ dwc:provenanceID rdf:type owl:DatatypeProperty ;
 dwc:readCount rdf:type owl:DatatypeProperty ;
               rdfs:range xsd:integer ;
               rdfs:label "Read Count" ;
-              skos:definition "A number of reads for a dwc:NucleotideSequence in a dwc:NucleotideAnalysis." .
+              skos:definition "The number of reads obtained for a processed dwc:NucleotideSequence during a dwc:NucleotideAnalysis." ;
+              skos:example 325 ,
+                           73591 ,
+                           8302 .
 
 
 ###  http://rs.tdwg.org/dwc/terms/recordedBy
@@ -3525,6 +3555,7 @@ dwc:samplingPerformedByID rdf:type owl:DatatypeProperty ;
 dwc:scientificName rdf:type owl:DatatypeProperty ;
                    rdfs:range xsd:string ;
                    rdfs:label "Scientific Name" ;
+                   skos:definition "The full scientific name, with authorship and date information if known. When forming part of a dwc:Identification, this should be the name in lowest level taxonomic rank that can be determined." ;
                    skos:example "Agrostis stolonifera L. × Polypogon monspeliensis (L.) Desf." ,
                                 "Ambystoma tigrinum diaboli" ,
                                 "Coleoptera" ,
@@ -3619,12 +3650,6 @@ dwc:subgenus rdf:type owl:DatatypeProperty ;
                           "Dicranum subgen. Orthodicranum" .
 
 
-###  http://rs.tdwg.org/dwc/terms/subjectCategory
-dwc:subjectCategory rdf:type owl:DatatypeProperty ;
-                    rdfs:label "Subject Category" ;
-                    skos:definition "A category for the content of a dwc:Media resource." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/subjectOccurrenceID
 dwc:subjectOccurrenceID rdf:type owl:DatatypeProperty ;
                         rdfs:label "Subject Occurrence ID" ;
@@ -3650,51 +3675,6 @@ dwc:substrate rdf:type owl:DatatypeProperty ;
                            "stone" ,
                            "wall" ,
                            "wooden board fence" .
-
-
-###  http://rs.tdwg.org/dwc/terms/surveyID
-dwc:surveyID rdf:type owl:DatatypeProperty ;
-             rdfs:label "Survey ID" ;
-             skos:definition "An identifier for a dwc:Survey." .
-
-
-###  http://rs.tdwg.org/dwc/terms/surveyTargetID
-dwc:surveyTargetID rdf:type owl:DatatypeProperty ;
-                   rdfs:label "Survey Target ID" ;
-                   skos:definition "An identifier for a dwc:SurveyTarget." .
-
-
-###  http://rs.tdwg.org/dwc/terms/surveyTargetType
-dwc:surveyTargetType rdf:type owl:DatatypeProperty ;
-                     rdfs:label "Survey Target Type" ;
-                     skos:definition "A scope a dwc:SurveyTarget describes." ;
-                     skos:example "establishmentMeans" ,
-                                  "growthForm" ,
-                                  "habitat" ,
-                                  "lifeStage" ,
-                                  "minimum length" ,
-                                  "sex" ,
-                                  "taxon" .
-
-
-###  http://rs.tdwg.org/dwc/terms/surveyTargetUnit
-dwc:surveyTargetUnit rdf:type owl:DatatypeProperty ;
-                     rdfs:label "Survey Target Unit" ;
-                     skos:definition "Unit associated with a value in dwc:surveyTargetValue." .
-
-
-###  http://rs.tdwg.org/dwc/terms/surveyTargetValue
-dwc:surveyTargetValue rdf:type owl:DatatypeProperty ;
-                      rdfs:label "Survey Target Value" ;
-                      skos:definition "A value of a characteristic to include or exclude in a dwc:SurveyTarget for a given dwc:surveyTargetType." ;
-                      skos:example "Aves" ,
-                                   "adult" ,
-                                   "female" ,
-                                   "height" ,
-                                   "native" ,
-                                   "oak savannah" ,
-                                   "tree" ,
-                                   "weight" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/taxonAssignmentMethod
@@ -3741,13 +3721,6 @@ dwc:taxonRemarks rdf:type owl:DatatypeProperty ;
 dwc:taxonSortOrder rdf:type owl:DatatypeProperty ;
                    rdfs:label "Taxon Sort Order" ;
                    skos:definition "A numerical position of a dwc:Taxon in a taxonFormula." .
-
-
-###  http://rs.tdwg.org/dwc/terms/totalReadCount
-dwc:totalReadCount rdf:type owl:DatatypeProperty ;
-                   rdfs:range xsd:integer ;
-                   rdfs:label "Total Read Count" ;
-                   skos:definition "A total number of reads in a dwc:NucleotideAnalysis." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/typeStatus
@@ -4033,6 +4006,14 @@ eco:hasVouchers rdf:type owl:DatatypeProperty ;
                              "true"^^xsd:boolean .
 
 
+###  http://rs.tdwg.org/eco/terms/includeOrExclude
+eco:includeOrExclude rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Include Or Exclude" ;
+                     skos:definition "Whether to include or exclude eco:surveyTargetValue in a scope categorized by eco:surveyTargetType." ;
+                     skos:example "exclude" ,
+                                  "include" .
+
+
 ###  http://rs.tdwg.org/eco/terms/inventoryTypes
 eco:inventoryTypes rdf:type owl:DatatypeProperty ;
                    rdfs:label "Inventory Types" ;
@@ -4085,6 +4066,14 @@ eco:isSamplingEffortReported rdf:type owl:DatatypeProperty ;
                                           "true"^^xsd:boolean .
 
 
+###  http://rs.tdwg.org/eco/terms/isSurveyTargetFullyReported
+eco:isSurveyTargetFullyReported rdf:type owl:DatatypeProperty ;
+                                rdfs:label "Is Survey Target Fully Reported" ;
+                                skos:definition "Whether an eco:SurveyTarget can be used to infer absence of detection because all counts of detected dwc:Occurrences matching an eco:SurveyTarget were fully reported." ;
+                                skos:example "false"^^xsd:boolean ,
+                                             "true"^^xsd:boolean .
+
+
 ###  http://rs.tdwg.org/eco/terms/isVegetationCoverReported
 eco:isVegetationCoverReported rdf:type owl:DatatypeProperty ;
                               rdfs:label "Is Vegetation Cover Reported" ;
@@ -4113,7 +4102,7 @@ eco:nonTargetTaxa rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/eco/terms/protocolDescriptions
 eco:protocolDescriptions rdf:type owl:DatatypeProperty ;
                          rdfs:label "Protocol Descriptions" ;
-                         skos:definition "A detailed description of the dwc:Protocols used during a dwc:Survey." ;
+                         skos:definition "A detailed description of the dwc:Protocols used during an eco:Survey." ;
                          skos:example "Three conventional harp traps (3.2m ht x 2.2m w) were established in flight path zones for a period of 4 hrs at dawn and dusk for a total of 10 trap nights. Traps were visited on an hourly basis during each deployment period and the trap catch recorded for species, size, weight, sex, age and maternal status." .
 
 
@@ -4197,6 +4186,51 @@ eco:siteNestingDescription rdf:type owl:DatatypeProperty ;
                            skos:example "Textual description of a hierarchical sampling design." .
 
 
+###  http://rs.tdwg.org/eco/terms/surveyID
+eco:surveyID rdf:type owl:DatatypeProperty ;
+             rdfs:label "Survey ID" ;
+             skos:definition "An identifier for an eco:Survey." .
+
+
+###  http://rs.tdwg.org/eco/terms/surveyTargetID
+eco:surveyTargetID rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Survey Target ID" ;
+                   skos:definition "An identifier for an eco:SurveyTarget." .
+
+
+###  http://rs.tdwg.org/eco/terms/surveyTargetType
+eco:surveyTargetType rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Survey Target Type" ;
+                     skos:definition "A scope an eco:SurveyTarget describes." ;
+                     skos:example "establishmentMeans" ,
+                                  "growthForm" ,
+                                  "habitat" ,
+                                  "lifeStage" ,
+                                  "minimum length" ,
+                                  "sex" ,
+                                  "taxon" .
+
+
+###  http://rs.tdwg.org/eco/terms/surveyTargetUnit
+eco:surveyTargetUnit rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Survey Target Unit" ;
+                     skos:definition "Unit associated with a value in eco:surveyTargetValue." .
+
+
+###  http://rs.tdwg.org/eco/terms/surveyTargetValue
+eco:surveyTargetValue rdf:type owl:DatatypeProperty ;
+                      rdfs:label "Survey Target Value" ;
+                      skos:definition "A value of a characteristic to include or exclude in an eco:SurveyTarget for a given eco:surveyTargetType." ;
+                      skos:example "Aves" ,
+                                   "adult" ,
+                                   "female" ,
+                                   "height" ,
+                                   "native" ,
+                                   "oak savannah" ,
+                                   "tree" ,
+                                   "weight" .
+
+
 ###  http://rs.tdwg.org/eco/terms/taxonCompletenessProtocols
 eco:taxonCompletenessProtocols rdf:type owl:DatatypeProperty ;
                                rdfs:label "Taxon Completenes Protocols" ;
@@ -4224,7 +4258,7 @@ eco:totalAreaSampledUnit rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/eco/terms/totalAreaSampledValue
 eco:totalAreaSampledValue rdf:type owl:DatatypeProperty ;
                           rdfs:label "Total Area Sampled Value" ;
-                          skos:definition "The numeric value for the total area dwc:Surveyed during a dwc:Event." ;
+                          skos:definition "The numeric value for the total area surveyed during a dwc:Event." ;
                           skos:example 0.8 .
 
 
@@ -4811,6 +4845,12 @@ dcterms:Location rdf:type owl:Class ;
                               "the place defined by a georeference" .
 
 
+###  http://rs.tdwg.org/ac/terms/Media
+ac:Media rdf:type owl:Class ;
+         rdfs:label "Media" ;
+         skos:definition "A digital or physical media resource." .
+
+
 ###  http://rs.tdwg.org/chrono/terms/ChronometricAge
 chrono:ChronometricAge rdf:type owl:Class ;
                        rdfs:label "Chronometric Age" ;
@@ -4857,7 +4897,7 @@ dwc:ChronometricAgeAgentRole rdf:type owl:Class ;
 ###  http://rs.tdwg.org/dwc/terms/ChronometricAgeMedia
 dwc:ChronometricAgeMedia rdf:type owl:Class ;
                          rdfs:label "Chronometric Age Media" ;
-                         skos:definition "A chrono:ChronometricAge as content in a dwc:Media entity." .
+                         skos:definition "A chrono:ChronometricAge as content in an ac:Media entity." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/ChronometricAgeReference
@@ -4879,7 +4919,7 @@ dwc:Event rdf:type owl:Class ;
 
 ###  http://rs.tdwg.org/dwc/terms/EventAgentRole
 dwc:EventAgentRole rdf:type owl:Class ;
-                   rdfs:label "EventAgentRole" ;
+                   rdfs:label "Event Agent Role" ;
                    skos:definition "A role filled by a dcterms:Agent with respect to a dwc:Event." .
 
 
@@ -4906,7 +4946,17 @@ dwc:GeologicalContext rdf:type owl:Class ;
 ###  http://rs.tdwg.org/dwc/terms/GeologicalContextMedia
 dwc:GeologicalContextMedia rdf:type owl:Class ;
                            rdfs:label "Geological Context Media" ;
-                           skos:definition "A dwc:GeologicalContext as content in a dwc:Media entity." .
+                           skos:definition "A dwc:GeologicalContext as content in an ac:Media entity." .
+
+
+###  http://rs.tdwg.org/dwc/terms/GeologicalMaterial
+dwc:GeologicalMaterial rdf:type owl:Class ;
+                       rdfs:subClassOf dwc:MaterialEntity ;
+                       rdfs:label "Geological Material" ;
+                       skos:definition "A dwc:MaterialEntity that is geological in nature." ;
+                       skos:example "a specific mineral" ,
+                                    "a specific ore" ,
+                                    "a specific rock" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/Identification
@@ -4961,7 +5011,7 @@ dwc:MaterialEntityAgentRole rdf:type owl:Class ;
 ###  http://rs.tdwg.org/dwc/terms/MaterialEntityMedia
 dwc:MaterialEntityMedia rdf:type owl:Class ;
                         rdfs:label "Material Entity Media" ;
-                        skos:definition "A dwc:MaterialEntity as content in a dwc:Media entity." .
+                        skos:definition "A dwc:MaterialEntity as content in an ac:Media entity." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/MaterialEntityReference
@@ -4970,16 +5020,10 @@ dwc:MaterialEntityReference rdf:type owl:Class ;
                             skos:definition "A dcterms:BibliographicResource relatd to a dwc:MaterialEntity." .
 
 
-###  http://rs.tdwg.org/dwc/terms/Media
-dwc:Media rdf:type owl:Class ;
-          rdfs:label "Media" ;
-          skos:definition "A dcmi:MediaType or other media type with other entities as subject matter." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/MediaAgentRole
 dwc:MediaAgentRole rdf:type owl:Class ;
                    rdfs:label "Media Agent Role" ;
-                   skos:definition "A role filled by a dcterms:Agent with respect to a dwc:Media entity." .
+                   skos:definition "A role filled by a dcterms:Agent with respect to an ac:Media entity." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/MolecularProtocol
@@ -5017,9 +5061,11 @@ dwc:NucleotideSequence rdf:type owl:Class ;
 
 ###  http://rs.tdwg.org/dwc/terms/Occurrence
 dwc:Occurrence rdf:type owl:Class ;
+               rdfs:subClassOf dwc:Event ;
                rdfs:label "Occurrence" ;
-               skos:definition "A state of a dwc:Organism in a dwc:Event." ;
+               skos:definition "A dwc:Event that establishes the state of a dwc:Organism at a particular place and time." ;
                skos:example "a fungus in Central Park in the summer of 1929" ,
+                            "a male lance-tailed manakin in a courtship display on Isla Boca Brava" ,
                             "a virus in a plant leaf in the New York Botanical Garden at 15:29 on 2014-10-23" ,
                             "a wolf pack on the shore of Kluane Lake in 1988" .
 
@@ -5033,13 +5079,13 @@ dwc:OccurrenceAgentRole rdf:type owl:Class ;
 ###  http://rs.tdwg.org/dwc/terms/OccurrenceMedia
 dwc:OccurrenceMedia rdf:type owl:Class ;
                     rdfs:label "Occurrence Media" ;
-                    skos:definition "A dwc:Occurrence as content in a dwc:Media entity." .
+                    skos:definition "A dwc:Occurrence as content in an ac:Media entity." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/OccurrenceReference
 dwc:OccurrenceReference rdf:type owl:Class ;
-                        rdfs:label "A dcterms:BibliographicResource related to a dwc:Occurrence." ,
-                                   "Occurrence Reference" .
+                        rdfs:label "Occurrence Reference" ;
+                        skos:definition "A dcterms:BibliographicResource related to a dwc:Occurrence." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/Organism
@@ -5053,6 +5099,7 @@ dwc:Organism rdf:type owl:Class ;
 
 ###  http://rs.tdwg.org/dwc/terms/OrganismInteraction
 dwc:OrganismInteraction rdf:type owl:Class ;
+                        rdfs:subClassOf dwc:Event ;
                         rdfs:label "Organism Interaction" ;
                         skos:definition "An interaction between two dwc:Organisms during a dwc:Event." ;
                         skos:example "a Mallophora ruficauda hunting an Apis mellifera in flight" ,
@@ -5073,7 +5120,7 @@ dwc:OrganismInteractionAgentRole rdf:type owl:Class ;
 ###  http://rs.tdwg.org/dwc/terms/OrganismInteractionMedia
 dwc:OrganismInteractionMedia rdf:type owl:Class ;
                              rdfs:label "Organism Interaction Media" ;
-                             skos:definition "A dwc:OrganismInteraction as content in a dwc:Media entity." .
+                             skos:definition "A dwc:OrganismInteraction as content in an ac:Media entity." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/OrganismInteractionReference
@@ -5126,21 +5173,6 @@ dwc:ResourceRelationship rdf:type owl:Class ;
                                       "an instance of a dwc:Organism is the mother of another instance of a dwc:Organism" .
 
 
-###  http://rs.tdwg.org/dwc/terms/Survey
-dwc:Survey rdf:type owl:Class ;
-           rdfs:label "Survey" ;
-           skos:definition "A biotic survey or inventory." ;
-           skos:example "a botanical survey of a protected area to assess native and invasive plant species" ,
-                        "a camera trap deployment in a rainforest to monitor large mammals" ,
-                        "a coverboard survey for reptiles in forested environments" ,
-                        "a frog call survey in wetlands across breeding seasons" ,
-                        "a habitat- or ecosystem-level survey (e.g., coral reef health assessment, forest biodiversity assessment)" ,
-                        "a macroinvertebrate sampling in a freshwater stream to assess water quality" ,
-                        "a pollinator survey in an agricultural landscape" ,
-                        "a wetland vegetation mapping" ,
-                        "an environmental impact assessment (e.g., pre-construction biological baseline survey for a wind farm project)" .
-
-
 ###  http://rs.tdwg.org/dwc/terms/SurveyAgentRole
 dwc:SurveyAgentRole rdf:type owl:Class ;
                     rdfs:label "Survey Agent Role" ;
@@ -5150,18 +5182,7 @@ dwc:SurveyAgentRole rdf:type owl:Class ;
 ###  http://rs.tdwg.org/dwc/terms/SurveyReference
 dwc:SurveyReference rdf:type owl:Class ;
                     rdfs:label "Survey Reference" ;
-                    skos:definition "A dcterms:BibliographicResource related to a dwc:Survey." .
-
-
-###  http://rs.tdwg.org/dwc/terms/SurveyTarget
-dwc:SurveyTarget rdf:type owl:Class ;
-                 rdfs:label "Survey Target" ;
-                 skos:definition "An intended scope for dwc:Occurrences in an eco:Survey." ;
-                 skos:example "Oncorhynchus mykiss and Oncorhynchus clarkii (only)" ,
-                              "all bird species" ,
-                              "all bird species except Larus gulls, fulmars and kittiwakes" ,
-                              "all total lengths except < 12 inches" ,
-                              "reproductive female Ctenomys sociabilis (only)" .
+                    skos:definition "A dcterms:BibliographicResource related to an eco:Survey." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/SurveyTargetDefinition
@@ -5174,6 +5195,33 @@ dwc:SurveyTargetDefinition rdf:type owl:Class ;
 dwc:UsagePolicy rdf:type owl:Class ;
                 rdfs:label "Usage Policy" ;
                 skos:definition "Information about rights, usage, and attribution statements applicable to an entity." .
+
+
+###  http://rs.tdwg.org/eco/terms/Survey
+eco:Survey rdf:type owl:Class ;
+           rdfs:subClassOf dwc:Event ;
+           rdfs:label "Survey" ;
+           skos:definition "A dwc:Event intentionally designed to characterize a defined biotic target or domain in such a way that the resulting dwc:Occurrences can be interpreted collectively to support ecological and monitoring inference (such as detectability, abundance, species co-occurence, spatial distribution, or temporal trends), rather than merely documenting individual observations or gathered material." ;
+           skos:example "a botanical survey of a protected area to assess native and invasive plant species" ,
+                        "a camera trap deployment in a rainforest to monitor large mammals" ,
+                        "a coverboard survey for reptiles in forested environments" ,
+                        "a frog call survey in wetlands across breeding seasons" ,
+                        "a habitat- or ecosystem-level survey (e.g., coral reef health assessment, forest biodiversity assessment)" ,
+                        "a macroinvertebrate sampling in a freshwater stream to assess water quality" ,
+                        "a pollinator survey in an agricultural landscape" ,
+                        "a wetland vegetation mapping" ,
+                        "an environmental impact assessment (e.g., pre-construction biological baseline survey for a wind farm project)" .
+
+
+###  http://rs.tdwg.org/eco/terms/SurveyTarget
+eco:SurveyTarget rdf:type owl:Class ;
+                 rdfs:label "Survey Target" ;
+                 skos:definition "An intended scope for dwc:Occurrences in an eco:Survey." ;
+                 skos:example "Oncorhynchus mykiss and Oncorhynchus clarkii (only)" ,
+                              "all bird species" ,
+                              "all bird species except Larus gulls, fulmars and kittiwakes" ,
+                              "all total lengths except < 12 inches" ,
+                              "reproductive female Ctenomys sociabilis (only)" .
 
 
 ###  http://www.w3.org/ns/adms#Identifier

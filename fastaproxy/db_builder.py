@@ -83,7 +83,7 @@ def build_db(dataset_ids: list[str]) -> Path:
 
     with duckdb.connect(database=str(db_path)) as con:
         for table_name, paths in tables.items():
-            rel = con.read_parquet(file_globs=paths, union_by_name=True)
+            rel = con.read_parquet(paths, union_by_name=True)
             rel.create_view(view_name=table_name)
 
         # NOTE: Create views to handle the dwc:SurveyTarget definition
@@ -112,6 +112,50 @@ def build_db(dataset_ids: list[str]) -> Path:
             WHERE location_id IS NOT NULL
         )
         WHERE rn = 1;
+        """)
+
+        # NOTE: Create a view to join the survey table with its event-based context
+        #
+        con.execute("""
+        -- eco:Survey entity recreated with a join.
+        CREATE VIEW j_survey AS
+        SELECT *
+        FROM survey
+        JOIN event ON survey.event_id = event.event_id;
+        """)
+
+        # NOTE: Create a view to join the occurrence table with its event-based context
+        #
+        con.execute("""
+        -- dwc:Occurrence entity recreated with a join.
+        CREATE VIEW j_occurrence AS
+        SELECT
+            occurrence.*,
+            event.* EXCLUDE (parent_event_id),
+            CASE
+                WHEN occurrence.event_id <> occurrence.occurrence_id
+                    THEN occurrence.event_id
+                ELSE event.parent_event_id
+            END AS parent_event_id
+        FROM occurrence
+        JOIN event ON occurrence.event_id = event.event_id;
+        """)
+
+        # NOTE: Create a view to join the organism_interaction table with its event-based context
+        #
+        con.execute("""
+        -- dwc:OrganismInteraction entity recreated with a join.
+        CREATE VIEW j_organism_interaction AS
+        SELECT
+            organism_interaction.*,
+            event.* EXCLUDE (parent_event_id),
+            CASE
+                WHEN organism_interaction.event_id <> organism_interaction.organism_interaction_id
+                    THEN organism_interaction.event_id
+                ELSE event.parent_event_id
+            END AS parent_event_id
+        FROM organism_interaction
+        JOIN event ON organism_interaction.event_id = event.event_id;
         """)
 
         # NOTE: Add transitive and transitive_reflexive views
