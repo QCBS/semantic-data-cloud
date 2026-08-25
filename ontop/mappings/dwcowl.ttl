@@ -1762,7 +1762,9 @@ dwc:agentRemarks rdf:type owl:DatatypeProperty ;
 dwc:agentRoleOrder rdf:type owl:DatatypeProperty ;
                    rdfs:range xsd:integer ;
                    rdfs:label "Agent Role Order" ;
-                   skos:definition "A numerical position of an AgentRole in a set of AgentRoles that have the same combination of dwc:agentRole, dwc:agentRoleIRI, dwc:agentRoleSource and related target." .
+                   skos:definition "A numerical position of an AgentRole in a set of AgentRoles." ;
+                   skos:example 1 ,
+                                2 .
 
 
 ###  http://rs.tdwg.org/dwc/terms/agentType
@@ -1967,17 +1969,17 @@ dwc:catalogNumber rdf:type owl:DatatypeProperty ;
 dwc:causeOfDeath rdf:type owl:DatatypeProperty ;
                  rdfs:label "Cause Of Death" ;
                  skos:definition "An indication of the known or suspected cause of death of a dwc:Organism." ;
-                 skos:example "burned" ,
+                 skos:example "burning" ,
                               "disease" ,
-                              "drowned" ,
+                              "drowning" ,
                               "herbicide" ,
                               "infanticide" ,
                               "old age" ,
-                              "poisoned" ,
-                              "roadkill" ,
-                              "shot" ,
-                              "starved" ,
-                              "trapped" .
+                              "poison" ,
+                              "shooting" ,
+                              "starvation" ,
+                              "trap" ,
+                              "vehicle collision" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/chronometricAgeConversionProtocolID
@@ -4838,11 +4840,12 @@ dcterms:Agent rdf:type owl:Class ;
               rdfs:comment "A person, group, organization, machine, software or other entity that can act. Membership in the dcterms:Agent class is determined by the capacity to act, even if not doing so in a specific context. To act: To participate in an event or process by contributing through behavior, operation, or an effect resulting from active participation — regardless of whether that contribution is intentional, volitional, or conscious." ;
               rdfs:label "Agent" ;
               skos:definition "A resource that acts or has the power to act." ;
-              skos:example "Carl Linnaeus" ,
-                           "ChatGPT" ,
-                           "The El Yunque National Forest ARBIMON System" ,
-                           "The National Science Foundation" ,
-                           "The Terra Nova Expedition" .
+              skos:example "a funding agency" ,
+                           "a particular bioacoustic monitoring installation" ,
+                           "a particular camera trap" ,
+                           "a person" ,
+                           "a software instance" ,
+                           "a team of participants on an expedition" .
 
 
 ###  http://purl.org/dc/terms/BibliographicResource
@@ -5230,7 +5233,7 @@ eco:Survey rdf:type owl:Class ;
 ###  http://rs.tdwg.org/eco/terms/SurveyTarget
 eco:SurveyTarget rdf:type owl:Class ;
                  rdfs:label "Survey Target" ;
-                 skos:definition "An intended scope for dwc:Occurrences in an eco:Survey." ;
+                 skos:definition "One or more scopes that describe a target for dwc:Occurrences in an eco:Survey." ;
                  skos:example "Oncorhynchus mykiss and Oncorhynchus clarkii (only)" ,
                               "all bird species" ,
                               "all bird species except Larus gulls, fulmars and kittiwakes" ,
