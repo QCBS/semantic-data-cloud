@@ -3,9 +3,8 @@ from contextlib import asynccontextmanager
 import hashlib
 import logging
 import os
-from typing import Annotated
 #
-from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
+from fastapi import Depends, FastAPI, HTTPException, Request, Response, status
 from glide import ExpirySet, ExpiryType, GlideClient, GlideClientConfiguration, NodeAddress
 from httpx import AsyncClient, AsyncHTTPTransport, HTTPError
 import orjson
@@ -82,7 +81,7 @@ async def get_health():
 
 @app.post("/sparql")
 async def sparql_query(
-    body: Annotated[QueryRequest, Query()],
+    body: QueryRequest,
     client: AsyncClient = Depends(get_http_client),
     cache: GlideClient = Depends(get_glide_client),
     registry: ContainerRegistry = Depends(get_registry),
