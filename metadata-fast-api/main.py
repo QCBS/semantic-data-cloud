@@ -198,12 +198,12 @@ async def search_datasets(
         ]
 
         if licenses:
-            conditions.append("license_id = ANY(?)")
             params.append(licenses)
+            conditions.append("license_id = ANY(?)")
 
         if maintenance:
-            conditions.append("maintenance_update_frequency = ANY(?)")
             params.append(maintenance)
+            conditions.append("maintenance_update_frequency = ANY(?)")
 
         query = "SELECT name FROM datasets WHERE " + " AND ".join(conditions) + ";"
 
@@ -213,28 +213,6 @@ async def search_datasets(
 
     return {"datasets": [row[0] for row in rows]}
 
-
-def _query():
-    conditions = [
-        "max_lon >= ?",
-        "min_lon <= ?",
-        "max_lat >= ?",
-        "min_lat <= ?",
-        "end_date >= ?",
-        "begin_date <= ?",
-    ]
-    params = [min_lon, max_lon, min_lat, max_lat, begin_date, end_date]
-
-    if licenses:
-        conditions.append("license_id = ANY(?)")
-        params.append(licenses)
-
-    if maintenance:
-        conditions.append("maintenance_update_frequency = ANY(?)")
-        params.append(maintenance)
-
-    query = "SELECT name FROM datasets WHERE " + " AND ".join(conditions) + ";"
-    return ddb.execute(query, params).fetchall()
 
 @app.post("/datasets/citations")
 async def get_citations(
