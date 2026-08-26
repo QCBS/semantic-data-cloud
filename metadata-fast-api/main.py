@@ -53,15 +53,11 @@ async def lifespan(app: FastAPI):
     logger.info(f"S3 load: {after_load - after_init:.3f}s")
     logger.info(f"Total startup: {after_load - start:.3f}s")
 
-    # WARN: Explicitly close the metadata database here after populating it
-    #
     ddb.close()
 
     yield
 
 
-# WARN: Open a fresh read-only connection per request and guarantees it's closed afterwards
-#
 def get_ddb(request: Request):
     conn = duckdb.connect(str(METADATA_DB_PATH), read_only=True)
     try:
