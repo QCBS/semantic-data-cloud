@@ -1,9 +1,9 @@
 import asyncio
 from contextlib import asynccontextmanager
-from datetime import date
 import logging
 import os
 import time
+from typing import Annotated
 #
 import duckdb
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
@@ -12,6 +12,7 @@ import orjson
 from pydantic import BaseModel
 #
 from s3io import s3_to_duckdb, duckdb_connect, METADATA_DB_PATH
+from schemas.datasets import DatasetRequest
 
 
 # WARN: Use uvicorn's error logger to output times. Probably remove along with timings after.
@@ -141,52 +142,13 @@ async def get_dataset(
 
 @app.get("/datasets/search")
 async def search_datasets(
-    min_lon: float = Query(
-        default=-180.0,
-        description="West bound of query bbox (in WGS84)",
-        ge=-180.0,
-        le=180.0,
-    ),
-    min_lat: float = Query(
-        default=-90.0,
-        description="South bound of query bbox (in WGS84)",
-        ge=-90.0,
-        le=90.0,
-    ),
-    max_lon: float = Query(
-        default=180.0,
-        description="East bound of query bbox (in WGS84)",
-        ge=-180.0,
-        le=180.0,
-    ),
-    max_lat: float = Query(
-        default=90.0,
-        description="North bound of query bbox (in WGS84)",
-        ge=-90.0,
-        le=90.0,
-    ),
-    begin_date: date = Query(
-        default=date(1, 1, 1),
-        description="Start of temporal range (YYYY-MM-DD)",
-    ),
-    end_date: date = Query(
-        default=date(2038, 1, 19),
-        description="End of temporal range (YYYY-MM-DD)",
-    ),
-    licenses: list[str] | None = Query(
-        default=None,
-        description="SPDX IDs of the licenses requested",
-    ),
-    maintenance: list[str] | None = Query(
-        default=None,
-        description="Controlled vocabulary terms for maintenance update frequency",
-    ),
+    request: Annotated[DatasetRequest, Query()],
     ddb=Depends(get_ddb),
 ):
     loop = asyncio.get_running_loop()
 
     def _query():
-        params = [min_lon, max_lon, min_lat, max_lat, begin_date, end_date]
+        params = [request.min_lon, request.max_lon, request.min_lat, request.max_lat, request.begin_date, request.end_date]
 
         conditions = [
             "max_lon >= ?",
@@ -197,12 +159,12 @@ async def search_datasets(
             "begin_date <= ?",
         ]
 
-        if licenses:
-            params.append(licenses)
+        if request.licenses:
+            params.append(request.licenses)
             conditions.append("license_id = ANY(?)")
 
-        if maintenance:
-            params.append(maintenance)
+        if request.maintenance:
+            params.append(request.maintenance)
             conditions.append("maintenance_update_frequency = ANY(?)")
 
         query = "SELECT name FROM datasets WHERE " + " AND ".join(conditions) + ";"
