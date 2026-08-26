@@ -1,7 +1,7 @@
 from datetime import date
 from enum import Enum
 #
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, Field, field_validator
 
 
 class MaintenanceFrequency(str, Enum):
@@ -21,10 +21,10 @@ class MaintenanceFrequency(str, Enum):
 
 class QueryRequest(BaseModel):
     query: str
-    bbox: list[float] = [-180.0, -90.0, 180.0, 90.0]
-    temporal: list[str] = ["0001-01-01", "2038-01-19"]
-    licenses: list[str] | None = None
-    maintenance: list[MaintenanceFrequency] | None = None
+    bbox: list[float] = Field([-180.0, -90.0, 180.0, 90.0], description="Bounding box for the desired datasets (in WGS84)")
+    temporal: list[str] = Field(["0001-01-01", "2038-01-19"], description="Begin and end dates for the desired datasets (in YYYY-MM-DD)")
+    licenses: list[str] | None = Field(None, description="SPDX IDs of the licenses requested")
+    maintenance: list[MaintenanceFrequency] | None = Field(None, description="Controlled vocabulary terms for maintenance update frequency")
 
 
     @field_validator("query")
