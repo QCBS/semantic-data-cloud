@@ -1,12 +1,30 @@
 from datetime import date
+from enum import Enum
 #
 from pydantic import BaseModel, field_validator
+
+
+class MaintenanceFrequency(str, Enum):
+    ANNUALLY = "annually"
+    AS_NEEDED = "asNeeded"
+    BIANNUALLY = "biannually"
+    CONTINUALLY = "continually"
+    DAILY = "daily"
+    IRREGULAR = "irregular"
+    MONTHLY = "monthly"
+    NOT_PLANNED = "notPlanned"
+    OTHER_MAINTENANCE_PERIOD = "otherMaintenancePeriod"
+    UNKNOWN = "unknown"
+    UNKOWN = "unkown"
+    WEEKLY = "weekly"
+
 
 class QueryRequest(BaseModel):
     query: str
     bbox: list[float] = [-180.0, -90.0, 180.0, 90.0]
     temporal: list[str] = ["0001-01-01", "2038-01-19"]
     licenses: list[str] | None = None
+    maintenance: list[MaintenanceFrequency] | None = None
 
 
     @field_validator("query")
