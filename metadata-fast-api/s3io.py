@@ -25,6 +25,7 @@ def duckdb_connect():
         begin_date DATE,
         end_date DATE,
         license_id VARCHAR,
+        maintenance_update_frequency VARCHAR,
         dataset_citation VARCHAR
     );
     """)
@@ -204,6 +205,21 @@ def _materialize_derived_columns(ddb):
             license_id = extracted_license.license_id
         FROM extracted_license
         WHERE datasets.name = extracted_license.name;
+    """)
+
+    ddb.execute("""
+        WITH extracted_maintenance AS (
+            SELECT
+                name,
+                eml_content,
+                eml_content -> 'dataset' -> 'maintenance' ->> 'maintenanceUpdateFrequency' AS maint
+            FROM datasets
+        )
+
+        UPDATE datasets
+        SET maintenance_update_frequency = maint 
+        FROM extracted_maintenance
+        WHERE datasets.name = extracted_maintenance.name;
     """)
 
     ddb.execute("""
