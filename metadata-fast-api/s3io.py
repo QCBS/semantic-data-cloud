@@ -212,7 +212,10 @@ def _materialize_derived_columns(ddb):
             SELECT
                 name,
                 eml_content,
-                eml_content -> 'dataset' -> 'maintenance' ->> 'maintenanceUpdateFrequency' AS maint
+                COALESCE(
+                    eml_content -> 'dataset' -> 'maintenance' ->> 'maintenanceUpdateFrequency',
+                    'unknown'
+                ) AS maint
             FROM datasets
         )
 
