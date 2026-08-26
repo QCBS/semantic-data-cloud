@@ -177,40 +177,40 @@ async def search_datasets(
         default=None,
         description="SPDX IDs of the licenses requested",
     ),
-    ddb = Depends(get_ddb),
+    maintenance: list[str] | None = Query(
+        default=None,
+        description="Controlled vocabulary terms for maintenance update frequency",
+    ),
+    ddb=Depends(get_ddb),
 ):
     params = [min_lon, max_lon, min_lat, max_lat, begin_date, end_date]
 
     loop = asyncio.get_running_loop()
 
     def _query():
+        query = """
+            SELECT name
+            FROM datasets
+            WHERE
+                max_lon >= ?
+                AND min_lon <= ?
+                AND max_lat >= ?
+                AND min_lat <= ?
+                AND end_date >= ?
+                AND begin_date <= ?
+        """
+
         if licenses:
-            return ddb.execute("""
-                SELECT name
-                FROM datasets
-                WHERE
-                    max_lon >= ?
-                    AND min_lon <= ?
-                    AND max_lat >= ?
-                    AND min_lat <= ?
-                    AND end_date >= ?
-                    AND begin_date <= ?
-                    AND license_id = ANY(?)
-                ;
-            """, params + [licenses]).fetchall()
-        else:
-            return ddb.execute("""
-                SELECT name
-                FROM datasets
-                WHERE
-                    max_lon >= ?
-                    AND min_lon <= ?
-                    AND max_lat >= ?
-                    AND min_lat <= ?
-                    AND end_date >= ?
-                    AND begin_date <= ?
-                ;
-            """, params).fetchall()
+            query += " AND license_id = ANY(?)"
+            params.append(licenses)
+
+        if maintenance:
+            query += " AND maintenance_update_frequency = ANY(?)"
+            params.append(maintenance)
+
+        query += ";"
+
+        return ddb.execute(query, params).fetchall()
 
     rows = await loop.run_in_executor(None, _query)
 
