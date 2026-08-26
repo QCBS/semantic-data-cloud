@@ -1,6 +1,22 @@
 from datetime import date
+from enum import Enum
 #
 from pydantic import BaseModel, Field
+
+
+class MaintenanceFrequency(str, Enum):
+    ANNUALLY = "annually"
+    AS_NEEDED = "asNeeded"
+    BIANNUALLY = "biannually"
+    CONTINUALLY = "continually"
+    DAILY = "daily"
+    IRREGULAR = "irregular"
+    MONTHLY = "monthly"
+    NOT_PLANNED = "notPlanned"
+    OTHER_MAINTENANCE_PERIOD = "otherMaintenancePeriod"
+    UNKNOWN = "unknown"
+    UNKOWN = "unkown"
+    WEEKLY = "weekly"
 
 
 class DatasetRequest(BaseModel):
@@ -11,4 +27,4 @@ class DatasetRequest(BaseModel):
     begin_date: date = Field(date(1, 1, 1), description="Start of temporal range (YYYY-MM-DD)")
     end_date: date = Field(date(2038, 1, 19), description="End of temporal range (YYYY-MM-DD)")
     licenses: list[str] | None = Field(None, description="SPDX IDs of the licenses requested")
-    maintenance: list[str] | None = Field(None, description="Controlled vocabulary terms for maintenance update frequency")
+    maintenance: list[MaintenanceFrequency] | None = Field(None, description="Controlled vocabulary terms for maintenance update frequency")
