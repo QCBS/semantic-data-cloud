@@ -183,32 +183,29 @@ async def search_datasets(
     ),
     ddb=Depends(get_ddb),
 ):
-    params = [min_lon, max_lon, min_lat, max_lat, begin_date, end_date]
-
     loop = asyncio.get_running_loop()
 
     def _query():
-        query = """
-            SELECT name
-            FROM datasets
-            WHERE
-                max_lon >= ?
-                AND min_lon <= ?
-                AND max_lat >= ?
-                AND min_lat <= ?
-                AND end_date >= ?
-                AND begin_date <= ?
-        """
+        params = [min_lon, max_lon, min_lat, max_lat, begin_date, end_date]
+
+        conditions = [
+            "max_lon >= ?",
+            "min_lon <= ?",
+            "max_lat >= ?",
+            "min_lat <= ?",
+            "end_date >= ?",
+            "begin_date <= ?",
+        ]
 
         if licenses:
-            query += " AND license_id = ANY(?)"
+            conditions.append("license_id = ANY(?)")
             params.append(licenses)
 
         if maintenance:
-            query += " AND maintenance_update_frequency = ANY(?)"
+            conditions.append("maintenance_update_frequency = ANY(?)")
             params.append(maintenance)
 
-        query += ";"
+        query = "SELECT name FROM datasets WHERE " + " AND ".join(conditions) + ";"
 
         return ddb.execute(query, params).fetchall()
 
@@ -216,6 +213,28 @@ async def search_datasets(
 
     return {"datasets": [row[0] for row in rows]}
 
+
+def _query():
+    conditions = [
+        "max_lon >= ?",
+        "min_lon <= ?",
+        "max_lat >= ?",
+        "min_lat <= ?",
+        "end_date >= ?",
+        "begin_date <= ?",
+    ]
+    params = [min_lon, max_lon, min_lat, max_lat, begin_date, end_date]
+
+    if licenses:
+        conditions.append("license_id = ANY(?)")
+        params.append(licenses)
+
+    if maintenance:
+        conditions.append("maintenance_update_frequency = ANY(?)")
+        params.append(maintenance)
+
+    query = "SELECT name FROM datasets WHERE " + " AND ".join(conditions) + ";"
+    return ddb.execute(query, params).fetchall()
 
 @app.post("/datasets/citations")
 async def get_citations(
