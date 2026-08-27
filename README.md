@@ -4,7 +4,7 @@ An application that allows SPARQL-based queries over biodiversity datasets using
 
 ## Overview
 
-Biodiversity data is commonly published as [Darwin Core Archives](https://ipt.gbif.org/manual/en/ipt/latest/dwca-guide#what-is-darwin-core-archive-dwc-a) distributed across institutional repositories. The newly proposed Darwin Core Data Package ([DwC-DP](https://www.gbif.org/composition/3Be8w9RzbjHtK2brXxTtun/introducing-the-darwin-core-data-package)) format introduces additional semantics and flexibility, but also increased complexity in data integration and querying. Querying across multiple such datasets typically requires either centralising the data or negotiating heterogeneous APIs.
+Biodiversity data is commonly published as Darwin Core Archives ([DwC-A](https://ipt.gbif.org/manual/en/ipt/latest/dwca-guide#what-is-darwin-core-archive-dwc-a)) distributed across institutional repositories. The newly proposed Darwin Core Data Package ([DwC-DP](https://www.gbif.org/composition/3Be8w9RzbjHtK2brXxTtun/introducing-the-darwin-core-data-package)) format introduces additional semantics and flexibility, but also increased complexity in data integration and querying. Querying across multiple such datasets typically requires either centralising the data or negotiating heterogeneous APIs.
 
 The Darwin Core Conceptual Model ([DwC-CM](https://dwc.tdwg.org/cm/)), which is the basis for DwC-DP, is a highly interconnected data model. In this regard, it is well suited to graph representations, making the Resource Description Framework ([RDF](https://www.w3.org/TR/rdf11-primer/)) a clean, intuitive and semantically-rich data model. However, transforming tabular datasets into RDF represents a considerable Extract, Transform, Load (ETL) process and raises deduplication concerns, as the data must be maintained in both a relational database and a triplestore.
 
@@ -115,7 +115,7 @@ Queries are submitted as a JSON payload over [HTTP](https://datatracker.ietf.org
 
 For additional, more complex SPARQL `SELECT` queries, consult [the LLM prompt document](/biomcp/prompts/darwin-core-schema.md). Although it was written for an agentic LLM, it is also intended to be readable by humans and contains and the queries can be run against the live instance.
 
-The request body can also include `bbox`, `temporal`, and `licenses` fields to narrow which datasets are loaded before the query runs, restricting the result, for instance, to only datasets that consider South American records from 2000 to 2015 and published under CC-BY-NC-4.0. See the [API reference](/docs/api.md) for the full request/response specification.
+The request body can also include `bbox`, `temporal`, and `licenses` fields to narrow which datasets are loaded before the query runs, restricting the result, for instance, `to only datasets that consider South American records from 2000 to 2015, that are published under CC-BY-NC-4.0 and that do not have any planned maintenance`. See the [API reference](/docs/api.md) for the full request/response specification.
 
 Each generated context also produces a citations file listing the source datasets used, in line with [the GBIF data user agreement](https://www.gbif.org/terms/data-user) and [GBIF's citation guidelines](https://www.gbif.org/citation-guidelines).
 
