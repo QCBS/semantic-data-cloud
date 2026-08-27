@@ -145,6 +145,7 @@ Return the identifiers of all datasets whose geographic and temporal coverage in
 | `begin_date` | `string` | No | Start of temporal range (`YYYY-MM-DD`). Default: `0001-01-01` |
 | `end_date` | `string` | No | End of temporal range (`YYYY-MM-DD`). Default: `2038-01-19` |
 | `licenses` | `[string]` | No | One or more SPDX license identifiers. Repeatable: `?licenses=CC-BY-4.0&licenses=CC0-1.0` |
+| `maintenance` | `[string]` | No | One or more maintenance update frequency controlled term. Repeatable: `?maintenance=notPlanned&maintenance=unknown` |
 
 **Intersection logic**
 
@@ -156,9 +157,9 @@ dataset.south ≤ max_lat AND dataset.north ≥ min_lat
 dataset.begin ≤ end_date AND dataset.end ≥ begin_date
 ```
 
-This is standard interval/rectangle intersection: any spatial or temporal overlap is sufficient.
+This is a standard interval/rectangle intersection, whereby any spatial or temporal overlap is sufficient.
 
-When `licenses` is provided, only datasets whose declared license matches one of the supplied identifiers are returned.
+If `licenses` or `maintenance` are provided, only datasets whose values match one of the supplied values are considered and returned.
 
 **Response**
 
