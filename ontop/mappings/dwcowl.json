@@ -2581,7 +2581,7 @@
       "isNullable" : true,
       "datatype" : "VARCHAR"
     }, {
-      "name" : "\"material_category\"",
+      "name" : "\"material_entity_category\"",
       "isNullable" : true,
       "datatype" : "VARCHAR"
     }, {
@@ -8320,7 +8320,7 @@
     "driverName" : "DuckDBJ",
     "driverVersion" : "1.0",
     "quotationString" : "\"",
-    "extractionTime" : "2026-08-23T14:21:43",
+    "extractionTime" : "2026-08-27T13:49:00",
     "idFactoryType" : "DUCKDB"
   }
 }
