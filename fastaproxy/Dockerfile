@@ -7,7 +7,7 @@ RUN apt-get update \
 RUN groupadd -g 999 ontop \
     && useradd -u 999 -g 999 -c "Ontop unprivileged user" -d /opt/ontop -s /sbin/nologin ontop
 
-COPY --from=ghcr.io/astral-sh/uv:0.12.5 /uv /usr/local/bin/uv
+COPY --from=ghcr.io/astral-sh/uv:0.12.6 /uv /usr/local/bin/uv
 
 ENV UV_PROJECT_ENVIRONMENT=/usr/local \
     UV_LINK_MODE=copy
