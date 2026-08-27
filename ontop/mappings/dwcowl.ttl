@@ -2884,17 +2884,22 @@ dwc:lowestBiostratigraphicZone rdf:type owl:DatatypeProperty ;
                                skos:example "Maastrichtian" .
 
 
-###  http://rs.tdwg.org/dwc/terms/materialCategory
-dwc:materialCategory rdf:type owl:DatatypeProperty ;
-                     rdfs:label "Material Category" ;
-                     skos:definition "A broad category that best matches the nature of a dwc:MaterialEntity." ;
-                     skos:example "DNA extract" ,
-                                  "fossilized" ,
-                                  "human-made" ,
-                                  "living" ,
-                                  "non-biological" ,
-                                  "preserved" ,
-                                  "tissue" .
+###  http://rs.tdwg.org/dwc/terms/materialEntityCategory
+dwc:materialEntityCategory rdf:type owl:DatatypeProperty ;
+                           rdfs:label "Material Category" ;
+                           skos:definition "A high-level, mutually exclusive classification describing the fundamental substance and origin of a dwc:MaterialEntity." ;
+                           skos:example "chemical" ,
+                                        "deadOrganism" ,
+                                        "fossil" ,
+                                        "humanArtifactWithBiologicalConstituent" ,
+                                        "humanArtifactWithoutBiologicalConstituent" ,
+                                        "liveOrganism" ,
+                                        "mineral" ,
+                                        "mixed" ,
+                                        "molecularBiologicalExtract" ,
+                                        "nonMolecularBiologicalExtract" ,
+                                        "partOfOrganism" ,
+                                        "rock" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/materialEntityID
