@@ -110,7 +110,7 @@ async def sparql_query(
         search_params.extend(("licenses", license) for license in body.licenses)
 
     if body.maintenance:
-        search_params.extend(("maintenance", maint) for maint in body.maintenance)
+        search_params.extend(("maintenance", maint.value) for maint in body.maintenance)
 
     search_resp = await client.get(
         f"{METADATA_API_BASE}/datasets/search",
