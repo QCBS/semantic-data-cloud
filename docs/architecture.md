@@ -95,10 +95,10 @@ docker network create -d bridge dwc-net
 
 The flow of data in the application can be summarized by the following sequence:
 
-  1. Client POSTs `{ sparql, [bbox, temporal, licenses] }` request to fastaproxy `/sparql`
+  1. Client POSTs `{ sparql, [bbox, temporal, licenses, maintenance] }` request to fastaproxy `/sparql`
 
   2. fastaproxy calls metadata-api `/datasets/search`
-    → returns list of dataset IDs whose coverage intersects the request
+    → returns list of dataset IDs that match the criteria set forth by the request
 
   3. fastaproxy computes `context_hash = SHA-256(sorted(dataset_ids))[:16]`
     → checks Valkey for `cache_key` corresponding to `"sparql:{context_hash}:{SHA-256(query)}"`
