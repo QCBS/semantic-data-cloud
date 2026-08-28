@@ -17,13 +17,15 @@ Requests against the `/sparql` endpoint use a JSON POST body, with the SPARQL qu
 | `query` | `string` | Yes | A valid SPARQL 1.1 query. Supported query forms include [SELECT](https://www.w3.org/TR/sparql11-query/#select), [ASK](https://www.w3.org/TR/sparql11-query/#ask), [CONSTRUCT](https://www.w3.org/TR/sparql11-query/#construct) and [DESCRIBE](https://www.w3.org/TR/sparql11-query/#describe). Prefixes must be declared explicitly |
 | `bbox` | `[float, float, float, float]` | No | Bounding box as `[min_lon, min_lat, max_lon, max_lat]` in WGS84. Default: `[-180.0, -90.0, 180.0, 90.0]` |
 | `temporal` | `[string, string]` | No | Temporal range as `["YYYY-MM-DD", "YYYY-MM-DD"]` (begin, end inclusive). Default: `['0001-01-01', '2038-01-19']` |
-| `licenses` | `[string, ...]` | No | SPDX license identifiers to restrict which datasets are loaded, see the [SPDX License List](https://spdx.org/licenses/). Default: `None` |
+| `licenses` | `[string, ...]` | No | SPDX license identifiers to restrict which datasets are considered, see the [SPDX License List](https://spdx.org/licenses/). Default: `None` |
+| `maintenance` | `[string, ...]` | No | Controlled values of planned maintenance update frequency to restrict which datasets are considered, see the [maintenance update frequency type controlled value](https://eml.ecoinformatics.org/schema/eml-dataset_xsd.html#MaintUpFreqType). Default: `None` |
 
 **Validation rules**
 
 - `bbox`: must contain exactly 4 values, with `min_lon ≤ max_lon` and `min_lat ≤ max_lat`. Each coordinate must be within WGS84 bounds.
 - `temporal`: must contain exactly 2 ISO 8601 dates (`YYYY-MM-DD`), with `begin ≤ end`.
-- `licenses`: no format validation. Values are matched against the `license_id` field in dataset metadata, which is expected to be a valid SPDX license identifier.
+- `licenses`: no formal validation. Values are matched against the `license_id` field in dataset metadata, which is expected to be a valid SPDX license identifier.
+- `licenses`: must contain values that are taken from the EML controlled vocabulary of dataset planned maintenance frequency update. Values that are not taken from this controlled vocabulary will result in a query error.
 
 **Response**
 
