@@ -115,7 +115,7 @@ Queries are submitted as a JSON payload over [HTTP](https://datatracker.ietf.org
 
 For additional, more complex SPARQL `SELECT` queries, consult [the LLM prompt document](/biomcp/prompts/darwin-core-schema.md). Although it was written for an agentic LLM, it is also intended to be readable by humans and contains and the queries can be run against the live instance.
 
-The request body can also include `bbox`, `temporal`, and `licenses` fields to narrow which datasets are loaded before the query runs, restricting the result, for instance, `to only datasets that consider South American records from 2000 to 2015, that are published under CC-BY-NC-4.0 and that do not have any planned maintenance`. See the [API reference](/docs/api.md) for the full request/response specification.
+The request body can also include `bbox`, `temporal`, `licenses` and `maintenance` fields to narrow which datasets are loaded before the query runs, restricting the result, for instance, to `only datasets that consider South American records from 2000 to 2015, that are published under CC-BY-NC-4.0 and that do not have any planned maintenance`. See the [API reference](/docs/api.md) for the full request/response specification.
 
 Each generated context also produces a citations file listing the source datasets used, in line with [the GBIF data user agreement](https://www.gbif.org/terms/data-user) and [GBIF's citation guidelines](https://www.gbif.org/citation-guidelines).
 
