@@ -80,16 +80,16 @@ dwc:OrganismInteraction
 ├─ dwcdp:interactionBy ──► dwc:Occurrence
 └─ dwcdp:interactionWith ──► dwc:Occurrence
 
-dwc:Survey — dwcdp:happenedDuring ──► dwc:Event
+eco:Survey — dwcdp:happenedDuring ──► dwc:Event
 
-dwc:Media — dwcdp:hasProvenance ──► dwc:Provenance
+ac:Media — dwcdp:hasProvenance ──► dwc:Provenance
 
 dwc:GeologicalContext — dwcdp:contextFor ──► dwc:MaterialEntity
 
 dwc:Assertion — dwcdp:about ──► [any entity: Occurrence, MaterialEntity, ...]
 
 dwc:OccurrenceMedia — dwcdp:hasContent ──► dwc:Occurrence
-└─ dwcdp:thisMedia ──► dwc:Media (ac:accessURI)
+└─ dwcdp:thisMedia ──► ac:Media (ac:accessURI)
 
 dwc:Identification — dwcdp:basedOn ──► [Occurrence, MaterialEntity, Media,
 ├─                                      NucleotideAnalysis, NucleotideSequence]
@@ -124,10 +124,10 @@ chrono:ChronometricAge — dwcdp:ageFor ──► dwc:Event
 `dwc:identificationID` · `dwc:scientificName` · `dwc:identifiedBy` · `dwc:dateIdentified`
 `dwc:taxonRank` · `dwc:identificationVerificationStatus` · `dwc:identificationRemarks`
 
-### dwc:Media (reached via dwc:OccurrenceMedia → dwcdp:thisMedia)
+### ac:Media (reached via dwc:OccurrenceMedia → dwcdp:thisMedia)
 `dwc:mediaID` · `ac:accessURI` · `dcterms:title` · `dcterms:type` · `dc:format`
 
-### dwc:Survey (linked to a dwc:Event via dwcdp:happenedDuring)
+### eco:Survey (linked to a dwc:Event via dwcdp:happenedDuring)
 `dwc:surveyID` · `dwc:sampleSizeUnit` · `dwc:sampleSizeValue` · `eco:areNonTargetTaxaFullyReported`
 `eco:isAbsenceReported` · `eco:isLeastSpecificTargetCategoryQuantityInclusive` · `eco:samplingEffortProtocol`
 `eco:samplingEffortUnit` · `eco:samplingEffortValue` · `eco:samplingPerformedBy`
@@ -312,7 +312,7 @@ LIMIT 100
 ### Pattern 7 — Assertions (measurements about any entity)
 dwc:Assertion records numeric or categorical measurements.
 Link from assertion to its subject via dwcdp:about.
-Subject can be any other entity, such as dwc:Occurrence, dwc:MaterialEntity, dwc:Event, or dwc:Media.
+Subject can be any other entity, such as dwc:Occurrence, dwc:MaterialEntity, dwc:Event, or ac:Media.
 
 ```sparql
 PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
@@ -334,7 +334,7 @@ ORDER BY DESC(?avgVal)
 ```
 
 ### Pattern 8 — Media linked to an occurrence (OccurrenceMedia)
-dwc:OccurrenceMedia is an entity that represents a dwc:Occurrence as content in a dwc:Media item.
+dwc:OccurrenceMedia is an entity that represents a dwc:Occurrence as content in a ac:Media item.
 Variants include dwc:EventMedia, dwc:MaterialMedia, dwc:OrganismMedia.
 
 ```sparql
@@ -350,7 +350,7 @@ WHERE {
           dwcdp:thisMedia ?med ;
           dwcdp:hasContent ?occ .
 
-  ?med a dwc:Media ;
+  ?med a ac:Media ;
        ac:accessURI ?accUri .
 
   ?occ a dwc:Occurrence ;
@@ -386,7 +386,7 @@ WHERE {
 ```
 
 ### Pattern 10 — Information about a survey that happened during an event
-dwc:Survey contains information about biodiversity inventories, checklists and surveys.
+eco:Survey contains information about biodiversity inventories, checklists and surveys.
 These are related to an event using the dwcdp:happenedDuring property.
 
 ```sparql
@@ -398,7 +398,7 @@ SELECT ?sampleSizeUnit ?sampleSizeValue ?samplingEffortProtocol ?samplingEffortU
        ?samplingEffortValue ?isAbsenceReported ?areNonTargetTaxaFullyReported
        ?isLeastSpecificTargetCategoryQuantityInclusive ?samplingPerformedBy
 WHERE {
-  ?surv a dwc:Survey ;
+  ?surv a eco:Survey ;
         dwcdp:happenedDuring ?evt .
 
   OPTIONAL { ?surv dwc:sampleSizeUnit ?sampleSizeUnit }
@@ -564,7 +564,7 @@ LIMIT 100
 ```
 
 ### Pattern 14 — Information about the provenance of an occurrence
-dwc:Provenance contains information about an entity's origin. This entity can be of various kinds, such as dwc:Event, dwc:MaterialEntity or dwc:Media.
+dwc:Provenance contains information about an entity's origin. This entity can be of various kinds, such as dwc:Event, dwc:MaterialEntity or ac:Media.
 If considering the provenance of a dwc:Occurrence, then this must be done through the dwc:Event.
 
 ```sparql
