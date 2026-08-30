@@ -2,7 +2,7 @@
 
 ## fastaproxy-sdc
 
-Base URL: [http://localhost:8000] (default)
+Base URL: [http://localhost:8000]() (default)
 
 ---
 
@@ -25,7 +25,7 @@ Requests against the `/sparql` endpoint use a JSON POST body, with the SPARQL qu
 - `bbox`: must contain exactly 4 values, with `min_lon ≤ max_lon` and `min_lat ≤ max_lat`. Each coordinate must be within WGS84 bounds.
 - `temporal`: must contain exactly 2 ISO 8601 dates (`YYYY-MM-DD`), with `begin ≤ end`.
 - `licenses`: no formal validation. Values are matched against the `license_id` field in dataset metadata, which is expected to be a valid SPDX license identifier.
-- `licenses`: must contain values that are taken from the EML controlled vocabulary of dataset planned maintenance frequency update. Values that are not taken from this controlled vocabulary will result in a query error.
+- `maintenance`: must contain values that are taken from the EML controlled vocabulary of dataset planned maintenance frequency update. Values that are not taken from this controlled vocabulary will result in a query error.
 
 **Response**
 
@@ -83,7 +83,7 @@ The first request for a new dataset combination triggers ontology files editing,
 
 ## metadata-api
 
-Base URL: [http://localhost:7788] (default, mapped to internal port 8000)
+Base URL: [http://localhost:7788]() (default, mapped to internal port 8000)
 
 ---
 
@@ -112,7 +112,14 @@ The EML document as JSON-LD, augmented with an `assets` array and a `self` link:
 {
   "@context": { "..." : "..." },
   "@type": "EML",
-  "additionalMetadata": { "..." : "..." },
+  "additionalMetadata": {
+    "metadata": {
+      "gbif": {
+        "citation": "...",
+        "..." : "..."
+      }
+    }
+  },
   "dataset": { "..." : "..." },
   "assets": [
     {

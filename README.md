@@ -1,6 +1,6 @@
 # Semantic Data Cloud
 
-An application that allows SPARQL-based queries over biodiversity datasets using Darwin Core Conceptual Model semantics over Parquet-backed DuckDB views.
+An application that allows SPARQL-based queries over Darwin Core Data Package biodiversity datasets, using Darwin Core Conceptual Model semantics on Parquet-backed DuckDB views.
 
 ## Overview
 

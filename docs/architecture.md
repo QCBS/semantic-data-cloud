@@ -117,6 +117,6 @@ The flow of data in the application can be summarized by the following sequence:
   6. fastaproxy POSTs SPARQL to `http://ontop-{context_hash}:8080/sparql`
     → Ontop reformulates SPARQL to SQL
     → DuckDB executes SQL against views
-    → results returned as SPARQL JSON
+    → results returned as SPARQL JSON or TTL
 
-  7. fastaproxy caches result in Valkey, returns SPARQL JSON results to client
+  7. fastaproxy caches result in Valkey, returns SPARQL JSON or TTL results to client
