@@ -618,7 +618,7 @@ This class links two `dwc:Occurrence` nodes in asymmetric roles: one is the acto
 
 ```
 dwc:OrganismInteraction (subClassOf dwc:Event)
-├─ dwc:organismInteractionType (string: "visited flower of", "parasite of", ...)
+├─ dwc:organismInteractionType (string: "visited flower of", "parasitized", ...)
 ├─ dwcdp:interactionBy ──► dwc:Occurrence (the acting organism)
 ├─ dwcdp:interactionWith ──► dwc:Occurrence (the target organism)
 ├─ dwcdp:spatialLocation ──► dcterms:Location (inherited from Event)
