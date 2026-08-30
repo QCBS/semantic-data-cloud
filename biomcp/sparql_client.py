@@ -2,6 +2,8 @@ import os
 import sys
 #
 from httpx import AsyncClient, HTTPStatusError, TimeoutException
+#
+from enums.maintenance_frequency import MaintenanceFrequency
 
 
 SPARQL_ENDPOINT = os.getenv("SPARQL_ENDPOINT", "http://fastaproxy-sdc:8000/sparql")
@@ -13,7 +15,7 @@ async def run_sparql(
     bbox: list[float] | None = None,
     temporal: list[str] | None = None,
     licenses: list[str] | None = None,
-    maintenance: list[str] | None = None,
+    maintenance: list[MaintenanceFrequency] | None = None,
 ) -> tuple[list[dict[str, str]], str]:
     payload: dict = {
         "query": sparql,

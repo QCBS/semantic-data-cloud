@@ -5,6 +5,7 @@ from fastmcp import FastMCP
 from pydantic import Field
 from typing import Annotated
 #
+from enums.maintenance_frequency import MaintenanceFrequency
 from sparql_client import run_sparql, rows_to_markdown
 
 
@@ -70,7 +71,7 @@ async def sparql_query(
     temporal: Annotated[
         list[str] | None,
         Field(
-            description="Date range as [start_date, end_date] in ISO 8601 format (YYYY-MM-DD)",
+            description="Date range as [start_date, end_date] in ISO 8601 format (YYYY-MM-DD).",
             min_length=2,
             max_length=2,
         ),
@@ -81,13 +82,19 @@ async def sparql_query(
             description="List of SPDX license identifiers.",
         ),
     ] = None,
+    maintenance: Annotated[
+        list[MaintenanceFrequency] | None,
+        Field(
+            description="List of planned maintenance update frequency controlled vocabulary terms.",
+        ),
+    ] = None,
 ) -> str:
     """Execute a SPARQL query against the biodiversity endpoint."""
 
-    print(f"[sparql_query] bbox={bbox} temporal={temporal} licenses={licenses}", file=sys.stderr)
+    print(f"[sparql_query] bbox={bbox} temporal={temporal} licenses={licenses} maintenance={maintenance}", file=sys.stderr)
     print(f"[sparql_query] query={sparql}", file=sys.stderr)
 
-    rows, error = await run_sparql(sparql, bbox, temporal, licenses)
+    rows, error = await run_sparql(sparql, bbox, temporal, licenses, maintenance)
 
     if error:
         return (
