@@ -18,17 +18,20 @@ Translate a natural language biodiversity question into a SPARQL SELECT query an
 
 Your primary job is writing correct SPARQL. Focus on that.
 
-OPTIONAL geographic, temporal and license scoping:
-  bbox     — [min_lon, min_lat, max_lon, max_lat] in WGS84.
-             Only supply this when the user explicitly asks to restrict results to a geographic area AND that restriction is meant to filter which datasets are loaded, not just to filter rows in the query.
-             Note: A dataset with global coverage will still be included even when a bbox is given — the bbox selects datasets whose declared coverage intersects the box, not datasets that contain only that area.
-  temporal — ["YYYY-MM-DD", "YYYY-MM-DD"].
-             Only supply this when the user explicitly asks to restrict by data collection period at the dataset level.
-  licenses — ["CC-BY-4.0", "CC0-1.0", ...].
-             List of SPDX license identifiers used to restrict which datasets are loaded. Only supply this when the user explicitly requests licensing constraints (for example: "CC-BY data only", "public-domain records", or "exclude non-commercial licenses").
-             Note: This filters datasets by their declared license and is not a SPARQL filter on individual records.
+OPTIONAL geographic, temporal, license and maintenance scoping:
+  bbox        — [min_lon, min_lat, max_lon, max_lat] in WGS84.
+                Only supply this when the user explicitly asks to restrict results to a geographic area AND that restriction is meant to filter which datasets are loaded, not just to filter rows in the query.
+                Note: A dataset with global coverage will still be included even when a bbox is given — the bbox selects datasets whose declared coverage intersects the box, not datasets that contain only that area.
+  temporal    — ["YYYY-MM-DD", "YYYY-MM-DD"].
+                Only supply this when the user explicitly asks to restrict by data collection period at the dataset level.
+  licenses    — ["CC-BY-4.0", "CC0-1.0", ...].
+                List of SPDX license identifiers used to restrict which datasets are loaded. Only supply this when the user explicitly requests licensing constraints (for example: "CC-BY data only", "public-domain records", or "exclude non-commercial licenses").
+                Note: This filters datasets by their declared license and is not a SPARQL filter on individual records.
+  maintenance — ["notPlanned", "unknown", ...].
+                List of planned maintenance update frequency for the datasets to be considered.
+                Note: The full controlled vocabulary is enforced by this parameter's schema. Both "unknown" and "unkown" (sic) are valid — "unkown" is a legacy misspelling preserved for backward compatibility with older records.
 
-When in doubt, omit bbox, temporal and licenses entirely. Most questions do not need them.
+When in doubt, omit bbox, temporal, licenses and maintenance entirely. Most questions do not need them.
 
 If a query returns 0 results, check the SPARQL before adjusting the bbox.
 
@@ -44,7 +47,7 @@ You have one tool: sparql_query.
 
 Your job is to translate natural language biodiversity questions into correct SPARQL queries using the Darwin Core OWL ontology, then execute them.
 
-The parameters bbox, temporal and licenses are optional. Omit them unless the user explicitly asks to scope the query to a specific geographic region, time period or license at the dataset level.
+The parameters bbox, temporal, licenses and maintenance are optional. Omit them unless the user explicitly asks to scope the query to a specific geographic region, time period, license or update maintenance frequency at the dataset level.
 
 Do not fill them in "helpfully", leave them empty by default.
 """.strip()
@@ -108,7 +111,7 @@ async def sparql_query(
     if not rows:
         return (
             "_No results returned._\n\n"
-            "1. Check traversal chains — coordinates are on Location, dates on Event\n"
+            "1. Check traversal chains — coordinates are on dcterms:Location\n"
             "2. Wrap optional properties in OPTIONAL { }\n"
             "3. Remove FILTER clauses one at a time to isolate the problem\n"
             "4. Run SELECT * with no filters and a small LIMIT to see what is actually there"
