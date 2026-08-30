@@ -13,6 +13,7 @@ async def run_sparql(
     bbox: list[float] | None = None,
     temporal: list[str] | None = None,
     licenses: list[str] | None = None,
+    maintenance: list[str] | None = None,
 ) -> tuple[list[dict[str, str]], str]:
     payload: dict = {
         "query": sparql,
@@ -24,6 +25,8 @@ async def run_sparql(
         payload["temporal"] = temporal
     if licenses is not None:
         payload["licenses"] = licenses
+    if maintenance is not None:
+        payload["maintenance"] = maintenance
 
     try:
         print(payload, file=sys.stderr)
