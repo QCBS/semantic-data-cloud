@@ -89,6 +89,14 @@ services:
       - "8000:8000"
     networks:
       - dwc-net
+    command: [
+      "uvicorn",
+      "main:app",
+      "--host",
+      "0.0.0.0",
+      "--port",
+      "8000"
+    ]
     environment:
       METADATA_API_BASE: http://metadata-api:8000
       TIMEOUT_VAL: 100
