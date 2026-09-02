@@ -8,7 +8,7 @@ The application exposes a natural language interface through the Model Context P
 
 ## Tool: `sparql_query`
 
-The tool accepts a SPARQL query string and three optional dataset-level filters:
+The tool accepts a SPARQL query string and four optional dataset-level filters:
 
 | Parameter | Type | Description |
 |---|---|---|
@@ -16,12 +16,16 @@ The tool accepts a SPARQL query string and three optional dataset-level filters:
 | `bbox` | `[float, float, float, float]` | Geographic bounding box `[min_lon, min_lat, max_lon, max_lat]`. Only supply when the user explicitly requests a geographic scope |
 | `temporal` | `[string, string]` | Date range `["YYYY-MM-DD", "YYYY-MM-DD"]`. Only supply when the user explicitly requests a temporal scope |
 | `licenses` | `[string, ...]` | SPDX license identifiers. Only supply when the user explicitly requests license-based filtering |
+| `maintenance` | `[string, ...]` | EML controlled vocabulary terms for planned maintenance update. Only supply when the user explicitly requests maintenance-based filtering |
 
-The `bbox`, `temporal`, and `licenses` parameters filter which datasets are loaded before the query runs, they are not SPARQL filters on individual records. For most questions, the tool should omit them entirely and focus on writing correct SPARQL.
+
+The `bbox`, `temporal`, `licenses` and `maintenance` parameters filter which datasets are loaded before the query runs, they are not SPARQL filters on individual records. For most questions, the tool should omit them entirely and focus on writing correct SPARQL.
 
 In this regard the tool is almost identical to the `/sparql` endpoint definition of the fastaproxy service. The only notable difference is the consideration of `sparql` instead of `query`, as smaller models had difficulty distinguishing between the natural language query from the user and the SPARQL query they had to rewrite.
 
 In addition to a prompt, the LLM also receives Python [typing](https://docs.python.org/3/library/typing.html) and [Pydantic](https://pydantic.dev/docs/validation/latest/get-started/) annotations to facilitate tool understanding.
+
+As the controlled vocabulary for dataset planned maintenance update frequency is quite small, it is provided to the LLM as a [Python enum](https://docs.python.org/3/library/enum.html) rather than as a free string.
 
 ---
 
