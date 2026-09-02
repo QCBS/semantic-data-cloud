@@ -74,7 +74,7 @@ For example, a minimal mapping of the `dwc:Occurrence` class and `dwc:scientific
 ```
 mappingId  occurrence-minimal-class
 target     :occurrence/{occurrence_id} a dwc:Occurrence ; dwc:scientific_name {scientific_name}^^xsd:string .
-source     SELECT occurrence_id, scientific_name FROM FROM dwcowl.main.occurrence
+source     SELECT * FROM FROM dwcowl.main.occurrence
 ```
 
 The string `dwcowl` in the SQL `FROM` clause is the DuckDB catalog name. It is replaced at runtime by the container manager with the quoted context hash (e.g. `"95cb752fb61d60a2"`) for each per-context database file. The quoting is necessary because the hash can begin with a digit rather than a letter, making it an invalid bare SQL identifier.
@@ -94,7 +94,7 @@ jdbc.driver=org.duckdb.DuckDBDriver
 jdbc.url=jdbc\:duckdb\:/db/dwcowl.duckdb
 jdbc.user=
 jdbc.password=
-ontop.query.defaultTimeout=3600
+ontop.query.defaultTimeout=300
 ontop.queryLogging=true
 ontop.queryLogging.includeReformulatedQuery=true
 ```
@@ -115,4 +115,4 @@ See the Ontop documentation pages on the role [of primary keys](https://ontop-vk
 
 The metadata file was produced by running the [Ontop CLI](https://ontop-vkg.org/guide/cli.html) against a DuckDB instance populated with a modified DWC-DP schema. This schema was based on the JSON files available at the [GBIF repository of schemas](https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/) and those [under review as part of the development version of the DWC-DP table schemas](https://github.com/tdwg/rs.tdwg.org/tree/dwc/dwc-dp/1.0_DEV/table-schemas), but also includes additional tables used internally by the application.
 
-**Note:** When used with a DuckDB JDBC driver version above 1.5.1.0, the Ontop CLI's `extract-db-metadata` command produces incomplete output, notably omitting the primary and foreign key assertions that Ontop relies on to optimize SPARQL-to-SQL translation optimization. Consequently, driver version 1.5.1.0 was used for database metadata extraction (this fact can be seen at the bottom of the [metadata.json](/ontop/mappings/dwcowl.json) file). This does not affect the application at runtime, as Ontop only relies on the metadata already captured in that file.
+**Note:** When used with a DuckDB JDBC driver version above `1.5.1.0`, the Ontop CLI's `extract-db-metadata` command produces incomplete output, notably omitting the primary and foreign key assertions that Ontop relies on to optimize SPARQL-to-SQL translation optimization. Consequently, driver version `1.5.1.0` was used for database metadata extraction (this fact can be seen at the bottom of the [metadata.json](/ontop/mappings/dwcowl.json) file). This does not affect the application at runtime, as Ontop only relies on the metadata already captured in that file.
