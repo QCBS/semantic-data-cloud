@@ -58,7 +58,7 @@ dwc:Event  (superclass — properties below are inherited by dwc:Occurrence, dwc
 ├─ dwcdp:spatialLocation ──► dcterms:Location
 │                            └─ dwcdp:georeferencedBy ──► dcterms:Agent
 ├─ dwcdp:conductedBy ──► dcterms:Agent
-├─ dwcdp:happenedDuring ──► dwc:Event (parent event, of any subclass)
+├─ dwcdp:happenedDuring ──► dwc:Event (parent event)
 └─ dwcdp:hasProvenance ──► dwc:Provenance
 
 dwc:Occurrence (subClassOf dwc:Event — inherits all properties above)
