@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import StrEnum
 
 
-class MaintenanceFrequency(str, Enum):
+class MaintenanceFrequency(StrEnum):
     ANNUALLY = "annually"
     AS_NEEDED = "asNeeded"
     BIANNUALLY = "biannually"

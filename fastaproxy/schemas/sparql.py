@@ -1,10 +1,10 @@
 from datetime import date
-from enum import Enum
+from enum import StrEnum
 #
 from pydantic import BaseModel, Field, field_validator
 
 
-class MaintenanceFrequency(str, Enum):
+class MaintenanceFrequency(StrEnum):
     ANNUALLY = "annually"
     AS_NEEDED = "asNeeded"
     BIANNUALLY = "biannually"
