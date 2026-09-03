@@ -90,7 +90,7 @@ async def sparql_query(
     print(body.bbox)
     print(body.temporal)
     print(body.licenses)
-    print(body.maintenance)
+    print([maint.value for maint in body.maintenance])
 
     min_lon, min_lat, max_lon, max_lat = body.bbox
     begin_date, end_date = body.temporal
@@ -110,7 +110,7 @@ async def sparql_query(
         search_params.extend(("licenses", license) for license in body.licenses)
 
     if body.maintenance:
-        search_params.extend(("maintenance", maint.value) for maint in body.maintenance)
+        search_params.extend(("maintenance", maint) for maint in body.maintenance)
 
     search_resp = await client.get(
         f"{METADATA_API_BASE}/datasets/search",
