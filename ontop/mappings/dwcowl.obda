@@ -97,7 +97,7 @@ target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xs
 source		SELECT * FROM dwcowl.main.agent_identifier
 
 mappingId	agent_media
-target		:agent-media/{media_id}/{agent_id} a dwc:AgentMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:agentID {agent_id}^^xsd:string ; dwc:mediaID {media_id}^^xsd:string ; ac:CVtermLiteral {subject_category}^^xsd:string ; ac:CVterm <{subject_category_iri}> ; dwcdp:hasContent :agent/{agent_id} ; dwcdp:thisMedia :media/{media_id} . 
+target		:agent-media/{media_id}/{agent_id} a dwc:AgentMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientationLiteral {subject_orientation_literal}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:agentID {agent_id}^^xsd:string ; dwc:mediaID {media_id}^^xsd:string ; ac:CVtermLiteral {subject_category}^^xsd:string ; ac:CVterm <{subject_category_iri}> ; dwcdp:hasContent :agent/{agent_id} ; dwcdp:thisMedia :media/{media_id} . 
 source		SELECT * FROM dwcowl.main.agent_media
 
 mappingId	chronometric_age
@@ -117,7 +117,7 @@ target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xs
 source		SELECT * FROM dwcowl.main.event_identifier
 
 mappingId	event_media
-target		:event-media/{media_id}/{event_id} a dwc:EventMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:eventID {event_id}^^xsd:string ; dwc:mediaID {media_id}^^xsd:string ; ac:CVtermLiteral {subject_category}^^xsd:string ; ac:CVterm <{subject_category_iri}> ; dwcdp:hasContent :event/{event_id} ; dwcdp:thisMedia :media/{media_id} . 
+target		:event-media/{media_id}/{event_id} a dwc:EventMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientationLiteral {subject_orientation_literal}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:eventID {event_id}^^xsd:string ; dwc:mediaID {media_id}^^xsd:string ; ac:CVtermLiteral {subject_category}^^xsd:string ; ac:CVterm <{subject_category_iri}> ; dwcdp:hasContent :event/{event_id} ; dwcdp:thisMedia :media/{media_id} . 
 source		SELECT * FROM dwcowl.main.event_media
 
 mappingId	event_protocol
@@ -133,7 +133,7 @@ target		:event-reference/{reference_id}/{event_id} a dwc:EventReference ; dwc:ev
 source		SELECT * FROM dwcowl.main.event_reference
 
 mappingId	geological_context_media
-target		:event-media/{media_id}/{geological_context_id} a dwc:GeologicalContextMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:geologicalContextID {geological_context_id}^^xsd:string ; dwc:mediaID {media_id}^^xsd:string ; ac:CVtermLiteral {subject_category}^^xsd:string ; ac:CVterm <{subject_category_iri}> ; dwcdp:hasContent :geological-context/{geological_context_id} ; dwcdp:thisMedia :media/{media_id} . 
+target		:event-media/{media_id}/{geological_context_id} a dwc:GeologicalContextMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientationLiteral {subject_orientation_literal}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:geologicalContextID {geological_context_id}^^xsd:string ; dwc:mediaID {media_id}^^xsd:string ; ac:CVtermLiteral {subject_category}^^xsd:string ; ac:CVterm <{subject_category_iri}> ; dwcdp:hasContent :geological-context/{geological_context_id} ; dwcdp:thisMedia :media/{media_id} . 
 source		SELECT * FROM dwcowl.main.geological_context_media
 
 mappingId	identification_agent_role
@@ -225,7 +225,7 @@ target		:assertion/{assertion_id} a dwc:Assertion ; chrono:chronometricAgeID {ch
 source		SELECT * FROM dwcowl.main.chronometric_age_assertion
 
 mappingId	chronometric_age_media
-target		:chronometric-age-media/{media_id}/{chronometric_age_id} a dwc:ChronometricAgeMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; chrono:chronometricAgeID {chronometric_age_id}^^xsd:string ; dwc:mediaID {media_id}^^xsd:string ; ac:CVtermLiteral {subject_category}^^xsd:string ; ac:CVterm <{subject_category_iri}> ; dwcdp:hasContent :chronometric-age/{chronometric_age_id} ; dwcdp:thisMedia :media/{media_id} . 
+target		:chronometric-age-media/{media_id}/{chronometric_age_id} a dwc:ChronometricAgeMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientationLiteral {subject_orientation_literal}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; chrono:chronometricAgeID {chronometric_age_id}^^xsd:string ; dwc:mediaID {media_id}^^xsd:string ; ac:CVtermLiteral {subject_category}^^xsd:string ; ac:CVterm <{subject_category_iri}> ; dwcdp:hasContent :chronometric-age/{chronometric_age_id} ; dwcdp:thisMedia :media/{media_id} . 
 source		SELECT * FROM dwcowl.main.chronometric_age_media
 
 mappingId	chronometric_age_protocol
@@ -253,7 +253,7 @@ target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xs
 source		SELECT * FROM dwcowl.main.material_identifier
 
 mappingId	material_media
-target		:material-media/{media_id}/{material_entity_id} a dwc:MaterialEntityMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:materialEntityID {material_entity_id}^^xsd:string ; dwc:mediaID {media_id}^^xsd:string ; ac:CVtermLiteral {subject_category}^^xsd:string ; ac:CVterm <{subject_category_iri}> ; dwcdp:hasContent :material-entity/{material_entity_id} ; dwcdp:thisMedia :media/{media_id} . 
+target		:material-media/{media_id}/{material_entity_id} a dwc:MaterialEntityMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientationLiteral {subject_orientation_literal}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:materialEntityID {material_entity_id}^^xsd:string ; dwc:mediaID {media_id}^^xsd:string ; ac:CVtermLiteral {subject_category}^^xsd:string ; ac:CVterm <{subject_category_iri}> ; dwcdp:hasContent :material-entity/{material_entity_id} ; dwcdp:thisMedia :media/{media_id} . 
 source		SELECT * FROM dwcowl.main.material_media
 
 mappingId	material_protocol
@@ -289,7 +289,7 @@ target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xs
 source		SELECT * FROM dwcowl.main.occurrence_identifier
 
 mappingId	occurrence_media
-target		:occurrence-media/{media_id}/{occurrence_id} a dwc:OccurrenceMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:mediaID {media_id}^^xsd:string ; dwc:occurrenceID {occurrence_id}^^xsd:string ; ac:CVtermLiteral {subject_category}^^xsd:string ; ac:CVterm <{subject_category_iri}> ; dwcdp:hasContent :event/{occurrence_id} ; dwcdp:thisMedia :media/{media_id} . 
+target		:occurrence-media/{media_id}/{occurrence_id} a dwc:OccurrenceMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientationLiteral {subject_orientation_literal}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:mediaID {media_id}^^xsd:string ; dwc:occurrenceID {occurrence_id}^^xsd:string ; ac:CVtermLiteral {subject_category}^^xsd:string ; ac:CVterm <{subject_category_iri}> ; dwcdp:hasContent :event/{occurrence_id} ; dwcdp:thisMedia :media/{media_id} . 
 source		SELECT * FROM dwcowl.main.occurrence_media
 
 mappingId	occurrence_protocol
@@ -313,7 +313,7 @@ target		:assertion/{assertion_id} a dwc:Assertion ; dc:source {assertion_type_so
 source		SELECT * FROM dwcowl.main.organism_interaction_assertion
 
 mappingId	organism_interaction_media
-target		:organism-interaction-media/{media_id}/{organism_interaction_id} a dwc:OrganismInteractionMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:mediaID {media_id}^^xsd:string ; dwc:organismInteractionID {organism_interaction_id}^^xsd:string ; ac:CVtermLiteral {subject_category}^^xsd:string ; ac:CVterm <{subject_category_iri}> ; dwcdp:hasContent :event/{organism_interaction_id} ; dwcdp:thisMedia :media/{media_id} . 
+target		:organism-interaction-media/{media_id}/{organism_interaction_id} a dwc:OrganismInteractionMedia ; ac:physicalSetting {physical_setting}^^xsd:string ; ac:subjectOrientationLiteral {subject_orientation_literal}^^xsd:string ; ac:subjectOrientation <{subject_orientation}> ; ac:subjectPartLiteral {subject_part_literal}^^xsd:string ; ac:subjectPart <{subject_part}> ; dwc:mediaID {media_id}^^xsd:string ; dwc:organismInteractionID {organism_interaction_id}^^xsd:string ; ac:CVtermLiteral {subject_category}^^xsd:string ; ac:CVterm <{subject_category_iri}> ; dwcdp:hasContent :event/{organism_interaction_id} ; dwcdp:thisMedia :media/{media_id} . 
 source		SELECT * FROM dwcowl.main.organism_interaction_media
 
 mappingId	organism_interaction_reference
