@@ -69,7 +69,7 @@ docker compose build ontop
 
 A [Valkey](https://valkey.io/) instance used for in-memory result caching. As the number of datasets grows, query latency may increase, caching allows repeated queries to be served from RAM rather than re-executing against the database.
 
-Cache keys are SHA-256 digests of the context hash concatenated with the SPARQL query bytes. Each key has a configurable time-to-live ([TTL](https://valkey.io/commands/ttl/)), defaulting to 70 seconds.
+Cache keys are SHA-256 digests of the context hash concatenated with the SPARQL query bytes. Each key has a configurable time-to-live ([TTL](https://valkey.io/commands/ttl/)), defaulting to 604 800 seconds (1 week).
 
 The instance uses at most 1 Gb or RAM and considers an [allkeys-lfu](https://valkey.io/topics/lru-cache/) eviction policy. This means that when memory is exhausted, the least frequently accessed keys will be removed to make place for the new data to be added.
 
