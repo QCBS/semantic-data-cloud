@@ -90,7 +90,7 @@ async def sparql_query(
     print(body.bbox)
     print(body.temporal)
     print(body.licenses)
-    print([maint.value for maint in body.maintenance])
+    print([maint.value for maint in (body.maintenance or [])])
 
     min_lon, min_lat, max_lon, max_lat = body.bbox
     begin_date, end_date = body.temporal
