@@ -72,7 +72,7 @@ In order to connect to the MCP server from VS Code, you need to [add the MCP ser
 {
   "servers": {
     "biomcp": {
-      "url": "https://chat.qcbs.ca/mcp",
+      "url": "https://data.qcbs.ca/mcp",
       "type": "http"
     }
   },

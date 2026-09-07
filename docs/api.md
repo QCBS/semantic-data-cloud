@@ -2,7 +2,7 @@
 
 ## fastaproxy-sdc
 
-Base URL: [http://localhost:8000]() (default)
+Base URL: [http://localhost:8000](http://localhost:8000) (default)
 
 ---
 
@@ -60,7 +60,7 @@ No `Accept` header is required or considered on the request, the response format
 }
 ```
 
-`ASK` queries return the standard results JSON format with a top-level `boolean` field in place of `results.bindings`.
+**Note:** `ASK` queries return the standard results JSON format with a top-level `boolean` field in place of `results.bindings`.
 
 **`CONSTRUCT`** / **`DESCRIBE`** example (`text/turtle`):
 
@@ -83,7 +83,7 @@ The first request for a new dataset combination triggers ontology files editing,
 
 ## metadata-api
 
-Base URL: [http://localhost:7788]() (default, mapped to internal port 8000)
+Base URL: [http://localhost:7788](http://localhost:7788) (default, mapped to internal port 8000)
 
 ---
 
