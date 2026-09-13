@@ -11,9 +11,10 @@ import httpx
 from db_builder import context_hash
 
 
+BLANKS_DIR = Path("/blanks")
 DB_DIR = Path("/db")
 MAPPING_DIR = Path("/app/config")
-BLANKS_DIR = Path("/blanks")
+#
 ONTOP_IMAGE = os.getenv("ONTOP_IMAGE", "semantic-data-cloud-ontop")
 ONTOP_NETWORK = os.getenv("ONTOP_NETWORK", "dwc-net")
 ONTOP_STARTUP_TIMEOUT = float(os.getenv("ONTOP_STARTUP_TIMEOUT", 60))
