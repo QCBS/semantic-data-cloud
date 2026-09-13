@@ -101,7 +101,7 @@ def camel_to_snake(name):
 
 df = pd.read_csv("occurrence.csv", sep="\t")
 df.columns = [camel_to_snake(col) for col in df.columns]
-df.to_parquet("occurrence.parquet", index=False)
+df.to_parquet("occurrence.parquet", engine="pyarrow", index=False)
 ```
 
 **Note:** The `index=False` argument is important, as it prevents pandas from writing its internal row index as an extra column in the Parquet file.
