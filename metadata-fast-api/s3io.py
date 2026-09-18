@@ -271,6 +271,7 @@ def s3_to_duckdb(target_name, extension, ddb, max_workers=20):
             futures = {
                 executor.submit(fetch_and_insert, dataset): dataset
                 for dataset in datasets.values()
+                if dataset["folder"] is not None
             }
 
             for future in as_completed(futures):
