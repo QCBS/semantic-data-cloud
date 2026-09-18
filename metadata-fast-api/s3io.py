@@ -117,8 +117,6 @@ def _write_eml_to_duckdb(dataset, content, ddb):
             #     href = dataset["assets"]["occurrence.parquet"]["href"]
             #     content["recordedTaxa"] = species_from_occurrences(href, ddb)
 
-        content["self"] = f"http://localhost:{METADATA_API_PORT}/dataset/{dataset['name']}"
-
         ddb.execute(
             "INSERT INTO datasets (name, eml_content) VALUES (?, ?);",
             [dataset["folder"].replace("datasets/", ""), orjson.dumps(content).decode("utf-8")],

@@ -115,6 +115,7 @@ async def get_list_datasets(
 @app.get("/dataset/{dataset_id}")
 async def get_dataset(
     dataset_id: str,
+    request: Request,
     ddb = Depends(get_ddb),
 ):
     loop = asyncio.get_running_loop()
@@ -133,7 +134,10 @@ async def get_dataset(
             detail="Dataset not found",
         )
 
-    return Response(row[0], media_type="application/ld+json")
+    eml_dict = orjson.loads(row[0]) if isinstance(row[0], str) else row[0]
+    eml_dict["self"] = f"{str(request.base_url).rstrip('/')}/dataset/{dataset_id}"
+
+    return Response(orjson.dumps(eml_dict), media_type="application/ld+json")
 
 
 @app.get("/datasets/search")
