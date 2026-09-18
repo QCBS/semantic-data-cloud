@@ -196,8 +196,6 @@ async def get_citations(
     return {"citations": [row[0] for row in rows]}
 
 
-# NOTE: list_datasets() now renamed _list_datasets() for consistency with fastaproxy code
-#
 def _list_datasets(
         page: int,
         page_size: int,
