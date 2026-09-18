@@ -257,7 +257,7 @@ LIMIT 200
 ```sparql
 PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 
-SELECT ?name (COUNT(?occ) AS ?n)
+SELECT ?name (COUNT(DISTINCT(?occ)) AS ?n)
 
 WHERE {
   ?occ a dwc:Occurrence ;
