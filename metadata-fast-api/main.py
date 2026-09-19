@@ -32,6 +32,7 @@ class SuppressHealthcheck(logging.Filter):
 
 
 METADATA_API_PORT = os.getenv("METADATA_API_PORT")
+PUBLIC_BASE_URL = os.getenv("PUBLIC_BASE_URL", f"localhost:{METADATA_API_PORT}").rstrip("/")
 
 
 @asynccontextmanager
@@ -89,10 +90,33 @@ async def read_root(
     return {
         "title": "Welcome to the QCBS Semantic Data Cloud API!",
         "description": "A metadata catalog of biodiversity and ecological datasets described using Ecological Metadata Language (EML), providing standardized, machine-readable metadata and access to associated data assets for discovery, integration, and analysis.",
-        "links": {
-            "datasets": f"http://localhost:{METADATA_API_PORT}/datasets",
-        },
-        "datasets": datasets,
+        "links": [
+            {
+                "rel": "self",
+                "type": "application/json",
+                "title": "This document",
+                "href": PUBLIC_BASE_URL,
+            },
+            {
+                "rel": "root",
+                "type": "application/json",
+                "title": "Root",
+                "href": PUBLIC_BASE_URL,
+            },
+            {
+                "rel": "datasets",
+                "type": "application/json",
+                "title": "Datasets available",
+                "href": f"{PUBLIC_BASE_URL}/datasets",
+            },
+            {
+                "rel": "search",
+                "type": "application/json",
+                "title": "Dataset search [GET]",
+                "href": f"{PUBLIC_BASE_URL}/datasets/search",
+                "method": "GET",
+            },
+        ],
     }
 
 
