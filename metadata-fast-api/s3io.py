@@ -9,7 +9,9 @@ import orjson
 
 
 METADATA_DB_PATH = Path("/data/metadatadb.duckdb")
+#
 METADATA_API_PORT = os.getenv("METADATA_API_PORT")
+PUBLIC_BASE_URL = os.getenv("PUBLIC_BASE_URL", f"localhost:{METADATA_API_PORT}").rstrip("/")
 
 
 def duckdb_connect():
@@ -116,6 +118,8 @@ def _write_eml_to_duckdb(dataset, content, ddb):
             # if "occurrence.parquet" in dataset["assets"]:
             #     href = dataset["assets"]["occurrence.parquet"]["href"]
             #     content["recordedTaxa"] = species_from_occurrences(href, ddb)
+
+        content["self"] = f"{PUBLIC_BASE_URL}/dataset/{dataset['name']}"
 
         ddb.execute(
             "INSERT INTO datasets (name, eml_content) VALUES (?, ?);",
