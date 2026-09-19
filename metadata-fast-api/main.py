@@ -80,13 +80,7 @@ app.add_middleware(
 
 
 @app.get("/")
-async def read_root(
-    ddb = Depends(get_ddb),
-):
-    loop = asyncio.get_running_loop()
-
-    datasets = await loop.run_in_executor(None, lambda: _list_datasets(1, 10, ddb))
-
+async def read_root():
     return {
         "title": "Welcome to the QCBS Semantic Data Cloud API!",
         "description": "A metadata catalog of biodiversity and ecological datasets described using Ecological Metadata Language (EML), providing standardized, machine-readable metadata and access to associated data assets for discovery, integration, and analysis.",
