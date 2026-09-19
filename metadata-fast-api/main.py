@@ -110,6 +110,12 @@ async def read_root():
                 "href": f"{PUBLIC_BASE_URL}/datasets/search",
                 "method": "GET",
             },
+            {
+                "rel": "service-desc",
+                "type": "application/vnd.oai.openapi+json",
+                "title": "OpenAPI service description",
+                "href": f"{PUBLIC_BASE_URL}/openapi.json",
+            },
         ],
     }
 
