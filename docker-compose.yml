@@ -29,13 +29,13 @@ services:
       - ./metadatadb:/data
       - ./metadata-fast-api:/app
     environment:
-      - S3_ACCESS_ID=${S3_ACCESS_ID}
-      - S3_ACCESS_SECRET=${S3_ACCESS_SECRET}
-      - S3_ENDPOINT_URL=${S3_ENDPOINT_URL}
-      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
-      - OBJECT_STORE_BASE_URL=${OBJECT_STORE_BASE_URL}
-      - METADATA_API_PORT=${METADATA_API_PORT:-7788}
-      - PUBLIC_BASE_URL=https://data.qcbs.ca/metadata-api
+      METADATA_API_PORT: ${METADATA_API_PORT:-7788}
+      OBJECT_STORE_BASE_URL: ${OBJECT_STORE_BASE_URL}
+      PUBLIC_BASE_URL: https://data.qcbs.ca/metadata-api
+      S3_ACCESS_ID: ${S3_ACCESS_ID}
+      S3_ACCESS_SECRET: ${S3_ACCESS_SECRET}
+      S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+      S3_ENDPOINT_URL: ${S3_ENDPOINT_URL}
     networks:
       - dwc-net
     restart: unless-stopped
