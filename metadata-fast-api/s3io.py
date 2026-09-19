@@ -119,7 +119,23 @@ def _write_eml_to_duckdb(dataset, content, ddb):
             #     href = dataset["assets"]["occurrence.parquet"]["href"]
             #     content["recordedTaxa"] = species_from_occurrences(href, ddb)
 
-        content["self"] = f"{PUBLIC_BASE_URL}/dataset/{dataset['name']}"
+        content["links"] = [
+            {
+                "rel": "parent",
+                "type": "application/json",
+                "href": PUBLIC_BASE_URL,
+            },
+            {
+                "rel": "root",
+                "type": "application/json",
+                "href": PUBLIC_BASE_URL,
+            },
+            {
+                "rel": "self",
+                "type": "application/ld+json",
+                "href": f"{PUBLIC_BASE_URL}/dataset/{dataset['name']}",
+            },
+        ]
 
         ddb.execute(
             "INSERT INTO datasets (name, eml_content) VALUES (?, ?);",
