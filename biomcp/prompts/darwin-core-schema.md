@@ -740,14 +740,17 @@ LIMIT 50
 1. Declare all namespaces used in the query at the top
 2. `dwc:Occurrence`, `eco:Survey`, and `dwc:OrganismInteraction` are `rdfs:subClassOf dwc:Event`, so coordinates CAN be reached directly from any of them: `?occ dwcdp:spatialLocation ?loc . ?loc dwc:decimalLatitude ?lat`. A `dcterms:Location` intermediate node is still always required — coordinates are never literal properties of the occurrence/survey/interaction itself.
 3. Dates and years are inherited `dwc:Event` properties, so they sit directly on `dwc:Occurrence`, `dwc:OrganismInteraction` and `eco:Survey` — no traversal needed to reach them on these classes.
-4. Use OPTIONAL for any property that may be absent on some records
-5. Always add LIMIT — 100 for browsing, 500 for filtered queries; omit for aggregations
-6. ALL SPARQL keywords UPPERCASE: AS, FILTER, OPTIONAL, ORDER BY, GROUP BY, WHERE
-7. NEVER use REGEX() — DuckDB cannot execute it via Ontop. Use instead:
+4. Use `OPTIONAL` for any property that may be absent on some records
+5. Always add `LIMIT` — 100 for browsing, 500 for filtered queries; omit for aggregations
+6. ALL SPARQL keywords UPPERCASE: `AS`, `FILTER`, `OPTIONAL`, `ORDER BY`, `GROUP BY`, `WHERE`
+7. `REGEX()` is supported via its 2-argument form (Ontop translates it to DuckDB's native regex matching). Use it for pattern matching that `CONTAINS`/`STRSTARTS` can't express — reserve it for genuinely regex-shaped needs (alternation, anchors, character classes) rather than as a default, since `CONTAINS`/`STRSTARTS` are simpler and cheaper for plain substring/prefix checks:
   - Exact match: `FILTER(?x = "Exact Value")`
   - Partial match: `FILTER(CONTAINS(LCASE(?x), "term"))`
   - Starts with: `FILTER(STRSTARTS(LCASE(?x), "prefix"))`
-8. COUNT queries do not need LIMIT
+  - Pattern match: `FILTER(REGEX(?x, "^Chaeto.*baronessa$"))`
+
+   Do NOT use the 3-argument form of `REGEX()` (with a separate flags argument, e.g. `"i"`) — it is not supported for DuckDB. For case-insensitive matching, use the inline `(?i)` flag inside the pattern string instead: `FILTER(REGEX(?x, "(?i)^Chaeto.*baronessa$"))`
+8. COUNT queries do not need `LIMIT`
 9. `dwcdp:happenedDuring` has ONE consistent meaning everywhere: it links a `dwc:Event` resource (a plain `dwc:Event`, or a subclass like `dwc:Occurrence`, `dwc:OrganismInteraction` or `eco:Survey` acting as one) to its containing parent `dwc:Event`. It is never needed to reach an entity's own date, location, or conducting agent — only to reach a broader event that contains it.
 10. Because `dwc:Occurrence`, `dwc:OrganismInteraction` and `eco:Survey` are subclasses of `dwc:Event`, `?x a dwc:Event` may also match instances only ever asserted as one of these subclasses. If a pattern specifically needs a "plain" event that is not any of these, and this matters for the question being asked, scope it with `FILTER NOT EXISTS { ?evt a dwc:Occurrence }` (and similarly for the other subclasses) rather than assuming `a dwc:Event` excludes them.
 
