@@ -749,9 +749,9 @@ LIMIT 50
    - Starts with: `FILTER(STRSTARTS(LCASE(?x), "prefix"))`
    - Pattern match: `FILTER(REGEX(?x, "^Chaeto.*baronessa$"))`
    Do NOT use the 3-argument form of `REGEX()` with a separate flags argument. For case-insensitive matching, use the inline `(?i)` flag: `FILTER(REGEX(?x, "(?i)^Chaeto.*baronessa$"))`.
-8. COUNT queries do not need `LIMIT`.
+8. `COUNT` queries do not need `LIMIT`.
 9. `dwcdp:happenedDuring` has ONE consistent meaning everywhere: it links a `dwc:Event` resource (a plain `dwc:Event`, or a subclass like `dwc:Occurrence`, `dwc:OrganismInteraction` or `eco:Survey` acting as one) to its containing parent `dwc:Event`. It is never needed to reach an entity's own date, location, or conducting agent — only to reach a broader event that contains it.
-10. Because `dwc:Occurrence`, `dwc:OrganismInteraction` and `eco:Survey` are subclasses of `dwc:Event`, `?x a dwc:Event` may also match instances only ever asserted as one of these subclasses. If a pattern specifically needs a "plain" event that is not any of these, and this matters for the question being asked, scope it with `FILTER NOT EXISTS { ?evt a dwc:Occurrence }` (and similarly for the other subclasses) rather than assuming `a dwc:Event` excludes them.
+10. Because `dwc:Occurrence`, `dwc:OrganismInteraction` and `eco:Survey` are subclasses of `dwc:Event`, `?x a dwc:Event` may also match instances only ever asserted as one of these subclasses. If a pattern specifically needs a "plain" event that is not any of these, and this matters for the question being asked, scope it with `FILTER NOT EXISTS { ?evt a dwc:Occurrence }` (and similarly for the other subclasses) rather than assuming a `dwc:Event` excludes them.
 
 ---
 
@@ -760,6 +760,6 @@ LIMIT 50
 Try in this order:
 
 1. Run `SELECT * WHERE { ?s ?p ?o } LIMIT 10` to confirm the endpoint has data at all
-2. Remove FILTER clauses one by one — identify which one eliminates all results
+2. Remove `FILTER` clauses one by one — identify which one eliminates all results
 3. Check every traversal chain — coordinates always go through a `dcterms:Location` node (whether reached from a plain `dwc:Event` or directly from its subclasses of `dwc:Occurrence`, `dwc:OrganismInteraction` or `eco:Survey`); dates are either directly on the resource or on a related `dwc:Event` reached via `dwcdp:happenedDuring`
 4. Wrap non-essential triples in `OPTIONAL { }` and add them back one at a time
