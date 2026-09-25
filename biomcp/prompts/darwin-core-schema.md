@@ -12,7 +12,7 @@ Do not invent new graph traversals.
 |---|---|
 | Species names, occurrences, lists | 1 |
 | Coordinates, map positions | 2 |
-| Country, locality, geographic filter | 3 |
+| Country code, locality, geographic filter | 3 |
 | Dates, years, months | 4 |
 | Counts, rankings, aggregations | 5 |
 | Who did what surrounding an occurrence (recorder, identifier, conductor) | 6 |
@@ -111,7 +111,7 @@ These properties are available on any event resources: a plain `dwc:Event`, or i
 
 ### dcterms:Location (reached via `dwcdp:spatialLocation` from any dwc:Event resource, including its subclasses)
 
-`dwc:locationID` · `dwc:coordinateUncertaintyInMeters` · `dwc:country` · `dwc:countryCode` · `dwc:decimalLatitude` · `dwc:decimalLongitude` · `dwc:locality` · `dwc:locationRemarks` · `dwc:maximumDepthInMeters` · `dwc:minimumDepthInMeters` · `dwc:stateProvince` · `dwc:waterBody`
+`dwc:locationID` · `dwc:coordinateUncertaintyInMeters` · `dwc:countryCode` · `dwc:decimalLatitude` · `dwc:decimalLongitude` · `dwc:locality` · `dwc:locationRemarks` · `dwc:maximumDepthInMeters` · `dwc:minimumDepthInMeters` · `dwc:stateProvince` · `dwc:waterBody`
 
 ### dwc:Occurrence
 
@@ -187,7 +187,7 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 
-SELECT ?lat ?lon ?country ?county ?locality ?locationRemarks ?stateProvince
+SELECT ?lat ?lon ?countryCode ?county ?locality ?locationRemarks ?stateProvince
 
 WHERE {
   ?occ a dwc:Occurrence ;
@@ -198,7 +198,7 @@ WHERE {
        dwc:decimalLatitude ?lat ;
        dwc:decimalLongitude ?lon .
 
-  OPTIONAL { ?loc dwc:country ?country }
+  OPTIONAL { ?loc dwc:countryCode ?countryCode }
   OPTIONAL { ?loc dwc:county ?county }
   OPTIONAL { ?loc dwc:locality ?locality }
   OPTIONAL { ?loc dwc:locationRemarks ?locationRemarks }
@@ -207,14 +207,14 @@ WHERE {
 LIMIT 200
 ```
 
-### Pattern 3 — Filter by country or species with full location
+### Pattern 3 — Filter by country code or species with full location
 
 ```sparql
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 
-SELECT ?lat ?lon ?country ?date
+SELECT ?lat ?lon ?countryCode ?date
 
 WHERE {
   ?occ a dwc:Occurrence ;
@@ -226,7 +226,7 @@ WHERE {
   OPTIONAL { ?occ dwc:eventDate ?date }
   OPTIONAL { ?loc dwc:decimalLatitude ?lat }
   OPTIONAL { ?loc dwc:decimalLongitude ?lon }
-  OPTIONAL { ?loc dwc:country ?country }
+  OPTIONAL { ?loc dwc:countryCode ?countryCode }
 }
 LIMIT 500
 ```
@@ -530,7 +530,7 @@ PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 
 SELECT ?mat ?geoCtx
-       ?country ?county ?decimalLatitude ?decimalLongitude ?locality ?locationRemarks ?stateProvince
+       ?countryCode ?county ?decimalLatitude ?decimalLongitude ?locality ?locationRemarks ?stateProvince
        ?bed ?earliestAgeOrLowestStage ?earliestEpochOrLowestSeries ?earliestEraOrLowestErathem
        ?earliestPeriodOrLowestSystem ?formation ?group ?latestAgeOrHighestStage
        ?latestEpochOrHighestSeries ?latestEraOrHighestErathem ?latestPeriodOrHighestSystem ?member
@@ -548,7 +548,7 @@ WHERE {
   ?geoCtx a dwc:GeologicalContext ;
           dwcdp:contextFor ?mat .
 
-  OPTIONAL { ?loc dwc:country ?country }
+  OPTIONAL { ?loc dwc:countryCode ?countryCode }
   OPTIONAL { ?loc dwc:county ?county }
   OPTIONAL { ?loc dwc:decimalLatitude ?decimalLatitude }
   OPTIONAL { ?loc dwc:decimalLongitude ?decimalLongitude }
@@ -666,7 +666,7 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 PREFIX dwcdp: <http://rs.tdwg.org/dwcdp/terms/>
 
-SELECT ?type ?objectName ?eventDate ?country (COUNT(*) AS ?n)
+SELECT ?type ?objectName ?eventDate ?countryCode (COUNT(*) AS ?n)
 
 WHERE {
   ?orgInt a dwc:OrganismInteraction ;
@@ -685,10 +685,10 @@ WHERE {
     ?orgInt dwcdp:spatialLocation ?loc .
 
     ?loc a dcterms:Location ;
-         dwc:country ?country .
+         dwc:countryCode ?countryCode .
   }
 }
-GROUP BY ?type ?objectName ?eventDate ?country
+GROUP BY ?type ?objectName ?eventDate ?countryCode
 ORDER BY DESC(?n)
 LIMIT 20
 ```
