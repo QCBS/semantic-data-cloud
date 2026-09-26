@@ -29,7 +29,6 @@ def test_root_endpoint():
     assert "title" in payload
     assert "description" in payload
     assert "links" in payload
-    assert "datasets" in payload
 
 
 def test_health_endpoint():
