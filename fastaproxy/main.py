@@ -6,7 +6,7 @@ import os
 #
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, status
 from glide import ExpirySet, ExpiryType, GlideClient, GlideClientConfiguration, NodeAddress
-from httpx import AsyncClient, AsyncHTTPTransport, HTTPError
+from httpx2 import AsyncClient, AsyncHTTPTransport, HTTPError
 import orjson
 #
 from container_manager import ContainerRegistry
