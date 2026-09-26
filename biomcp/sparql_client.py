@@ -1,7 +1,7 @@
 import os
 import sys
 #
-from httpx import AsyncClient, HTTPStatusError, TimeoutException
+from httpx2 import AsyncClient, HTTPStatusError, TimeoutException
 #
 from enums.maintenance_frequency import MaintenanceFrequency
 
