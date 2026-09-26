@@ -106,7 +106,7 @@ async def read_root():
             {
                 "rel": "search",
                 "type": "application/json",
-                "title": "Dataset search [GET]",
+                "title": "Datasets search [GET]",
                 "href": f"{PUBLIC_BASE_URL}/datasets/search",
                 "method": "GET",
             },
@@ -163,7 +163,7 @@ async def get_dataset(
 @app.get("/datasets/search")
 async def search_datasets(
     request: Annotated[DatasetRequest, Query()],
-    ddb=Depends(get_ddb),
+    ddb = Depends(get_ddb),
 ):
     loop = asyncio.get_running_loop()
 
