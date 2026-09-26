@@ -1,7 +1,7 @@
 import asyncio
 import time
 #
-import httpx
+import httpx2
 import pytest
 
 
@@ -18,17 +18,17 @@ DESCRIBE_QUERY = "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> PREFIX dwcdp: <htt
 
 
 def test_health_endpoint():
-    res = httpx.get(f"{FASTAPROXY_BASE_URL}/health")
+    res = httpx2.get(f"{FASTAPROXY_BASE_URL}/health")
 
     assert res.status_code == 200
     assert res.json() == {"status": "ok"}
 
 
 def test_sparql_endpoint():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
-            "query": OCCURRENCE_QUERY
+            "query": OCCURRENCE_QUERY,
         },
         timeout=TIMEOUT_VAL,
     )
@@ -50,7 +50,7 @@ def test_sparql_endpoint():
 
 
 def test_sparql_response_binding_shape():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": NAMED_VAR_QUERY,
@@ -72,7 +72,7 @@ def test_sparql_response_binding_shape():
 
 
 def test_sparql_with_explicit_default_search_vals():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": OCCURRENCE_QUERY,
@@ -88,7 +88,7 @@ def test_sparql_with_explicit_default_search_vals():
 
 
 def test_sparql_with_license_filter():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": OCCURRENCE_QUERY,
@@ -106,7 +106,7 @@ def test_sparql_with_license_filter():
 
 
 def test_sparql_ask_query():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": ASK_QUERY,
@@ -129,7 +129,7 @@ def test_sparql_ask_query():
 # TODO: Maybe expand verification using rdflib
 #
 def test_sparql_construct_query():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": CONSTRUCT_QUERY,
@@ -148,7 +148,7 @@ def test_sparql_construct_query():
 # TODO: Maybe expand verification using rdflib
 #
 def test_sparql_describe_query():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": DESCRIBE_QUERY,
@@ -167,7 +167,7 @@ def test_sparql_describe_query():
 
 
 def test_sparql_no_datasets_found_returns_404():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": OCCURRENCE_QUERY,
@@ -184,7 +184,7 @@ def test_sparql_no_datasets_found_returns_404():
 
 
 def test_missing_query():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={},
     )
@@ -197,7 +197,7 @@ def test_missing_query():
 
 
 def test_missing_spatial_value():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
@@ -212,7 +212,7 @@ def test_missing_spatial_value():
 
 
 def test_non_numeric_spatial_value():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
@@ -227,7 +227,7 @@ def test_non_numeric_spatial_value():
 
 
 def test_non_iso_8601_date():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
@@ -243,7 +243,7 @@ def test_non_iso_8601_date():
 
 
 def test_temporal_start_after_end():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": OCCURRENCE_QUERY,
@@ -262,7 +262,7 @@ def test_temporal_start_after_end():
 
 
 def test_missing_prefix():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": "SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
@@ -275,7 +275,7 @@ def test_missing_prefix():
 
 
 def test_invalid_sparql_syntax():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": "SPARQL IS SELECT * FROM FUN;",
@@ -287,7 +287,7 @@ def test_invalid_sparql_syntax():
 
 
 def test_sparql_empty_query_string():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": "",
@@ -302,7 +302,7 @@ def test_sparql_empty_query_string():
 
 
 def test_sparql_too_short_bbox():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": OCCURRENCE_QUERY,
@@ -321,7 +321,7 @@ def test_sparql_too_short_bbox():
 
 
 def test_sparql_too_long_bbox():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": OCCURRENCE_QUERY,
@@ -340,7 +340,7 @@ def test_sparql_too_long_bbox():
 
 
 def test_sparql_too_short_temporal():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": OCCURRENCE_QUERY,
@@ -359,7 +359,7 @@ def test_sparql_too_short_temporal():
 
 
 def test_sparql_too_long_temporal():
-    res = httpx.post(
+    res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": OCCURRENCE_QUERY,
@@ -378,14 +378,14 @@ def test_sparql_too_long_temporal():
 
 
 def test_cache_returns_same_result():
-    first_query = httpx.post(
+    first_query = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": OCCURRENCE_QUERY,
         },
         timeout=TIMEOUT_VAL,
     )
-    second_query = httpx.post(
+    second_query = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": OCCURRENCE_QUERY,
@@ -401,7 +401,7 @@ def test_cache_returns_same_result():
 
 def test_cache_second_request_is_faster():
     t0 = time.monotonic()
-    first_query = httpx.post(
+    first_query = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": EVENT_QUERY,
@@ -411,7 +411,7 @@ def test_cache_second_request_is_faster():
     first_duration = time.monotonic() - t0
 
     t0 = time.monotonic()
-    second_query = httpx.post(
+    second_query = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
         json={
             "query": EVENT_QUERY,
@@ -423,14 +423,14 @@ def test_cache_second_request_is_faster():
     assert first_query.status_code == 200
     assert second_query.status_code == 200
 
-    # WARN: If rerun, the cache is already set, so this test will fail. Consider running `valkey-cli` FLUSHDB.
+    # WARN: If rerun, the cache is already set, so this test will fail. Consider running valkey-cli FLUSHDB.
     #
     assert second_duration < first_duration / 2.0, f"Cache did not accelerate response: first={first_duration:.2f}s second={second_duration:.2f}s"
 
 
 @pytest.mark.asyncio
 async def test_sparql_endpoint_concurrent():
-    async with httpx.AsyncClient() as client:
+    async with httpx2.AsyncClient() as client:
         async def make_request():
             res = await client.post(
                 url=f"{FASTAPROXY_BASE_URL}/sparql",

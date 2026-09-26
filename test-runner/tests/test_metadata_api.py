@@ -1,6 +1,6 @@
 import asyncio
 #
-import httpx
+import httpx2
 import pytest
 
 
@@ -18,7 +18,7 @@ DEFAULT_SEARCH_VALS = {
 
 
 def test_root_endpoint():
-    res = httpx.get(
+    res = httpx2.get(
         url=f"{METADATA_API_BASE_URL}/"
     )
 
@@ -32,14 +32,14 @@ def test_root_endpoint():
 
 
 def test_health_endpoint():
-    res = httpx.get(f"{METADATA_API_BASE_URL}/health")
+    res = httpx2.get(f"{METADATA_API_BASE_URL}/health")
 
     assert res.status_code == 200
     assert res.json() == {"status": "ok"}
 
 
 def test_list_datasets_default_page():
-    res = httpx.get(f"{METADATA_API_BASE_URL}/datasets")
+    res = httpx2.get(f"{METADATA_API_BASE_URL}/datasets")
 
     assert res.status_code == 200
 
@@ -55,11 +55,11 @@ def test_list_datasets_default_page():
 
 
 def test_list_datasets_pagination():
-    page1 = httpx.get(
+    page1 = httpx2.get(
         f"{METADATA_API_BASE_URL}/datasets",
         params={"page": 1, "page_size": 2}
     ).json()
-    page2 = httpx.get(
+    page2 = httpx2.get(
         f"{METADATA_API_BASE_URL}/datasets",
         params={"page": 2, "page_size": 2}
     ).json()
@@ -69,7 +69,7 @@ def test_list_datasets_pagination():
 
 
 def test_list_datasets_invalid_page_size():
-    res = httpx.get(
+    res = httpx2.get(
         f"{METADATA_API_BASE_URL}/datasets",
         params={"page_size": 9999}
     )
@@ -78,7 +78,7 @@ def test_list_datasets_invalid_page_size():
 
 
 def test_example_dataset():
-    res = httpx.get(
+    res = httpx2.get(
         url=f"{METADATA_API_BASE_URL}/dataset/{TEST_DATASET_ID}"
     )
 
@@ -95,7 +95,7 @@ def test_example_dataset():
 
 
 def test_nonexistant_dataset():
-    res = httpx.get(
+    res = httpx2.get(
         url=f"{METADATA_API_BASE_URL}/dataset/nonexistant-dataset"
     )
 
@@ -103,7 +103,7 @@ def test_nonexistant_dataset():
 
 
 def test_metadata_search():
-    res = httpx.get(
+    res = httpx2.get(
         url=f"{METADATA_API_BASE_URL}/datasets/search",
         params=DEFAULT_SEARCH_VALS,
     )
@@ -116,7 +116,7 @@ def test_metadata_search():
 
 
 def test_metadata_search_licenses():
-    res = httpx.get(
+    res = httpx2.get(
         url=f"{METADATA_API_BASE_URL}/datasets/search",
         params={
             "licenses": ["CC0-1.0", "CC-BY-4.0"],
@@ -127,7 +127,7 @@ def test_metadata_search_licenses():
 
 
 def test_metadata_search_impossible_license():
-    res = httpx.get(
+    res = httpx2.get(
         url=f"{METADATA_API_BASE_URL}/datasets/search",
         params={
             "licenses": ["XYZ-PL0"],
@@ -139,7 +139,7 @@ def test_metadata_search_impossible_license():
 
 
 def test_metadata_search_min_lon_gt_180():
-    res = httpx.get(
+    res = httpx2.get(
         url=f"{METADATA_API_BASE_URL}/datasets/search",
         params={
             "min_lon": 195.0,
@@ -156,7 +156,7 @@ def test_metadata_search_min_lon_gt_180():
 
 
 def test_metadata_search_min_lon_lt_m180():
-    res = httpx.get(
+    res = httpx2.get(
         url=f"{METADATA_API_BASE_URL}/datasets/search",
         params={
             "min_lon": -195.0,
@@ -173,7 +173,7 @@ def test_metadata_search_min_lon_lt_m180():
 
 
 def test_metadata_search_max_lon_gt_180():
-    res = httpx.get(
+    res = httpx2.get(
         url=f"{METADATA_API_BASE_URL}/datasets/search",
         params={
             "max_lon": 195.0,
@@ -190,7 +190,7 @@ def test_metadata_search_max_lon_gt_180():
 
 
 def test_metadata_search_max_lon_lt_m180():
-    res = httpx.get(
+    res = httpx2.get(
         url=f"{METADATA_API_BASE_URL}/datasets/search",
         params={
             "max_lon": -195.0,
@@ -207,7 +207,7 @@ def test_metadata_search_max_lon_lt_m180():
 
 
 def test_metadata_search_min_lat_gt_90():
-    res = httpx.get(
+    res = httpx2.get(
         url=f"{METADATA_API_BASE_URL}/datasets/search",
         params={
             "min_lat": 95.0,
@@ -224,7 +224,7 @@ def test_metadata_search_min_lat_gt_90():
 
 
 def test_metadata_search_min_lat_lt_m90():
-    res = httpx.get(
+    res = httpx2.get(
         url=f"{METADATA_API_BASE_URL}/datasets/search",
         params={
             "min_lat": -95.0,
@@ -241,7 +241,7 @@ def test_metadata_search_min_lat_lt_m90():
 
 
 def test_metadata_search_max_lat_gt_90():
-    res = httpx.get(
+    res = httpx2.get(
         url=f"{METADATA_API_BASE_URL}/datasets/search",
         params={
             "max_lat": 95.0,
@@ -258,7 +258,7 @@ def test_metadata_search_max_lat_gt_90():
 
 
 def test_metadata_search_max_lat_lt_m90():
-    res = httpx.get(
+    res = httpx2.get(
         url=f"{METADATA_API_BASE_URL}/datasets/search",
         params={
             "max_lat": -95.0,
@@ -275,7 +275,7 @@ def test_metadata_search_max_lat_lt_m90():
 
 
 def test_citations_known_dataset():
-    res = httpx.post(
+    res = httpx2.post(
         f"{METADATA_API_BASE_URL}/datasets/citations",
         json={
             "dataset_names": [TEST_DATASET_ID],
@@ -292,7 +292,7 @@ def test_citations_known_dataset():
 
 
 def test_citations_unknown_dataset_returns_empty():
-    res = httpx.post(
+    res = httpx2.post(
         f"{METADATA_API_BASE_URL}/datasets/citations",
         json={
             "dataset_names": ["imaginary-key-xyz"],
@@ -305,7 +305,7 @@ def test_citations_unknown_dataset_returns_empty():
 
 @pytest.mark.asyncio
 async def test_metadata_search_concurrent():
-    async with httpx.AsyncClient() as client:
+    async with httpx2.AsyncClient() as client:
         async def make_request():
             res = await client.get(
                 url=f"{METADATA_API_BASE_URL}/datasets/search",
