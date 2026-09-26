@@ -4,7 +4,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 #
 import duckdb
-import httpx
+import httpx2
 
 
 DB_DIR = Path("/db")
@@ -29,8 +29,10 @@ def _local_schema() -> dict[str, list[str]]:
 
 
 def _fetch_dataset_json(dataset_id: str) -> dict:
-    url = f"{METADATA_API_BASE}/dataset/{dataset_id}"
-    resp = httpx.get(url, timeout=30)
+    resp = httpx2.get(
+        url=f"{METADATA_API_BASE}/dataset/{dataset_id}",
+        timeout=30,
+    )
     resp.raise_for_status()
     return resp.json()
 
@@ -49,8 +51,8 @@ def _get_datasets_citations(dataset_ids: list[str], ctx_hash: str) -> None:
     citation_file = DB_DIR / f"{ctx_hash}.txt"
 
     if not citation_file.exists():
-        citation_resp = httpx.post(
-            f"{METADATA_API_BASE}/datasets/citations",
+        citation_resp = httpx2.post(
+            url=f"{METADATA_API_BASE}/datasets/citations",
             json={"dataset_names": dataset_ids},
         )
 

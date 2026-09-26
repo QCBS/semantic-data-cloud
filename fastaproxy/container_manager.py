@@ -6,7 +6,7 @@ import time
 #
 import docker
 from docker.errors import NotFound
-import httpx
+import httpx2
 #
 from db_builder import context_hash
 
@@ -75,16 +75,22 @@ class ContainerRegistry:
 
     def _is_healthy(self, ontop_url: str) -> bool:
         try:
-            res = httpx.get(f"{ontop_url}/actuator/health", timeout=3)
+            res = httpx2.get(
+                url=f"{ontop_url}/actuator/health",
+                timeout=3,
+            )
             return res.status_code == 200
-        except httpx.RequestError:
+        except httpx2.RequestError:
             return False
 
     def _wait_for_health(self, ontop_url: str) -> None:
         deadline = time.monotonic() + ONTOP_STARTUP_TIMEOUT
         while time.monotonic() < deadline:
             try:
-                res = httpx.get(f"{ontop_url}/actuator/health", timeout=3)
+                res = httpx2.get(
+                    url=f"{ontop_url}/actuator/health",
+                    timeout=3,
+                )
                 if res.status_code == 200:
                     return
             except Exception as e:
