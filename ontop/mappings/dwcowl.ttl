@@ -5246,6 +5246,15 @@ eco:SurveyTarget rdf:type owl:Class ;
                               "reproductive female Ctenomys sociabilis (only)" .
 
 
+###  http://rs.tdwg.org/eco/terms/SurveyTargetDescriptor
+eco:SurveyTargetDescriptor rdf:type owl:Class ;
+                           rdfs:label "Survey Target Descriptor" ;
+                           skos:definition "A combination of a survey target value and a survey target type for given eco:SurveyTarget." ;
+                           skos:example "minimumTotalLength: 20 cm" ,
+                                        "pathway: transportContaminant" ,
+                                        "taxon: Aves" .
+
+
 ###  http://www.w3.org/ns/adms#Identifier
 adms:Identifier rdf:type owl:Class ;
                 rdfs:label "Identifier" ;
