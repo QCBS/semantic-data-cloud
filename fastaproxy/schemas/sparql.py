@@ -36,6 +36,14 @@ class QueryRequest(BaseModel):
         return value
 
 
+    @field_validator("datasets")
+    @classmethod
+    def validate_datasets(cls, value: list[str] | None) -> list[str] | None:
+        if value == []:
+            raise ValueError("datasets must not be an empty list")
+        return value
+
+
     @field_validator("bbox")
     @classmethod
     def validate_bbox(cls, value: list[float]) -> list[float]:
