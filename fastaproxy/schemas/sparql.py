@@ -25,6 +25,7 @@ class QueryRequest(BaseModel):
     temporal: list[str] = Field(["0001-01-01", "2038-01-19"], description="Begin and end dates for the desired datasets (in YYYY-MM-DD)")
     licenses: list[str] | None = Field(None, description="SPDX IDs of the licenses requested")
     maintenance: list[MaintenanceFrequency] | None = Field(None, description="Controlled vocabulary terms for maintenance update frequency")
+    datasets: list[str] | None = Field(None, description="List of dataset IDs to be considered")
 
 
     @field_validator("query")
