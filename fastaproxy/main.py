@@ -87,45 +87,49 @@ async def sparql_query(
     registry: ContainerRegistry = Depends(get_registry),
     lock: Lock = Depends(get_lock),
 ):
-    print(body.bbox)
-    print(body.temporal)
-    print(body.licenses)
-    print([maint.value for maint in (body.maintenance or [])])
-
-    min_lon, min_lat, max_lon, max_lat = body.bbox
-    begin_date, end_date = body.temporal
-
     sparql_bytes = body.query.encode("utf-8")
 
-    search_params = [
-        ("min_lon", min_lon),
-        ("min_lat", min_lat),
-        ("max_lon", max_lon),
-        ("max_lat", max_lat),
-        ("begin_date", begin_date),
-        ("end_date", end_date),
-    ]
+    if body.datasets:
+        dataset_ids: list[str] = body.datasets
+        print(dataset_ids)
+    else:
+        print(body.bbox)
+        print(body.temporal)
+        print(body.licenses)
+        print([maint.value for maint in (body.maintenance or [])])
 
-    if body.licenses:
-        search_params.extend(("licenses", license) for license in body.licenses)
+        min_lon, min_lat, max_lon, max_lat = body.bbox
+        begin_date, end_date = body.temporal
 
-    if body.maintenance:
-        search_params.extend(("maintenance", maint) for maint in body.maintenance)
+        search_params = [
+            ("min_lon", min_lon),
+            ("min_lat", min_lat),
+            ("max_lon", max_lon),
+            ("max_lat", max_lat),
+            ("begin_date", begin_date),
+            ("end_date", end_date),
+        ]
 
-    search_resp = await client.get(
-        f"{METADATA_API_BASE}/datasets/search",
-        params=search_params,
-    )
+        if body.licenses:
+            search_params.extend(("licenses", license) for license in body.licenses)
 
-    search_resp.raise_for_status()
+        if body.maintenance:
+            search_params.extend(("maintenance", maint) for maint in body.maintenance)
 
-    dataset_ids: list[str] = search_resp.json().get("datasets", [])
-
-    if not dataset_ids:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="No datasets found for the given spatial and temporal filters.",
+        search_resp = await client.get(
+            f"{METADATA_API_BASE}/datasets/search",
+            params=search_params,
         )
+
+        search_resp.raise_for_status()
+
+        dataset_ids: list[str] = search_resp.json().get("datasets", [])
+
+        if not dataset_ids:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="No datasets found for the given spatial and temporal filters.",
+            )
 
     ctx_hash = context_hash(dataset_ids)
 
