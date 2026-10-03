@@ -4,6 +4,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 #
 import duckdb
+from fastapi import HTTPException, status
 import httpx2
 
 
@@ -59,6 +60,12 @@ def _get_datasets_citations(dataset_ids: list[str], ctx_hash: str) -> None:
         citation_resp.raise_for_status()
 
         citations = citation_resp.json().get("citations", [])
+
+        if len(citations) != len(dataset_ids):
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"One or more of the datasets were not found: {dataset_ids}"
+            )
 
         citation_file.write_text("\n".join(citations), encoding="utf-8")
 
