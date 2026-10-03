@@ -28,8 +28,8 @@ Each dataset record stores its asset list, which are the URLs of its constituent
 
 The central proxy for all SPARQL queries. Its responsibilities are:
 
-- Accepting client SPARQL queries alongside optional dataset filters (spatial, temporal, license).
-- Querying the metadata API to resolve the relevant dataset IDs.
+- Accepting client SPARQL queries alongside optional dataset filters (spatial, temporal, license, maintenance).
+- Querying the metadata API to resolve the relevant dataset IDs or using the supplied dataset identifiers.
 - Delegating database construction to `db_builder`.
 - Delegating container management to `ContainerRegistry`.
 - Forwarding SPARQL to the appropriate Ontop container.
@@ -55,7 +55,7 @@ Volume host paths are discovered automatically by inspecting `fastaproxy`'s own 
 
 The application extends [the official Ontop Docker image](https://hub.docker.com/r/ontop/ontop) by adding the DuckDB JDBC driver, enabling Ontop to execute SQL queries against the S3-hosted Parquet files using [DuckDB](https://duckdb.org/why_duckdb). This custom image, named `semantic-data-cloud-ontop`, serves as the base image for all dynamically created Ontop containers.
 
-From this image, short-lived containers running [Ontop](https://ontop-vkg.org/) (`ontop/ontop:5.5.0`) with the DuckDB JDBC driver (`duckdb_jdbc-1.5.2.1.jar`). Each Ontop container receives a unique name, `ontop-{context_hash}`, where `{context_hash}` is a truncated SHA-256 hash of the the space vertical bar space (` | `) separated dataset names selected by the filters used in the user-submitted query.
+From this image, short-lived containers running [Ontop](https://ontop-vkg.org/) (`ontop/ontop:5.5.0`) with the DuckDB JDBC driver (`duckdb_jdbc-1.5.2.1.jar`). Each Ontop container receives a unique name, `ontop-{context_hash}`, where `{context_hash}` is a truncated SHA-256 hash of the the vertical bar (`|`) separated dataset identifiers that make up the query context, whether resolved through the `metadata-api` filters or supplied explicitly through `datasets`.
 
 Each container receives four files at startup: an OWL ontology (`.ttl`), an OBDA mapping (`.obda`), a database metadata (`.json`), and a connection properties file (`.properties`). The OBDA mapping and the database metadata files are generated per-context with the correct database catalog name. Ontop translates incoming SPARQL queries to SQL, executes them through DuckDB, and returns results in SPARQL JSON format.
 
@@ -95,10 +95,11 @@ docker network create -d bridge dwc-net
 
 The flow of data in the application can be summarized by the following sequence:
 
-  1. Client POSTs `{ sparql, [bbox, temporal, licenses, maintenance] }` request to fastaproxy `/sparql`
+  1. Client POSTs `{ sparql, [datasets] | [bbox, temporal, licenses, maintenance] }` request to fastaproxy `/sparql`
 
-  2. fastaproxy calls metadata-api `/datasets/search`
-    → returns list of dataset IDs that match the criteria set forth by the request
+  2. fastaproxy resolves the dataset identifiers:
+    → if `datasets` is provided, use the supplied dataset IDs directly
+    → otherwise, call metadata-api `/datasets/search` to resolve dataset IDs from the supplied filters
 
   3. fastaproxy computes `context_hash = SHA-256(sorted(dataset_ids))[:16]`
     → checks Valkey for `cache_key` corresponding to `"sparql:{context_hash}:{SHA-256(query)}"`

@@ -25,6 +25,7 @@ class QueryRequest(BaseModel):
     temporal: list[str] = Field(["0001-01-01", "2038-01-19"], description="Begin and end dates for the desired datasets (in YYYY-MM-DD)")
     licenses: list[str] | None = Field(None, description="SPDX IDs of the licenses requested")
     maintenance: list[MaintenanceFrequency] | None = Field(None, description="Controlled vocabulary terms for maintenance update frequency")
+    datasets: list[str] | None = Field(None, description="List of dataset IDs to be considered")
 
 
     @field_validator("query")
@@ -32,6 +33,14 @@ class QueryRequest(BaseModel):
     def validate_query(cls, value: str) -> str:
         if not value.strip():
             raise ValueError("query must not be an empty string")
+        return value
+
+
+    @field_validator("datasets")
+    @classmethod
+    def validate_datasets(cls, value: list[str] | None) -> list[str] | None:
+        if value == []:
+            raise ValueError("datasets must not be an empty list")
         return value
 
 

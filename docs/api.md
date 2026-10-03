@@ -19,6 +19,13 @@ Requests against the `/sparql` endpoint use a JSON POST body, with the SPARQL qu
 | `temporal` | `[string, string]` | No | Temporal range as `["YYYY-MM-DD", "YYYY-MM-DD"]` (begin, end inclusive). Default: `['0001-01-01', '2038-01-19']` |
 | `licenses` | `[string, ...]` | No | SPDX license identifiers to restrict which datasets are considered, see the [SPDX License List](https://spdx.org/licenses/). Default: `None` |
 | `maintenance` | `[string, ...]` | No | Controlled values of planned maintenance update frequency to restrict which datasets are considered, see the [maintenance update frequency type controlled value](https://eml.ecoinformatics.org/schema/eml-dataset_xsd.html#MaintUpFreqType). Default: `None` |
+| `datasets` | `[string, ....]` | No | Dataset identifiers specifying the datasets to be considered. Each identifier must correspond to a dataset registered in `metadata-api`. |
+
+**Dataset selection**
+
+If `datasets` is provided, its identifiers determine which datasets are to be considered. In this case, the `bbox`, `temporal`, `licenses`, and `maintenance` parameters are ignored.
+
+If `datasets` is not provided, `metadata-api` is used to search for datasets using `bbox`, `temporal`, `licenses`, and `maintenance` parameters.
 
 **Validation rules**
 
@@ -26,12 +33,13 @@ Requests against the `/sparql` endpoint use a JSON POST body, with the SPARQL qu
 - `temporal`: must contain exactly 2 ISO 8601 dates (`YYYY-MM-DD`), with `begin ≤ end`.
 - `licenses`: no formal validation. Values are matched against the `license_id` field in dataset metadata, which is expected to be a valid SPDX license identifier.
 - `maintenance`: must contain values that are taken from the EML controlled vocabulary of dataset planned maintenance frequency update. Values that are not taken from this controlled vocabulary will result in a query error.
+- `datasets`: must contain identifiers that are registered in `metadata-api`. An unknown identifier will raise an error.
 
 **Response**
 
 The response format depends on the SPARQL query form used in the request:
 
-| Query form | `Content-Type` | Format |
+| Query form | Content-Type | Format |
 |---|---|---|
 | `SELECT`, `ASK` | `application/sparql-results+json` | [SPARQL 1.1 Query Results JSON](https://www.w3.org/TR/sparql11-results-json/) |
 | `CONSTRUCT`, `DESCRIBE` | `text/turtle` | [RDF 1.1 Turtle](https://www.w3.org/TR/turtle/) |
