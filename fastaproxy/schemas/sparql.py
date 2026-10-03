@@ -59,14 +59,19 @@ class QueryRequest(BaseModel):
 
     @field_validator("temporal")
     @classmethod
-    def validate_temporal(cls, value: list[str]) -> list[str]:
-        if len(value) != 2:
-            raise ValueError("Temporal range must have exactly 2 values: [begin_date, end_date]")
-        try:
-            begin = date.fromisoformat(value[0])
-            end = date.fromisoformat(value[1])
-        except ValueError:
-            raise ValueError("dates must be in YYYY-MM-DD format")
-        if begin > end:
+    def validate_temporal(cls, value: tuple[str | None, str | None] | None) -> tuple[str | None, str | None] | None:
+        if value is None:
+            return None
+
+        begin, end = value
+
+        if begin is not None:
+            begin = date.fromisoformat(begin)
+
+        if end is not None:
+            end = date.fromisoformat(end)
+
+        if begin is not None and end is not None and begin > end:
             raise ValueError("begin_date must be <= end_date")
+
         return value
