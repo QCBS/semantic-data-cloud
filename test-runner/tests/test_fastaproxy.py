@@ -239,7 +239,7 @@ def test_non_iso_8601_date():
 
     assert res.status_code == 422
     assert body["detail"][0]["type"] == "value_error"
-    assert "dates must be in YYYY-MM-DD format" in body["detail"][0]["msg"]
+    assert " Invalid isoformat string" in body["detail"][0]["msg"]
 
 
 def test_temporal_start_after_end():
@@ -353,9 +353,9 @@ def test_sparql_too_short_temporal():
 
     body = res.json()
 
-    assert body["detail"][0]["type"] == "value_error"
-    assert body["detail"][0]["loc"] == ["body", "temporal"]
-    assert "Temporal range must have exactly 2 values" in body["detail"][0]["msg"]
+    assert body["detail"][0]["type"] == "missing"
+    assert body["detail"][0]["loc"] == ["body", "temporal", 1]
+    assert "Field required" in body["detail"][0]["msg"]
 
 
 def test_sparql_too_long_temporal():
@@ -372,9 +372,9 @@ def test_sparql_too_long_temporal():
 
     body = res.json()
 
-    assert body["detail"][0]["type"] == "value_error"
+    assert body["detail"][0]["type"] == "too_long"
     assert body["detail"][0]["loc"] == ["body", "temporal"]
-    assert "Temporal range must have exactly 2 values" in body["detail"][0]["msg"]
+    assert "Tuple should have at most 2 items after validation" in body["detail"][0]["msg"]
 
 
 def test_cache_returns_same_result():

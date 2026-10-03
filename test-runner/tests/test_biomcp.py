@@ -265,7 +265,7 @@ async def test_sparql_non_iso_8601_dates_rejected():
         #
         assert text
         assert "API error" in text
-        assert "dates must be in YYYY-MM-DD format" in text
+        assert "Invalid isoformat string" in text
 
 
 @pytest.mark.asyncio
