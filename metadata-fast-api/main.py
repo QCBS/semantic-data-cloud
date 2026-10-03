@@ -168,16 +168,22 @@ async def search_datasets(
     loop = asyncio.get_running_loop()
 
     def _query():
-        params = [request.min_lon, request.max_lon, request.min_lat, request.max_lat, request.begin_date, request.end_date]
+        params = [request.min_lon, request.max_lon, request.min_lat, request.max_lat]
 
         conditions = [
             "max_lon >= ?",
             "min_lon <= ?",
             "max_lat >= ?",
             "min_lat <= ?",
-            "end_date >= ?",
-            "begin_date <= ?",
         ]
+
+        if  request.begin_date:
+            params.append(request.begin_date)
+            conditions.append("end_date >= ?")
+
+        if request.end_date:
+            params.append(request.end_date)
+            conditions.append("begin_date <= ?")
 
         if request.licenses:
             params.append(request.licenses)
@@ -188,6 +194,8 @@ async def search_datasets(
             conditions.append("maintenance_update_frequency = ANY(?)")
 
         query = "SELECT name FROM datasets WHERE " + " AND ".join(conditions) + ";"
+
+        print(query)
 
         return ddb.execute(query, params).fetchall()
 
