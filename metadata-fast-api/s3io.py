@@ -114,7 +114,12 @@ def _fetch_eml_from_s3(dataset, s3_client) -> tuple[dict, dict] | None:
 def _write_eml_to_duckdb(dataset, content, ddb):
     try:
         if len(dataset["assets"]) > 0:
-            content["assets"] = list(dataset["assets"].values())
+            content["assets"] = {
+                Path(file_name).stem: asset
+                for file_name, asset in dataset["assets"].items()
+            }
+            # content["assets"] = list(dataset["assets"].values())
+            #
             # if "occurrence.parquet" in dataset["assets"]:
             #     href = dataset["assets"]["occurrence.parquet"]["href"]
             #     content["recordedTaxa"] = species_from_occurrences(href, ddb)
