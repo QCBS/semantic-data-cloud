@@ -21,7 +21,7 @@ class MaintenanceFrequency(StrEnum):
 
 class QueryRequest(BaseModel):
     query: str
-    bbox: list[float] = Field([-180.0, -90.0, 180.0, 90.0], description="Bounding box for the desired datasets (in WGS84)")
+    bbox: tuple[float | None, float | None, float | None, float | None] | None  = Field(None, description="Bounding box for the desired datasets (in WGS84)")
     temporal: tuple[str | None, str | None] | None = Field(None, description="Begin and end dates for the desired datasets (in YYYY-MM-DD)")
     licenses: list[str] | None = Field(None, description="SPDX IDs of the licenses requested")
     maintenance: list[MaintenanceFrequency] | None = Field(None, description="Controlled vocabulary terms for maintenance update frequency")
