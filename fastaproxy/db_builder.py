@@ -39,7 +39,8 @@ def _fetch_dataset_json(dataset_id: str) -> dict:
 
 
 def _merge_assets(tables: dict[str, list[str]], dataset_json: dict) -> None:
-    for asset in dataset_json.get("assets", []):
+    # for asset in dataset_json.get("assets", []):
+    for asset in dataset_json.get("assets", {}).values():
         href = asset.get("href", "")
         if not href.endswith(".parquet"):
             continue
