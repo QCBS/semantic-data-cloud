@@ -196,21 +196,6 @@ def test_missing_query():
     assert body["detail"][0]["loc"] == ["body", "query"]
 
 
-def test_missing_spatial_value():
-    res = httpx2.post(
-        url=f"{FASTAPROXY_BASE_URL}/sparql",
-        json={
-            "query": "PREFIX dwc: <http://rs.tdwg.org/dwc/terms/> SELECT ?occ WHERE { ?occ a dwc:Occurrence } LIMIT 1",
-            "bbox": [-74.0684, 4.5958, -74.0684],
-        },
-    )
-
-    body = res.json()
-
-    assert res.status_code == 422
-    assert body["detail"][0]["type"] == "value_error"
-
-
 def test_non_numeric_spatial_value():
     res = httpx2.post(
         url=f"{FASTAPROXY_BASE_URL}/sparql",
@@ -315,9 +300,9 @@ def test_sparql_too_short_bbox():
 
     body = res.json()
 
-    assert body["detail"][0]["type"] == "value_error"
-    assert body["detail"][0]["loc"] == ["body", "bbox"]
-    assert "Spatial range bbox must have exactly 4 values" in body["detail"][0]["msg"]
+    assert body["detail"][0]["type"] == "missing"
+    assert body["detail"][0]["loc"] == ['body', 'bbox', 3]
+    assert "Field required" in body["detail"][0]["msg"]
 
 
 def test_sparql_too_long_bbox():
@@ -334,9 +319,9 @@ def test_sparql_too_long_bbox():
 
     body = res.json()
 
-    assert body["detail"][0]["type"] == "value_error"
+    assert body["detail"][0]["type"] == "too_long"
     assert body["detail"][0]["loc"] == ["body", "bbox"]
-    assert "Spatial range bbox must have exactly 4 values" in body["detail"][0]["msg"]
+    assert "Tuple should have at most 4 items after validation" in body["detail"][0]["msg"]
 
 
 def test_sparql_too_short_temporal():
