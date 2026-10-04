@@ -102,13 +102,13 @@ async def sparql_query(
 
         if body.bbox:
             min_lon, min_lat, max_lon, max_lat = body.bbox
-            if min_lon:
+            if min_lon is not None:
                 search_params.append(("min_lon", min_lon))
-            if min_lat:
+            if min_lat is not None:
                 search_params.append(("min_lat", min_lat))
-            if max_lon:
+            if max_lon is not None:
                 search_params.append(("max_lon", max_lon))
-            if max_lat:
+            if max_lat is not None:
                 search_params.append(("max_lat", max_lat))
 
         if body.temporal:

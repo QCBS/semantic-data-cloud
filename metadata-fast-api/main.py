@@ -171,19 +171,19 @@ async def search_datasets(
         params = []
         conditions = []
 
-        if  request.min_lon:
+        if  request.min_lon is not None:
             params.append(request.min_lon)
             conditions.append("max_lon >= ?")
 
-        if  request.max_lon:
+        if  request.max_lon is not None:
             params.append(request.max_lon)
             conditions.append("min_lon <= ?")
 
-        if  request.min_lat:
+        if  request.min_lat is not None:
             params.append(request.min_lat)
             conditions.append("max_lat >= ?")
 
-        if  request.max_lat:
+        if  request.max_lat is not None:
             params.append(request.max_lat)
             conditions.append("min_lat <= ?")
 
