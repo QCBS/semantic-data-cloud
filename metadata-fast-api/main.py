@@ -195,8 +195,6 @@ async def search_datasets(
 
         query = "SELECT name FROM datasets WHERE " + " AND ".join(conditions) + ";"
 
-        print(query)
-
         return ddb.execute(query, params).fetchall()
 
     rows = await loop.run_in_executor(None, _query)
