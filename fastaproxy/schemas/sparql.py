@@ -46,14 +46,18 @@ class QueryRequest(BaseModel):
 
     @field_validator("bbox")
     @classmethod
-    def validate_bbox(cls, value: list[float]) -> list[float]:
-        if len(value) != 4:
-            raise ValueError("Spatial range bbox must have exactly 4 values: [min_lon, min_lat, max_lon, max_lat]")
+    def validate_bbox(cls, value: tuple[float | None, float | None, float | None, float | None] | None) -> tuple[float | None, float | None, float | None, float | None] | None:
+        if value is None:
+            return None
+
         min_lon, min_lat, max_lon, max_lat = value
-        if min_lon > max_lon:
+
+        if min_lon is not None and max_lon is not None and min_lon > max_lon:
             raise ValueError("min_lon must be <= max_lon")
-        if min_lat > max_lat:
+
+        if min_lat is not None and max_lat is not None and min_lat > max_lat:
             raise ValueError("min_lat must be <= max_lat")
+
         return value
 
 
