@@ -98,14 +98,18 @@ async def sparql_query(
         print(body.licenses)
         print([maint.value for maint in (body.maintenance or [])])
 
-        min_lon, min_lat, max_lon, max_lat = body.bbox
+        search_params = []
 
-        search_params = [
-            ("min_lon", min_lon),
-            ("min_lat", min_lat),
-            ("max_lon", max_lon),
-            ("max_lat", max_lat),
-        ]
+        if body.bbox:
+            min_lon, min_lat, max_lon, max_lat = body.bbox
+            if min_lon:
+                search_params.append(("min_lon", min_lon))
+            if min_lat:
+                search_params.append(("min_lat", min_lat))
+            if max_lon:
+                search_params.append(("max_lon", max_lon))
+            if max_lat:
+                search_params.append(("max_lat", max_lat))
 
         if body.temporal:
             begin_date, end_date = body.temporal
