@@ -239,6 +239,69 @@ async def get_citations(
     return {"citations": [row[0] for row in rows]}
 
 
+@app.get("/search")
+async def search_datasets_get(
+    request: Annotated[DatasetRequest, Query()],
+    ddb = Depends(get_ddb),
+):
+    loop = asyncio.get_running_loop()
+
+    def _query():
+        params = []
+        conditions = []
+
+        if  request.min_lon is not None:
+            params.append(request.min_lon)
+            conditions.append("max_lon >= ?")
+
+        if  request.max_lon is not None:
+            params.append(request.max_lon)
+            conditions.append("min_lon <= ?")
+
+        if  request.min_lat is not None:
+            params.append(request.min_lat)
+            conditions.append("max_lat >= ?")
+
+        if  request.max_lat is not None:
+            params.append(request.max_lat)
+            conditions.append("min_lat <= ?")
+
+        if  request.begin_date:
+            params.append(request.begin_date)
+            conditions.append("end_date >= ?")
+
+        if request.end_date:
+            params.append(request.end_date)
+            conditions.append("begin_date <= ?")
+
+        if request.licenses:
+            params.append(request.licenses)
+            conditions.append("license_id = ANY(?)")
+
+        if request.maintenance:
+            params.append(request.maintenance)
+            conditions.append("maintenance_update_frequency = ANY(?)")
+
+        if len(params) > 0:
+            if request.limit:
+                params.append(request.limit)
+                query = "SELECT eml_content FROM datasets WHERE " + " AND ".join(conditions) + " LIMIT ?" +  ";"
+            else:
+                query = "SELECT eml_content FROM datasets WHERE " + " AND ".join(conditions) + ";"
+        else:
+            if request.limit:
+                params.append(request.limit)
+                query = "SELECT eml_content FROM datasets LIMIT ?;"
+            else:
+                query = "SELECT eml_content FROM datasets;"
+
+        return ddb.execute(query, params).fetchall()
+
+    rows = await loop.run_in_executor(None, _query)
+
+    return {"datasets": [orjson.loads(row[0]) for row in rows]}
+
+
 def _list_datasets(
         page: int,
         page_size: int,
