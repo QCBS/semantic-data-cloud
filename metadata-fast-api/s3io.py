@@ -92,6 +92,7 @@ def create_asset(folder, file_name):
     return {
         "href": f"{href}",
         "mimetype": "application/vnd.apache.parquet",
+        "roles": ["data"],
     }
 
 
