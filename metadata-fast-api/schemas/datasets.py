@@ -28,3 +28,4 @@ class DatasetRequest(BaseModel):
     end_date: date | None = Field(None, description="End of temporal range (YYYY-MM-DD)")
     licenses: list[str] | None = Field(None, description="SPDX IDs of the licenses requested")
     maintenance: list[MaintenanceFrequency] | None = Field(None, description="Controlled vocabulary terms for maintenance update frequency")
+    limit: int | None = Field(None, description="Number of EML documents to be returned", ge=1)
