@@ -107,14 +107,14 @@ async def read_root():
                 "rel": "search",
                 "type": "application/json",
                 "title": "Datasets search [GET]",
-                "href": f"{PUBLIC_BASE_URL}/datasets/search",
+                "href": f"{PUBLIC_BASE_URL}/search",
                 "method": "GET",
             },
             {
                 "rel": "search",
                 "type": "application/json",
                 "title": "Datasets search [POST]",
-                "href": f"{PUBLIC_BASE_URL}/datasets/search",
+                "href": f"{PUBLIC_BASE_URL}/search",
                 "method": "POST",
             },
             {
