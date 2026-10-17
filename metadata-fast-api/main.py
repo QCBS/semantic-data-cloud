@@ -309,7 +309,6 @@ async def search_datasets_get(
     return {"datasets": [orjson.loads(row[0]) for row in rows]}
 
 
-
 @app.post("/search")
 async def search_datasets_post(
     request: Annotated[DatasetRequest, Body()],

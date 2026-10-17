@@ -224,7 +224,7 @@ def test_non_iso_8601_date():
 
     assert res.status_code == 422
     assert body["detail"][0]["type"] == "value_error"
-    assert " Invalid isoformat string" in body["detail"][0]["msg"]
+    assert "Invalid isoformat string" in body["detail"][0]["msg"]
 
 
 def test_temporal_start_after_end():
@@ -301,7 +301,7 @@ def test_sparql_too_short_bbox():
     body = res.json()
 
     assert body["detail"][0]["type"] == "missing"
-    assert body["detail"][0]["loc"] == ['body', 'bbox', 3]
+    assert body["detail"][0]["loc"] == ["body", "bbox", 3]
     assert "Field required" in body["detail"][0]["msg"]
 
 

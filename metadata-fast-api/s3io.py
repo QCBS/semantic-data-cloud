@@ -119,8 +119,6 @@ def _write_eml_to_duckdb(dataset, content, ddb):
                 Path(file_name).stem: asset
                 for file_name, asset in dataset["assets"].items()
             }
-            # content["assets"] = list(dataset["assets"].values())
-            #
             # if "occurrence.parquet" in dataset["assets"]:
             #     href = dataset["assets"]["occurrence.parquet"]["href"]
             #     content["recordedTaxa"] = species_from_occurrences(href, ddb)
