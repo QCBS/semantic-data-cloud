@@ -6,7 +6,7 @@ import time
 from typing import Annotated
 #
 import duckdb
-from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
+from fastapi import Body, Depends, FastAPI, HTTPException, Query, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 import orjson
 from pydantic import BaseModel
@@ -107,8 +107,15 @@ async def read_root():
                 "rel": "search",
                 "type": "application/json",
                 "title": "Datasets search [GET]",
-                "href": f"{PUBLIC_BASE_URL}/datasets/search",
+                "href": f"{PUBLIC_BASE_URL}/search",
                 "method": "GET",
+            },
+            {
+                "rel": "search",
+                "type": "application/json",
+                "title": "Datasets search [POST]",
+                "href": f"{PUBLIC_BASE_URL}/search",
+                "method": "POST",
             },
             {
                 "rel": "service-desc",
@@ -168,16 +175,32 @@ async def search_datasets(
     loop = asyncio.get_running_loop()
 
     def _query():
-        params = [request.min_lon, request.max_lon, request.min_lat, request.max_lat, request.begin_date, request.end_date]
+        params = []
+        conditions = []
 
-        conditions = [
-            "max_lon >= ?",
-            "min_lon <= ?",
-            "max_lat >= ?",
-            "min_lat <= ?",
-            "end_date >= ?",
-            "begin_date <= ?",
-        ]
+        if  request.min_lon is not None:
+            params.append(request.min_lon)
+            conditions.append("max_lon >= ?")
+
+        if  request.max_lon is not None:
+            params.append(request.max_lon)
+            conditions.append("min_lon <= ?")
+
+        if  request.min_lat is not None:
+            params.append(request.min_lat)
+            conditions.append("max_lat >= ?")
+
+        if  request.max_lat is not None:
+            params.append(request.max_lat)
+            conditions.append("min_lat <= ?")
+
+        if  request.begin_date:
+            params.append(request.begin_date)
+            conditions.append("end_date >= ?")
+
+        if request.end_date:
+            params.append(request.end_date)
+            conditions.append("begin_date <= ?")
 
         if request.licenses:
             params.append(request.licenses)
@@ -187,7 +210,10 @@ async def search_datasets(
             params.append(request.maintenance)
             conditions.append("maintenance_update_frequency = ANY(?)")
 
-        query = "SELECT name FROM datasets WHERE " + " AND ".join(conditions) + ";"
+        if len(params) > 0:
+            query = "SELECT name FROM datasets WHERE " + " AND ".join(conditions) + ";"
+        else:
+            query = "SELECT name FROM datasets;"
 
         return ddb.execute(query, params).fetchall()
 
@@ -218,6 +244,132 @@ async def get_citations(
     rows = await loop.run_in_executor(None, _query)
 
     return {"citations": [row[0] for row in rows]}
+
+
+@app.get("/search")
+async def search_datasets_get(
+    request: Annotated[DatasetRequest, Query()],
+    ddb = Depends(get_ddb),
+):
+    loop = asyncio.get_running_loop()
+
+    def _query():
+        params = []
+        conditions = []
+
+        if  request.min_lon is not None:
+            params.append(request.min_lon)
+            conditions.append("max_lon >= ?")
+
+        if  request.max_lon is not None:
+            params.append(request.max_lon)
+            conditions.append("min_lon <= ?")
+
+        if  request.min_lat is not None:
+            params.append(request.min_lat)
+            conditions.append("max_lat >= ?")
+
+        if  request.max_lat is not None:
+            params.append(request.max_lat)
+            conditions.append("min_lat <= ?")
+
+        if  request.begin_date:
+            params.append(request.begin_date)
+            conditions.append("end_date >= ?")
+
+        if request.end_date:
+            params.append(request.end_date)
+            conditions.append("begin_date <= ?")
+
+        if request.licenses:
+            params.append(request.licenses)
+            conditions.append("license_id = ANY(?)")
+
+        if request.maintenance:
+            params.append(request.maintenance)
+            conditions.append("maintenance_update_frequency = ANY(?)")
+
+        if len(params) > 0:
+            if request.limit:
+                params.append(request.limit)
+                query = "SELECT eml_content FROM datasets WHERE " + " AND ".join(conditions) + " LIMIT ?" +  ";"
+            else:
+                query = "SELECT eml_content FROM datasets WHERE " + " AND ".join(conditions) + ";"
+        else:
+            if request.limit:
+                params.append(request.limit)
+                query = "SELECT eml_content FROM datasets LIMIT ?;"
+            else:
+                query = "SELECT eml_content FROM datasets;"
+
+        return ddb.execute(query, params).fetchall()
+
+    rows = await loop.run_in_executor(None, _query)
+
+    return {"datasets": [orjson.loads(row[0]) for row in rows]}
+
+
+@app.post("/search")
+async def search_datasets_post(
+    request: Annotated[DatasetRequest, Body()],
+    ddb = Depends(get_ddb),
+):
+    loop = asyncio.get_running_loop()
+
+    def _query():
+        params = []
+        conditions = []
+
+        if  request.min_lon is not None:
+            params.append(request.min_lon)
+            conditions.append("max_lon >= ?")
+
+        if  request.max_lon is not None:
+            params.append(request.max_lon)
+            conditions.append("min_lon <= ?")
+
+        if  request.min_lat is not None:
+            params.append(request.min_lat)
+            conditions.append("max_lat >= ?")
+
+        if  request.max_lat is not None:
+            params.append(request.max_lat)
+            conditions.append("min_lat <= ?")
+
+        if  request.begin_date:
+            params.append(request.begin_date)
+            conditions.append("end_date >= ?")
+
+        if request.end_date:
+            params.append(request.end_date)
+            conditions.append("begin_date <= ?")
+
+        if request.licenses:
+            params.append(request.licenses)
+            conditions.append("license_id = ANY(?)")
+
+        if request.maintenance:
+            params.append(request.maintenance)
+            conditions.append("maintenance_update_frequency = ANY(?)")
+
+        if len(params) > 0:
+            if request.limit:
+                params.append(request.limit)
+                query = "SELECT eml_content FROM datasets WHERE " + " AND ".join(conditions) + " LIMIT ?" +  ";"
+            else:
+                query = "SELECT eml_content FROM datasets WHERE " + " AND ".join(conditions) + ";"
+        else:
+            if request.limit:
+                params.append(request.limit)
+                query = "SELECT eml_content FROM datasets LIMIT ?;"
+            else:
+                query = "SELECT eml_content FROM datasets;"
+
+        return ddb.execute(query, params).fetchall()
+
+    rows = await loop.run_in_executor(None, _query)
+
+    return {"datasets": [orjson.loads(row[0]) for row in rows]}
 
 
 def _list_datasets(
