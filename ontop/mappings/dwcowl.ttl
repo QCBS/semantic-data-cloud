@@ -2036,6 +2036,17 @@ dwc:classificationCodes rdf:type owl:DatatypeProperty ;
                                      "9.AD.25" .
 
 
+###  http://rs.tdwg.org/dwc/terms/classificationSystem
+dwc:classificationSystem rdf:type owl:DatatypeProperty ;
+                         rdfs:label "Classification System" ;
+                         skos:definition "A reference to the classification system in which an authoritative name or formal classification belongs." ;
+                         skos:example "Gaines, R.V., Skinner, H.C.W., Foord, E.E., Mason, B., Rosenzweig, A. (1997): Dana's New Mineralogy: The System of Mineralogy of James Dwight Dana and Edward Salisbury Dana. 8th edition. John Wiley & Sons, New York, xlv + 1819 p. (ISBN 0-471-19310-0)." ,
+                                      "Index Fungorum. (2026). Index Fungorum electronic database. Royal Botanic Gardens, Kew. Retrieved August 17, 2026, from indexfungorum.org." ,
+                                      "Mammal Diversity Database. (2026). Mammal Diversity Database (Version 2.5) [Data set]. [Zenodo](https://zenodo.org/records/10595931). https://doi.org/10.5281/zenodo.17033774" ,
+                                      "Strunz, H., Nickel, E.H. (2001): Strunz Mineralogical Tables. Chemical-Structural Mineral Classification System. 9th edition. E. Schweizerbart’sche Verlagsbuchhandlung, Stuttgart, ix + 870 p. (ISBN 3-510-65188-X)" ,
+                                      "https://kos.geospecimens.org/vocab/meteorite-classification" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/collectedBy
 dwc:collectedBy rdf:type owl:DatatypeProperty ;
                 rdfs:label "Collected By" ;
@@ -3804,6 +3815,26 @@ dwc:substrate rdf:type owl:DatatypeProperty ;
                            "wooden board fence" .
 
 
+###  http://rs.tdwg.org/dwc/terms/subtribe
+dwc:subtribe rdf:type owl:DatatypeProperty ;
+             rdfs:label "Subtribe" ;
+             skos:definition "The full scientific name of the subtribe in which the dwc:Taxon is classified." ;
+             skos:example "Plotinini" ,
+                          "Typhaeini" .
+
+
+###  http://rs.tdwg.org/dwc/terms/superfamily
+dwc:superfamily rdf:type owl:DatatypeProperty ;
+                rdfs:label "Superfamily" ;
+                skos:definition "The full scientific name of the superfamily in which the dwc:Taxon is classified." ;
+                skos:example "Achatinoidea" ,
+                             "Cerithioidea" ,
+                             "Helicoidea" ,
+                             "Hypsibioidea" ,
+                             "Valvatoidea" ,
+                             "Zonitoidea" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/taxonAssignmentMethod
 dwc:taxonAssignmentMethod rdf:type owl:DatatypeProperty ;
                           rdfs:label "Taxon Assignment Method" ;
@@ -3871,6 +3902,14 @@ dwc:tectonicUnits rdf:type owl:DatatypeProperty ;
                   skos:example "Sublage Nappe" ,
                                "Upper Helvetic" ,
                                "Wildhorn Nappe Complex" .
+
+
+###  http://rs.tdwg.org/dwc/terms/tribe
+dwc:tribe rdf:type owl:DatatypeProperty ;
+          rdfs:label "Tribe" ;
+          skos:definition "The full scientific name of the tribe in which the dwc:Taxon is classified." ;
+          skos:example "Arethuseae" ,
+                       "Ortaliini" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/typeStatus
