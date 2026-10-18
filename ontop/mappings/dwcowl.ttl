@@ -2545,6 +2545,29 @@ dwc:geodeticDatum rdf:type owl:DatatypeProperty ;
                                "not recorded" .
 
 
+###  http://rs.tdwg.org/dwc/terms/geologicEvent
+dwc:geologicEvent rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Geologic Event" ;
+                  skos:definition "A name of an identifiable event during which one or more geologic processes acted to create or modify one or more dwc:GeologicalMaterials." ;
+                  skos:example "Alleghanian orogeny" ,
+                               "Alpine orogeny" ,
+                               "Sevier orogeny" ,
+                               "Variscan orogeny" ,
+                               "Vredefort impact" .
+
+
+###  http://rs.tdwg.org/dwc/terms/geologicProvince
+dwc:geologicProvince rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Geologic Province" ;
+                     skos:definition "An extensive named region with similar geologic history, structural, petrographic, or physiographic features throughout in which the GeologicalContext was located." ;
+                     skos:example "Basin and Range" ,
+                                  "Blue Ridge" ,
+                                  "Coastal Plain" ,
+                                  "Northwest Province" ,
+                                  "Piedmont" ,
+                                  "Surprise Paleovalley" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/geologicalContextID
 dwc:geologicalContextID rdf:type owl:DatatypeProperty ;
                         rdfs:label "Geological Context ID" ;
@@ -2856,6 +2879,16 @@ dwc:lifeStage rdf:type owl:DatatypeProperty ;
                            "larva" ,
                            "seedling" ,
                            "zygote" .
+
+
+###  http://rs.tdwg.org/dwc/terms/lithodemicUnit
+dwc:lithodemicUnit rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Lithodermic Unit" ;
+                   skos:definition "A geologic unit that lacks stratification, is primarily comprised of intrusive, deformed, and/or metamorphosed rock, and is characterized by irregularly mixed lithology or highly complicated structural relations." ;
+                   skos:example "Catalina Core Complex" ,
+                                "New England Plutonic Suite" ,
+                                "Sierra Nevada batholith" ,
+                                "injection complex" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/lithostratigraphicTerms
@@ -3795,6 +3828,15 @@ dwc:taxonRemarks rdf:type owl:DatatypeProperty ;
 dwc:taxonSortOrder rdf:type owl:DatatypeProperty ;
                    rdfs:label "Taxon Sort Order" ;
                    skos:definition "A numerical position of a dwc:Taxon in a taxonFormula." .
+
+
+###  http://rs.tdwg.org/dwc/terms/tectonicUnits
+dwc:tectonicUnits rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Tectonic Units" ;
+                  skos:definition "The combination of all tectonic unit names for the rock from which a dwc:MaterialEntity was collected." ;
+                  skos:example "Sublage Nappe" ,
+                               "Upper Helvetic" ,
+                               "Wildhorn Nappe Complex" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/typeStatus
