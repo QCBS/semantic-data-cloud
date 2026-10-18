@@ -4003,6 +4003,12 @@ dwc:typifiedName rdf:type owl:DatatypeProperty ;
                  skos:example "Polysiphonia amphibolis Womersley" .
 
 
+###  http://rs.tdwg.org/dwc/terms/usagePolicyID
+dwc:usagePolicyID rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Usage Policy ID" ;
+                  skos:definition "An identifier for a dwc:UsagePolicy." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/verbatimAssertionType
 dwc:verbatimAssertionType rdf:type owl:DatatypeProperty ;
                           rdfs:label "Verbatim Assertion Type" ;
