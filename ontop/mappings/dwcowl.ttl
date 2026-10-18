@@ -2883,7 +2883,7 @@ dwc:lifeStage rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/dwc/terms/lithodemicUnit
 dwc:lithodemicUnit rdf:type owl:DatatypeProperty ;
-                   rdfs:label "Lithodermic Unit" ;
+                   rdfs:label "Lithodemic Unit" ;
                    skos:definition "A geologic unit that lacks stratification, is primarily comprised of intrusive, deformed, and/or metamorphosed rock, and is characterized by irregularly mixed lithology or highly complicated structural relations." ;
                    skos:example "Catalina Core Complex" ,
                                 "New England Plutonic Suite" ,
