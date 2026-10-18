@@ -3564,6 +3564,35 @@ dwc:sampleSizeValue rdf:type owl:DatatypeProperty ;
                     skos:example 5 .
 
 
+###  http://rs.tdwg.org/dwc/terms/sampledSubstrateCategory
+dwc:sampledSubstrateCategory rdf:type owl:DatatypeProperty ;
+                             rdfs:label "Sampled Substrate Category" ;
+                             skos:definition "A category or type of substrate sampled during a dwc:Event." ;
+                             skos:example "ocean" ,
+                                          "soil" ,
+                                          "vegetation" .
+
+
+###  http://rs.tdwg.org/dwc/terms/sampledSubstrateLayer
+dwc:sampledSubstrateLayer rdf:type owl:DatatypeProperty ;
+                          rdfs:label "Sampled Substrate Layer" ;
+                          skos:definition "A list (concatenated and separated) of substrate layers sampled during a dwc:Event." ;
+                          skos:example "abysopelagic" ,
+                                       "bathypelagic" ,
+                                       "bedrock (R)" ,
+                                       "canopy" ,
+                                       "eluviated (E)" ,
+                                       "epipelagic | mesopelagic" ,
+                                       "forest floor" ,
+                                       "hadalpelagic" ,
+                                       "herbaceous | shrub" ,
+                                       "organic (O)" ,
+                                       "parent material (C)" ,
+                                       "subsoil (B)" ,
+                                       "surface (A)" ,
+                                       "understory" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/samplingPerformedByID
 dwc:samplingPerformedByID rdf:type owl:DatatypeProperty ;
                           rdfs:label "Sampling Performed By ID" ;
