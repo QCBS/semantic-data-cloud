@@ -2403,15 +2403,6 @@ dwc:eventID rdf:type owl:DatatypeProperty ;
             skos:example "INBO:VIS:Ev:00009375" .
 
 
-###  http://rs.tdwg.org/dwc/terms/eventReferences
-dwc:eventReferences rdf:type owl:DatatypeProperty ;
-                    rdfs:label "Event References" ;
-                    skos:definition "A list (concatenated and separated) of dcterms:BibliographicResources associated with a dwc:Event." ;
-                    skos:example "Christopher J. Conroy, Jennifer L. Neuwald. 2008. Phylogeographic study of the California vole, Microtus californicus Journal of Mammalogy, 89(3):755-767." ,
-                                 "Steven R. Hoofer and Ronald A. Van Den Bussche. 2001. Phylogenetic Relationships of Plecotine Bats and Allies Based on Mitochondrial Ribosomal Sequences. Journal of Mammalogy 82(1):131-137. | Walker, Faith M., Jeffrey T. Foster, Kevin P. Drees, Carol L. Chambers. 2014. Spotted bat (Euderma maculatum) microsatellite discovery using illumina sequencing. Conservation Genetics Resources" ,
-                                 "http://www.sciencemag.org/cgi/content/abstract/322/5899/261" .
-
-
 ###  http://rs.tdwg.org/dwc/terms/eventRemarks
 dwc:eventRemarks rdf:type owl:DatatypeProperty ;
                  rdfs:label "Event Remarks" ;
