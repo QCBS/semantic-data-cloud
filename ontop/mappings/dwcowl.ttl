@@ -3066,6 +3066,18 @@ dwc:namePublishedInYear rdf:type owl:DatatypeProperty ;
                                      "2008" .
 
 
+###  http://rs.tdwg.org/dwc/terms/namedPlace
+dwc:namedPlace rdf:type owl:DatatypeProperty ;
+               rdfs:label "Named Place" ;
+               skos:definition "The full, unabbreviated name of a geographic location not otherwise categorized by a dcterms:Location property that is naturally occurring or anthropogenic in origin within a historical, administrative, or cultural context in which a dcterms:Location occurs." ;
+               skos:example "11th Level, Bergwerksglücker Lode, Wiemannsbucht Mine" ,
+                            "Craigleith Quarry" ,
+                            "Hagerman Fossil Beds" ,
+                            "Mauna Kea" ,
+                            "NEON Niwot Ridge Mountain Research Station (NIWO)" ,
+                            "Red Cloud Mine" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/nomenclaturalCode
 dwc:nomenclaturalCode rdf:type owl:DatatypeProperty ;
                       rdfs:label "Nomenclatural Code" ;
