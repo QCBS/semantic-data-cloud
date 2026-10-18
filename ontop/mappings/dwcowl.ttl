@@ -2705,6 +2705,22 @@ dwc:identificationRemarks rdf:type owl:DatatypeProperty ;
                           skos:example "Distinguished between Anthus correndera and Anthus hellmayri based on the comparative lengths of the uñas." .
 
 
+###  http://rs.tdwg.org/dwc/terms/identificationType
+dwc:identificationType rdf:type owl:DatatypeProperty ;
+                       rdfs:label "Identification Type" ;
+                       skos:definition "A category that best matches the nature of a dwc:Identification." ;
+                       skos:example "features" ,
+                                    "fine features" ,
+                                    "functionalAttributes" ,
+                                    "geography" ,
+                                    "karyotype" ,
+                                    "media" ,
+                                    "nucleotideAnalysis" ,
+                                    "relationship" ,
+                                    "taxonomicRevision" ,
+                                    "unknown" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/identificationVerificationStatus
 dwc:identificationVerificationStatus rdf:type owl:DatatypeProperty ;
                                      rdfs:label "Identification Verification Status" ;
