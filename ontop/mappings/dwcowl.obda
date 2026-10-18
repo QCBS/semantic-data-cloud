@@ -33,7 +33,7 @@ xmprights:	http://ns.adobe.com/xap/1.0/rights/
 
 [MappingDeclaration] @collection [[
 mappingId	agent
-target		:agent/{agent_id} a dcterms:Agent ; dcterms:title {preferred_agent_name}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRemarks {agent_remarks}^^xsd:string ; dwc:agentType {agent_type}^^xsd:string . 
+target		:agent/{agent_pk} a dcterms:Agent ; dcterms:title {preferred_agent_name}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string , {agent_pk}^^xsd:string ; dwc:agentRemarks {agent_remarks}^^xsd:string ; dwc:agentType {agent_type}^^xsd:string . 
 source		SELECT * FROM dwcowl.main.agent
 
 mappingId	bibliographic_resource
