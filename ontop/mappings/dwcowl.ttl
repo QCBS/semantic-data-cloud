@@ -1942,6 +1942,25 @@ dwc:behavior rdf:type owl:DatatypeProperty ;
                           "running" .
 
 
+###  http://rs.tdwg.org/dwc/terms/bibliographicIdentifier
+dwc:bibliographicIdentifier rdf:type owl:DatatypeProperty ;
+                            rdfs:label "Bibliographic Identifier" ;
+                            skos:definition "A number or symbol to uniquely identify a dcterms:BibliographicResource." ;
+                            skos:example "10.1046/j.1420-9101.1997.10010039.x" ,
+                                         "10998406" ,
+                                         "978-0565095024" .
+
+
+###  http://rs.tdwg.org/dwc/terms/bibliographicIdentifierType
+dwc:bibliographicIdentifierType rdf:type owl:DatatypeProperty ;
+                                rdfs:label "Bibliographic Identifier Type" ;
+                                skos:definition "A code that best matches the nature of an identifier for a dcterms:BibliographicResource." ;
+                                skos:example "DOI" ,
+                                             "ISBN" ,
+                                             "ISSN" ,
+                                             "OCN" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/caste
 dwc:caste rdf:type owl:DatatypeProperty ;
           rdfs:range xsd:string ;
