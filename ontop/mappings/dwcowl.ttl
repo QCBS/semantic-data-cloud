@@ -3835,16 +3835,6 @@ dwc:superfamily rdf:type owl:DatatypeProperty ;
                              "Zonitoidea" .
 
 
-###  http://rs.tdwg.org/dwc/terms/taxonAssignmentMethod
-dwc:taxonAssignmentMethod rdf:type owl:DatatypeProperty ;
-                          rdfs:label "Taxon Assignment Method" ;
-                          skos:definition "Tool and thresholds used to compare sequences when computing 'species-level' OTUs." ;
-                          skos:example "2.6.0+" ,
-                                       "blastn" ,
-                                       "e-value cutoff: 0.001" ,
-                                       "identity cutoff: 0.97" .
-
-
 ###  http://rs.tdwg.org/dwc/terms/taxonFormula
 dwc:taxonFormula rdf:type owl:DatatypeProperty ;
                  rdfs:label "Taxon Formula" ;
