@@ -2242,20 +2242,6 @@ dwc:degreeOfEstablishment rdf:type owl:DatatypeProperty ;
                                        "widespreadInvasive" .
 
 
-###  http://rs.tdwg.org/dwc/terms/derivationEventID
-dwc:derivationEventID rdf:type owl:DatatypeProperty ;
-                      rdfs:label "Derivation Event ID" ;
-                      skos:definition "An identifier for a dwc:Event during which a dwc:MaterialEntity was derived from another dwc:MaterialEntity." .
-
-
-###  http://rs.tdwg.org/dwc/terms/derivationType
-dwc:derivationType rdf:type owl:DatatypeProperty ;
-                   rdfs:label "Derivation Type" ;
-                   skos:definition "A category that best matches the nature of the derivation of one dwc:MaterialEntity from another dwc:MaterialEntity." ;
-                   skos:example "included" ,
-                                "sampledFrom" .
-
-
 ###  http://rs.tdwg.org/dwc/terms/derivedFromMaterialEntityID
 dwc:derivedFromMaterialEntityID rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Derived From Material Entity ID" ;
