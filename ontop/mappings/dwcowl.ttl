@@ -2873,6 +2873,14 @@ dwc:locality rdf:type owl:DatatypeProperty ;
                           "Queets Rainforest, Olympic National Park" .
 
 
+###  http://rs.tdwg.org/dwc/terms/locationAccordingTo
+dwc:locationAccordingTo rdf:type owl:DatatypeProperty ;
+                        rdfs:label "Location According To" ;
+                        skos:definition "Information about the source of this dcterms:Location information. Could be a publication (gazetteer), institution, or team of individuals." ;
+                        skos:example "GADM" ,
+                                     "Getty Thesaurus of Geographic Names" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/locationID
 dwc:locationID rdf:type owl:DatatypeProperty ;
                rdfs:label "Location ID" ;
