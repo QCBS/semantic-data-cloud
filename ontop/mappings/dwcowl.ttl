@@ -2027,6 +2027,15 @@ dwc:class rdf:type owl:DatatypeProperty ;
                        "Mammalia" .
 
 
+###  http://rs.tdwg.org/dwc/terms/classificationCodes
+dwc:classificationCodes rdf:type owl:DatatypeProperty ;
+                        rdfs:label "Geological Classification Codes" ;
+                        skos:definition "A list (concatenated and separated) of codes that each identifies a name from a classification system applied to a dwc:GeologicalMaterial." ;
+                        skos:example "71.02.02a.01" ,
+                                     "75.01.03.01 | 4.DA.05" ,
+                                     "9.AD.25" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/collectedBy
 dwc:collectedBy rdf:type owl:DatatypeProperty ;
                 rdfs:label "Collected By" ;
@@ -2572,6 +2581,15 @@ dwc:geologicProvince rdf:type owl:DatatypeProperty ;
 dwc:geologicalContextID rdf:type owl:DatatypeProperty ;
                         rdfs:label "Geological Context ID" ;
                         skos:definition "An identifier for the set of information associated with a dwc:GeologicalContext (the location within a geological context, such as stratigraphy)." .
+
+
+###  http://rs.tdwg.org/dwc/terms/geologicalMaterialNames
+dwc:geologicalMaterialNames rdf:type owl:DatatypeProperty ;
+                            rdfs:label "Geological Material Names" ;
+                            skos:definition "A list (concatenated and separated) of mineral or lithotaxon names for a dwc:GeologicalMaterial." ;
+                            skos:example "garnet group" ,
+                                         "muscovite" ,
+                                         "quartz | smoky quartz" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/georeferenceProtocol
@@ -4425,24 +4443,6 @@ eco:voucherInstitutions rdf:type owl:DatatypeProperty ;
                         skos:example "AMNH | MVZ" ,
                                      "FMNH" ,
                                      "Nairobi National Museum" .
-
-
-###  http://rs.tdwg.org/mineralogy/terms/classificationCode
-minext:classificationCode rdf:type owl:DatatypeProperty ;
-                          rdfs:label "Geo Classification Code" ;
-                          skos:definition "An identifier for a minext:classificationCode." ;
-                          skos:example "71.02.02a.01" ,
-                                       "9.AD.25" .
-
-
-###  http://rs.tdwg.org/mineralogy/terms/name
-minext:name rdf:type owl:DatatypeProperty ;
-            rdfs:label "Geo Name" ;
-            skos:definition "A human-readable lexical label assigned to a mineral includes both informal (e.g., variety, synonym) and formal (classification) forms." ;
-            skos:example "Almandine" ,
-                         "Fluorite" ,
-                         "Garnet Group" ,
-                         "Plagioclase (Series)" .
 
 
 ###  https://w3id.org/mixs/0000001
