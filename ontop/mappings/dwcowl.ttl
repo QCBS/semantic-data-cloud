@@ -2155,6 +2155,15 @@ dwc:cultivarEpithet rdf:type owl:DatatypeProperty ;
                                  "Mishmiense" .
 
 
+###  http://rs.tdwg.org/dwc/terms/damageRemarks
+dwc:damageRemarks rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Damage Remarks" ;
+                  skos:definition "A general description of any physical changes to a dwc:MaterialEntity that have negatively affected its value." ;
+                  skos:example "Attached label not legible (or torn, or covered)" ,
+                               "Due to oxidation and hydration of the pyrite in the coal, the sample has largely decayed to a coal powder with some larger coal pieces" ,
+                               "Some terminations broken off" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/dataGeneralizations
 dwc:dataGeneralizations rdf:type owl:DatatypeProperty ;
                         rdfs:label "Data Generalizations" ;
@@ -2691,6 +2700,34 @@ dwc:habitat rdf:type owl:DatatypeProperty ;
                             "pre-cordilleran steppe" .
 
 
+###  http://rs.tdwg.org/dwc/terms/handlingRequirements
+dwc:handlingRequirements rdf:type owl:DatatypeProperty ;
+                         rdfs:label "Handling Requirements" ;
+                         skos:definition "A description of the procedures required to preserve and protect a dwc:MaterialEntity during handling." ;
+                         skos:example "avoid contact with direct sunlight" ,
+                                      "handle with gloves" ,
+                                      "not to be taken out of storage medium" .
+
+
+###  http://rs.tdwg.org/dwc/terms/hazardRemarks
+dwc:hazardRemarks rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Hazard Remarks" ;
+                  skos:definition "Comments or notes about the type of hazards associated with a dwc:MaterialEntity." ;
+                  skos:example "asbestos" ,
+                               "requires skin protection" ,
+                               "slightly radioactive" .
+
+
+###  http://rs.tdwg.org/dwc/terms/hazardType
+dwc:hazardType rdf:type owl:DatatypeProperty ;
+               rdfs:label "Hazard Type" ;
+               skos:definition "A term that belongs to a hazard classification scheme based on a set of unique characteristics and negative health outcomes." ;
+               skos:example "carcinogen" ,
+                            "radioactive" ,
+                            "skin irritant" ,
+                            "toxic" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/higherGeography
 dwc:higherGeography rdf:type owl:DatatypeProperty ;
                     rdfs:label "Higher Geography" ;
@@ -2980,6 +3017,16 @@ dwc:lowestBiostratigraphicZone rdf:type owl:DatatypeProperty ;
                                skos:example "Maastrichtian" .
 
 
+###  http://rs.tdwg.org/dwc/terms/materialDescription
+dwc:materialDescription rdf:type owl:DatatypeProperty ;
+                        rdfs:label "Material Description" ;
+                        skos:definition "Remarks on the physical characteristics of a dwc:MaterialEntity, particularly those that distinguish it from otherwise similar dwc:MaterialEntities." ;
+                        skos:example "Extraordinary composition" ,
+                                     "Historically valuable" ,
+                                     "Showpiece" ,
+                                     "Two generations of quartz" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/materialEntityCategory
 dwc:materialEntityCategory rdf:type owl:DatatypeProperty ;
                            rdfs:label "Material Category" ;
@@ -3037,6 +3084,15 @@ dwc:materialEntityType rdf:type owl:DatatypeProperty ;
                                     "Taxidermy mount" .
 
 
+###  http://rs.tdwg.org/dwc/terms/materialProportion
+dwc:materialProportion rdf:type owl:DatatypeProperty ;
+                       rdfs:label "Material Proportion" ;
+                       skos:definition "The qualitative or quantitative abundance of a dwc:MaterialEntity with respect to another dwc:MaterialEntity of which it is a part." ;
+                       skos:example "20%" ,
+                                    "dominant" ,
+                                    "minor" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/materialReferences
 dwc:materialReferences rdf:type owl:DatatypeProperty ;
                        rdfs:label "Material References" ;
@@ -3044,6 +3100,17 @@ dwc:materialReferences rdf:type owl:DatatypeProperty ;
                        skos:example "Christopher J. Conroy, Jennifer L. Neuwald. 2008. Phylogeographic study of the California vole, Microtus californicus Journal of Mammalogy, 89(3):755-767." ,
                                     "Steven R. Hoofer and Ronald A. Van Den Bussche. 2001. Phylogenetic Relationships of Plecotine Bats and Allies Based on Mitochondrial Ribosomal Sequences. Journal of Mammalogy 82(1):131-137. | Walker, Faith M., Jeffrey T. Foster, Kevin P. Drees, Carol L. Chambers. 2014. Spotted bat (Euderma maculatum) microsatellite discovery using illumina sequencing. Conservation Genetics Resources." ,
                                     "http://www.sciencemag.org/cgi/content/abstract/322/5899/261" .
+
+
+###  http://rs.tdwg.org/dwc/terms/materialRole
+dwc:materialRole rdf:type owl:DatatypeProperty ;
+                 rdfs:label "Material Role" ;
+                 skos:definition "A category that best matches the nature of the relationship between a dwc:MaterialEntity and another dwc:MaterialEntity of which it is a part." ;
+                 skos:example "groundmass" ,
+                              "matrix" ,
+                              "phenocryst" ,
+                              "vein" ,
+                              "xenolith" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/maximumDepthInMeters
@@ -3067,6 +3134,15 @@ dwc:maximumElevationInMeters rdf:type owl:DatatypeProperty ;
                              skos:definition "An upper limit of a range of elevation in meters above a dwc:verticalDatum." ;
                              skos:example -205 ,
                                           1236 .
+
+
+###  http://rs.tdwg.org/dwc/terms/measuredMassInGrams
+dwc:measuredMassInGrams rdf:type owl:DatatypeProperty ;
+                        rdfs:label "Measured Mass In Grams" ;
+                        skos:definition "Mass of a dwc:MaterialEntity, measured in grams." ;
+                        skos:example 0.03 ,
+                                     2.34 ,
+                                     56.6 .
 
 
 ###  http://rs.tdwg.org/dwc/terms/mediaID
@@ -3653,6 +3729,17 @@ dwc:sampleSizeValue rdf:type owl:DatatypeProperty ;
                     skos:example 5 .
 
 
+###  http://rs.tdwg.org/dwc/terms/sampledFeatureType
+dwc:sampledFeatureType rdf:type owl:DatatypeProperty ;
+                       rdfs:label "Sampled Feature Type" ;
+                       skos:definition "The type of naturally occurring or anthropogenic physical feature from which a dwc:MaterialEntity was sampled." ;
+                       skos:example "erratic boulder" ,
+                                    "float" ,
+                                    "mine dump" ,
+                                    "mine/quarry pit" ,
+                                    "outcrop" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/sampledSubstrateCategory
 dwc:sampledSubstrateCategory rdf:type owl:DatatypeProperty ;
                              rdfs:label "Sampled Substrate Category" ;
@@ -3894,12 +3981,26 @@ dwc:tectonicUnits rdf:type owl:DatatypeProperty ;
                                "Wildhorn Nappe Complex" .
 
 
+###  http://rs.tdwg.org/dwc/terms/treatments
+dwc:treatments rdf:type owl:DatatypeProperty ;
+               rdfs:label "Treatments" ;
+               skos:definition "Description of any processes or curatorial actions taken specifically to mitigate damage to a dwc:MaterialEntity." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/tribe
 dwc:tribe rdf:type owl:DatatypeProperty ;
           rdfs:label "Tribe" ;
           skos:definition "The full scientific name of the tribe in which the dwc:Taxon is classified." ;
           skos:example "Arethuseae" ,
                        "Ortaliini" .
+
+
+###  http://rs.tdwg.org/dwc/terms/typeOfType
+dwc:typeOfType rdf:type owl:DatatypeProperty ;
+               rdfs:label "Type Of Type" ;
+               skos:definition "A category of nomenclatural type of a dwc:MaterialEntity." ;
+               skos:example "holotype" ,
+                            "isotype" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/typeStatus
@@ -4006,6 +4107,15 @@ dwc:verbatimLongitude rdf:type owl:DatatypeProperty ;
                       rdfs:label "Verbatim Longitude" ;
                       skos:definition "A verbatim original longitude of a dcterms:Location." ;
                       skos:example "121d 10' 34\" W" .
+
+
+###  http://rs.tdwg.org/dwc/terms/verbatimMass
+dwc:verbatimMass rdf:type owl:DatatypeProperty ;
+                 rdfs:label "Verbatim Mass" ;
+                 skos:definition "The verbatim original representation of the mass of a dwc:MaterialEntity, including original units of measurement." ;
+                 skos:example "105.07 g" ,
+                              "11.01 Lbs" ,
+                              "2.45 kg" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/verbatimSRS
