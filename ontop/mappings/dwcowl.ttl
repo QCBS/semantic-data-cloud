@@ -3248,12 +3248,6 @@ dwc:parentEventID rdf:type owl:DatatypeProperty ;
                   skos:example "A1" .
 
 
-###  http://rs.tdwg.org/dwc/terms/parentReferenceID
-dwc:parentReferenceID rdf:type owl:DatatypeProperty ;
-                      rdfs:label "Parent Reference ID" ;
-                      skos:definition "An identifier for a dcterms:BibliographicResource that this dcterms:BibliographicResource is a part of." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/pathway
 dwc:pathway rdf:type owl:DatatypeProperty ;
             rdfs:label "Pathway" ;
