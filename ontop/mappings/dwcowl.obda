@@ -341,8 +341,8 @@ target		:survey-reference/{reference_id}/{survey_id} a dwc:SurveyReference ; dwc
 source		SELECT * FROM dwcowl.main.survey_reference
 
 mappingId	survey_target
-target		:survey-target/{survey_target_id} a eco:SurveyTarget ; eco:isSurveyTargetFullyReported {is_survey_target_fully_reported}^^xsd:boolean ; eco:surveyID {survey_id}^^xsd:string ; eco:surveyTargetID {survey_target_id}^^xsd:string ; dwcdp:targetFor :event/{survey_id} . 
-source		SELECT * FROM dwcowl.main.v_survey_target
+target		:survey-target/{survey_target_pk} a eco:SurveyTarget ; eco:abundanceCap {abundance_cap}^^xsd:integer ; eco:isSurveyTargetFullyReported {is_survey_target_fully_reported}^^xsd:boolean ; eco:surveyTargetDescription {survey_target_description}^^xsd:string ; eco:surveyTargetID {survey_target_id}^^xsd:string , {survey_target_pk}^^xsd:string ; eco:surveyTargetRemarks {survey_target_remarks}^^xsd:string . 
+source		SELECT * FROM dwcowl.main.survey_target
 
 mappingId	survey_target_definition
 target		:survey-target/{survey_target_id}/definition/{definition_key} a dwc:SurveyTargetDefinition ; dc:source {survey_target_type_source}^^xsd:string , {survey_target_value_source}^^xsd:string , {survey_target_unit_source}^^xsd:string ; dcterms:type <{survey_target_type_iri}> ; eco:surveyTargetType {survey_target_type}^^xsd:string ; eco:surveyTargetUnit {survey_target_unit}^^xsd:string ; eco:surveyTargetValue {survey_target_value}^^xsd:string ; dwciri:surveyTargetValue <{survey_target_value_iri}> ; eco:includeOrExclude {include_or_exclude}^^xsd:string ; dwciri:surveyTargetUnit <{survey_target_unit_iri}> . 
