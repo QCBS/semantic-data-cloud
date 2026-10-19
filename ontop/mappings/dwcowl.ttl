@@ -3756,6 +3756,18 @@ dwc:samplingPerformedByID rdf:type owl:DatatypeProperty ;
                           skos:example "https://orcid.org/0000-0002-1825-0097" .
 
 
+###  http://rs.tdwg.org/dwc/terms/samplingProtocol
+dwc:samplingProtocol rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Sampling Protocol" ;
+                     skos:definition "The names of, references to, or descriptions of the methods or protocols used during an eco:Survey." ;
+                     skos:example "Penguins from space: faecal stains reveal the location of emperor penguin colonies, https://doi.org/10.1111/j.1466-8238.2009.00467.x" ,
+                                  "Takats et al. 2001. Guidelines for Nocturnal Owl Monitoring in North America. Beaverhill Bird Observatory and Bird Studies Canada, Edmonton, Alberta. 32 pp., http://www.bsc-eoc.org/download/Owl.pdf" ,
+                                  "UV light trap" ,
+                                  "ad hoc observation | point count" ,
+                                  "bottom trawl" ,
+                                  "mist net" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/scientificName
 dwc:scientificName rdf:type owl:DatatypeProperty ;
                    rdfs:range xsd:string ;
