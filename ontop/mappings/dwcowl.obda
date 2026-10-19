@@ -73,7 +73,7 @@ target		:organism/{organism_pk} a dwc:Organism ; dwc:associatedOrganisms {associ
 source		SELECT * FROM dwcowl.main.organism
 
 mappingId	protocol
-target		:protocol/{protocol_id} a dwc:Protocol ; dwc:protocolDescription {protocol_description}^^xsd:string ; dwc:protocolID {protocol_id}^^xsd:string ; dwc:protocolRemarks {protocol_remarks}^^xsd:string ; dwc:protocolType {protocol_type}^^xsd:string ; eco:protocolReferences {protocol_references}^^xsd:string . 
+target		:protocol/{protocol_pk} a dwc:Protocol ; dwc:protocolDescription {protocol_description}^^xsd:string ; dwc:protocolID {protocol_id}^^xsd:string , {protocol_pk}^^xsd:string ; dwc:protocolRemarks {protocol_remarks}^^xsd:string ; dwc:protocolType {protocol_type}^^xsd:string ; eco:protocolReferences {protocol_references}^^xsd:string . 
 source		SELECT * FROM dwcowl.main.protocol
 
 mappingId	provenance
