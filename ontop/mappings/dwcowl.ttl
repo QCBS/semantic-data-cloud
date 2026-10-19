@@ -3528,12 +3528,6 @@ dwc:protocolType rdf:type owl:DatatypeProperty ;
                               "sampling effort" .
 
 
-###  http://rs.tdwg.org/dwc/terms/provenanceID
-dwc:provenanceID rdf:type owl:DatatypeProperty ;
-                 rdfs:label "Provenance ID" ;
-                 skos:definition "An identifier for a dwc:Provenance." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/readCount
 dwc:readCount rdf:type owl:DatatypeProperty ;
               rdfs:range xsd:integer ;
