@@ -4555,9 +4555,10 @@ eco:verbatimSiteNames rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/eco/terms/verbatimTargetScope
 eco:verbatimTargetScope rdf:type owl:DatatypeProperty ;
                         rdfs:label "Verbatim Target Scope" ;
-                        skos:definition "A verbatim original description of a dwc:Event scope." ;
-                        skos:example "dead animals, ground-living insects" ,
+                        skos:definition "The verbatim original description of an eco:Survey scope." ;
+                        skos:example "dead animals" ,
                                      "freshwater macroinvertebrates" ,
+                                     "ground-living insects" ,
                                      "small mammals" .
 
 
