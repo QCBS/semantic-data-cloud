@@ -29,6 +29,7 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix photoshop: <http://ns.adobe.com/photoshop/1.0/> .
 @prefix xmprights: <http://ns.adobe.com/xap/1.0/rights/> .
+@prefix Iptc4xmpExt: <http://iptc.org/std/Iptc4xmpExt/2008-02-29/> .
 @base <https://biobang.org/> .
 
 <http://example.org/dwcowl#> rdf:type owl:Ontology ;
