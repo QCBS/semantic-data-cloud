@@ -25,7 +25,6 @@
 @prefix chrono: <http://rs.tdwg.org/chrono/terms/> .
 @prefix dwciri: <http://rs.tdwg.org/dwc/iri/> .
 @prefix ecoiri: <http://rs.tdwg.org/eco/iri/> .
-@prefix minext: <http://rs.tdwg.org/mineralogy/terms/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix photoshop: <http://ns.adobe.com/photoshop/1.0/> .
 @prefix xmprights: <http://ns.adobe.com/xap/1.0/rights/> .
