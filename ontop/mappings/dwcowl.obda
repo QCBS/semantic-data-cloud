@@ -69,7 +69,7 @@ target		:nucleotide-sequence/{nucleotide_sequence_pk} a dwc:NucleotideSequence ;
 source		SELECT * FROM dwcowl.main.nucleotide_sequence
 
 mappingId	organism
-target		:organism/{organism_id} a dwc:Organism ; dwc:associatedOrganisms {associated_organisms}^^xsd:string ; dwc:causeOfDeath {cause_of_death}^^xsd:string ; dwc:organismID {organism_id}^^xsd:string ; dwc:organismName {organism_name}^^xsd:string ; dwc:organismRemarks {organism_remarks}^^xsd:string ; dwc:organismScope {organism_scope}^^xsd:string . 
+target		:organism/{organism_pk} a dwc:Organism ; dwc:associatedOrganisms {associated_organisms}^^xsd:string ; dwc:causeOfDeath {cause_of_death}^^xsd:string ; dwc:organismID {organism_id}^^xsd:string , {organism_pk}^^xsd:integer ; dwc:organismName {organism_name}^^xsd:string ; dwc:organismRemarks {organism_remarks}^^xsd:string ; dwc:organismScope {organism_scope}^^xsd:string . 
 source		SELECT * FROM dwcowl.main.organism
 
 mappingId	protocol
