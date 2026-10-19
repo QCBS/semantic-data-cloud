@@ -89,7 +89,7 @@ target		:usage-policy/{usage_policy_pk} a dwc:UsagePolicy ; ac:attributionLogoUR
 source		SELECT * FROM dwcowl.main.usage_policy
 
 mappingId	agent_agent_role
-target		:agent-agent-role/{agent_id}/{related_agent_id} a dwc:AgentAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:relatedAgentID {related_agent_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :agent/{related_agent_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+target		:agent-agent-role/{agent_fk}/{related_agent_fk} a dwc:AgentAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_fk}^^xsd:string , {related_agent_fk}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :agent/{related_agent_fk} ; dwcdp:roleHolder :agent/{agent_fk} . 
 source		SELECT * FROM dwcowl.main.agent_agent_role
 
 mappingId	agent_identifier
