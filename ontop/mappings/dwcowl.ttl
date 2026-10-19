@@ -4467,6 +4467,16 @@ eco:surveyID rdf:type owl:DatatypeProperty ;
              skos:definition "An identifier for an eco:Survey." .
 
 
+###  http://rs.tdwg.org/eco/terms/surveySiteType
+eco:surveySiteType rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Survey Site Type" ;
+                   skos:definition "A spatial category of a sampling location for an eco:Survey." ;
+                   skos:example "arealPlot" ,
+                                "horizontalTransect" ,
+                                "observationPoint" ,
+                                "verticalTransect" .
+
+
 ###  http://rs.tdwg.org/eco/terms/surveyTargetID
 eco:surveyTargetID rdf:type owl:DatatypeProperty ;
                    rdfs:label "Survey Target ID" ;
