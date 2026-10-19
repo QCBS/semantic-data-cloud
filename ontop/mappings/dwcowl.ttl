@@ -4489,10 +4489,25 @@ eco:surveySiteType rdf:type owl:DatatypeProperty ;
                                 "verticalTransect" .
 
 
+###  http://rs.tdwg.org/eco/terms/surveyTargetDescription
+eco:surveyTargetDescription rdf:type owl:DatatypeProperty ;
+                            rdfs:label "Survey Target Description" ;
+                            skos:definition "A verbatim description of an eco:SurveyTarget." ;
+                            skos:example "all flowering Rosaceae" ,
+                                         "all passerine birds" .
+
+
 ###  http://rs.tdwg.org/eco/terms/surveyTargetID
 eco:surveyTargetID rdf:type owl:DatatypeProperty ;
                    rdfs:label "Survey Target ID" ;
                    skos:definition "An identifier for an eco:SurveyTarget." .
+
+
+###  http://rs.tdwg.org/eco/terms/surveyTargetRemarks
+eco:surveyTargetRemarks rdf:type owl:DatatypeProperty ;
+                        rdfs:label "Survey Target Remarks" ;
+                        skos:definition "Comments or notes about an eco:SurveyTarget." ;
+                        skos:example "Survey target scopes reflect post-facto filtering, not original survey design." .
 
 
 ###  http://rs.tdwg.org/eco/terms/surveyTargetType
