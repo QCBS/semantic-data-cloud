@@ -28,7 +28,6 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix photoshop: <http://ns.adobe.com/photoshop/1.0/> .
 @prefix xmpRights: <http://ns.adobe.com/xap/1.0/rights/> .
-@prefix xmprights: <http://ns.adobe.com/xap/1.0/rights/> .
 @prefix Iptc4xmpExt: <http://iptc.org/std/Iptc4xmpExt/2008-02-29/> .
 @base <https://biobang.org/> .
 
@@ -900,19 +899,19 @@ xmp:Rating rdf:type owl:DatatypeProperty ;
 
 
 ###  http://ns.adobe.com/xap/1.0/rights/Owner
-xmprights:Owner rdf:type owl:DatatypeProperty ;
+xmpRights:Owner rdf:type owl:DatatypeProperty ;
                 rdfs:label "Owner" ;
                 skos:definition "An identifier for a dcterms:Agent that owns the copyright for a resource." .
 
 
 ###  http://ns.adobe.com/xap/1.0/rights/UsageTerms
-xmprights:UsageTerms rdf:type owl:DatatypeProperty ;
+xmpRights:UsageTerms rdf:type owl:DatatypeProperty ;
                      rdfs:label "Usage Terms" ;
                      skos:definition "A license statement defining how resources may be used. Information on a collection applies to all contained objects unless an object has a different statement." .
 
 
 ###  http://ns.adobe.com/xap/1.0/rights/WebStatement
-xmprights:WebStatement rdf:type owl:DatatypeProperty ;
+xmpRights:WebStatement rdf:type owl:DatatypeProperty ;
                        rdfs:label "Web Statement" ;
                        skos:definition "A URL defining or further elaborating on a license statement (e.g., a web page explaining the precise terms of use)" ;
                        skos:example "http://creativecommons.org/licenses/by-nc-sa/3.0/us/" .
