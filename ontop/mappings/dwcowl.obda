@@ -65,7 +65,7 @@ target		:molecular-protocol/{molecular_protocol_pk} a dwc:MolecularProtocol ; dw
 source		SELECT * FROM dwcowl.main.molecular_protocol
 
 mappingId	nucleotide_sequence
-target		:nucleotide-sequence/{nucleotide_sequence_id} a dwc:NucleotideSequence ; dwc:nucleotideSequenceID {nucleotide_sequence_id}^^xsd:string ; dwc:nucleotideSequenceRemarks {nucleotide_sequence_remarks}^^xsd:string ; dwc:sequence {sequence}^^xsd:string . 
+target		:nucleotide-sequence/{nucleotide_sequence_pk} a dwc:NucleotideSequence ; dwc:nucleotideSequenceID {nucleotide_sequence_id}^^xsd:string , {nucleotide_sequence_pk}^^xsd:string ; dwc:nucleotideSequenceRemarks {nucleotide_sequence_remarks}^^xsd:string ; dwc:sequence {sequence}^^xsd:string . 
 source		SELECT * FROM dwcowl.main.nucleotide_sequence
 
 mappingId	organism
