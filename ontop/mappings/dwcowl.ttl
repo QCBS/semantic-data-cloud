@@ -54,6 +54,12 @@ skos:example rdf:type owl:AnnotationProperty .
 #    Object Properties
 #################################################################
 
+###  http://iptc.org/std/Iptc4xmpExt/2008-02-29/CVterm
+Iptc4xmpExt:CVterm rdf:type owl:ObjectProperty ;
+                   rdfs:label "Subject Category" ;
+                   skos:definition "An IRI of a controlled vocabulary value for the subject category of an ac:Media resource." .
+
+
 ###  http://purl.org/dc/terms/accessRights
 dcterms:accessRights rdf:type owl:ObjectProperty ;
                      rdfs:label "Access Rights" ;
@@ -130,12 +136,6 @@ bibo:editor rdf:type owl:ObjectProperty ;
 bibo:status rdf:type owl:ObjectProperty ;
             rdfs:label "Status" ;
             skos:definition "An indication of whether a dcterms:BibliographicResource was peer reviewed." .
-
-
-###  http://rs.tdwg.org/ac/terms/CVterm
-ac:CVterm rdf:type owl:ObjectProperty ;
-          rdfs:label "Subject Category" ;
-          skos:definition "An IRI of a controlled vocabulary value for the subject category of an ac:Media resource." .
 
 
 ###  http://rs.tdwg.org/ac/terms/accessURI
