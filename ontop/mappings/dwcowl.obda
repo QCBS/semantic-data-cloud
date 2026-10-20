@@ -105,7 +105,7 @@ target		:chronometric-age/{chronometric_age_id} a chrono:ChronometricAge ; chron
 source		SELECT * FROM dwcowl.main.chronometric_age
 
 mappingId	event_agent_role
-target		:event-agent-role/{agent_id}/{event_id} a dwc:EventAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:eventID {event_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :event/{event_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+target		:event-agent-role/{agent_fk}/{event_fk} a dwc:EventAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_fk}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:eventID {event_fk}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwc:relationshipOfResourceID {agent_role_iri}^^xsd:string ; dwcdp:roleFor :event/{event_fk} ; dwcdp:roleHolder :agent/{agent_fk} . 
 source		SELECT * FROM dwcowl.main.event_agent_role
 
 mappingId	event_assertion
@@ -137,7 +137,7 @@ target		:event-media/{media_id}/{geological_context_id} a dwc:GeologicalContextM
 source		SELECT * FROM dwcowl.main.geological_context_media
 
 mappingId	identification_agent_role
-target		:identification-agent-role/{agent_id}/{identification_id} a dwc:IdentificationAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:identificationID {identification_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :identification/{identification_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+target		:identification-agent-role/{agent_fk}/{identification_fk} a dwc:IdentificationAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:identificationID {identification_fk}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwc:relationshipOfResourceID {agent_role_iri}^^xsd:string ; dwcdp:roleFor :identification/{identification_fk} ; dwcdp:roleHolder :agent/{agent_fk} . 
 source		SELECT * FROM dwcowl.main.identification_agent_role
 
 mappingId	identification_reference
@@ -153,7 +153,7 @@ target		:material-entity/{material_entity_pk} a dwc:MaterialEntity ; dcterms:lic
 source		SELECT * FROM dwcowl.main.material
 
 mappingId	media_agent_role
-target		:media-agent-role/{agent_id}/{media_id} a dwc:MediaAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:mediaID {media_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :media/{media_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+target		:media-agent-role/{agent_fk}/{media_fk} a dwc:MediaAgentRole ; dc:source {agent_role_source}^^xsd:string ; dcterms:identifier {media_fk}^^xsd:string ; dwc:agentID {agent_fk}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwc:relationshipOfResourceID {agent_role_iri}^^xsd:string ; dwcdp:roleFor :media/{media_fk} ; dwcdp:roleHolder :agent/{agent_fk} . 
 source		SELECT * FROM dwcowl.main.media_agent_role
 
 mappingId	media_assertion
@@ -173,7 +173,7 @@ target		:media/{media_id} dwcdp:hasUsagePolicy :usage-policy/{usage_policy_id} .
 source		SELECT * FROM dwcowl.main.media_usage_policy
 
 mappingId	molecular_protocol_agent_role
-target		:molecular-protocol-agent-role/{agent_id}/{molecular_protocol_id} a dwc:MolecularProtocolAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:molecularProtocolID {molecular_protocol_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :molecular-protocol/{molecular_protocol_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+target		:molecular-protocol-agent-role/{agent_fk}/{molecular_protocol_fk} a dwc:MolecularProtocolAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:molecularProtocolID {molecular_protocol_fk}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwc:relationshipOfResourceID {agent_role_iri}^^xsd:string ; dwcdp:roleFor :molecular-protocol/{molecular_protocol_fk} ; dwcdp:roleHolder :agent/{agent_fk} . 
 source		SELECT * FROM dwcowl.main.molecular_protocol_agent_role
 
 mappingId	molecular_protocol_assertion
@@ -217,7 +217,7 @@ target		:event/{survey_pk} a eco:Survey ; dcterms:title {preferred_event_name}^^
 source		SELECT * FROM dwcowl.main.j_survey
 
 mappingId	chronometric_age_agent_role
-target		:chronometric-age-agent-role/{agent_id}/{chronometric_age_id} a dwc:ChronometricAgeAgentRole ; chrono:chronometricAgeID {chronometric_age_id}^^xsd:string ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :chronometric-age/{chronometric_age_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+target		:chronometric-age-agent-role/{agent_fk}/{chronometric_age_fk} a dwc:ChronometricAgeAgentRole ; chrono:chronometricAgeID {chronometric_age_fk}^^xsd:string ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_fk}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwc:relationshipOfResourceID {agent_role_iri}^^xsd:string ; dwcdp:roleFor :chronometric-age/{chronometric_age_fk} ; dwcdp:roleHolder :agent/{agent_fk} . 
 source		SELECT * FROM dwcowl.main.chronometric_age_agent_role
 
 mappingId	chronometric_age_assertion
@@ -237,7 +237,7 @@ target		:chronometric-age-reference/{reference_id}/{chronometric_age_id} a dwc:C
 source		SELECT * FROM dwcowl.main.chronometric_age_reference
 
 mappingId	material_agent_role
-target		:material-agent-role/{agent_id}/{material_entity_id} a dwc:MaterialEntityAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:materialEntityID {material_entity_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :material-entity/{material_entity_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+target		:material-agent-role/{agent_fk}/{material_entity_fk} a dwc:MaterialEntityAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_fk}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:materialEntityID {material_entity_fk}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwc:relationshipOfResourceID {agent_role_iri}^^xsd:string ; dwcdp:roleFor :material-entity/{material_entity_fk} ; dwcdp:roleHolder :agent/{agent_fk} . 
 source		SELECT * FROM dwcowl.main.material_agent_role
 
 mappingId	material_assertion
@@ -277,7 +277,7 @@ target		:assertion/{assertion_id} a dwc:Assertion ; dc:source {assertion_type_so
 source		SELECT * FROM dwcowl.main.nucleotide_analysis_assertion
 
 mappingId	occurrence_agent_role
-target		:occurrence-agent-role/{agent_id}/{occurrence_id} a dwc:OccurrenceAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:occurrenceID {occurrence_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :event/{occurrence_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+target		:occurrence-agent-role/{agent_fk}/{occurrence_fk} a dwc:OccurrenceAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_fk}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:occurrenceID {occurrence_fk}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwc:relationshipOfResourceID {agent_role_iri}^^xsd:string ; dwcdp:roleFor :event/{occurrence_fk} ; dwcdp:roleHolder :agent/{agent_fk} . 
 source		SELECT * FROM dwcowl.main.occurrence_agent_role
 
 mappingId	occurrence_assertion
@@ -305,7 +305,7 @@ target		:event/{organism_interaction_id} a dwc:OrganismInteraction ; dc:source {
 source		SELECT * FROM dwcowl.main.j_organism_interaction
 
 mappingId	organism_interaction_agent_role
-target		:organism-interaction-agent-role/{agent_id}/{organism_interaction_id} a dwc:OrganismInteractionAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:organismInteractionID {organism_interaction_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :event/{organism_interaction_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+target		:organism-interaction-agent-role/{agent_fk}/{organism_interaction_fk} a dwc:OrganismInteractionAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_fk}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:organismInteractionID {organism_interaction_id}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwc:relationshipOfResourceID {agent_role_iri}^^xsd:string ; dwcdp:roleFor :event/{organism_interaction_fk} ; dwcdp:roleHolder :agent/{agent_fk} . 
 source		SELECT * FROM dwcowl.main.organism_interaction_agent_role
 
 mappingId	organism_interaction_assertion
@@ -321,7 +321,7 @@ target		:organism-interaction-reference/{reference_id}/{organism_interaction_id}
 source		SELECT * FROM dwcowl.main.organism_interaction_reference
 
 mappingId	survey_agent_role
-target		:survey-agent-role/{agent_id}/{survey_id} a dwc:SurveyAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; eco:surveyID {survey_id}^^xsd:string ; dwciri:agentRole <{agent_role_iri}> ; dwcdp:roleFor :survey/{survey_id} ; dwcdp:roleHolder :agent/{agent_id} . 
+target		:survey-agent-role/{agent_fk}/{survey_fk} a dwc:SurveyAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_fk}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; eco:surveyID {survey_fk}^^xsd:string ; dwc:relationshipOfResourceID {agent_role_iri}^^xsd:string ; dwcdp:roleFor :survey/{survey_fk} ; dwcdp:roleHolder :agent/{agent_fk} . 
 source		SELECT * FROM dwcowl.main.survey_agent_role
 
 mappingId	survey_assertion
