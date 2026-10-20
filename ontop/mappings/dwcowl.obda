@@ -93,7 +93,7 @@ target		:agent-agent-role/{agent_fk}/{related_agent_fk} a dwc:AgentAgentRole ; d
 source		SELECT * FROM dwcowl.main.agent_agent_role
 
 mappingId	agent_identifier
-target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:agentID {agent_id}^^xsd:string ; dwcdp:identifierFor :agent/{agent_id} . 
+target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:agentID {agent_fk}^^xsd:string ; dwcdp:identifierFor :agent/{agent_fk} . 
 source		SELECT * FROM dwcowl.main.agent_identifier
 
 mappingId	agent_media
@@ -113,7 +113,7 @@ target		:assertion/{assertion_id} a dwc:Assertion ; dc:source {assertion_type_so
 source		SELECT * FROM dwcowl.main.event_assertion
 
 mappingId	event_identifier
-target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:eventID {event_id}^^xsd:string ; dwcdp:identifierFor :event/{event_id} . 
+target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:eventID {event_fk}^^xsd:string ; dwcdp:identifierFor :event/{event_fk} . 
 source		SELECT * FROM dwcowl.main.event_identifier
 
 mappingId	event_media
@@ -161,7 +161,7 @@ target		:assertion/{assertion_id} a dwc:Assertion ; dc:source {assertion_type_so
 source		SELECT * FROM dwcowl.main.media_assertion
 
 mappingId	media_identifier
-target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:mediaID {media_id}^^xsd:string ; dwcdp:identifierFor :media/{media_id} . 
+target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:mediaID {media_fk}^^xsd:string ; dwcdp:identifierFor :media/{media_fk} . 
 source		SELECT * FROM dwcowl.main.media_identifier
 
 mappingId	media_provenance
@@ -197,7 +197,7 @@ target		:assertion/{assertion_id} a dwc:Assertion ; dc:source {assertion_type_so
 source		SELECT * FROM dwcowl.main.organism_assertion
 
 mappingId	organism_identifier
-target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:organismID {organism_id}^^xsd:string ; dwcdp:identifierFor :organism/{organism_id} . 
+target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:organismID {organism_fk}^^xsd:string ; dwcdp:identifierFor :organism/{organism_fk} . 
 source		SELECT * FROM dwcowl.main.organism_identifier
 
 mappingId	organism_reference
@@ -249,7 +249,7 @@ target		:material-entity/{material_entity_id} dwcdp:withinContext :geological-co
 source		SELECT * FROM dwcowl.main.material_geological_context
 
 mappingId	material_identifier
-target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:materialEntityID {material_entity_id}^^xsd:string ; dwcdp:identifierFor :material-entity/{material_entity_id} . 
+target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:materialEntityID {material_entity_fk}^^xsd:string ; dwcdp:identifierFor :material-entity/{material_entity_fk} . 
 source		SELECT * FROM dwcowl.main.material_identifier
 
 mappingId	material_media
@@ -285,7 +285,7 @@ target		:assertion/{assertion_id} a dwc:Assertion ; dc:source {assertion_type_so
 source		SELECT * FROM dwcowl.main.occurrence_assertion
 
 mappingId	occurrence_identifier
-target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:occurrenceID {occurrence_id}^^xsd:string ; dwcdp:identifierFor :event/{occurrence_id} . 
+target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; dwc:occurrenceID {occurrence_fk}^^xsd:string ; dwcdp:identifierFor :event/{occurrence_fk} . 
 source		SELECT * FROM dwcowl.main.occurrence_identifier
 
 mappingId	occurrence_media
@@ -329,7 +329,7 @@ target		:assertion/{assertion_id} a dwc:Assertion ; dc:source {assertion_type_so
 source		SELECT * FROM dwcowl.main.survey_assertion
 
 mappingId	survey_identifier
-target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; eco:surveyID {survey_id}^^xsd:string ; dwcdp:identifierFor :survey/{survey_id} . 
+target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xsd:string ; dc:source {identifier_type_source}^^xsd:string ; dc:type {identifier_type}^^xsd:string ; dcterms:type <{identifier_type_iri}> ; eco:surveyID {survey_fk}^^xsd:string ; dwcdp:identifierFor :survey/{survey_fk} . 
 source		SELECT * FROM dwcowl.main.survey_identifier
 
 mappingId	survey_protocol
