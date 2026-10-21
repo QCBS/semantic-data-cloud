@@ -121,7 +121,7 @@ target		:event-media/{media_fk}/{event_fk} a dwc:EventMedia ; ac:CVtermLiteral {
 source		SELECT * FROM dwcowl.main.event_media
 
 mappingId	event_protocol
-target		:event/{event_id} dwcdp:followed :protocol/{protocol_id} . :protocol/{protocol_id} dwcdp:usedDuring :event/{event_id} . 
+target		:event/{event_fk} dwcdp:followed :protocol/{protocol_fk} . :protocol/{protocol_fk} dwcdp:usedDuring :event/{event_fk} . 
 source		SELECT * FROM dwcowl.main.event_protocol
 
 mappingId	event_provenance
@@ -229,7 +229,7 @@ target		:chronometric-age-media/{media_fk}/{chronometric_age_fk} a dwc:Chronomet
 source		SELECT * FROM dwcowl.main.chronometric_age_media
 
 mappingId	chronometric_age_protocol
-target		:chronometric-age/{chronometric_age_id} dwcdp:followed :protocol/{protocol_id} . :protocol/{protocol_id} dwcdp:usedFor :chronometric-age/{chronometric_age_id} . 
+target		:chronometric-age/{chronometric_age_fk} dwcdp:followed :protocol/{protocol_fk} . :protocol/{protocol_fk} dwcdp:usedFor :chronometric-age/{chronometric_age_fk} . 
 source		SELECT * FROM dwcowl.main.chronometric_age_protocol
 
 mappingId	chronometric_age_reference
@@ -257,7 +257,7 @@ target		:material-media/{media_fk}/{material_entity_fk} a dwc:MaterialEntityMedi
 source		SELECT * FROM dwcowl.main.material_media
 
 mappingId	material_protocol
-target		:material-entity/{material_entity_id} dwcdp:followed :protocol/{protocol_id} . :protocol/{protocol_id} dwcdp:usedFor :material-entity/{material_entity_id} . 
+target		:material-entity/{material_entity_fk} dwcdp:followed :protocol/{protocol_fk} . :protocol/{protocol_fk} dwcdp:usedFor :material-entity/{material_entity_fk} . 
 source		SELECT * FROM dwcowl.main.material_protocol
 
 mappingId	material_provenance
@@ -293,7 +293,7 @@ target		:occurrence-media/{media_fk}/{occurrence_fk} a dwc:OccurrenceMedia ; ac:
 source		SELECT * FROM dwcowl.main.occurrence_media
 
 mappingId	occurrence_protocol
-target		:event/{occurrence_id} dwcdp:followed :protocol/{protocol_id} . :protocol/{protocol_id} dwcdp:usedDuring :event/{occurrence_id} . 
+target		:event/{occurrence_fk} dwcdp:followed :protocol/{protocol_fk} . :protocol/{protocol_fk} dwcdp:usedDuring :event/{occurrence_fk} . 
 source		SELECT * FROM dwcowl.main.occurrence_protocol
 
 mappingId	occurrence_reference
@@ -333,7 +333,7 @@ target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xs
 source		SELECT * FROM dwcowl.main.survey_identifier
 
 mappingId	survey_protocol
-target		:survey/{survey_id} dwcdp:followed :protocol/{protocol_id} . :protocol/{protocol_id} dwcdp:usedDuring :survey/{survey_id} . 
+target		:survey/{survey_fk} dwcdp:followed :protocol/{protocol_fk} . :protocol/{protocol_fk} dwcdp:usedDuring :survey/{survey_fk} . 
 source		SELECT * FROM dwcowl.main.survey_protocol
 
 mappingId	survey_reference
