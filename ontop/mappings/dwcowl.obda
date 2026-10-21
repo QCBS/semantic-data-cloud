@@ -129,7 +129,7 @@ target		:event/{event_fk} dwcdp:hasProvenance :provenance/{provenance_fk} . :pro
 source		SELECT * FROM dwcowl.main.event_provenance
 
 mappingId	event_reference
-target		:event-reference/{reference_id}/{event_id} a dwc:EventReference ; dwc:eventID {event_id}^^xsd:string ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :event/{event_id} ; dwcdp:mentionedIn :bibliographic-resource/{reference_id} . 
+target		:event-reference/{reference_fk}/{event_fk} a dwc:EventReference ; dwc:eventID {event_fk}^^xsd:string ; dwc:referenceID {reference_fk}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :event/{event_fk} ; dwcdp:mentionedIn :bibliographic-resource/{reference_fk} . 
 source		SELECT * FROM dwcowl.main.event_reference
 
 mappingId	geological_context_media
@@ -141,7 +141,7 @@ target		:identification-agent-role/{agent_fk}/{identification_fk} a dwc:Identifi
 source		SELECT * FROM dwcowl.main.identification_agent_role
 
 mappingId	identification_reference
-target		:identification-reference/{reference_id}/{identification_id} a dwc:IdentificationReference ; dwc:identificationID {identification_id}^^xsd:string ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:used :bibliographic-resource/{reference_id} ; dwcdp:usedFor :identification/{identification_id} . 
+target		:identification-reference/{reference_fk}/{identification_fk} a dwc:IdentificationReference ; dwc:identificationID {identification_fk}^^xsd:string ; dwc:referenceID {reference_fk}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:used :bibliographic-resource/{reference_fk} ; dwcdp:usedFor :identification/{identification_fk} . 
 source		SELECT * FROM dwcowl.main.identification_reference
 
 mappingId	identification_taxon
@@ -181,7 +181,7 @@ target		:assertion/{assertion_id} a dwc:Assertion ; dc:source {assertion_type_so
 source		SELECT * FROM dwcowl.main.molecular_protocol_assertion
 
 mappingId	molecular_protocol_reference
-target		:molecular-protocol-reference/{reference_id}/{molecular_protocol_id} a dwc:MolecularProtocolReference ; dwc:molecularProtocolID {molecular_protocol_id}^^xsd:string ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :molecular-protocol/{molecular_protocol_id} ; dwcdp:mentionedIn :bibliographic-resource/{reference_id} . 
+target		:molecular-protocol-reference/{reference_fk}/{molecular_protocol_fk} a dwc:MolecularProtocolReference ; dwc:molecularProtocolID {molecular_protocol_fk}^^xsd:string ; dwc:referenceID {reference_fk}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :molecular-protocol/{molecular_protocol_fk} ; dwcdp:mentionedIn :bibliographic-resource/{reference_fk} . 
 source		SELECT * FROM dwcowl.main.molecular_protocol_reference
 
 mappingId	nucleotide_analysis
@@ -201,7 +201,7 @@ target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xs
 source		SELECT * FROM dwcowl.main.organism_identifier
 
 mappingId	organism_reference
-target		:organism-reference/{reference_id}/{organism_id} a dwc:OrganismReference ; dwc:organismID {organism_id}^^xsd:string ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :organism/{organism_id} ; dwcdp:mentionedIn :bibliographic-resource/{reference_id} . 
+target		:organism-reference/{reference_fk}/{organism_fk} a dwc:OrganismReference ; dwc:organismID {organism_fk}^^xsd:string ; dwc:referenceID {reference_fk}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :organism/{organism_fk} ; dwcdp:mentionedIn :bibliographic-resource/{reference_fk} . 
 source		SELECT * FROM dwcowl.main.organism_reference
 
 mappingId	organism_relationship
@@ -209,7 +209,7 @@ target		:resource-relationship/{organism_relationship_id} a dwc:ResourceRelation
 source		SELECT * FROM dwcowl.main.organism_relationship
 
 mappingId	protocol_reference
-target		:protocol-reference/{reference_id}/{protocol_id} a dwc:ProtocolReference ; dwc:protocolID {protocol_id}^^xsd:string ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :protocol/{protocol_id} ; dwcdp:mentionedIn :bibliographic-resource/{reference_id} . 
+target		:protocol-reference/{reference_fk}/{protocol_fk} a dwc:ProtocolReference ; dwc:protocolID {protocol_fk}^^xsd:string ; dwc:referenceID {reference_fk}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :protocol/{protocol_fk} ; dwcdp:mentionedIn :bibliographic-resource/{reference_fk} . 
 source		SELECT * FROM dwcowl.main.protocol_reference
 
 mappingId	survey
@@ -233,7 +233,7 @@ target		:chronometric-age/{chronometric_age_fk} dwcdp:followed :protocol/{protoc
 source		SELECT * FROM dwcowl.main.chronometric_age_protocol
 
 mappingId	chronometric_age_reference
-target		:chronometric-age-reference/{reference_id}/{chronometric_age_id} a dwc:ChronometricAgeReference ; chrono:chronometricAgeID {chronometric_age_id}^^xsd:string ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :chronometric-age/{chronometric_age_id} ; dwcdp:mentionedIn :bibliographic-resource/{reference_id} . 
+target		:chronometric-age-reference/{reference_fk}/{chronometric_age_fk} a dwc:ChronometricAgeReference ; chrono:chronometricAgeID {chronometric_age_fk}^^xsd:string ; dwc:referenceID {reference_fk}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :chronometric-age/{chronometric_age_fk} ; dwcdp:mentionedIn :bibliographic-resource/{reference_fk} . 
 source		SELECT * FROM dwcowl.main.chronometric_age_reference
 
 mappingId	material_agent_role
@@ -265,7 +265,7 @@ target		:material-entity/{material_entity_fk} dwcdp:hasProvenance :provenance/{p
 source		SELECT * FROM dwcowl.main.material_provenance
 
 mappingId	material_reference
-target		:material-reference/{reference_id}/{material_entity_id} a dwc:MaterialEntityReference ; dwc:materialEntityID {material_entity_id}^^xsd:string ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :material-entity/{material_entity_id} ; dwcdp:mentionedIn :bibliographic-resource/{reference_id} . 
+target		:material-reference/{reference_fk}/{material_entity_fk} a dwc:MaterialEntityReference ; dwc:materialEntityID {material_entity_fk}^^xsd:string ; dwc:referenceID {reference_fk}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :material-entity/{material_entity_fk} ; dwcdp:mentionedIn :bibliographic-resource/{reference_fk} . 
 source		SELECT * FROM dwcowl.main.material_reference
 
 mappingId	material_usage_policy
@@ -297,7 +297,7 @@ target		:event/{occurrence_fk} dwcdp:followed :protocol/{protocol_fk} . :protoco
 source		SELECT * FROM dwcowl.main.occurrence_protocol
 
 mappingId	occurrence_reference
-target		:occurrence-reference/{reference_id}/{occurrence_id} a dwc:OccurrenceReference ; dwc:occurrenceID {occurrence_id}^^xsd:string ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :event/{occurrence_id} ; dwcdp:mentionedIn :bibliographic-resource/{reference_id} . 
+target		:occurrence-reference/{reference_fk}/{occurrence_fk} a dwc:OccurrenceReference ; dwc:occurrenceID {occurrence_fk}^^xsd:string ; dwc:referenceID {reference_fk}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :event/{occurrence_fk} ; dwcdp:mentionedIn :bibliographic-resource/{reference_fk} . 
 source		SELECT * FROM dwcowl.main.occurrence_reference
 
 mappingId	organism_interaction
@@ -317,7 +317,7 @@ target		:organism-interaction-media/{media_fk}/{organism_interaction_fk} a dwc:O
 source		SELECT * FROM dwcowl.main.organism_interaction_media
 
 mappingId	organism_interaction_reference
-target		:organism-interaction-reference/{reference_id}/{organism_interaction_id} a dwc:OrganismInteractionReference ; dwc:organismInteractionID {organism_interaction_id}^^xsd:string ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :event/{organism_interaction_id} ; dwcdp:mentionedIn :bibliographic-resource/{reference_id} . 
+target		:organism-interaction-reference/{reference_fk}/{organism_interaction_fk} a dwc:OrganismInteractionReference ; dwc:organismInteractionID {organism_interaction_fk}^^xsd:string ; dwc:referenceID {reference_fk}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; dwcdp:mentioned :event/{organism_interaction_fk} ; dwcdp:mentionedIn :bibliographic-resource/{reference_fk} . 
 source		SELECT * FROM dwcowl.main.organism_interaction_reference
 
 mappingId	survey_agent_role
@@ -337,7 +337,7 @@ target		:survey/{survey_fk} dwcdp:followed :protocol/{protocol_fk} . :protocol/{
 source		SELECT * FROM dwcowl.main.survey_protocol
 
 mappingId	survey_reference
-target		:survey-reference/{reference_id}/{survey_id} a dwc:SurveyReference ; dwc:referenceID {reference_id}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; eco:surveyID {survey_id}^^xsd:string ; dwcdp:mentioned :survey/{survey_id} ; dwcdp:mentionedIn :bibliographic-resource/{reference_id} . 
+target		:survey-reference/{reference_fk}/{survey_fk} a dwc:SurveyReference ; dwc:referenceID {reference_fk}^^xsd:string ; dwc:relationshipOfResource {relationship_type}^^xsd:string ; eco:surveyID {survey_fk}^^xsd:string ; dwcdp:mentioned :survey/{survey_fk} ; dwcdp:mentionedIn :bibliographic-resource/{reference_fk} . 
 source		SELECT * FROM dwcowl.main.survey_reference
 
 mappingId	survey_target
