@@ -3531,6 +3531,15 @@ dwc:protocolType rdf:type owl:DatatypeProperty ;
                               "sampling effort" .
 
 
+###  http://rs.tdwg.org/dwc/terms/rawTotalReadCount
+dwc:rawTotalReadCount rdf:type owl:DatatypeProperty ;
+                      rdfs:label "Raw Total Read Count" ;
+                      skos:definition 586031 ,
+                                      150456 ,
+                                      70463 ,
+                                      "A total number of raw, unprocessed reads from a dwc:NucleotideAnalysis." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/readCount
 dwc:readCount rdf:type owl:DatatypeProperty ;
               rdfs:range xsd:integer ;
