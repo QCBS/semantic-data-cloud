@@ -2785,6 +2785,7 @@ dwc:identifiedBy rdf:type owl:DatatypeProperty ;
                  rdfs:label "Identified By" ;
                  skos:definition "A list (concatenated and separated) of names of dcterms:Agents responsible for making a taxonomic determination of a dwc:Organism." ;
                  skos:example "James L. Patton" ,
+                              "MegaDetector V5" ,
                               "Theodore Pappenfuss | Robert Macey" .
 
 
@@ -2826,7 +2827,9 @@ dwc:institutionCode rdf:type owl:DatatypeProperty ;
                     skos:definition "A name (or acronym) an organization." ;
                     skos:example "CLO" ,
                                  "FMNH" ,
+                                 "Kew Gardens" ,
                                  "MVZ" ,
+                                 "National Museum of Kenya" ,
                                  "UCMP" .
 
 
