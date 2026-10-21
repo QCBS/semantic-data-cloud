@@ -125,7 +125,7 @@ target		:event/{event_id} dwcdp:followed :protocol/{protocol_id} . :protocol/{pr
 source		SELECT * FROM dwcowl.main.event_protocol
 
 mappingId	event_provenance
-target		:event/{event_id} dwcdp:hasProvenance :provenance/{provenance_id} . :provenance/{provenance_id} dwcdp:provenanceFor :event/{event_id} . 
+target		:event/{event_fk} dwcdp:hasProvenance :provenance/{provenance_fk} . :provenance/{provenance_fk} dwcdp:provenanceFor :event/{event_fk} . 
 source		SELECT * FROM dwcowl.main.event_provenance
 
 mappingId	event_reference
@@ -165,7 +165,7 @@ target		<{identifier}> a adms:Identifier ; dc:language {identifier_language}^^xs
 source		SELECT * FROM dwcowl.main.media_identifier
 
 mappingId	media_provenance
-target		:media/{media_id} dwcdp:hasProvenance :provenance/{provenance_id} . :provenance/{provenance_id} dwcdp:provenanceFor :media/{media_id} . 
+target		:media/{media_fk} dwcdp:hasProvenance :provenance/{provenance_fk} . :provenance/{provenance_fk} dwcdp:provenanceFor :media/{media_fk} . 
 source		SELECT * FROM dwcowl.main.media_provenance
 
 mappingId	media_usage_policy
@@ -261,7 +261,7 @@ target		:material-entity/{material_entity_id} dwcdp:followed :protocol/{protocol
 source		SELECT * FROM dwcowl.main.material_protocol
 
 mappingId	material_provenance
-target		:material-entity/{material_entity_id} dwcdp:hasProvenance :provenance/{provenance_id} . :provenance/{provenance_id} dwcdp:provenanceFor :material-entity/{material_entity_id} . 
+target		:material-entity/{material_entity_fk} dwcdp:hasProvenance :provenance/{provenance_fk} . :provenance/{provenance_fk} dwcdp:provenanceFor :material-entity/{material_entity_fk} . 
 source		SELECT * FROM dwcowl.main.material_provenance
 
 mappingId	material_reference
