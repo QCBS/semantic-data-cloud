@@ -169,7 +169,7 @@ target		:media/{media_fk} dwcdp:hasProvenance :provenance/{provenance_fk} . :pro
 source		SELECT * FROM dwcowl.main.media_provenance
 
 mappingId	media_usage_policy
-target		:media/{media_id} dwcdp:hasUsagePolicy :usage-policy/{usage_policy_id} . :usage-policy/{usage_policy_id} dwcdp:usagePolicyFor :media/{media_id} . 
+target		:media/{media_fk} dwcdp:hasUsagePolicy :usage-policy/{usage_policy_fk} . :usage-policy/{usage_policy_fk} dwcdp:usagePolicyFor :media/{media_fk} . 
 source		SELECT * FROM dwcowl.main.media_usage_policy
 
 mappingId	molecular_protocol_agent_role
@@ -269,7 +269,7 @@ target		:material-reference/{reference_id}/{material_entity_id} a dwc:MaterialEn
 source		SELECT * FROM dwcowl.main.material_reference
 
 mappingId	material_usage_policy
-target		:material-entity/{material_entity_id} dwcdp:hasUsagePolicy :usage-policy/{usage_policy_id} . :usage-policy/{usage_policy_id} dwcdp:usagePolicyFor :material-entity/{material_entity_id} . 
+target		:material-entity/{material_entity_fk} dwcdp:hasUsagePolicy :usage-policy/{usage_policy_fk} . :usage-policy/{usage_policy_fk} dwcdp:usagePolicyFor :material-entity/{material_entity_fk} . 
 source		SELECT * FROM dwcowl.main.material_usage_policy
 
 mappingId	nucleotide_analysis_assertion
@@ -407,5 +407,9 @@ source		SELECT * FROM dwcowl.main.part_of_transitive_occurrence
 mappingId	part_of_transitive_reflexive_occurrence
 target		:event/{child} dwcdp:partOfTransitiveReflexive :event/{ancestor} . 
 source		SELECT * FROM dwcowl.main.part_of_transitive_reflexive_occurrence
+
+mappingId	event_usage_policy
+target		:event/{event_fk} dwcdp:hasUsagePolicy :usage-policy/{usage_policy_fk} . :usage-policy/{usage_policy_fk} dwcdp:usagePolicyFor :event/{event_fk} . 
+source		SELECT * FROM dwcowl.main.event_usage_policy
 ]]
 
