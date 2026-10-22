@@ -448,6 +448,12 @@ dwcdp:hasProvenance rdf:type owl:ObjectProperty ;
                     skos:definition "An object property used to relate a resource to its dwc:Provenance." .
 
 
+###  http://rs.tdwg.org/dwcdp/terms/hasTarget
+dwcdp:hasTarget rdf:type owl:ObjectProperty ;
+                rdfs:label "Has Target" ;
+                skos:definition "An object property used to relate eco:SurveyTargets to the eco:Surveys they are targets for." .
+
+
 ###  http://rs.tdwg.org/dwcdp/terms/hasUsagePolicy
 dwcdp:hasUsagePolicy rdf:type owl:ObjectProperty ;
                      rdfs:label "Has Usage Policy" ;
