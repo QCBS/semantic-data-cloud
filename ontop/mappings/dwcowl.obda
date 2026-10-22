@@ -349,7 +349,7 @@ target		:survey-target/{survey_target_pk} a eco:SurveyTarget ; eco:abundanceCap 
 source		SELECT * FROM dwcowl.main.survey_target
 
 mappingId	survey_target_descriptor
-target		:survey-target-descriptor/{survey_target_fk}/{include_or_exclude} a eco:SurveyTargetDescriptor ; dc:source {survey_target_type_source}^^xsd:string , {survey_target_unit_source}^^xsd:string , {survey_target_value_source}^^xsd:string ; dcterms:type <{survey_target_type_iri}> , <{survey_target_unit_iri}> , <{survey_target_value_iri}> ; eco:includeOrExclude {include_or_exclude}^^xsd:string ; eco:surveyTargetID {survey_target_fk}^^xsd:string ; eco:surveyTargetType {survey_target_type}^^xsd:string ; eco:surveyTargetUnit {survey_target_unit}^^xsd:string ; eco:surveyTargetValue {survey_target_value}^^xsd:string . 
+target		:survey-target-descriptor/{survey_target_fk}/{include_or_exclude} a eco:SurveyTargetDescriptor ; dc:source {survey_target_type_source}^^xsd:string , {survey_target_unit_source}^^xsd:string , {survey_target_value_source}^^xsd:string ; dcterms:type <{survey_target_type_iri}> , <{survey_target_unit_iri}> , <{survey_target_value_iri}> ; eco:includeOrExclude {include_or_exclude}^^xsd:string ; eco:surveyTargetID {survey_target_fk}^^xsd:string ; eco:surveyTargetType {survey_target_type}^^xsd:string ; eco:surveyTargetUnit {survey_target_unit}^^xsd:string ; eco:surveyTargetValue {survey_target_value}^^xsd:string ; dwcdp:descriptorFor :survey-target/{survey_target_fk} . 
 source		SELECT * FROM dwcowl.main.survey_target_descriptor
 
 mappingId	survey_target_definition
