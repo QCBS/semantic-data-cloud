@@ -3534,10 +3534,10 @@ dwc:protocolType rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/rawTotalReadCount
 dwc:rawTotalReadCount rdf:type owl:DatatypeProperty ;
                       rdfs:label "Raw Total Read Count" ;
-                      skos:definition 586031 ,
-                                      150456 ,
-                                      70463 ,
-                                      "A total number of raw, unprocessed reads from a dwc:NucleotideAnalysis." .
+                      skos:definition "A total number of raw, unprocessed reads from a dwc:NucleotideAnalysis." ;
+                      skos:example 150456 ,
+                                   586031 ,
+                                   70463 .
 
 
 ###  http://rs.tdwg.org/dwc/terms/readCount
