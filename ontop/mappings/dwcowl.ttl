@@ -271,7 +271,7 @@ dwcdp:about rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/accordingTo
 dwcdp:accordingTo rdf:type owl:ObjectProperty ;
                   rdfs:label "According To" ;
-                  skos:definition "An object property used to relate a dwc:ResourceRelationship to the dcterm:Agent responsible for stating it." .
+                  skos:definition "An object property used to relate a dwc:ResourceRelationship to the dcterms:Agent responsible for stating it." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/ageFor
@@ -365,6 +365,12 @@ dwcdp:derivedFromTransitive rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/derivedFromTransitiveReflexive
 dwcdp:derivedFromTransitiveReflexive rdf:type owl:ObjectProperty ;
                                      rdfs:label "Derived From Transitive Reflexive" .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/descriptorFor
+dwcdp:descriptorFor rdf:type owl:ObjectProperty ;
+                    rdfs:label "Descriptor For" ;
+                    skos:definition "An object property used to relate a eco:SurveyTargetDescriptor to the eco:SurveyTarget it is a descriptor for." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/determinedBy
