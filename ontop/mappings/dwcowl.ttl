@@ -3624,6 +3624,13 @@ dwc:readCount rdf:type owl:DatatypeProperty ;
                            8302 .
 
 
+###  http://rs.tdwg.org/dwc/terms/recordNumber
+dwc:recordNumber rdf:type owl:DatatypeProperty ;
+                 rdfs:label "Record Number" ;
+                 skos:definition "An identifier given to the dwc:Occurrence at the time it was recorded. Often serves as a link between field notes and a dwc:MaterialEntity record, such as a specimen collector's number." ;
+                 skos:example "OPP 7101" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/recordedBy
 dwc:recordedBy rdf:type owl:DatatypeProperty ;
                rdfs:range xsd:string ;
