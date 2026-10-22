@@ -2571,6 +2571,13 @@ dwc:geologicEvent rdf:type owl:DatatypeProperty ;
                                "Vredefort impact" .
 
 
+###  http://rs.tdwg.org/dwc/terms/geologicMaterialNameID
+dwc:geologicMaterialNameID rdf:type owl:DatatypeProperty ;
+                           rdfs:label "Geologic Material Name ID" ;
+                           skos:definition "An identifier for a mineral or lithotaxon name for a dwc:GeologicalMaterial. May be a global unique identifier or an identifier specific to the data set." ;
+                           skos:example "https://geospecimens.org/api/v1/catalog/resource/mineral-name/ba673bdf-7228-11f0-a057-52f8e1bb0628" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/geologicProvince
 dwc:geologicProvince rdf:type owl:DatatypeProperty ;
                      rdfs:label "Geologic Province" ;
@@ -2587,6 +2594,18 @@ dwc:geologicProvince rdf:type owl:DatatypeProperty ;
 dwc:geologicalContextID rdf:type owl:DatatypeProperty ;
                         rdfs:label "Geological Context ID" ;
                         skos:definition "An identifier for the set of information associated with a dwc:GeologicalContext (the location within a geological context, such as stratigraphy)." .
+
+
+###  http://rs.tdwg.org/dwc/terms/geologicalMaterialNameTypes
+dwc:geologicalMaterialNameTypes rdf:type owl:DatatypeProperty ;
+                                rdfs:label "Geological Material Name Types" ;
+                                skos:definition "A list (concatenated and separated) of the types of names provided in dwc:geologicalMaterialNames." ;
+                                skos:example "classification" ,
+                                             "group" ,
+                                             "historical" ,
+                                             "species" ,
+                                             "species | variety" ,
+                                             "synonym" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/geologicalMaterialNames
@@ -3125,6 +3144,24 @@ dwc:maximumElevationInMeters rdf:type owl:DatatypeProperty ;
                                           1236 .
 
 
+###  http://rs.tdwg.org/dwc/terms/measuredChemistry
+dwc:measuredChemistry rdf:type owl:DatatypeProperty ;
+                      rdfs:label "Measured Chemistry" ;
+                      skos:definition "A concise expression of the chemical composition of a mineral that shows the number of atoms of each element in a molecule, their spatial arrangement, and their linkage to each other." ;
+                      skos:example "(Mg0.77Fe0.23)2SiO4" ,
+                                   "Al2O3 (2.21)" ,
+                                   "An6.4 Ab73.6 Or20" ,
+                                   "SiO2 (65.76)" ,
+                                   "TiO2 (32.120)" .
+
+
+###  http://rs.tdwg.org/dwc/terms/measuredChemistrySource
+dwc:measuredChemistrySource rdf:type owl:DatatypeProperty ;
+                            rdfs:label "Measured Chemistry Source" ;
+                            skos:definition "A list (concatenated and separated) of resources associated with the reported measured chemistry described specifically enough to allow anyone in the future to use the same resources." ;
+                            skos:example "Novak, G. A., & Gibbs, G. V. (1971). The crystal chemistry of the silicate garnets. American Mineralogist: Journal of Earth and Planetary Materials, 56(5-6), 791-825." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/measuredMassInGrams
 dwc:measuredMassInGrams rdf:type owl:DatatypeProperty ;
                         rdfs:label "Measured Mass In Grams" ;
@@ -3146,6 +3183,25 @@ dwc:member rdf:type owl:DatatypeProperty ;
            skos:definition "The full name of the lithostratigraphic member from which the dwc:MaterialEntity was collected." ;
            skos:example "Hellnmaria Member" ,
                         "Lava Dam Member" .
+
+
+###  http://rs.tdwg.org/dwc/terms/mineralSequence
+dwc:mineralSequence rdf:type owl:DatatypeProperty ;
+                    rdfs:label "Mineral Sequence" ;
+                    skos:definition "A list (concatenated and separated) of minerals in a dwc:GeologicalMaterial, ordered in a manner that illustrates the relative timing of mineral formation." ;
+                    skos:example "Calcite > Quartz > Sphalerite > Pyrite" ,
+                                 "Sphalerite > Quartz > Pyrite" .
+
+
+###  http://rs.tdwg.org/dwc/terms/mineralogicalAnalysisProtocol
+dwc:mineralogicalAnalysisProtocol rdf:type owl:DatatypeProperty ;
+                                  rdfs:label "Mineralogical Analysis Protocol" ;
+                                  skos:definition "A technique used to determine the chemical composition or crystallography of a mineral." ;
+                                  skos:example "Electron probe microanalysis" ,
+                                               "Scanning electron microscopy with energy-dispersive X-ray spectroscopy" ,
+                                               "Wet Chemistry" ,
+                                               "X-ray diffraction" ,
+                                               "X-ray fluorescence" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/minimumDepthInMeters
