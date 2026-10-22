@@ -123,16 +123,6 @@ def build_db(dataset_ids: list[str]) -> Path:
         WHERE rn = 1;
         """)
 
-        # NOTE: Create a view to join the survey table with its event-based context
-        #
-        con.execute("""
-        -- eco:Survey entity recreated with a join.
-        CREATE VIEW j_survey AS
-        SELECT *
-        FROM survey
-        JOIN event ON survey.event_id = event.event_id;
-        """)
-
         # NOTE: Create a view to join the occurrence table with its event-based context
         #
         con.execute("""
@@ -140,14 +130,14 @@ def build_db(dataset_ids: list[str]) -> Path:
         CREATE VIEW j_occurrence AS
         SELECT
             occurrence.*,
-            event.* EXCLUDE (parent_event_id),
+            event.* EXCLUDE (parent_event_fk),
             CASE
-                WHEN occurrence.event_id <> occurrence.occurrence_id
-                    THEN occurrence.event_id
-                ELSE event.parent_event_id
-            END AS parent_event_id
+                WHEN occurrence.event_fk <> occurrence.occurrence_pk
+                    THEN occurrence.event_fk
+                ELSE event.parent_event_fk
+            END AS parent_event_fk
         FROM occurrence
-        JOIN event ON occurrence.event_id = event.event_id;
+        JOIN event ON occurrence.event_fk = event.event_pk;
         """)
 
         # NOTE: Create a view to join the organism_interaction table with its event-based context
@@ -157,14 +147,31 @@ def build_db(dataset_ids: list[str]) -> Path:
         CREATE VIEW j_organism_interaction AS
         SELECT
             organism_interaction.*,
-            event.* EXCLUDE (parent_event_id),
+            event.* EXCLUDE (parent_event_fk),
             CASE
-                WHEN organism_interaction.event_id <> organism_interaction.organism_interaction_id
-                    THEN organism_interaction.event_id
-                ELSE event.parent_event_id
-            END AS parent_event_id
+                WHEN organism_interaction.event_fk <> organism_interaction.organism_interaction_pk
+                    THEN organism_interaction.event_fk
+                ELSE event.parent_event_fk
+            END AS parent_event_fk
         FROM organism_interaction
-        JOIN event ON organism_interaction.event_id = event.event_id;
+        JOIN event ON organism_interaction.event_fk = event.event_pk;
+        """)
+
+        # NOTE: Create a view to join the survey table with its event-based context
+        #
+        con.execute("""
+        -- eco:Survey entity recreated with a join.
+        CREATE VIEW j_survey AS
+        SELECT
+            survey.*,
+            event.* EXCLUDE (parent_event_fk),
+            CASE
+                WHEN survey.event_fk <> survey.survey_pk
+                    THEN survey.event_fk
+                ELSE event.parent_event_fk
+            END AS parent_event_fk
+        FROM survey
+        JOIN event ON survey.event_fk = event.event_pk;
         """)
 
         # NOTE: Add transitive and transitive_reflexive views
