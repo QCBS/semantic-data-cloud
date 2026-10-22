@@ -2001,6 +2001,12 @@ dwc:causeOfDeath rdf:type owl:DatatypeProperty ;
                               "vehicle collision" .
 
 
+###  http://rs.tdwg.org/dwc/terms/chemistryRemarks
+dwc:chemistryRemarks rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Chemistry Remarks" ;
+                     skos:definition "General remarks about the chemical and isotopic composition of a dwc:GeologicalMaterial." .
+
+
 ###  http://rs.tdwg.org/dwc/terms/chronometricAgeConversionProtocolID
 dwc:chronometricAgeConversionProtocolID rdf:type owl:DatatypeProperty ;
                                         rdfs:label "Chronometric Age Conversion Protocol ID" ;
