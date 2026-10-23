@@ -90,7 +90,7 @@ WITH RECURSIVE closure(child, ancestor) AS (
     FROM closure clo
     JOIN media med
         ON clo.ancestor = med.media_pk
-    WHERE med.derived_from_media_pk IS NOT NULL
+    WHERE med.derived_from_media_fk IS NOT NULL
 )
 
 SELECT DISTINCT child, ancestor
