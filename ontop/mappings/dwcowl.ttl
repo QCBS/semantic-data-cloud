@@ -2007,24 +2007,6 @@ dwc:chemistryRemarks rdf:type owl:DatatypeProperty ;
                      skos:definition "General remarks about the chemical and isotopic composition of a dwc:GeologicalMaterial." .
 
 
-###  http://rs.tdwg.org/dwc/terms/chronometricAgeConversionProtocolID
-dwc:chronometricAgeConversionProtocolID rdf:type owl:DatatypeProperty ;
-                                        rdfs:label "Chronometric Age Conversion Protocol ID" ;
-                                        skos:definition "An identifier for a dwc:Protocol used to convert a chrono:uncalibratedChronometricAge into a chronometric age in years, as captured in the chrono:earliestChronometricAge, chrono:earliestChronometricAgeReferenceSystem, chrono:latestChronometricAge, and chrono:latestChronometricAgeReferenceSystem fields." .
-
-
-###  http://rs.tdwg.org/dwc/terms/chronometricAgeDeterminedByID
-dwc:chronometricAgeDeterminedByID rdf:type owl:DatatypeProperty ;
-                                  rdfs:label "Chronometric Age Determined By ID" ;
-                                  skos:definition "An identifier for a dcterms:Agent responsible for determining a chrono:ChronometricAge." .
-
-
-###  http://rs.tdwg.org/dwc/terms/chronometricAgeProtocolID
-dwc:chronometricAgeProtocolID rdf:type owl:DatatypeProperty ;
-                              rdfs:label "Chronometric Age Protocol ID" ;
-                              skos:definition "An identifier for a dwc:Protocol used to determine a chrono:ChronometricAge." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/class
 dwc:class rdf:type owl:DatatypeProperty ;
           rdfs:label "Class" ;
