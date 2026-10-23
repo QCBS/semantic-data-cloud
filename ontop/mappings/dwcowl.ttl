@@ -1856,12 +1856,6 @@ dwc:assertionMadeDate rdf:type owl:DatatypeProperty ;
                                    "2018-08-29T15:19" .
 
 
-###  http://rs.tdwg.org/dwc/terms/assertionProtocolID
-dwc:assertionProtocolID rdf:type owl:DatatypeProperty ;
-                        rdfs:label "Assertion Protocol ID" ;
-                        skos:definition "An identifier for a dwc:Protocol used to make a dwc:Assertion." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/assertionProtocols
 dwc:assertionProtocols rdf:type owl:DatatypeProperty ;
                        rdfs:label "Assertion Protocols" ;
