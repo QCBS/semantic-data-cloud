@@ -2330,23 +2330,6 @@ dwc:eventCategory rdf:type owl:DatatypeProperty ;
                                "varied" .
 
 
-###  http://rs.tdwg.org/dwc/terms/eventConductedBy
-dwc:eventConductedBy rdf:type owl:DatatypeProperty ;
-                     rdfs:label "Event Conducted By" ;
-                     skos:definition "A list (concatenated and separated) of names of dcterms:Agents responsible for conducting or recording a dwc:Event." ;
-                     skos:example "FMNH" ,
-                                  "José E. Crespo" ,
-                                  "Oliver P. Pearson | Anita K. Pearson" .
-
-
-###  http://rs.tdwg.org/dwc/terms/eventConductedByID
-dwc:eventConductedByID rdf:type owl:DatatypeProperty ;
-                       rdfs:label "Event Conducted By ID" ;
-                       skos:definition "An identifier for a dcterms:Agent responsible for conducting or recording a dwc:Event." ;
-                       skos:example "https://orcid.org/0000-0002-1825-0097" ,
-                                    "https://ror.org/00mh9zx15" .
-
-
 ###  http://rs.tdwg.org/dwc/terms/eventDate
 dwc:eventDate rdf:type owl:DatatypeProperty ;
               rdfs:label "Event Date" ;
