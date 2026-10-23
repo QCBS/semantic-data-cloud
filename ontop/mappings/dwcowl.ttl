@@ -3385,7 +3385,8 @@ dwc:otherCatalogNumbers rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/ownerID
 dwc:ownerID rdf:type owl:DatatypeProperty ;
             rdfs:label "Owner ID" ;
-            skos:definition "An identifier for a dcterms:Agent that owns the copyright for a resource." .
+            skos:definition "An identifier for a dcterms:Agent that owns the copyright for a resource." ;
+            skos:example "https://orcid.org/0000-0002-1825-0097" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/ownerInstitutionCode
