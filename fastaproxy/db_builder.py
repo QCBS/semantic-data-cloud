@@ -95,19 +95,6 @@ def build_db(dataset_ids: list[str]) -> Path:
             rel = con.read_parquet(paths, union_by_name=True)
             rel.create_view(view_name=table_name)
 
-        # NOTE: Create views to handle the dwc:SurveyTarget definition
-        #
-        con.execute("""
-        -- Views to expose survey_target data without computed expressions.
-        CREATE VIEW v_survey_target AS
-        SELECT DISTINCT survey_target_id, survey_id, is_survey_target_fully_reported
-        FROM survey_target;
-
-        CREATE VIEW v_survey_target_with_key AS
-        SELECT *, LOWER(REPLACE(survey_target_type, ' ', '')) AS definition_key
-        FROM survey_target;
-        """)
-
         # NOTE: Create a view to separate dcterms:Location information from the event table
         #
         con.execute("""
