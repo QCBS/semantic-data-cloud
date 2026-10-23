@@ -2815,12 +2815,6 @@ dwc:isPartOfMaterialEntityID rdf:type owl:DatatypeProperty ;
                              skos:definition "An identifier for a dwc:MaterialEntity of which this dwc:MaterialEntity is a part." .
 
 
-###  http://rs.tdwg.org/dwc/terms/isPartOfOccurrenceID
-dwc:isPartOfOccurrenceID rdf:type owl:DatatypeProperty ;
-                         rdfs:label "Is Part Of Occurrence ID" ;
-                         skos:definition "An identifier for a dwc:Occurrence of which this dwc:Occurrence is a part." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/island
 dwc:island rdf:type owl:DatatypeProperty ;
            rdfs:label "Island" ;
