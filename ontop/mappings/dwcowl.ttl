@@ -2048,7 +2048,8 @@ dwc:collectionCode rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/collectionID
 dwc:collectionID rdf:type owl:DatatypeProperty ;
                  rdfs:label "Collection ID" ;
-                 skos:definition "An identifier for a collection." .
+                 skos:definition "An identifier for a collection." ;
+                 skos:example "https://scientific-collections.gbif.org/collection/fbd3ed74-5a21-4e01-b86a-33d36f032d9c" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/collectorNumber
