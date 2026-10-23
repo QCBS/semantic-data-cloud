@@ -897,7 +897,7 @@ photoshop:Credit rdf:type owl:DatatypeProperty ;
 
 ###  http://ns.adobe.com/xap/1.0/CreateDate
 xmp:CreateDate rdf:type owl:DatatypeProperty ;
-               rdfs:label "Original Date and Time" ;
+               rdfs:label "Original Date And Time" ;
                skos:example "The date and time a resource was created. For a digital file, this need not match a file-system creation time. For a freshly created resource, it should be close to that time, modulo the time taken to write the file. Later file transfer, copying, and so on, can make the file-system time arbitrarily different." .
 
 
@@ -2697,7 +2697,8 @@ dwc:highestBiostratigraphicZone rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/identificationID
 dwc:identificationID rdf:type owl:DatatypeProperty ;
                      rdfs:label "Identification ID" ;
-                     skos:definition "An identifier for a dwc:Identification." .
+                     skos:definition "An identifier for a dwc:Identification." ;
+                     skos:example "9992" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/identificationReferences
@@ -2750,7 +2751,9 @@ dwc:identifiedBy rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/identifiedByID
 dwc:identifiedByID rdf:type owl:DatatypeProperty ;
                    rdfs:label "Identified By ID" ;
-                   skos:definition "An identifier for a dcterms:Agent responsible for making a taxonomic determination of a dwc:Organism." .
+                   skos:definition "An identifier for a dcterms:Agent responsible for making a taxonomic determination of a dwc:Organism." ;
+                   skos:example "https://orcid.org/0000-0002-1825-0097" ,
+                                "https://orcid.org/0000-0002-1825-0097 | https://orcid.org/0000-0002-1825-0098" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/informationWithheld
