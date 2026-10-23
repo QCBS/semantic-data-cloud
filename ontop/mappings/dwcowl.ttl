@@ -2035,22 +2035,6 @@ dwc:classificationSystem rdf:type owl:DatatypeProperty ;
                                       "https://kos.geospecimens.org/vocab/meteorite-classification" .
 
 
-###  http://rs.tdwg.org/dwc/terms/collectedBy
-dwc:collectedBy rdf:type owl:DatatypeProperty ;
-                rdfs:label "Collected By" ;
-                skos:definition "A list (concatenated and separated) of names of dcterms:Agents responsible for collecting a dwc:MaterialEntity." ;
-                skos:example "José E. Crespo" ,
-                             "Oliver P. Pearson | Anita K. Pearson" .
-
-
-###  http://rs.tdwg.org/dwc/terms/collectedByID
-dwc:collectedByID rdf:type owl:DatatypeProperty ;
-                  rdfs:label "Collected By ID" ;
-                  skos:definition "An identifier for the dcterms:Agent responsible for collecting a dwc:MaterialEntity." ;
-                  skos:example "https://orcid.org/0000-0002-1825-0097" ,
-                               "https://ror.org/00mh9zx15" .
-
-
 ###  http://rs.tdwg.org/dwc/terms/collectionCode
 dwc:collectionCode rdf:type owl:DatatypeProperty ;
                    rdfs:label "Collection Code" ;
