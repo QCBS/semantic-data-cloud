@@ -2531,7 +2531,8 @@ dwc:geologicProvince rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/geologicalContextID
 dwc:geologicalContextID rdf:type owl:DatatypeProperty ;
                         rdfs:label "Geological Context ID" ;
-                        skos:definition "An identifier for the set of information associated with a dwc:GeologicalContext (the location within a geological context, such as stratigraphy)." .
+                        skos:definition "An identifier for the set of information associated with a dwc:GeologicalContext (the location within a geological context, such as stratigraphy)." ;
+                        skos:example "https://opencontext.org/subjects/e54377f7-4452-4315-b676-40679b10c4d9" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/geologicalMaterialNameTypes
