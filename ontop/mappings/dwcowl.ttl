@@ -3570,18 +3570,6 @@ dwc:referenceType rdf:type owl:DatatypeProperty ;
                   skos:definition "A category that best matches the nature of a dcterms:BibliographicResource." .
 
 
-###  http://rs.tdwg.org/dwc/terms/relatedAgentID
-dwc:relatedAgentID rdf:type owl:DatatypeProperty ;
-                   rdfs:label "Related Agent ID" ;
-                   skos:definition "An identifier for a related dcterms:Agent." .
-
-
-###  http://rs.tdwg.org/dwc/terms/relatedOccurrenceID
-dwc:relatedOccurrenceID rdf:type owl:DatatypeProperty ;
-                        rdfs:label "Related Occurrence ID" ;
-                        skos:definition "An identifier for a related dwc:Occurrence in a dwc:OrganismInteraction." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/relatedOrganismPart
 dwc:relatedOrganismPart rdf:type owl:DatatypeProperty ;
                         rdfs:label "Related Organism Part" ;
@@ -3603,12 +3591,6 @@ dwc:relatedResourceID rdf:type owl:DatatypeProperty ;
 dwc:relationshipAccordingTo rdf:type owl:DatatypeProperty ;
                             rdfs:label "Relationship According To" ;
                             skos:definition "A name of a dcterms:Agent responsible for asserting a dwc:ResourceRelationship." .
-
-
-###  http://rs.tdwg.org/dwc/terms/relationshipAccordingToID
-dwc:relationshipAccordingToID rdf:type owl:DatatypeProperty ;
-                              rdfs:label "Relationship According To ID" ;
-                              skos:definition "An identifier for a dcterms:Agent responsible for asserting a dwc:ResourceRelationship." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/relationshipEstablishedDate
