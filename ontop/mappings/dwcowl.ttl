@@ -1901,12 +1901,6 @@ dwc:assertionValue rdf:type owl:DatatypeProperty ;
                    skos:definition "An asserted value, if it is not numeric." .
 
 
-###  http://rs.tdwg.org/dwc/terms/assertionValueNumeric
-dwc:assertionValueNumeric rdf:type owl:DatatypeProperty ;
-                          rdfs:label "Assertion Value Numeric" ;
-                          skos:definition "An asserted value, if it is numeric." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/associatedOrganisms
 dwc:associatedOrganisms rdf:type owl:DatatypeProperty ;
                         rdfs:label "Associated Organisms" ;
@@ -4698,7 +4692,7 @@ eco:voucherInstitutions rdf:type owl:DatatypeProperty ;
 ###  https://w3id.org/mixs/0000001
 <https://w3id.org/mixs/0000001> rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Amount Or Size Of Sample Collected" ;
-                                skos:definition "The total amount or size (volume (ml), mass (g) or area (m2) ) of sample collected." ;
+                                skos:definition "The total amount or size (volume (ml), mass (g) or area (m2)) of sample collected." ;
                                 skos:example "5 liter" .
 
 
