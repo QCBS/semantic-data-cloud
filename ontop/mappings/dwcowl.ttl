@@ -2215,18 +2215,6 @@ dwc:degreeOfEstablishment rdf:type owl:DatatypeProperty ;
                                        "widespreadInvasive" .
 
 
-###  http://rs.tdwg.org/dwc/terms/derivedFromMaterialEntityID
-dwc:derivedFromMaterialEntityID rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Derived From Material Entity ID" ;
-                                skos:definition "An identifier for a dwc:MaterialEntity from which this dwc:MaterialEntity was derived." .
-
-
-###  http://rs.tdwg.org/dwc/terms/derivedFromMediaID
-dwc:derivedFromMediaID rdf:type owl:DatatypeProperty ;
-                       rdfs:label "Derived From Media ID" ;
-                       skos:definition "An identifier for an ac:Media resource from which this ac:Media resource was derived." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/digitalSpecimenID
 dwc:digitalSpecimenID rdf:type owl:DatatypeProperty ;
                       rdfs:label "Digital Specimen ID" ;
