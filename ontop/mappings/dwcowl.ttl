@@ -216,22 +216,22 @@ dwciri:agentRole rdf:type owl:ObjectProperty ;
                  skos:definition "An IRI of the controlled vocabulary value for a role of a dcterms:Agent." .
 
 
-###  http://rs.tdwg.org/dwc/iri/assertionType
-dwciri:assertionType rdf:type owl:ObjectProperty ;
-                     rdfs:label "Assertion Type" ;
-                     skos:definition "An IRI of a controlled vocabulary value for a type of dwc:Assertion." .
-
-
 ###  http://rs.tdwg.org/dwc/iri/assertionUnit
 dwciri:assertionUnit rdf:type owl:ObjectProperty ;
                      rdfs:label "Assertion Unit" ;
                      skos:definition "An IRI of a controlled vocabulary value for the unit of a dwc:assertionValue or a dwc:assertionValueNumeric." .
 
 
-###  http://rs.tdwg.org/dwc/iri/assertionValue
-dwciri:assertionValue rdf:type owl:ObjectProperty ;
-                      rdfs:label "Assertion Value" ;
-                      skos:definition "An IRI of the controlled vocabulary value for a value of a dwc:Assertion." .
+###  http://rs.tdwg.org/dwc/iri/measurementType
+dwciri:measurementType rdf:type owl:ObjectProperty ;
+                       rdfs:label "Measurement Type" ;
+                       skos:definition "An IRI of a controlled vocabulary value for a type of dwc:Assertion." .
+
+
+###  http://rs.tdwg.org/dwc/iri/measurementValue
+dwciri:measurementValue rdf:type owl:ObjectProperty ;
+                        rdfs:label "Measurement Value" ;
+                        skos:definition "An IRI of the controlled vocabulary value for a value of a dwc:Assertion." .
 
 
 ###  http://rs.tdwg.org/dwc/iri/ownerInstitution
