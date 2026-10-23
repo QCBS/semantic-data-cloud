@@ -3398,13 +3398,6 @@ dwc:ownerInstitutionCode rdf:type owl:DatatypeProperty ;
                                       "NPS" .
 
 
-###  http://rs.tdwg.org/dwc/terms/parentEventID
-dwc:parentEventID rdf:type owl:DatatypeProperty ;
-                  rdfs:label "Parent Event ID" ;
-                  skos:definition "An identifier for a broader dwc:Event that contains this and potentially other dwc:Events." ;
-                  skos:example "A1" .
-
-
 ###  http://rs.tdwg.org/dwc/terms/pathway
 dwc:pathway rdf:type owl:DatatypeProperty ;
             rdfs:label "Pathway" ;
