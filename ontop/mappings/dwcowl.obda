@@ -213,7 +213,7 @@ target		:molecular-protocol/{molecular_protocol_pk} a dwc:MolecularProtocol ; dw
 source		SELECT * FROM dwcowl.main.molecular_protocol
 
 mappingId	molecular_protocol_agent_role
-target		:molecular-protocol-agent-role/{agent_fk}/{molecular_protocol_fk} a dwc:MolecularProtocolAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_id}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:molecularProtocolID {molecular_protocol_fk}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwc:relationshipOfResourceID {agent_role_iri}^^xsd:string ; dwcdp:roleFor :molecular-protocol/{molecular_protocol_fk} ; dwcdp:roleHolder :agent/{agent_fk} . 
+target		:molecular-protocol-agent-role/{agent_fk}/{molecular_protocol_fk} a dwc:MolecularProtocolAgentRole ; dc:source {agent_role_source}^^xsd:string ; dwc:agentID {agent_fk}^^xsd:string ; dwc:agentRoleOrder {agent_role_order}^^xsd:integer ; dwc:molecularProtocolID {molecular_protocol_fk}^^xsd:string ; dwc:relationshipEstablishedDate {agent_role_date}^^xsd:string ; dwc:relationshipOfResource {agent_role}^^xsd:string ; dwc:relationshipOfResourceID {agent_role_iri}^^xsd:string ; dwcdp:roleFor :molecular-protocol/{molecular_protocol_fk} ; dwcdp:roleHolder :agent/{agent_fk} . 
 source		SELECT * FROM dwcowl.main.molecular_protocol_agent_role
 
 mappingId	molecular_protocol_assertion
