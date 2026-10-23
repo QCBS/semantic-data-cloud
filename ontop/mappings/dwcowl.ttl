@@ -2398,12 +2398,6 @@ dwc:evidenceForOccurrenceID rdf:type owl:DatatypeProperty ;
                             skos:definition "An identifier for a dwc:Occurrence for which a dwc:MaterialEntity provides evidence." .
 
 
-###  http://rs.tdwg.org/dwc/terms/externalRelatedOccurrenceID
-dwc:externalRelatedOccurrenceID rdf:type owl:DatatypeProperty ;
-                                rdfs:label "External Related Occurrence ID" ;
-                                skos:definition "An identifier for the related dwc:Occurrence (the object) of a dwc:ResourceRelationship that is not within the same dataset." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/family
 dwc:family rdf:type owl:DatatypeProperty ;
            rdfs:label "Family" ;
