@@ -220,7 +220,7 @@ WITH RECURSIVE closure(child, ancestor) AS (
         material_entity_pk AS child,
         is_part_of_material_entity_fk AS ancestor
     FROM material
-    WHERE is_part_of_material_entity_pk IS NOT NULL
+    WHERE is_part_of_material_entity_fk IS NOT NULL
 
     UNION
 
