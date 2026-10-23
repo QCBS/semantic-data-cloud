@@ -148,17 +148,17 @@ FROM closure;
 -- Define dwcdp:partOfTransitive for dcterms:BibliographicResource
 CREATE VIEW part_of_transitive_bibliographic_resource AS
 WITH RECURSIVE closure(child, ancestor) AS (
-    SELECT reference_pk, parent_reference_pk
+    SELECT reference_pk, is_part_of_reference_fk
     FROM bibliographic_resource
-    WHERE parent_reference_fk IS NOT NULL
+    WHERE is_part_of_reference_fk IS NOT NULL
 
     UNION ALL
 
-    SELECT clo.child, bib.parent_reference_fk
+    SELECT clo.child, bib.is_part_of_reference_fk
     FROM closure clo
     JOIN bibliographic_resource bib
     ON clo.ancestor = bib.reference_pk
-    WHERE bib.parent_reference_pk IS NOT NULL
+    WHERE bib.is_part_of_reference_fk IS NOT NULL
 )
 
 SELECT DISTINCT child, ancestor
@@ -169,9 +169,9 @@ CREATE VIEW part_of_transitive_reflexive_bibliographic_resource AS
 WITH RECURSIVE closure(child, ancestor) AS (
     SELECT
         reference_pk AS child,
-        parent_reference_fk AS ancestor
+        is_part_of_reference_fk AS ancestor
     FROM bibliographic_resource
-    WHERE parent_reference_fk IS NOT NULL
+    WHERE is_part_of_reference_fk IS NOT NULL
 
     UNION
 
@@ -184,11 +184,11 @@ WITH RECURSIVE closure(child, ancestor) AS (
 
     SELECT
         clo.child,
-        bib.parent_reference_fk AS ancestor
+        bib.is_part_of_reference_fk AS ancestor
     FROM closure clo
     JOIN bibliographic_resource bib
         ON clo.ancestor = bib.reference_pk
-    WHERE bib.parent_reference_fk IS NOT NULL
+    WHERE bib.is_part_of_reference_fk IS NOT NULL
 )
 
 SELECT DISTINCT child, ancestor
