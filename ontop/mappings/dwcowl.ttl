@@ -892,7 +892,7 @@ exif:PixelYDimension rdf:type owl:DatatypeProperty ;
 photoshop:Credit rdf:type owl:DatatypeProperty ;
                  rdfs:label "Credit" ;
                  skos:definition "Free text describing how credit should be attributed." ;
-                 skos:example "For example, `Please cite this as …" .
+                 skos:example "Please cite this as …" .
 
 
 ###  http://ns.adobe.com/xap/1.0/CreateDate
