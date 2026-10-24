@@ -1747,7 +1747,8 @@ chrono:materialDatedRelationship rdf:type owl:DatatypeProperty ;
 chrono:uncalibratedChronometricAge rdf:type owl:DatatypeProperty ;
                                    rdfs:label "Uncalibrated Chronometric Age" ;
                                    skos:definition "An output of a dating assay before it is calibrated into an age using a specific conversion protocol." ;
-                                   skos:example "1510 +/- 25 14C yr BP, 16.26 Ma +/- 0.016" .
+                                   skos:example "1510 +/- 25 14C yr BP" ,
+                                                "16.26 Ma +/- 0.016" .
 
 
 ###  http://rs.tdwg.org/chrono/terms/verbatimChronometricAge
