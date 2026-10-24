@@ -3627,13 +3627,6 @@ dwc:relationshipOfResourceID rdf:type owl:DatatypeProperty ;
                                           "https://www.inaturalist.org/observation_fields/879" .
 
 
-###  http://rs.tdwg.org/dwc/terms/relationshipOrder
-dwc:relationshipOrder rdf:type owl:DatatypeProperty ;
-                      rdfs:range xsd:integer ;
-                      rdfs:label "Relationship Order" ;
-                      skos:definition "A numerical position of a dwc:ResourceRelationship in a set of dwc:ResourceRelationships that have the same combination of dwc:organismID, dwc:relatedOrganismID, dwc:relationshipType, dwc:relationshipTypeIRI, and dwc:relationshipTypeSource." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/relationshipRemarks
 dwc:relationshipRemarks rdf:type owl:DatatypeProperty ;
                         rdfs:label "Relationship Remarks" ;
