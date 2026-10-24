@@ -4440,8 +4440,8 @@ eco:siteCount rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/eco/terms/siteNestingDescription
 eco:siteNestingDescription rdf:type owl:DatatypeProperty ;
                            rdfs:label "Site Nesting Description" ;
-                           skos:definition "5 sampling sites of 3-5 plots each" ;
-                           skos:example "Textual description of a hierarchical sampling design." .
+                           skos:definition "Textual description of a hierarchical sampling design." ;
+                           skos:example "5 sampling sites of 3-5 plots each" .
 
 
 ###  http://rs.tdwg.org/eco/terms/surveyID
