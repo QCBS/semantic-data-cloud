@@ -24,6 +24,7 @@
 @prefix dwcdp: <http://rs.tdwg.org/dwcdp/terms/> .
 @prefix chrono: <http://rs.tdwg.org/chrono/terms/> .
 @prefix dwciri: <http://rs.tdwg.org/dwc/iri/> .
+@prefix ecoiri: <http://rs.tdwg.org/eco/iri/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix photoshop: <http://ns.adobe.com/photoshop/1.0/> .
 @prefix xmpRights: <http://ns.adobe.com/xap/1.0/rights/> .
