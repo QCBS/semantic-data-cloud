@@ -234,18 +234,6 @@ dwciri:measurementValue rdf:type owl:ObjectProperty ;
                         skos:definition "An IRI of the controlled vocabulary value for a value of a dwc:Assertion." .
 
 
-###  http://rs.tdwg.org/dwc/iri/surveyTargetUnit
-dwciri:surveyTargetUnit rdf:type owl:ObjectProperty ;
-                        rdfs:label "Survey Target Unit" ;
-                        skos:definition "An IRI of a controlled vocabulary value for a target unit." .
-
-
-###  http://rs.tdwg.org/dwc/iri/surveyTargetValue
-dwciri:surveyTargetValue rdf:type owl:ObjectProperty ;
-                         rdfs:label "Survey Target Value" ;
-                         skos:definition "An IRI of a controlled vocabulary value for a target value." .
-
-
 ###  http://rs.tdwg.org/dwcdp/terms/about
 dwcdp:about rdf:type owl:ObjectProperty ;
             rdfs:label "About" ;
@@ -666,6 +654,18 @@ dwcdp:usedFor rdf:type owl:ObjectProperty ;
 dwcdp:withinContext rdf:type owl:ObjectProperty ;
                     rdfs:label "Within Context" ;
                     skos:definition "An object property to link a dcterms:Location or a dwc:MaterialEntity to the dwc:GeologicalContext within which it is situated." .
+
+
+###  http://rs.tdwg.org/eco/iri/surveyTargetUnit
+ecoiri:surveyTargetUnit rdf:type owl:ObjectProperty ;
+                        rdfs:label "Survey Target Unit" ;
+                        skos:definition "An IRI of a controlled vocabulary value for a target unit." .
+
+
+###  http://rs.tdwg.org/eco/iri/surveyTargetValue
+ecoiri:surveyTargetValue rdf:type owl:ObjectProperty ;
+                         rdfs:label "Survey Target Value" ;
+                         skos:definition "An IRI of a controlled vocabulary value for a target value." .
 
 
 ###  https://w3id.org/mixs/0000005
