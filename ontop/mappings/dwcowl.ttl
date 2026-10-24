@@ -204,12 +204,6 @@ ac:variant rdf:type owl:ObjectProperty ;
            skos:definition "The category describing this Service Access Point variant, denoted by an IRI." .
 
 
-###  http://rs.tdwg.org/ac/terms/variantIRI
-ac:variantIRI rdf:type owl:ObjectProperty ;
-              rdfs:label "Variant IRI" ;
-              skos:definition "The category describing this Service Access Point variant, denoted by an IRI." .
-
-
 ###  http://rs.tdwg.org/dwc/iri/agentRole
 dwciri:agentRole rdf:type owl:ObjectProperty ;
                  rdfs:label "Agent Role" ;
