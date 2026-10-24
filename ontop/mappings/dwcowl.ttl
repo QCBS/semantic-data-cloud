@@ -5072,7 +5072,7 @@ eco:voucherInstitutions rdf:type owl:DatatypeProperty ;
 
 ###  https://w3id.org/mixs/0001320
 <https://w3id.org/mixs/0001320> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Taxonomy ID of DNA Sample" ;
+                                rdfs:label "Taxonomy ID Of DNA Sample" ;
                                 skos:definition "NCBI taxon id of the sample. Maybe be a single taxon or mixed taxa sample. Use `synthetic metagenome` for mock community/positive controls, or `blank sample` for negative controls." ;
                                 skos:example "Gut Metagenome [NCBITaxon:749906]" .
 
