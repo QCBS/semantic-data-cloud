@@ -321,12 +321,6 @@ dwcdp:commentedBy rdf:type owl:ObjectProperty ;
                   rdfs:label "Commented By" .
 
 
-###  http://rs.tdwg.org/dwcdp/terms/conductedBy
-dwcdp:conductedBy rdf:type owl:ObjectProperty ;
-                  rdfs:label "Conducted By" ;
-                  skos:definition "An object property to relate a dwc:Event to the dcterms:Agent that conducted it." .
-
-
 ###  http://rs.tdwg.org/dwcdp/terms/contextFor
 dwcdp:contextFor rdf:type owl:ObjectProperty ;
                  rdfs:label "Context For" ;
