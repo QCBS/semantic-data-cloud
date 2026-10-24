@@ -24,7 +24,6 @@
 @prefix dwcdp: <http://rs.tdwg.org/dwcdp/terms/> .
 @prefix chrono: <http://rs.tdwg.org/chrono/terms/> .
 @prefix dwciri: <http://rs.tdwg.org/dwc/iri/> .
-@prefix ecoiri: <http://rs.tdwg.org/eco/iri/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix photoshop: <http://ns.adobe.com/photoshop/1.0/> .
 @prefix xmpRights: <http://ns.adobe.com/xap/1.0/rights/> .
@@ -673,12 +672,6 @@ dwcdp:usedFor rdf:type owl:ObjectProperty ;
 dwcdp:withinContext rdf:type owl:ObjectProperty ;
                     rdfs:label "Within Context" ;
                     skos:definition "An object property to link a dcterms:Location or a dwc:MaterialEntity to the dwc:GeologicalContext within which it is situated." .
-
-
-###  http://rs.tdwg.org/eco/iri/samplingEffortProtocol
-ecoiri:samplingEffortProtocol rdf:type owl:ObjectProperty ;
-                              rdfs:label "Sampling Effort Protocol" ;
-                              skos:definition "An identifier for a dwc:Protocol used to determine a eco:samplingEffortValue." .
 
 
 ###  https://w3id.org/mixs/0000005

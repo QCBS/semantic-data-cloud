@@ -25,7 +25,6 @@ skos:		http://www.w3.org/2004/02/skos/core#
 dwcdp:		http://rs.tdwg.org/dwcdp/terms/
 chrono:		http://rs.tdwg.org/chrono/terms/
 dwciri:		http://rs.tdwg.org/dwc/iri/
-ecoiri:		http://rs.tdwg.org/eco/iri/
 dcterms:		http://purl.org/dc/terms/
 photoshop:	http://ns.adobe.com/photoshop/1.0/
 xmpRights:	http://ns.adobe.com/xap/1.0/rights/
