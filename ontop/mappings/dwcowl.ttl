@@ -233,13 +233,6 @@ dwciri:measurementValue rdf:type owl:ObjectProperty ;
                         skos:definition "An IRI of the controlled vocabulary value for a value of a dwc:Assertion." .
 
 
-###  http://rs.tdwg.org/dwc/iri/samplingPerformedBy
-dwciri:samplingPerformedBy rdf:type owl:ObjectProperty ;
-                           rdfs:label "Sampling Performed By" ;
-                           skos:definition "An identifier for a dcterms:Agent responsible for sampling." ;
-                           skos:example "https://orcid.org/0000-0002-1825-0097" .
-
-
 ###  http://rs.tdwg.org/dwc/iri/surveyTargetUnit
 dwciri:surveyTargetUnit rdf:type owl:ObjectProperty ;
                         rdfs:label "Survey Target Unit" ;
