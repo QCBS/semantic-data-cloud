@@ -3932,7 +3932,9 @@ dwc:taxonRemarks rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/taxonSortOrder
 dwc:taxonSortOrder rdf:type owl:DatatypeProperty ;
                    rdfs:label "Taxon Sort Order" ;
-                   skos:definition "A numerical position of a dwc:Taxon in a taxonFormula." .
+                   skos:definition "A numerical position of a dwc:Taxon in a taxonFormula." ;
+                   skos:example 1 ,
+                                2 .
 
 
 ###  http://rs.tdwg.org/dwc/terms/tectonicUnits
