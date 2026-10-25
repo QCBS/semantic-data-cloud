@@ -5328,7 +5328,8 @@ dwc:OccurrenceReference rdf:type owl:Class ;
 dwc:Organism rdf:type owl:Class ;
              rdfs:label "Organism" ;
              skos:definition "A particular organism or defined group of organisms considered to be taxonomically homogeneous." ;
-             skos:example "a specific bird" ,
+             skos:example "a particular plant gathered in the wild, transplanted to a botanical garden, and preserved as a specimen in a collection" ,
+                          "a specific bird" ,
                           "a specific instance of a bacterial culture" ,
                           "a specific wolf pack" .
 
