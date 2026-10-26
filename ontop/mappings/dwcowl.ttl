@@ -3514,7 +3514,10 @@ dwc:recordedBy rdf:type owl:DatatypeProperty ;
                rdfs:label "Recorded By" ;
                skos:definition "A list (concatenated and separated) of names of dcterms:Agents responsible for recording a dwc:Occurrence." ;
                skos:example "José E. Crespo" ,
-                            "Oliver P. Pearson | Anita K. Pearson" .
+                            "Megatherium Club" ,
+                            "Oliver P. Pearson | Anita K. Pearson" ,
+                            "ROV SuBastian" ,
+                            "The Natural History Society of Northumbria" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/recordedByID
