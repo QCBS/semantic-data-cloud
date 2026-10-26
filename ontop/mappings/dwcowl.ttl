@@ -4373,7 +4373,11 @@ eco:reportedWeather rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/eco/terms/samplingEffortProtocol
 eco:samplingEffortProtocol rdf:type owl:DatatypeProperty ;
-                           rdfs:label "Sampling Effort Protocol" .
+                           rdfs:label "Sampling Effort Protocol" ;
+                           skos:definition "A description of or reference to a Protocol used to determine a eco:samplingEffortValue." ;
+                           skos:example "2 people occupying a bird hide for a period of 8 hours and undertaking a 30 minute count of species within the 150 degree field of view every 2 hours" ,
+                                        "40 box traps deployed at even spacings along 4 parallel 100m transects placed 50m apart and visited at 6 hourly intervals over a 48 hour period" ,
+                                        "A single baited camera trap station with motion sensor trigger, deployed for a period of 10 days and configured for detecting large fauna moving through a known traffic way" .
 
 
 ###  http://rs.tdwg.org/eco/terms/samplingEffortUnit
