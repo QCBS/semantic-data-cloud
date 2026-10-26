@@ -3455,7 +3455,8 @@ dwc:projectTitle rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/protocolDescription
 dwc:protocolDescription rdf:type owl:DatatypeProperty ;
                         rdfs:label "Protocol Description" ;
-                        skos:definition "A detailed description of a dwc:Protocol." .
+                        skos:definition "A detailed description of a dwc:Protocol." ;
+                        skos:example "Georeference following Zermoglio et al. 2020 (https://doi.org/10.35035/e09p-h128), using GeoPick (https://geopick.gbif.org/) for named place determinations and Georeferencing Calculator (https://github.com/VertNet/georefcalculator) for complex uncertainties." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/protocolID
