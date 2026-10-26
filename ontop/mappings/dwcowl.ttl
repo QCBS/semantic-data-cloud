@@ -1865,7 +1865,13 @@ dwc:assertionUnit rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/assertionValue
 dwc:assertionValue rdf:type owl:DatatypeProperty ;
                    rdfs:label "Assertion Value" ;
-                   skos:definition "An asserted value, if it is not numeric." .
+                   skos:definition "An asserted value, if it is not numeric." ;
+                   skos:example "1" ,
+                                "14.5" ,
+                                "20" ,
+                                "45" ,
+                                "Hamon grab" ,
+                                "UV-light" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/associatedOrganisms
