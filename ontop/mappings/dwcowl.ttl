@@ -3544,7 +3544,17 @@ dwc:referenceRemarks rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/referenceType
 dwc:referenceType rdf:type owl:DatatypeProperty ;
                   rdfs:label "Reference Type" ;
-                  skos:definition "A category that best matches the nature of a dcterms:BibliographicResource." .
+                  skos:definition "A category that best matches the nature of a dcterms:BibliographicResource." ;
+                  skos:example "book" ,
+                               "bookSection" ,
+                               "fieldNotebook" ,
+                               "journalArticle" ,
+                               "log" ,
+                               "oralCommunication" ,
+                               "poster" ,
+                               "proceedingsPaper" ,
+                               "report" ,
+                               "thesis" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/relatedOrganismPart
