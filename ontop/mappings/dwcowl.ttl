@@ -25,10 +25,10 @@
 @prefix chrono: <http://rs.tdwg.org/chrono/terms/> .
 @prefix dwciri: <http://rs.tdwg.org/dwc/iri/> .
 @prefix ecoiri: <http://rs.tdwg.org/eco/iri/> .
-@prefix minext: <http://rs.tdwg.org/mineralogy/terms/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix photoshop: <http://ns.adobe.com/photoshop/1.0/> .
-@prefix xmprights: <http://ns.adobe.com/xap/1.0/rights/> .
+@prefix xmpRights: <http://ns.adobe.com/xap/1.0/rights/> .
+@prefix Iptc4xmpExt: <http://iptc.org/std/Iptc4xmpExt/2008-02-29/> .
 @base <https://biobang.org/> .
 
 <http://example.org/dwcowl#> rdf:type owl:Ontology ;
@@ -53,6 +53,12 @@ skos:example rdf:type owl:AnnotationProperty .
 #################################################################
 #    Object Properties
 #################################################################
+
+###  http://iptc.org/std/Iptc4xmpExt/2008-02-29/CVterm
+Iptc4xmpExt:CVterm rdf:type owl:ObjectProperty ;
+                   rdfs:label "Subject Category" ;
+                   skos:definition "An IRI of a controlled vocabulary value for the subject category of an ac:Media resource." .
+
 
 ###  http://purl.org/dc/terms/accessRights
 dcterms:accessRights rdf:type owl:ObjectProperty ;
@@ -132,12 +138,6 @@ bibo:status rdf:type owl:ObjectProperty ;
             skos:definition "An indication of whether a dcterms:BibliographicResource was peer reviewed." .
 
 
-###  http://rs.tdwg.org/ac/terms/CVterm
-ac:CVterm rdf:type owl:ObjectProperty ;
-          rdfs:label "Subject Category" ;
-          skos:definition "An IRI of a controlled vocabulary value for the subject category of an ac:Media resource." .
-
-
 ###  http://rs.tdwg.org/ac/terms/accessURI
 ac:accessURI rdf:type owl:ObjectProperty ;
              rdfs:label "Access URI" ;
@@ -174,6 +174,12 @@ ac:reviewer rdf:type owl:ObjectProperty ;
             skos:definition "An identifier for a dcterms:Agent primarily responsible for providing the ac:reviewerComments." .
 
 
+###  http://rs.tdwg.org/ac/terms/subjectCategoryVocabulary
+ac:subjectCategoryVocabulary rdf:type owl:ObjectProperty ;
+                             rdfs:label "Subject Category Vocabulary" ;
+                             skos:definition "A reference to a controlled vocabulary in which the definition of a value in dwc:subjectCategory is given." .
+
+
 ###  http://rs.tdwg.org/ac/terms/subjectOrientation
 ac:subjectOrientation rdf:type owl:ObjectProperty ;
                       rdfs:label "Subject Orientation" ;
@@ -198,22 +204,10 @@ ac:variant rdf:type owl:ObjectProperty ;
            skos:definition "The category describing this Service Access Point variant, denoted by an IRI." .
 
 
-###  http://rs.tdwg.org/ac/terms/variantIRI
-ac:variantIRI rdf:type owl:ObjectProperty ;
-              rdfs:label "Variant IRI" ;
-              skos:definition "The category describing this Service Access Point variant, denoted by an IRI." .
-
-
 ###  http://rs.tdwg.org/dwc/iri/agentRole
 dwciri:agentRole rdf:type owl:ObjectProperty ;
                  rdfs:label "Agent Role" ;
                  skos:definition "An IRI of the controlled vocabulary value for a role of a dcterms:Agent." .
-
-
-###  http://rs.tdwg.org/dwc/iri/assertionType
-dwciri:assertionType rdf:type owl:ObjectProperty ;
-                     rdfs:label "Assertion Type" ;
-                     skos:definition "An IRI of a controlled vocabulary value for a type of dwc:Assertion." .
 
 
 ###  http://rs.tdwg.org/dwc/iri/assertionUnit
@@ -222,38 +216,16 @@ dwciri:assertionUnit rdf:type owl:ObjectProperty ;
                      skos:definition "An IRI of a controlled vocabulary value for the unit of a dwc:assertionValue or a dwc:assertionValueNumeric." .
 
 
-###  http://rs.tdwg.org/dwc/iri/assertionValue
-dwciri:assertionValue rdf:type owl:ObjectProperty ;
-                      rdfs:label "Assertion Value" ;
-                      skos:definition "An IRI of the controlled vocabulary value for a value of a dwc:Assertion." .
+###  http://rs.tdwg.org/dwc/iri/measurementType
+dwciri:measurementType rdf:type owl:ObjectProperty ;
+                       rdfs:label "Measurement Type" ;
+                       skos:definition "An IRI of a controlled vocabulary value for a type of dwc:Assertion." .
 
 
-###  http://rs.tdwg.org/dwc/iri/ownerInstitution
-dwciri:ownerInstitution rdf:type owl:ObjectProperty ;
-                        rdfs:label "Owner Institution" ;
-                        skos:definition "An identifier for an institution that owns a dwc:MaterialEntity." ;
-                        skos:example "http://grscicoll.org/institution/museum-southwestern-biology" ,
-                                     "https://ror.org/015hz7p22" ,
-                                     "https://scientific-collections.gbif.org/institution/e3d4dcc4-81e2-444c-8a5c-41d1044b5381" .
-
-
-###  http://rs.tdwg.org/dwc/iri/samplingPerformedBy
-dwciri:samplingPerformedBy rdf:type owl:ObjectProperty ;
-                           rdfs:label "Sampling Performed By" ;
-                           skos:definition "An identifier for a dcterms:Agent responsible for sampling." ;
-                           skos:example "https://orcid.org/0000-0002-1825-0097" .
-
-
-###  http://rs.tdwg.org/dwc/iri/surveyTargetUnit
-dwciri:surveyTargetUnit rdf:type owl:ObjectProperty ;
-                        rdfs:label "Survey Target Unit" ;
-                        skos:definition "An IRI of a controlled vocabulary value for a target unit." .
-
-
-###  http://rs.tdwg.org/dwc/iri/surveyTargetValue
-dwciri:surveyTargetValue rdf:type owl:ObjectProperty ;
-                         rdfs:label "Survey Target Value" ;
-                         skos:definition "An IRI of a controlled vocabulary value for a target value." .
+###  http://rs.tdwg.org/dwc/iri/measurementValue
+dwciri:measurementValue rdf:type owl:ObjectProperty ;
+                        rdfs:label "Measurement Value" ;
+                        skos:definition "An IRI of the controlled vocabulary value for a value of a dwc:Assertion." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/about
@@ -265,7 +237,7 @@ dwcdp:about rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/accordingTo
 dwcdp:accordingTo rdf:type owl:ObjectProperty ;
                   rdfs:label "According To" ;
-                  skos:definition "An object property used to relate a dwc:ResourceRelationship to the dcterm:Agent responsible for stating it." .
+                  skos:definition "An object property used to relate a dwc:ResourceRelationship to the dcterms:Agent responsible for stating it." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/ageFor
@@ -315,12 +287,6 @@ dwcdp:commentedBy rdf:type owl:ObjectProperty ;
                   rdfs:label "Commented By" .
 
 
-###  http://rs.tdwg.org/dwcdp/terms/conductedBy
-dwcdp:conductedBy rdf:type owl:ObjectProperty ;
-                  rdfs:label "Conducted By" ;
-                  skos:definition "An object property to relate a dwc:Event to the dcterms:Agent that conducted it." .
-
-
 ###  http://rs.tdwg.org/dwcdp/terms/contextFor
 dwcdp:contextFor rdf:type owl:ObjectProperty ;
                  rdfs:label "Context For" ;
@@ -359,6 +325,12 @@ dwcdp:derivedFromTransitive rdf:type owl:ObjectProperty ;
 ###  http://rs.tdwg.org/dwcdp/terms/derivedFromTransitiveReflexive
 dwcdp:derivedFromTransitiveReflexive rdf:type owl:ObjectProperty ;
                                      rdfs:label "Derived From Transitive Reflexive" .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/descriptorFor
+dwcdp:descriptorFor rdf:type owl:ObjectProperty ;
+                    rdfs:label "Descriptor For" ;
+                    skos:definition "An object property used to relate a eco:SurveyTargetDescriptor to the eco:SurveyTarget it is a descriptor for." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/determinedBy
@@ -434,6 +406,12 @@ dwcdp:hasMedia rdf:type owl:ObjectProperty ;
 dwcdp:hasProvenance rdf:type owl:ObjectProperty ;
                     rdfs:label "Has Provenance" ;
                     skos:definition "An object property used to relate a resource to its dwc:Provenance." .
+
+
+###  http://rs.tdwg.org/dwcdp/terms/hasTarget
+dwcdp:hasTarget rdf:type owl:ObjectProperty ;
+                rdfs:label "Has Target" ;
+                skos:definition "An object property used to relate eco:SurveyTargets to the eco:Surveys they are targets for." .
 
 
 ###  http://rs.tdwg.org/dwcdp/terms/hasUsagePolicy
@@ -672,10 +650,16 @@ dwcdp:withinContext rdf:type owl:ObjectProperty ;
                     skos:definition "An object property to link a dcterms:Location or a dwc:MaterialEntity to the dwc:GeologicalContext within which it is situated." .
 
 
-###  http://rs.tdwg.org/eco/iri/samplingEffortProtocol
-ecoiri:samplingEffortProtocol rdf:type owl:ObjectProperty ;
-                              rdfs:label "Sampling Effort Protocol" ;
-                              skos:definition "An identifier for a dwc:Protocol used to determine a eco:samplingEffortValue." .
+###  http://rs.tdwg.org/eco/iri/surveyTargetUnit
+ecoiri:surveyTargetUnit rdf:type owl:ObjectProperty ;
+                        rdfs:label "Survey Target Unit" ;
+                        skos:definition "An IRI of a controlled vocabulary value for a target unit." .
+
+
+###  http://rs.tdwg.org/eco/iri/surveyTargetValue
+ecoiri:surveyTargetValue rdf:type owl:ObjectProperty ;
+                         rdfs:label "Survey Target Value" ;
+                         skos:definition "An IRI of a controlled vocabulary value for a target value." .
 
 
 ###  https://w3id.org/mixs/0000005
@@ -874,12 +858,12 @@ exif:PixelYDimension rdf:type owl:DatatypeProperty ;
 photoshop:Credit rdf:type owl:DatatypeProperty ;
                  rdfs:label "Credit" ;
                  skos:definition "Free text describing how credit should be attributed." ;
-                 skos:example "For example, `Please cite this as …" .
+                 skos:example "Please cite this as …" .
 
 
 ###  http://ns.adobe.com/xap/1.0/CreateDate
 xmp:CreateDate rdf:type owl:DatatypeProperty ;
-               rdfs:label "Original Date and Time" ;
+               rdfs:label "Original Date And Time" ;
                skos:example "The date and time a resource was created. For a digital file, this need not match a file-system creation time. For a freshly created resource, it should be close to that time, modulo the time taken to write the file. Later file transfer, copying, and so on, can make the file-system time arbitrarily different." .
 
 
@@ -899,19 +883,19 @@ xmp:Rating rdf:type owl:DatatypeProperty ;
 
 
 ###  http://ns.adobe.com/xap/1.0/rights/Owner
-xmprights:Owner rdf:type owl:DatatypeProperty ;
+xmpRights:Owner rdf:type owl:DatatypeProperty ;
                 rdfs:label "Owner" ;
                 skos:definition "An identifier for a dcterms:Agent that owns the copyright for a resource." .
 
 
 ###  http://ns.adobe.com/xap/1.0/rights/UsageTerms
-xmprights:UsageTerms rdf:type owl:DatatypeProperty ;
+xmpRights:UsageTerms rdf:type owl:DatatypeProperty ;
                      rdfs:label "Usage Terms" ;
                      skos:definition "A license statement defining how resources may be used. Information on a collection applies to all contained objects unless an object has a different statement." .
 
 
 ###  http://ns.adobe.com/xap/1.0/rights/WebStatement
-xmprights:WebStatement rdf:type owl:DatatypeProperty ;
+xmpRights:WebStatement rdf:type owl:DatatypeProperty ;
                        rdfs:label "Web Statement" ;
                        skos:definition "A URL defining or further elaborating on a license statement (e.g., a web page explaining the precise terms of use)" ;
                        skos:example "http://creativecommons.org/licenses/by-nc-sa/3.0/us/" .
@@ -1511,12 +1495,6 @@ ac:startTimestamp rdf:type owl:DatatypeProperty ;
                   skos:definition "The beginning of a temporal region, specified as real-world clock time ISO 8601 timestamps, using UTC timezone, with an optional fractional part to indicate milliseconds or finer. There is no limit on the number of decimal places for the decimal fraction." .
 
 
-###  http://rs.tdwg.org/ac/terms/subjectCategoryVocabulary
-ac:subjectCategoryVocabulary rdf:type owl:DatatypeProperty ;
-                             rdfs:label "Subject Category Source" ;
-                             skos:definition "A reference to a controlled vocabulary in which the definition of a value in dwc:subjectCategory is given." .
-
-
 ###  http://rs.tdwg.org/ac/terms/subjectOrientationLiteral
 ac:subjectOrientationLiteral rdf:type owl:DatatypeProperty ;
                              rdfs:label "Subject Orientation Literal" ;
@@ -1735,7 +1713,8 @@ chrono:materialDatedRelationship rdf:type owl:DatatypeProperty ;
 chrono:uncalibratedChronometricAge rdf:type owl:DatatypeProperty ;
                                    rdfs:label "Uncalibrated Chronometric Age" ;
                                    skos:definition "An output of a dating assay before it is calibrated into an age using a specific conversion protocol." ;
-                                   skos:example "1510 +/- 25 14C yr BP, 16.26 Ma +/- 0.016" .
+                                   skos:example "1510 +/- 25 14C yr BP" ,
+                                                "16.26 Ma +/- 0.016" .
 
 
 ###  http://rs.tdwg.org/chrono/terms/verbatimChronometricAge
@@ -1844,12 +1823,6 @@ dwc:assertionMadeDate rdf:type owl:DatatypeProperty ;
                                    "2018-08-29T15:19" .
 
 
-###  http://rs.tdwg.org/dwc/terms/assertionProtocolID
-dwc:assertionProtocolID rdf:type owl:DatatypeProperty ;
-                        rdfs:label "Assertion Protocol ID" ;
-                        skos:definition "An identifier for a dwc:Protocol used to make a dwc:Assertion." .
-
-
 ###  http://rs.tdwg.org/dwc/terms/assertionProtocols
 dwc:assertionProtocols rdf:type owl:DatatypeProperty ;
                        rdfs:label "Assertion Protocols" ;
@@ -1892,13 +1865,13 @@ dwc:assertionUnit rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/assertionValue
 dwc:assertionValue rdf:type owl:DatatypeProperty ;
                    rdfs:label "Assertion Value" ;
-                   skos:definition "An asserted value, if it is not numeric." .
-
-
-###  http://rs.tdwg.org/dwc/terms/assertionValueNumeric
-dwc:assertionValueNumeric rdf:type owl:DatatypeProperty ;
-                          rdfs:label "Assertion Value Numeric" ;
-                          skos:definition "An asserted value, if it is numeric." .
+                   skos:definition "An asserted value, if it is not numeric." ;
+                   skos:example "1" ,
+                                "14.5" ,
+                                "20" ,
+                                "45" ,
+                                "Hamon grab" ,
+                                "UV-light" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/associatedOrganisms
@@ -1942,6 +1915,25 @@ dwc:behavior rdf:type owl:DatatypeProperty ;
                           "running" .
 
 
+###  http://rs.tdwg.org/dwc/terms/bibliographicIdentifier
+dwc:bibliographicIdentifier rdf:type owl:DatatypeProperty ;
+                            rdfs:label "Bibliographic Identifier" ;
+                            skos:definition "A number or symbol to uniquely identify a dcterms:BibliographicResource." ;
+                            skos:example "10.1046/j.1420-9101.1997.10010039.x" ,
+                                         "10998406" ,
+                                         "978-0565095024" .
+
+
+###  http://rs.tdwg.org/dwc/terms/bibliographicIdentifierType
+dwc:bibliographicIdentifierType rdf:type owl:DatatypeProperty ;
+                                rdfs:label "Bibliographic Identifier Type" ;
+                                skos:definition "A code that best matches the nature of an identifier for a dcterms:BibliographicResource." ;
+                                skos:example "DOI" ,
+                                             "ISBN" ,
+                                             "ISSN" ,
+                                             "OCN" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/caste
 dwc:caste rdf:type owl:DatatypeProperty ;
           rdfs:range xsd:string ;
@@ -1982,22 +1974,10 @@ dwc:causeOfDeath rdf:type owl:DatatypeProperty ;
                               "vehicle collision" .
 
 
-###  http://rs.tdwg.org/dwc/terms/chronometricAgeConversionProtocolID
-dwc:chronometricAgeConversionProtocolID rdf:type owl:DatatypeProperty ;
-                                        rdfs:label "Chronometric Age Conversion Protocol ID" ;
-                                        skos:definition "An identifier for a dwc:Protocol used to convert a chrono:uncalibratedChronometricAge into a chronometric age in years, as captured in the chrono:earliestChronometricAge, chrono:earliestChronometricAgeReferenceSystem, chrono:latestChronometricAge, and chrono:latestChronometricAgeReferenceSystem fields." .
-
-
-###  http://rs.tdwg.org/dwc/terms/chronometricAgeDeterminedByID
-dwc:chronometricAgeDeterminedByID rdf:type owl:DatatypeProperty ;
-                                  rdfs:label "Chronometric Age Determined By ID" ;
-                                  skos:definition "An identifier for a dcterms:Agent responsible for determining a chrono:ChronometricAge." .
-
-
-###  http://rs.tdwg.org/dwc/terms/chronometricAgeProtocolID
-dwc:chronometricAgeProtocolID rdf:type owl:DatatypeProperty ;
-                              rdfs:label "Chronometric Age Protocol ID" ;
-                              skos:definition "An identifier for a dwc:Protocol used to determine a chrono:ChronometricAge." .
+###  http://rs.tdwg.org/dwc/terms/chemistryRemarks
+dwc:chemistryRemarks rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Chemistry Remarks" ;
+                     skos:definition "General remarks about the chemical and isotopic composition of a dwc:GeologicalMaterial." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/class
@@ -2008,20 +1988,24 @@ dwc:class rdf:type owl:DatatypeProperty ;
                        "Mammalia" .
 
 
-###  http://rs.tdwg.org/dwc/terms/collectedBy
-dwc:collectedBy rdf:type owl:DatatypeProperty ;
-                rdfs:label "Collected By" ;
-                skos:definition "A list (concatenated and separated) of names of dcterms:Agents responsible for collecting a dwc:MaterialEntity." ;
-                skos:example "José E. Crespo" ,
-                             "Oliver P. Pearson | Anita K. Pearson" .
+###  http://rs.tdwg.org/dwc/terms/classificationCodes
+dwc:classificationCodes rdf:type owl:DatatypeProperty ;
+                        rdfs:label "Geological Classification Codes" ;
+                        skos:definition "A list (concatenated and separated) of codes that each identifies a name from a classification system applied to a dwc:GeologicalMaterial." ;
+                        skos:example "71.02.02a.01" ,
+                                     "75.01.03.01 | 4.DA.05" ,
+                                     "9.AD.25" .
 
 
-###  http://rs.tdwg.org/dwc/terms/collectedByID
-dwc:collectedByID rdf:type owl:DatatypeProperty ;
-                  rdfs:label "Collected By ID" ;
-                  skos:definition "An identifier for the dcterms:Agent responsible for collecting a dwc:MaterialEntity." ;
-                  skos:example "https://orcid.org/0000-0002-1825-0097" ,
-                               "https://ror.org/00mh9zx15" .
+###  http://rs.tdwg.org/dwc/terms/classificationSystem
+dwc:classificationSystem rdf:type owl:DatatypeProperty ;
+                         rdfs:label "Classification System" ;
+                         skos:definition "A reference to the classification system in which an authoritative name or formal classification belongs." ;
+                         skos:example "Gaines, R.V., Skinner, H.C.W., Foord, E.E., Mason, B., Rosenzweig, A. (1997): Dana's New Mineralogy: The System of Mineralogy of James Dwight Dana and Edward Salisbury Dana. 8th edition. John Wiley & Sons, New York, xlv + 1819 p. (ISBN 0-471-19310-0)." ,
+                                      "Index Fungorum. (2026). Index Fungorum electronic database. Royal Botanic Gardens, Kew. Retrieved August 17, 2026, from indexfungorum.org." ,
+                                      "Mammal Diversity Database. (2026). Mammal Diversity Database (Version 2.5) [Data set]. [Zenodo](https://zenodo.org/records/10595931). https://doi.org/10.5281/zenodo.17033774" ,
+                                      "Strunz, H., Nickel, E.H. (2001): Strunz Mineralogical Tables. Chemical-Structural Mineral Classification System. 9th edition. E. Schweizerbart’sche Verlagsbuchhandlung, Stuttgart, ix + 870 p. (ISBN 3-510-65188-X)" ,
+                                      "https://kos.geospecimens.org/vocab/meteorite-classification" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/collectionCode
@@ -2037,7 +2021,8 @@ dwc:collectionCode rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/collectionID
 dwc:collectionID rdf:type owl:DatatypeProperty ;
                  rdfs:label "Collection ID" ;
-                 skos:definition "An identifier for a collection." .
+                 skos:definition "An identifier for a collection." ;
+                 skos:example "https://scientific-collections.gbif.org/collection/fbd3ed74-5a21-4e01-b86a-33d36f032d9c" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/collectorNumber
@@ -2116,6 +2101,15 @@ dwc:cultivarEpithet rdf:type owl:DatatypeProperty ;
                                  "Mishmiense" .
 
 
+###  http://rs.tdwg.org/dwc/terms/damageRemarks
+dwc:damageRemarks rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Damage Remarks" ;
+                  skos:definition "A general description of any physical changes to a dwc:MaterialEntity that have negatively affected its value." ;
+                  skos:example "Attached label not legible (or torn, or covered)" ,
+                               "Due to oxidation and hydration of the pyrite in the coal, the sample has largely decayed to a coal powder with some larger coal pieces" ,
+                               "Some terminations broken off" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/dataGeneralizations
 dwc:dataGeneralizations rdf:type owl:DatatypeProperty ;
                         rdfs:label "Data Generalizations" ;
@@ -2192,32 +2186,6 @@ dwc:degreeOfEstablishment rdf:type owl:DatatypeProperty ;
                                        "released" ,
                                        "reproducing" ,
                                        "widespreadInvasive" .
-
-
-###  http://rs.tdwg.org/dwc/terms/derivationEventID
-dwc:derivationEventID rdf:type owl:DatatypeProperty ;
-                      rdfs:label "Derivation Event ID" ;
-                      skos:definition "An identifier for a dwc:Event during which a dwc:MaterialEntity was derived from another dwc:MaterialEntity." .
-
-
-###  http://rs.tdwg.org/dwc/terms/derivationType
-dwc:derivationType rdf:type owl:DatatypeProperty ;
-                   rdfs:label "Derivation Type" ;
-                   skos:definition "A category that best matches the nature of the derivation of one dwc:MaterialEntity from another dwc:MaterialEntity." ;
-                   skos:example "included" ,
-                                "sampledFrom" .
-
-
-###  http://rs.tdwg.org/dwc/terms/derivedFromMaterialEntityID
-dwc:derivedFromMaterialEntityID rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Derived From Material Entity ID" ;
-                                skos:definition "An identifier for a dwc:MaterialEntity from which this dwc:MaterialEntity was derived." .
-
-
-###  http://rs.tdwg.org/dwc/terms/derivedFromMediaID
-dwc:derivedFromMediaID rdf:type owl:DatatypeProperty ;
-                       rdfs:label "Derived From Media ID" ;
-                       skos:definition "An identifier for an ac:Media resource from which this ac:Media resource was derived." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/digitalSpecimenID
@@ -2335,23 +2303,6 @@ dwc:eventCategory rdf:type owl:DatatypeProperty ;
                                "varied" .
 
 
-###  http://rs.tdwg.org/dwc/terms/eventConductedBy
-dwc:eventConductedBy rdf:type owl:DatatypeProperty ;
-                     rdfs:label "Event Conducted By" ;
-                     skos:definition "A list (concatenated and separated) of names of dcterms:Agents responsible for conducting or recording a dwc:Event." ;
-                     skos:example "FMNH" ,
-                                  "José E. Crespo" ,
-                                  "Oliver P. Pearson | Anita K. Pearson" .
-
-
-###  http://rs.tdwg.org/dwc/terms/eventConductedByID
-dwc:eventConductedByID rdf:type owl:DatatypeProperty ;
-                       rdfs:label "Event Conducted By ID" ;
-                       skos:definition "An identifier for a dcterms:Agent responsible for conducting or recording a dwc:Event." ;
-                       skos:example "https://orcid.org/0000-0002-1825-0097" ,
-                                    "https://ror.org/00mh9zx15" .
-
-
 ###  http://rs.tdwg.org/dwc/terms/eventDate
 dwc:eventDate rdf:type owl:DatatypeProperty ;
               rdfs:label "Event Date" ;
@@ -2382,15 +2333,6 @@ dwc:eventID rdf:type owl:DatatypeProperty ;
             rdfs:label "Event ID" ;
             skos:definition "An identifier for the set of information associated with a dwc:Event (something that occurs at a place and time)." ;
             skos:example "INBO:VIS:Ev:00009375" .
-
-
-###  http://rs.tdwg.org/dwc/terms/eventReferences
-dwc:eventReferences rdf:type owl:DatatypeProperty ;
-                    rdfs:label "Event References" ;
-                    skos:definition "A list (concatenated and separated) of dcterms:BibliographicResources associated with a dwc:Event." ;
-                    skos:example "Christopher J. Conroy, Jennifer L. Neuwald. 2008. Phylogeographic study of the California vole, Microtus californicus Journal of Mammalogy, 89(3):755-767." ,
-                                 "Steven R. Hoofer and Ronald A. Van Den Bussche. 2001. Phylogenetic Relationships of Plecotine Bats and Allies Based on Mitochondrial Ribosomal Sequences. Journal of Mammalogy 82(1):131-137. | Walker, Faith M., Jeffrey T. Foster, Kevin P. Drees, Carol L. Chambers. 2014. Spotted bat (Euderma maculatum) microsatellite discovery using illumina sequencing. Conservation Genetics Resources" ,
-                                 "http://www.sciencemag.org/cgi/content/abstract/322/5899/261" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/eventRemarks
@@ -2427,12 +2369,6 @@ dwc:eventType rdf:type owl:DatatypeProperty ;
 dwc:evidenceForOccurrenceID rdf:type owl:DatatypeProperty ;
                             rdfs:label "Evidence For Occurrence ID" ;
                             skos:definition "An identifier for a dwc:Occurrence for which a dwc:MaterialEntity provides evidence." .
-
-
-###  http://rs.tdwg.org/dwc/terms/externalRelatedOccurrenceID
-dwc:externalRelatedOccurrenceID rdf:type owl:DatatypeProperty ;
-                                rdfs:label "External Related Occurrence ID" ;
-                                skos:definition "An identifier for the related dwc:Occurrence (the object) of a dwc:ResourceRelationship that is not within the same dataset." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/family
@@ -2535,10 +2471,62 @@ dwc:geodeticDatum rdf:type owl:DatatypeProperty ;
                                "not recorded" .
 
 
+###  http://rs.tdwg.org/dwc/terms/geologicEvent
+dwc:geologicEvent rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Geologic Event" ;
+                  skos:definition "A name of an identifiable event during which one or more geologic processes acted to create or modify one or more dwc:GeologicalMaterials." ;
+                  skos:example "Alleghanian orogeny" ,
+                               "Alpine orogeny" ,
+                               "Sevier orogeny" ,
+                               "Variscan orogeny" ,
+                               "Vredefort impact" .
+
+
+###  http://rs.tdwg.org/dwc/terms/geologicMaterialNameID
+dwc:geologicMaterialNameID rdf:type owl:DatatypeProperty ;
+                           rdfs:label "Geologic Material Name ID" ;
+                           skos:definition "An identifier for a mineral or lithotaxon name for a dwc:GeologicalMaterial. May be a global unique identifier or an identifier specific to the data set." ;
+                           skos:example "https://geospecimens.org/api/v1/catalog/resource/mineral-name/ba673bdf-7228-11f0-a057-52f8e1bb0628" .
+
+
+###  http://rs.tdwg.org/dwc/terms/geologicProvince
+dwc:geologicProvince rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Geologic Province" ;
+                     skos:definition "An extensive named region with similar geologic history, structural, petrographic, or physiographic features throughout in which the GeologicalContext was located." ;
+                     skos:example "Basin and Range" ,
+                                  "Blue Ridge" ,
+                                  "Coastal Plain" ,
+                                  "Northwest Province" ,
+                                  "Piedmont" ,
+                                  "Surprise Paleovalley" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/geologicalContextID
 dwc:geologicalContextID rdf:type owl:DatatypeProperty ;
                         rdfs:label "Geological Context ID" ;
-                        skos:definition "An identifier for the set of information associated with a dwc:GeologicalContext (the location within a geological context, such as stratigraphy)." .
+                        skos:definition "An identifier for the set of information associated with a dwc:GeologicalContext (the location within a geological context, such as stratigraphy)." ;
+                        skos:example "https://opencontext.org/subjects/e54377f7-4452-4315-b676-40679b10c4d9" .
+
+
+###  http://rs.tdwg.org/dwc/terms/geologicalMaterialNameTypes
+dwc:geologicalMaterialNameTypes rdf:type owl:DatatypeProperty ;
+                                rdfs:label "Geological Material Name Types" ;
+                                skos:definition "A list (concatenated and separated) of the types of names provided in dwc:geologicalMaterialNames." ;
+                                skos:example "classification" ,
+                                             "group" ,
+                                             "historical" ,
+                                             "species" ,
+                                             "species | variety" ,
+                                             "synonym" .
+
+
+###  http://rs.tdwg.org/dwc/terms/geologicalMaterialNames
+dwc:geologicalMaterialNames rdf:type owl:DatatypeProperty ;
+                            rdfs:label "Geological Material Names" ;
+                            skos:definition "A list (concatenated and separated) of mineral or lithotaxon names for a dwc:GeologicalMaterial." ;
+                            skos:example "garnet group" ,
+                                         "muscovite" ,
+                                         "quartz | smoky quartz" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/georeferenceProtocol
@@ -2629,6 +2617,34 @@ dwc:habitat rdf:type owl:DatatypeProperty ;
                             "pre-cordilleran steppe" .
 
 
+###  http://rs.tdwg.org/dwc/terms/handlingRequirements
+dwc:handlingRequirements rdf:type owl:DatatypeProperty ;
+                         rdfs:label "Handling Requirements" ;
+                         skos:definition "A description of the procedures required to preserve and protect a dwc:MaterialEntity during handling." ;
+                         skos:example "avoid contact with direct sunlight" ,
+                                      "handle with gloves" ,
+                                      "not to be taken out of storage medium" .
+
+
+###  http://rs.tdwg.org/dwc/terms/hazardRemarks
+dwc:hazardRemarks rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Hazard Remarks" ;
+                  skos:definition "Comments or notes about the type of hazards associated with a dwc:MaterialEntity." ;
+                  skos:example "asbestos" ,
+                               "requires skin protection" ,
+                               "slightly radioactive" .
+
+
+###  http://rs.tdwg.org/dwc/terms/hazardType
+dwc:hazardType rdf:type owl:DatatypeProperty ;
+               rdfs:label "Hazard Type" ;
+               skos:definition "A term that belongs to a hazard classification scheme based on a set of unique characteristics and negative health outcomes." ;
+               skos:example "carcinogen" ,
+                            "radioactive" ,
+                            "skin irritant" ,
+                            "toxic" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/higherGeography
 dwc:higherGeography rdf:type owl:DatatypeProperty ;
                     rdfs:label "Higher Geography" ;
@@ -2654,7 +2670,8 @@ dwc:highestBiostratigraphicZone rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/identificationID
 dwc:identificationID rdf:type owl:DatatypeProperty ;
                      rdfs:label "Identification ID" ;
-                     skos:definition "An identifier for a dwc:Identification." .
+                     skos:definition "An identifier for a dwc:Identification." ;
+                     skos:example "9992" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/identificationReferences
@@ -2672,6 +2689,22 @@ dwc:identificationRemarks rdf:type owl:DatatypeProperty ;
                           skos:example "Distinguished between Anthus correndera and Anthus hellmayri based on the comparative lengths of the uñas." .
 
 
+###  http://rs.tdwg.org/dwc/terms/identificationType
+dwc:identificationType rdf:type owl:DatatypeProperty ;
+                       rdfs:label "Identification Type" ;
+                       skos:definition "A category that best matches the nature of a dwc:Identification." ;
+                       skos:example "features" ,
+                                    "fine features" ,
+                                    "functionalAttributes" ,
+                                    "geography" ,
+                                    "karyotype" ,
+                                    "media" ,
+                                    "nucleotideAnalysis" ,
+                                    "relationship" ,
+                                    "taxonomicRevision" ,
+                                    "unknown" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/identificationVerificationStatus
 dwc:identificationVerificationStatus rdf:type owl:DatatypeProperty ;
                                      rdfs:label "Identification Verification Status" ;
@@ -2684,13 +2717,16 @@ dwc:identifiedBy rdf:type owl:DatatypeProperty ;
                  rdfs:label "Identified By" ;
                  skos:definition "A list (concatenated and separated) of names of dcterms:Agents responsible for making a taxonomic determination of a dwc:Organism." ;
                  skos:example "James L. Patton" ,
+                              "MegaDetector V5" ,
                               "Theodore Pappenfuss | Robert Macey" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/identifiedByID
 dwc:identifiedByID rdf:type owl:DatatypeProperty ;
                    rdfs:label "Identified By ID" ;
-                   skos:definition "An identifier for a dcterms:Agent responsible for making a taxonomic determination of a dwc:Organism." .
+                   skos:definition "An identifier for a dcterms:Agent responsible for making a taxonomic determination of a dwc:Organism." ;
+                   skos:example "https://orcid.org/0000-0002-1825-0097" ,
+                                "https://orcid.org/0000-0002-1825-0097 | https://orcid.org/0000-0002-1825-0098" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/informationWithheld
@@ -2725,7 +2761,9 @@ dwc:institutionCode rdf:type owl:DatatypeProperty ;
                     skos:definition "A name (or acronym) an organization." ;
                     skos:example "CLO" ,
                                  "FMNH" ,
+                                 "Kew Gardens" ,
                                  "MVZ" ,
+                                 "National Museum of Kenya" ,
                                  "UCMP" .
 
 
@@ -2748,12 +2786,6 @@ dwc:isAcceptedIdentification rdf:type owl:DatatypeProperty ;
 dwc:isPartOfMaterialEntityID rdf:type owl:DatatypeProperty ;
                              rdfs:label "Is Part Of Material Entity ID" ;
                              skos:definition "An identifier for a dwc:MaterialEntity of which this dwc:MaterialEntity is a part." .
-
-
-###  http://rs.tdwg.org/dwc/terms/isPartOfOccurrenceID
-dwc:isPartOfOccurrenceID rdf:type owl:DatatypeProperty ;
-                         rdfs:label "Is Part Of Occurrence ID" ;
-                         skos:definition "An identifier for a dwc:Occurrence of which this dwc:Occurrence is a part." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/island
@@ -2848,6 +2880,16 @@ dwc:lifeStage rdf:type owl:DatatypeProperty ;
                            "zygote" .
 
 
+###  http://rs.tdwg.org/dwc/terms/lithodemicUnit
+dwc:lithodemicUnit rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Lithodemic Unit" ;
+                   skos:definition "A geologic unit that lacks stratification, is primarily comprised of intrusive, deformed, and/or metamorphosed rock, and is characterized by irregularly mixed lithology or highly complicated structural relations." ;
+                   skos:example "Catalina Core Complex" ,
+                                "New England Plutonic Suite" ,
+                                "Sierra Nevada batholith" ,
+                                "injection complex" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/lithostratigraphicTerms
 dwc:lithostratigraphicTerms rdf:type owl:DatatypeProperty ;
                             rdfs:label "Lithostratigraphic Terms" ;
@@ -2861,6 +2903,14 @@ dwc:locality rdf:type owl:DatatypeProperty ;
              skos:definition "The specific description of the place." ;
              skos:example "Bariloche, 25 km NNE via Ruta Nacional 40 (=Ruta 237)" ,
                           "Queets Rainforest, Olympic National Park" .
+
+
+###  http://rs.tdwg.org/dwc/terms/locationAccordingTo
+dwc:locationAccordingTo rdf:type owl:DatatypeProperty ;
+                        rdfs:label "Location According To" ;
+                        skos:definition "Information about the source of this dcterms:Location information. Could be a publication (gazetteer), institution, or team of individuals." ;
+                        skos:example "GADM" ,
+                                     "Getty Thesaurus of Geographic Names" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/locationID
@@ -2882,6 +2932,16 @@ dwc:lowestBiostratigraphicZone rdf:type owl:DatatypeProperty ;
                                rdfs:label "Lowest Biostratigraphic Zone" ;
                                skos:definition "The full name of the lowest possible geological biostratigraphic zone of the stratigraphic horizon from which the dwc:MaterialEntity was collected." ;
                                skos:example "Maastrichtian" .
+
+
+###  http://rs.tdwg.org/dwc/terms/materialDescription
+dwc:materialDescription rdf:type owl:DatatypeProperty ;
+                        rdfs:label "Material Description" ;
+                        skos:definition "Remarks on the physical characteristics of a dwc:MaterialEntity, particularly those that distinguish it from otherwise similar dwc:MaterialEntities." ;
+                        skos:example "Extraordinary composition" ,
+                                     "Historically valuable" ,
+                                     "Showpiece" ,
+                                     "Two generations of quartz" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/materialEntityCategory
@@ -2941,13 +3001,24 @@ dwc:materialEntityType rdf:type owl:DatatypeProperty ;
                                     "Taxidermy mount" .
 
 
-###  http://rs.tdwg.org/dwc/terms/materialReferences
-dwc:materialReferences rdf:type owl:DatatypeProperty ;
-                       rdfs:label "Material References" ;
-                       skos:definition "A list (concatenated and separated) of dcterms:BibliographicResources associated with a dwc:MaterialEntity." ;
-                       skos:example "Christopher J. Conroy, Jennifer L. Neuwald. 2008. Phylogeographic study of the California vole, Microtus californicus Journal of Mammalogy, 89(3):755-767." ,
-                                    "Steven R. Hoofer and Ronald A. Van Den Bussche. 2001. Phylogenetic Relationships of Plecotine Bats and Allies Based on Mitochondrial Ribosomal Sequences. Journal of Mammalogy 82(1):131-137. | Walker, Faith M., Jeffrey T. Foster, Kevin P. Drees, Carol L. Chambers. 2014. Spotted bat (Euderma maculatum) microsatellite discovery using illumina sequencing. Conservation Genetics Resources." ,
-                                    "http://www.sciencemag.org/cgi/content/abstract/322/5899/261" .
+###  http://rs.tdwg.org/dwc/terms/materialProportion
+dwc:materialProportion rdf:type owl:DatatypeProperty ;
+                       rdfs:label "Material Proportion" ;
+                       skos:definition "The qualitative or quantitative abundance of a dwc:MaterialEntity with respect to another dwc:MaterialEntity of which it is a part." ;
+                       skos:example "20%" ,
+                                    "dominant" ,
+                                    "minor" .
+
+
+###  http://rs.tdwg.org/dwc/terms/materialRole
+dwc:materialRole rdf:type owl:DatatypeProperty ;
+                 rdfs:label "Material Role" ;
+                 skos:definition "A category that best matches the nature of the relationship between a dwc:MaterialEntity and another dwc:MaterialEntity of which it is a part." ;
+                 skos:example "groundmass" ,
+                              "matrix" ,
+                              "phenocryst" ,
+                              "vein" ,
+                              "xenolith" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/maximumDepthInMeters
@@ -2973,6 +3044,33 @@ dwc:maximumElevationInMeters rdf:type owl:DatatypeProperty ;
                                           1236 .
 
 
+###  http://rs.tdwg.org/dwc/terms/measuredChemistry
+dwc:measuredChemistry rdf:type owl:DatatypeProperty ;
+                      rdfs:label "Measured Chemistry" ;
+                      skos:definition "A concise expression of the chemical composition of a mineral that shows the number of atoms of each element in a molecule, their spatial arrangement, and their linkage to each other." ;
+                      skos:example "(Mg0.77Fe0.23)2SiO4" ,
+                                   "Al2O3 (2.21)" ,
+                                   "An6.4 Ab73.6 Or20" ,
+                                   "SiO2 (65.76)" ,
+                                   "TiO2 (32.120)" .
+
+
+###  http://rs.tdwg.org/dwc/terms/measuredChemistrySource
+dwc:measuredChemistrySource rdf:type owl:DatatypeProperty ;
+                            rdfs:label "Measured Chemistry Source" ;
+                            skos:definition "A list (concatenated and separated) of resources associated with the reported measured chemistry described specifically enough to allow anyone in the future to use the same resources." ;
+                            skos:example "Novak, G. A., & Gibbs, G. V. (1971). The crystal chemistry of the silicate garnets. American Mineralogist: Journal of Earth and Planetary Materials, 56(5-6), 791-825." .
+
+
+###  http://rs.tdwg.org/dwc/terms/measuredMassInGrams
+dwc:measuredMassInGrams rdf:type owl:DatatypeProperty ;
+                        rdfs:label "Measured Mass In Grams" ;
+                        skos:definition "Mass of a dwc:MaterialEntity, measured in grams." ;
+                        skos:example 0.03 ,
+                                     2.34 ,
+                                     56.6 .
+
+
 ###  http://rs.tdwg.org/dwc/terms/mediaID
 dwc:mediaID rdf:type owl:DatatypeProperty ;
             rdfs:label "Media ID" ;
@@ -2985,6 +3083,25 @@ dwc:member rdf:type owl:DatatypeProperty ;
            skos:definition "The full name of the lithostratigraphic member from which the dwc:MaterialEntity was collected." ;
            skos:example "Hellnmaria Member" ,
                         "Lava Dam Member" .
+
+
+###  http://rs.tdwg.org/dwc/terms/mineralSequence
+dwc:mineralSequence rdf:type owl:DatatypeProperty ;
+                    rdfs:label "Mineral Sequence" ;
+                    skos:definition "A list (concatenated and separated) of minerals in a dwc:GeologicalMaterial, ordered in a manner that illustrates the relative timing of mineral formation." ;
+                    skos:example "Calcite > Quartz > Sphalerite > Pyrite" ,
+                                 "Sphalerite > Quartz > Pyrite" .
+
+
+###  http://rs.tdwg.org/dwc/terms/mineralogicalAnalysisProtocol
+dwc:mineralogicalAnalysisProtocol rdf:type owl:DatatypeProperty ;
+                                  rdfs:label "Mineralogical Analysis Protocol" ;
+                                  skos:definition "A technique used to determine the chemical composition or crystallography of a mineral." ;
+                                  skos:example "Electron probe microanalysis" ,
+                                               "Scanning electron microscopy with energy-dispersive X-ray spectroscopy" ,
+                                               "Wet Chemistry" ,
+                                               "X-ray diffraction" ,
+                                               "X-ray fluorescence" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/minimumDepthInMeters
@@ -3054,6 +3171,18 @@ dwc:namePublishedInYear rdf:type owl:DatatypeProperty ;
                         skos:definition "The four-digit year in which the dwc:scientificName was published." ;
                         skos:example "1915" ,
                                      "2008" .
+
+
+###  http://rs.tdwg.org/dwc/terms/namedPlace
+dwc:namedPlace rdf:type owl:DatatypeProperty ;
+               rdfs:label "Named Place" ;
+               skos:definition "The full, unabbreviated name of a geographic location not otherwise categorized by a dcterms:Location property that is naturally occurring or anthropogenic in origin within a historical, administrative, or cultural context in which a dcterms:Location occurs." ;
+               skos:example "11th Level, Bergwerksglücker Lode, Wiemannsbucht Mine" ,
+                            "Craigleith Quarry" ,
+                            "Hagerman Fossil Beds" ,
+                            "Mauna Kea" ,
+                            "NEON Niwot Ridge Mountain Research Station (NIWO)" ,
+                            "Red Cloud Mine" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/nomenclaturalCode
@@ -3229,7 +3358,8 @@ dwc:otherCatalogNumbers rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/ownerID
 dwc:ownerID rdf:type owl:DatatypeProperty ;
             rdfs:label "Owner ID" ;
-            skos:definition "An identifier for a dcterms:Agent that owns the copyright for a resource." .
+            skos:definition "An identifier for a dcterms:Agent that owns the copyright for a resource." ;
+            skos:example "https://orcid.org/0000-0002-1825-0097" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/ownerInstitutionCode
@@ -3239,19 +3369,6 @@ dwc:ownerInstitutionCode rdf:type owl:DatatypeProperty ;
                          skos:example "APN" ,
                                       "InBio" ,
                                       "NPS" .
-
-
-###  http://rs.tdwg.org/dwc/terms/parentEventID
-dwc:parentEventID rdf:type owl:DatatypeProperty ;
-                  rdfs:label "Parent Event ID" ;
-                  skos:definition "An identifier for a broader dwc:Event that contains this and potentially other dwc:Events." ;
-                  skos:example "A1" .
-
-
-###  http://rs.tdwg.org/dwc/terms/parentReferenceID
-dwc:parentReferenceID rdf:type owl:DatatypeProperty ;
-                      rdfs:label "Parent Reference ID" ;
-                      skos:definition "An identifier for a dcterms:BibliographicResource that this dcterms:BibliographicResource is a part of." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/pathway
@@ -3338,7 +3455,8 @@ dwc:projectTitle rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/protocolDescription
 dwc:protocolDescription rdf:type owl:DatatypeProperty ;
                         rdfs:label "Protocol Description" ;
-                        skos:definition "A detailed description of a dwc:Protocol." .
+                        skos:definition "A detailed description of a dwc:Protocol." ;
+                        skos:example "Georeference following Zermoglio et al. 2020 (https://doi.org/10.35035/e09p-h128), using GeoPick (https://geopick.gbif.org/) for named place determinations and Georeferencing Calculator (https://github.com/VertNet/georefcalculator) for complex uncertainties." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/protocolID
@@ -3364,10 +3482,13 @@ dwc:protocolType rdf:type owl:DatatypeProperty ;
                               "sampling effort" .
 
 
-###  http://rs.tdwg.org/dwc/terms/provenanceID
-dwc:provenanceID rdf:type owl:DatatypeProperty ;
-                 rdfs:label "Provenance ID" ;
-                 skos:definition "An identifier for a dwc:Provenance." .
+###  http://rs.tdwg.org/dwc/terms/rawTotalReadCount
+dwc:rawTotalReadCount rdf:type owl:DatatypeProperty ;
+                      rdfs:label "Raw Total Read Count" ;
+                      skos:definition "A total number of raw, unprocessed reads from a dwc:NucleotideAnalysis." ;
+                      skos:example 150456 ,
+                                   586031 ,
+                                   70463 .
 
 
 ###  http://rs.tdwg.org/dwc/terms/readCount
@@ -3380,13 +3501,23 @@ dwc:readCount rdf:type owl:DatatypeProperty ;
                            8302 .
 
 
+###  http://rs.tdwg.org/dwc/terms/recordNumber
+dwc:recordNumber rdf:type owl:DatatypeProperty ;
+                 rdfs:label "Record Number" ;
+                 skos:definition "An identifier given to the dwc:Occurrence at the time it was recorded. Often serves as a link between field notes and a dwc:MaterialEntity record, such as a specimen collector's number." ;
+                 skos:example "OPP 7101" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/recordedBy
 dwc:recordedBy rdf:type owl:DatatypeProperty ;
                rdfs:range xsd:string ;
                rdfs:label "Recorded By" ;
                skos:definition "A list (concatenated and separated) of names of dcterms:Agents responsible for recording a dwc:Occurrence." ;
                skos:example "José E. Crespo" ,
-                            "Oliver P. Pearson | Anita K. Pearson" .
+                            "Megatherium Club" ,
+                            "Oliver P. Pearson | Anita K. Pearson" ,
+                            "ROV SuBastian" ,
+                            "The Natural History Society of Northumbria" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/recordedByID
@@ -3413,19 +3544,17 @@ dwc:referenceRemarks rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/referenceType
 dwc:referenceType rdf:type owl:DatatypeProperty ;
                   rdfs:label "Reference Type" ;
-                  skos:definition "A category that best matches the nature of a dcterms:BibliographicResource." .
-
-
-###  http://rs.tdwg.org/dwc/terms/relatedAgentID
-dwc:relatedAgentID rdf:type owl:DatatypeProperty ;
-                   rdfs:label "Related Agent ID" ;
-                   skos:definition "An identifier for a related dcterms:Agent." .
-
-
-###  http://rs.tdwg.org/dwc/terms/relatedOccurrenceID
-dwc:relatedOccurrenceID rdf:type owl:DatatypeProperty ;
-                        rdfs:label "Related Occurrence ID" ;
-                        skos:definition "An identifier for a related dwc:Occurrence in a dwc:OrganismInteraction." .
+                  skos:definition "A category that best matches the nature of a dcterms:BibliographicResource." ;
+                  skos:example "book" ,
+                               "bookSection" ,
+                               "fieldNotebook" ,
+                               "journalArticle" ,
+                               "log" ,
+                               "oralCommunication" ,
+                               "poster" ,
+                               "proceedingsPaper" ,
+                               "report" ,
+                               "thesis" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/relatedOrganismPart
@@ -3449,12 +3578,6 @@ dwc:relatedResourceID rdf:type owl:DatatypeProperty ;
 dwc:relationshipAccordingTo rdf:type owl:DatatypeProperty ;
                             rdfs:label "Relationship According To" ;
                             skos:definition "A name of a dcterms:Agent responsible for asserting a dwc:ResourceRelationship." .
-
-
-###  http://rs.tdwg.org/dwc/terms/relationshipAccordingToID
-dwc:relationshipAccordingToID rdf:type owl:DatatypeProperty ;
-                              rdfs:label "Relationship According To ID" ;
-                              skos:definition "An identifier for a dcterms:Agent responsible for asserting a dwc:ResourceRelationship." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/relationshipEstablishedDate
@@ -3489,13 +3612,6 @@ dwc:relationshipOfResourceID rdf:type owl:DatatypeProperty ;
                              skos:example "http://purl.obolibrary.org/obo/RO_0002455" ,
                                           "http://purl.obolibrary.org/obo/RO_0002456" ,
                                           "https://www.inaturalist.org/observation_fields/879" .
-
-
-###  http://rs.tdwg.org/dwc/terms/relationshipOrder
-dwc:relationshipOrder rdf:type owl:DatatypeProperty ;
-                      rdfs:range xsd:integer ;
-                      rdfs:label "Relationship Order" ;
-                      skos:definition "A numerical position of a dwc:ResourceRelationship in a set of dwc:ResourceRelationships that have the same combination of dwc:organismID, dwc:relatedOrganismID, dwc:relationshipType, dwc:relationshipTypeIRI, and dwc:relationshipTypeSource." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/relationshipRemarks
@@ -3551,11 +3667,63 @@ dwc:sampleSizeValue rdf:type owl:DatatypeProperty ;
                     skos:example 5 .
 
 
+###  http://rs.tdwg.org/dwc/terms/sampledFeatureType
+dwc:sampledFeatureType rdf:type owl:DatatypeProperty ;
+                       rdfs:label "Sampled Feature Type" ;
+                       skos:definition "The type of naturally occurring or anthropogenic physical feature from which a dwc:MaterialEntity was sampled." ;
+                       skos:example "erratic boulder" ,
+                                    "float" ,
+                                    "mine dump" ,
+                                    "mine/quarry pit" ,
+                                    "outcrop" .
+
+
+###  http://rs.tdwg.org/dwc/terms/sampledSubstrateCategory
+dwc:sampledSubstrateCategory rdf:type owl:DatatypeProperty ;
+                             rdfs:label "Sampled Substrate Category" ;
+                             skos:definition "A category or type of substrate sampled during a dwc:Event." ;
+                             skos:example "ocean" ,
+                                          "soil" ,
+                                          "vegetation" .
+
+
+###  http://rs.tdwg.org/dwc/terms/sampledSubstrateLayer
+dwc:sampledSubstrateLayer rdf:type owl:DatatypeProperty ;
+                          rdfs:label "Sampled Substrate Layer" ;
+                          skos:definition "A list (concatenated and separated) of substrate layers sampled during a dwc:Event." ;
+                          skos:example "abysopelagic" ,
+                                       "bathypelagic" ,
+                                       "bedrock (R)" ,
+                                       "canopy" ,
+                                       "eluviated (E)" ,
+                                       "epipelagic | mesopelagic" ,
+                                       "forest floor" ,
+                                       "hadalpelagic" ,
+                                       "herbaceous | shrub" ,
+                                       "organic (O)" ,
+                                       "parent material (C)" ,
+                                       "subsoil (B)" ,
+                                       "surface (A)" ,
+                                       "understory" .
+
+
 ###  http://rs.tdwg.org/dwc/terms/samplingPerformedByID
 dwc:samplingPerformedByID rdf:type owl:DatatypeProperty ;
                           rdfs:label "Sampling Performed By ID" ;
                           skos:definition "An identifier for a dcterms:Agent responsible for sampling." ;
                           skos:example "https://orcid.org/0000-0002-1825-0097" .
+
+
+###  http://rs.tdwg.org/dwc/terms/samplingProtocol
+dwc:samplingProtocol rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Sampling Protocol" ;
+                     skos:definition "The names of, references to, or descriptions of the methods or protocols used during an eco:Survey." ;
+                     skos:example "Penguins from space: faecal stains reveal the location of emperor penguin colonies, https://doi.org/10.1111/j.1466-8238.2009.00467.x" ,
+                                  "Takats et al. 2001. Guidelines for Nocturnal Owl Monitoring in North America. Beaverhill Bird Observatory and Bird Studies Canada, Edmonton, Alberta. 32 pp., http://www.bsc-eoc.org/download/Owl.pdf" ,
+                                  "UV light trap" ,
+                                  "ad hoc observation | point count" ,
+                                  "bottom trawl" ,
+                                  "mist net" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/scientificName
@@ -3684,14 +3852,24 @@ dwc:substrate rdf:type owl:DatatypeProperty ;
                            "wooden board fence" .
 
 
-###  http://rs.tdwg.org/dwc/terms/taxonAssignmentMethod
-dwc:taxonAssignmentMethod rdf:type owl:DatatypeProperty ;
-                          rdfs:label "Taxon Assignment Method" ;
-                          skos:definition "Tool and thresholds used to compare sequences when computing 'species-level' OTUs." ;
-                          skos:example "2.6.0+" ,
-                                       "blastn" ,
-                                       "e-value cutoff: 0.001" ,
-                                       "identity cutoff: 0.97" .
+###  http://rs.tdwg.org/dwc/terms/subtribe
+dwc:subtribe rdf:type owl:DatatypeProperty ;
+             rdfs:label "Subtribe" ;
+             skos:definition "The full scientific name of the subtribe in which the dwc:Taxon is classified." ;
+             skos:example "Plotinini" ,
+                          "Typhaeini" .
+
+
+###  http://rs.tdwg.org/dwc/terms/superfamily
+dwc:superfamily rdf:type owl:DatatypeProperty ;
+                rdfs:label "Superfamily" ;
+                skos:definition "The full scientific name of the superfamily in which the dwc:Taxon is classified." ;
+                skos:example "Achatinoidea" ,
+                             "Cerithioidea" ,
+                             "Helicoidea" ,
+                             "Hypsibioidea" ,
+                             "Valvatoidea" ,
+                             "Zonitoidea" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/taxonFormula
@@ -3741,7 +3919,40 @@ dwc:taxonRemarks rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/dwc/terms/taxonSortOrder
 dwc:taxonSortOrder rdf:type owl:DatatypeProperty ;
                    rdfs:label "Taxon Sort Order" ;
-                   skos:definition "A numerical position of a dwc:Taxon in a taxonFormula." .
+                   skos:definition "A numerical position of a dwc:Taxon in a taxonFormula." ;
+                   skos:example 1 ,
+                                2 .
+
+
+###  http://rs.tdwg.org/dwc/terms/tectonicUnits
+dwc:tectonicUnits rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Tectonic Units" ;
+                  skos:definition "The combination of all tectonic unit names for the rock from which a dwc:MaterialEntity was collected." ;
+                  skos:example "Sublage Nappe" ,
+                               "Upper Helvetic" ,
+                               "Wildhorn Nappe Complex" .
+
+
+###  http://rs.tdwg.org/dwc/terms/treatments
+dwc:treatments rdf:type owl:DatatypeProperty ;
+               rdfs:label "Treatments" ;
+               skos:definition "Description of any processes or curatorial actions taken specifically to mitigate damage to a dwc:MaterialEntity." .
+
+
+###  http://rs.tdwg.org/dwc/terms/tribe
+dwc:tribe rdf:type owl:DatatypeProperty ;
+          rdfs:label "Tribe" ;
+          skos:definition "The full scientific name of the tribe in which the dwc:Taxon is classified." ;
+          skos:example "Arethuseae" ,
+                       "Ortaliini" .
+
+
+###  http://rs.tdwg.org/dwc/terms/typeOfType
+dwc:typeOfType rdf:type owl:DatatypeProperty ;
+               rdfs:label "Type Of Type" ;
+               skos:definition "A category of nomenclatural type of a dwc:MaterialEntity." ;
+               skos:example "holotype" ,
+                            "isotype" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/typeStatus
@@ -3756,6 +3967,12 @@ dwc:typifiedName rdf:type owl:DatatypeProperty ;
                  rdfs:label "Typified Name" ;
                  skos:definition "A scientific name for which a specimen or other name is the type." ;
                  skos:example "Polysiphonia amphibolis Womersley" .
+
+
+###  http://rs.tdwg.org/dwc/terms/usagePolicyID
+dwc:usagePolicyID rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Usage Policy ID" ;
+                  skos:definition "An identifier for a dwc:UsagePolicy." .
 
 
 ###  http://rs.tdwg.org/dwc/terms/verbatimAssertionType
@@ -3848,6 +4065,15 @@ dwc:verbatimLongitude rdf:type owl:DatatypeProperty ;
                       rdfs:label "Verbatim Longitude" ;
                       skos:definition "A verbatim original longitude of a dcterms:Location." ;
                       skos:example "121d 10' 34\" W" .
+
+
+###  http://rs.tdwg.org/dwc/terms/verbatimMass
+dwc:verbatimMass rdf:type owl:DatatypeProperty ;
+                 rdfs:label "Verbatim Mass" ;
+                 skos:definition "The verbatim original representation of the mass of a dwc:MaterialEntity, including original units of measurement." ;
+                 skos:example "105.07 g" ,
+                              "11.01 Lbs" ,
+                              "2.45 kg" .
 
 
 ###  http://rs.tdwg.org/dwc/terms/verbatimSRS
@@ -4160,7 +4386,11 @@ eco:reportedWeather rdf:type owl:DatatypeProperty ;
 
 ###  http://rs.tdwg.org/eco/terms/samplingEffortProtocol
 eco:samplingEffortProtocol rdf:type owl:DatatypeProperty ;
-                           rdfs:label "Sampling Effort Protocol" .
+                           rdfs:label "Sampling Effort Protocol" ;
+                           skos:definition "A description of or reference to a Protocol used to determine a eco:samplingEffortValue." ;
+                           skos:example "2 people occupying a bird hide for a period of 8 hours and undertaking a 30 minute count of species within the 150 degree field of view every 2 hours" ,
+                                        "40 box traps deployed at even spacings along 4 parallel 100m transects placed 50m apart and visited at 6 hourly intervals over a 48 hour period" ,
+                                        "A single baited camera trap station with motion sensor trigger, deployed for a period of 10 days and configured for detecting large fauna moving through a known traffic way" .
 
 
 ###  http://rs.tdwg.org/eco/terms/samplingEffortUnit
@@ -4203,8 +4433,8 @@ eco:siteCount rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/eco/terms/siteNestingDescription
 eco:siteNestingDescription rdf:type owl:DatatypeProperty ;
                            rdfs:label "Site Nesting Description" ;
-                           skos:definition "5 sampling sites of 3-5 plots each" ;
-                           skos:example "Textual description of a hierarchical sampling design." .
+                           skos:definition "Textual description of a hierarchical sampling design." ;
+                           skos:example "5 sampling sites of 3-5 plots each" .
 
 
 ###  http://rs.tdwg.org/eco/terms/surveyID
@@ -4213,10 +4443,35 @@ eco:surveyID rdf:type owl:DatatypeProperty ;
              skos:definition "An identifier for an eco:Survey." .
 
 
+###  http://rs.tdwg.org/eco/terms/surveySiteType
+eco:surveySiteType rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Survey Site Type" ;
+                   skos:definition "A spatial category of a sampling location for an eco:Survey." ;
+                   skos:example "arealPlot" ,
+                                "horizontalTransect" ,
+                                "observationPoint" ,
+                                "verticalTransect" .
+
+
+###  http://rs.tdwg.org/eco/terms/surveyTargetDescription
+eco:surveyTargetDescription rdf:type owl:DatatypeProperty ;
+                            rdfs:label "Survey Target Description" ;
+                            skos:definition "A verbatim description of an eco:SurveyTarget." ;
+                            skos:example "all flowering Rosaceae" ,
+                                         "all passerine birds" .
+
+
 ###  http://rs.tdwg.org/eco/terms/surveyTargetID
 eco:surveyTargetID rdf:type owl:DatatypeProperty ;
                    rdfs:label "Survey Target ID" ;
                    skos:definition "An identifier for an eco:SurveyTarget." .
+
+
+###  http://rs.tdwg.org/eco/terms/surveyTargetRemarks
+eco:surveyTargetRemarks rdf:type owl:DatatypeProperty ;
+                        rdfs:label "Survey Target Remarks" ;
+                        skos:definition "Comments or notes about an eco:SurveyTarget." ;
+                        skos:example "Survey target scopes reflect post-facto filtering, not original survey design." .
 
 
 ###  http://rs.tdwg.org/eco/terms/surveyTargetType
@@ -4301,9 +4556,10 @@ eco:verbatimSiteNames rdf:type owl:DatatypeProperty ;
 ###  http://rs.tdwg.org/eco/terms/verbatimTargetScope
 eco:verbatimTargetScope rdf:type owl:DatatypeProperty ;
                         rdfs:label "Verbatim Target Scope" ;
-                        skos:definition "A verbatim original description of a dwc:Event scope." ;
-                        skos:example "dead animals, ground-living insects" ,
+                        skos:definition "The verbatim original description of an eco:Survey scope." ;
+                        skos:example "dead animals" ,
                                      "freshwater macroinvertebrates" ,
+                                     "ground-living insects" ,
                                      "small mammals" .
 
 
@@ -4316,28 +4572,10 @@ eco:voucherInstitutions rdf:type owl:DatatypeProperty ;
                                      "Nairobi National Museum" .
 
 
-###  http://rs.tdwg.org/mineralogy/terms/classificationCode
-minext:classificationCode rdf:type owl:DatatypeProperty ;
-                          rdfs:label "Geo Classification Code" ;
-                          skos:definition "An identifier for a minext:classificationCode." ;
-                          skos:example "71.02.02a.01" ,
-                                       "9.AD.25" .
-
-
-###  http://rs.tdwg.org/mineralogy/terms/name
-minext:name rdf:type owl:DatatypeProperty ;
-            rdfs:label "Geo Name" ;
-            skos:definition "A human-readable lexical label assigned to a mineral includes both informal (e.g., variety, synonym) and formal (classification) forms." ;
-            skos:example "Almandine" ,
-                         "Fluorite" ,
-                         "Garnet Group" ,
-                         "Plagioclase (Series)" .
-
-
 ###  https://w3id.org/mixs/0000001
 <https://w3id.org/mixs/0000001> rdf:type owl:DatatypeProperty ;
                                 rdfs:label "Amount Or Size Of Sample Collected" ;
-                                skos:definition "The total amount or size (volume (ml), mass (g) or area (m2) ) of sample collected." ;
+                                skos:definition "The total amount or size (volume (ml), mass (g) or area (m2)) of sample collected." ;
                                 skos:example "5 liter" .
 
 
@@ -4825,7 +5063,7 @@ minext:name rdf:type owl:DatatypeProperty ;
 
 ###  https://w3id.org/mixs/0001320
 <https://w3id.org/mixs/0001320> rdf:type owl:DatatypeProperty ;
-                                rdfs:label "Taxonomy ID of DNA Sample" ;
+                                rdfs:label "Taxonomy ID Of DNA Sample" ;
                                 skos:definition "NCBI taxon id of the sample. Maybe be a single taxon or mixed taxa sample. Use `synthetic metagenome` for mock community/positive controls, or `blank sample` for negative controls." ;
                                 skos:example "Gut Metagenome [NCBITaxon:749906]" .
 
@@ -4975,7 +5213,7 @@ dwc:GeologicalContextMedia rdf:type owl:Class ;
 dwc:GeologicalMaterial rdf:type owl:Class ;
                        rdfs:subClassOf dwc:MaterialEntity ;
                        rdfs:label "Geological Material" ;
-                       skos:definition "A dwc:MaterialEntity that is geological in nature." ;
+                       skos:definition "A dwc:MaterialEntity comprised of a natural amount of matter generated by some geologic process, includes synthetic material intended to represent a geological material." ;
                        skos:example "a specific mineral" ,
                                     "a specific ore" ,
                                     "a specific rock" .
@@ -5114,7 +5352,8 @@ dwc:OccurrenceReference rdf:type owl:Class ;
 dwc:Organism rdf:type owl:Class ;
              rdfs:label "Organism" ;
              skos:definition "A particular organism or defined group of organisms considered to be taxonomically homogeneous." ;
-             skos:example "a specific bird" ,
+             skos:example "a particular plant gathered in the wild, transplanted to a botanical garden, and preserved as a specimen in a collection" ,
+                          "a specific bird" ,
                           "a specific instance of a bacterial culture" ,
                           "a specific wolf pack" .
 
