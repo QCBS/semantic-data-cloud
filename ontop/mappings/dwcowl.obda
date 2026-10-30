@@ -345,7 +345,7 @@ target		:survey-reference/{reference_fk}/{survey_fk} a dwc:SurveyReference ; dwc
 source		SELECT * FROM dwcowl.main.survey_reference
 
 mappingId	survey_survey_target
-target		:survey/{survey_fk} dwcdp:hasTarget :survey-target/{survey_target_fk} . :survey-target/{survey_target_fk} dwcdp:targetFor :survey/{survey_fk} . 
+target		:event/{survey_fk} dwcdp:hasTarget :survey-target/{survey_target_fk} . :survey-target/{survey_target_fk} dwcdp:targetFor :event/{survey_fk} . 
 source		SELECT * FROM survey_survey_target
 
 mappingId	survey_target
