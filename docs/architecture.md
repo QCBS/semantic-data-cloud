@@ -43,7 +43,7 @@ Constructs a materialised DuckDB database for a given list of dataset IDs. For e
 
 The output is a `.duckdb` file containing views over Parquet files representing the tables in the Darwin Core Data Package schema, named after a 16-character SHA-256 prefix of the sorted, pipe-delimited dataset ID list. This hash serves as both the filename and the cache key, a database is built only once per unique dataset combination and reused on all subsequent requests.
 
-The [blanks/](../blanks/) directory contains zero-row Parquet files for every table in the Darwin Core Data Package schema, obtained from the [GBIF schema repository](https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/). These serve as schema anchors: they guarantee that every table exists in the database even when no dataset in the context contributes data to it, preventing Ontop from encountering missing tables or forcing the Parquet file to contains numerous empty columns.
+The [blanks/](../blanks/) directory contains zero-row Parquet files for every table in the Darwin Core Data Package schema, obtained from the [TDWG reposity of schemas](https://rs.tdwg.org/dwc-dp/1.0/table-schemas/). These serve as schema anchors: they guarantee that every table exists in the database even when no dataset in the context contributes data to it, preventing Ontop from encountering missing tables or forcing the Parquet file to contains numerous empty columns.
 
 #### container_manager
 
