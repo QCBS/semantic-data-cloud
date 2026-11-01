@@ -10,8 +10,9 @@ import httpx2
 
 DB_DIR = Path("/db")
 BLANKS_DIR = Path("/blanks")
-METADATA_API_BASE = os.getenv("METADATA_API_BASE", "http://metadata-api:8000")
 CREATE_TARP_VIEWS_SQL = (Path(__file__).parent / "create_tarp_views.sql").read_text(encoding="utf-8")
+#
+METADATA_API_BASE = os.getenv("METADATA_API_BASE", "http://metadata-api:8000")
 #
 SURROGATE_KEYS = {
     "occurrence_assertion": "assertion_pk",
