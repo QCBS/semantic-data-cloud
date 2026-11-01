@@ -15,7 +15,16 @@ CREATE_TARP_VIEWS_SQL = (Path(__file__).parent / "create_tarp_views.sql").read_t
 METADATA_API_BASE = os.getenv("METADATA_API_BASE", "http://metadata-api:8000")
 #
 SURROGATE_KEYS = {
+    "chronometric_age_assertion": "assertion_pk",
+    "event_assertion": "assertion_pk",
+    "material_assertion": "assertion_pk",
+    "media_assertion": "assertion_pk",
+    "molecular_protocol_assertion": "assertion_pk",
+    "nucleotide_analysis_assertion": "assertion_pk",
     "occurrence_assertion": "assertion_pk",
+    "organism_assertion": "assertion_pk",
+    "organism_interaction_assertion": "assertion_pk",
+    "survey_assertion": "assertion_pk",
 }
 
 
