@@ -25,6 +25,7 @@ SURROGATE_KEYS = {
     "organism_assertion": "assertion_pk",
     "organism_interaction_assertion": "assertion_pk",
     "survey_assertion": "assertion_pk",
+    "survey_target_descriptor": "survey_target_descriptor_pk",
 }
 
 
