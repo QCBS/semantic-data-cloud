@@ -10,8 +10,23 @@ import httpx2
 
 DB_DIR = Path("/db")
 BLANKS_DIR = Path("/blanks")
-METADATA_API_BASE = os.getenv("METADATA_API_BASE", "http://metadata-api:8000")
 CREATE_TARP_VIEWS_SQL = (Path(__file__).parent / "create_tarp_views.sql").read_text(encoding="utf-8")
+#
+METADATA_API_BASE = os.getenv("METADATA_API_BASE", "http://metadata-api:8000")
+#
+SURROGATE_KEYS = {
+    "chronometric_age_assertion": "assertion_pk",
+    "event_assertion": "assertion_pk",
+    "material_assertion": "assertion_pk",
+    "media_assertion": "assertion_pk",
+    "molecular_protocol_assertion": "assertion_pk",
+    "nucleotide_analysis_assertion": "assertion_pk",
+    "occurrence_assertion": "assertion_pk",
+    "organism_assertion": "assertion_pk",
+    "organism_interaction_assertion": "assertion_pk",
+    "survey_assertion": "assertion_pk",
+    "survey_target_descriptor": "survey_target_descriptor_pk",
+}
 
 
 # NOTE: Maybe later increase the number of characters if number of datasets increases.
@@ -46,6 +61,19 @@ def _merge_assets(tables: dict[str, list[str]], dataset_json: dict) -> None:
         name = Path(urlparse(href).path).stem.replace("-", "_")
         if name in tables:
             tables[name].append(href)
+
+
+def _create_table_view(con: duckdb.DuckDBPyConnection, table_name: str, paths: list[str]) -> None:
+    key_col = SURROGATE_KEYS.get(table_name)
+
+    if key_col is None:
+        rel = con.read_parquet(paths, union_by_name=True)
+        rel.create_view(view_name=table_name)
+        return
+
+    rel = con.read_parquet(paths, union_by_name=True, filename=True, file_row_number=True)
+    rel = rel.project(f"md5(filename || '|' || file_row_number)::UUID AS {key_col}, * EXCLUDE (filename, file_row_number)")
+    rel.create_view(view_name=table_name)
 
 
 def _get_datasets_citations(dataset_ids: list[str], ctx_hash: str) -> None:
@@ -92,8 +120,7 @@ def build_db(dataset_ids: list[str]) -> Path:
 
     with duckdb.connect(database=str(db_path)) as con:
         for table_name, paths in tables.items():
-            rel = con.read_parquet(paths, union_by_name=True)
-            rel.create_view(view_name=table_name)
+            _create_table_view(con, table_name, paths)
 
         # NOTE: Create a view to separate dcterms:Location information from the event table
         #
