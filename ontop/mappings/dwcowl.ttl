@@ -5111,6 +5111,12 @@ ac:Media rdf:type owl:Class ;
          skos:definition "A digital or physical media resource." .
 
 
+###  http://rs.tdwg.org/ac/terms/RegionOfInterest
+ac:RegionOfInterest rdf:type owl:Class ;
+                    rdfs:label "Region Of Interest" ;
+                    skos:definition "A designated region of a media item bounded in dimensions appropriate for the media type." .
+
+
 ###  http://rs.tdwg.org/chrono/terms/ChronometricAge
 chrono:ChronometricAge rdf:type owl:Class ;
                        rdfs:label "Chronometric Age" ;
