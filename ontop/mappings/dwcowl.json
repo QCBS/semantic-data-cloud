@@ -925,7 +925,7 @@
     "columns" : [ {
       "name" : "\"assertion_pk\"",
       "isNullable" : false,
-      "datatype" : "VARCHAR"
+      "datatype" : "UUID"
     }, {
       "name" : "\"assertion_by\"",
       "isNullable" : true,
@@ -1057,7 +1057,7 @@
     "columns" : [ {
       "name" : "\"assertion_pk\"",
       "isNullable" : false,
-      "datatype" : "VARCHAR"
+      "datatype" : "UUID"
     }, {
       "name" : "\"assertion_by\"",
       "isNullable" : true,
@@ -1189,7 +1189,7 @@
     "columns" : [ {
       "name" : "\"assertion_pk\"",
       "isNullable" : false,
-      "datatype" : "VARCHAR"
+      "datatype" : "UUID"
     }, {
       "name" : "\"assertion_by\"",
       "isNullable" : true,
@@ -1596,7 +1596,7 @@
     "columns" : [ {
       "name" : "\"assertion_pk\"",
       "isNullable" : false,
-      "datatype" : "VARCHAR"
+      "datatype" : "UUID"
     }, {
       "name" : "\"assertion_by\"",
       "isNullable" : true,
@@ -1845,7 +1845,7 @@
     "otherNames" : [ [ "\"main\"", "\"organism\"" ], [ "\"dwcowl\"", "\"main\"", "\"organism\"" ] ]
   }, {
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_survey_target_descriptor_fk_486",
+      "name" : "dwcowl_main_survey_target_descriptor_fk_487",
       "from" : {
         "relation" : [ "\"survey_target_descriptor\"" ],
         "columns" : [ "\"survey_target_fk\"" ]
@@ -1856,6 +1856,10 @@
       }
     } ],
     "columns" : [ {
+      "name" : "\"survey_target_descriptor_pk\"",
+      "isNullable" : false,
+      "datatype" : "UUID"
+    }, {
       "name" : "\"include_or_exclude\"",
       "isNullable" : false,
       "datatype" : "VARCHAR"
@@ -2212,7 +2216,7 @@
     "columns" : [ {
       "name" : "\"assertion_pk\"",
       "isNullable" : false,
-      "datatype" : "VARCHAR"
+      "datatype" : "UUID"
     }, {
       "name" : "\"assertion_by\"",
       "isNullable" : true,
@@ -2449,7 +2453,7 @@
     "columns" : [ {
       "name" : "\"assertion_pk\"",
       "isNullable" : false,
-      "datatype" : "VARCHAR"
+      "datatype" : "UUID"
     }, {
       "name" : "\"assertion_by\"",
       "isNullable" : true,
@@ -2581,7 +2585,7 @@
     "columns" : [ {
       "name" : "\"assertion_pk\"",
       "isNullable" : false,
-      "datatype" : "VARCHAR"
+      "datatype" : "UUID"
     }, {
       "name" : "\"assertion_by\"",
       "isNullable" : true,
@@ -3222,7 +3226,7 @@
     "columns" : [ {
       "name" : "\"assertion_pk\"",
       "isNullable" : false,
-      "datatype" : "VARCHAR"
+      "datatype" : "UUID"
     }, {
       "name" : "\"assertion_by\"",
       "isNullable" : true,
@@ -5553,7 +5557,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_usage_policy_fk_489",
+      "name" : "dwcowl_main_usage_policy_fk_490",
       "from" : {
         "relation" : [ "\"usage_policy\"" ],
         "columns" : [ "\"owner_fk\"" ]
@@ -5563,7 +5567,7 @@
         "columns" : [ "\"agent_pk\"" ]
       }
     }, {
-      "name" : "dwcowl_main_usage_policy_fk_490",
+      "name" : "dwcowl_main_usage_policy_fk_491",
       "from" : {
         "relation" : [ "\"usage_policy\"" ],
         "columns" : [ "\"rights_holder_fk\"" ]
@@ -8362,7 +8366,7 @@
       "isPrimaryKey" : true
     } ],
     "foreignKeys" : [ {
-      "name" : "dwcowl_main_v_location_fk_493",
+      "name" : "dwcowl_main_v_location_fk_494",
       "from" : {
         "relation" : [ "\"v_location\"" ],
         "columns" : [ "\"geological_context_fk\"" ]
@@ -8939,7 +8943,7 @@
     "columns" : [ {
       "name" : "\"assertion_pk\"",
       "isNullable" : false,
-      "datatype" : "VARCHAR"
+      "datatype" : "UUID"
     }, {
       "name" : "\"assertion_by\"",
       "isNullable" : true,
@@ -9301,7 +9305,7 @@
     "columns" : [ {
       "name" : "\"assertion_pk\"",
       "isNullable" : false,
-      "datatype" : "VARCHAR"
+      "datatype" : "UUID"
     }, {
       "name" : "\"assertion_by\"",
       "isNullable" : true,
@@ -9994,7 +9998,7 @@
     "driverName" : "DuckDBJ",
     "driverVersion" : "1.0",
     "quotationString" : "\"",
-    "extractionTime" : "2026-10-30T19:05:30",
+    "extractionTime" : "2026-11-01T14:48:12",
     "idFactoryType" : "DUCKDB"
   }
 }
