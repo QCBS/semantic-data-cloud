@@ -72,7 +72,7 @@ def _create_table_view(con: duckdb.DuckDBPyConnection, table_name: str, paths: l
         return
 
     rel = con.read_parquet(paths, union_by_name=True, filename=True, file_row_number=True)
-    rel = rel.project(f"md5(filename || file_row_number)::UUID AS {key_col}, * EXCLUDE (filename, file_row_number)")
+    rel = rel.project(f"md5(filename || '|' || file_row_number)::UUID AS {key_col}, * EXCLUDE (filename, file_row_number)")
     rel.create_view(view_name=table_name)
 
 
